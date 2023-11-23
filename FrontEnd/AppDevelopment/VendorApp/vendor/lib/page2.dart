@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Positioned(
                   left: 188,
-                  top: 861,
+                  top: 561,
                   child: Text(
                     'Next',
                     style: TextStyle(
