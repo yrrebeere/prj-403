@@ -11,11 +11,11 @@ var usersRouter = require('./routes/users');
 
 // var app = express();
 const app = express()
-const port = 5000
+const port = 4000
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -46,7 +46,6 @@ app.get('/grocery_store',(req,res) => {
         console.log(err)
       }
     })
-
   })
 })
 
@@ -62,7 +61,6 @@ app.get('/:store_id',(req,res) => {
         console.log(err)
       }
     })
-
   })
 })
 
@@ -79,7 +77,6 @@ app.delete('/:store_id',(req,res) => {
         console.log(err)
       }
     })
-
   })
 })
 
@@ -99,7 +96,6 @@ app.post('',(req,res) => {
         console.log(err)
       }
     })
-
     console.log(req.body)
   })
 })
@@ -114,21 +110,17 @@ app.put('',(req,res) => {
     connection.query("UPDATE grocery_store SET name =  ? WHERE store_id = ?",[name,store_id],(err,rows) => {
       connection.release();
       if(!err){
-        res.send(`Grocery Store with the Record ID: has been added.`)
+        res.send(`Grocery Store has been updated.`)
       }
       else{
         console.log(err)
       }
     })
-
     console.log(req.body)
   })
 })
 
-
-
 app.listen(port,() => console.log(`listen on port ${port}`))
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
