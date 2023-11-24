@@ -5,7 +5,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -14,6 +14,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -22,18 +25,18 @@ class _MyAppState extends State<MyApp> {
         ),
         body: SafeArea(
           child: Container(
-            width: 430,
-            height: 832,
+            width: screenWidth,
+            height: screenHeight,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(color: Color(0xFF6FB457)),
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
-                  top: 233,
+                  top: screenHeight * 0.28,
                   child: Container(
-                    width: 430,
-                    height: 599,
+                    width: screenWidth * 1.0,
+                    height: screenHeight * 0.718,
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -46,13 +49,13 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 142,
-                  top: 44,
+                  left: screenWidth * 0.35,
+                  top: screenHeight * 0.053,
                   child: Text(
                     'Wasail',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 48,
+                      fontSize: screenWidth * 0.12,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -60,13 +63,13 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 35,
-                  top: 266,
+                  left: screenWidth * 0.0875,
+                  top: screenHeight * 0.320,
                   child: Text(
                     'Select Language',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 32,
+                      fontSize: screenWidth * 0.06,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -74,11 +77,11 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 35,
-                  top: 330,
+                  left: screenWidth * 0.0875,
+                  top: screenHeight * 0.395,
                   child: Container(
-                    width: 360,
-                    height: 76,
+                    width: screenWidth * 0.83,
+                    height: screenHeight * 0.091,
                     decoration: BoxDecoration(
                       color: Colors.blueAccent,
                       boxShadow: [
@@ -87,17 +90,17 @@ class _MyAppState extends State<MyApp> {
                           blurRadius: 4,
                           offset: Offset(0, 4),
                           spreadRadius: 0,
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 35,
-                  top: 431,
+                  left: screenWidth * 0.0875,
+                  top: screenHeight * 0.495,
                   child: Container(
-                    width: 360,
-                    height: 76,
+                    width: screenWidth * 0.83,
+                    height: screenHeight * 0.091,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -106,17 +109,17 @@ class _MyAppState extends State<MyApp> {
                           blurRadius: 4,
                           offset: Offset(0, 4),
                           spreadRadius: 0,
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 35,
-                  top: 532,
+                  left: screenWidth * 0.0875,
+                  top: screenHeight * 0.595,
                   child: Container(
-                    width: 360,
-                    height: 76,
+                    width: screenWidth * 0.83,
+                    height: screenHeight * 0.091,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -125,16 +128,16 @@ class _MyAppState extends State<MyApp> {
                           blurRadius: 4,
                           offset: Offset(0, 4),
                           spreadRadius: 0,
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: 71,
-                  top: 353,
+                  left: screenWidth * 0.175,
+                  top: screenHeight * 0.425,
                   child: SizedBox(
-                    width: 288,
+                    width: screenWidth * 0.8,
                     child: Text.rich(
                       TextSpan(
                         children: [
@@ -142,7 +145,7 @@ class _MyAppState extends State<MyApp> {
                             text: 'EN                         ',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 24,
+                              fontSize: screenWidth * 0.048,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
                               height: 0,
@@ -151,8 +154,8 @@ class _MyAppState extends State<MyApp> {
                           TextSpan(
                             text: 'English',
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.7900000214576721),
-                              fontSize: 24,
+                              color: Colors.black.withOpacity(0.79),
+                              fontSize: screenWidth * 0.048,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
                               height: 0,
@@ -164,10 +167,10 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 71,
-                  top: 454,
+                  left: screenWidth * 0.175,
+                  top: screenHeight * 0.525,
                   child: SizedBox(
-                    width: 288,
+                    width: screenWidth * 0.72,
                     child: Text.rich(
                       TextSpan(
                         children: [
@@ -175,7 +178,7 @@ class _MyAppState extends State<MyApp> {
                             text: 'UR                             ',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 24,
+                              fontSize: screenWidth * 0.048,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
                               height: 0,
@@ -184,8 +187,8 @@ class _MyAppState extends State<MyApp> {
                           TextSpan(
                             text: 'Urdu',
                             style: TextStyle(
-                              color: Colors.black.withOpacity(0.7900000214576721),
-                              fontSize: 24,
+                              color: Colors.black.withOpacity(0.79),
+                              fontSize: screenWidth * 0.048,
                               fontFamily: 'Inter',
                               fontWeight: FontWeight.w400,
                               height: 0,
@@ -197,15 +200,15 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 71,
-                  top: 556,
+                  left: screenWidth * 0.175,
+                  top: screenHeight * 0.625,
                   child: SizedBox(
-                    width: 288,
+                    width: screenWidth * 0.72,
                     child: Text(
                       'اردو                                اب',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: screenWidth * 0.048,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w400,
                         height: 0,
@@ -214,15 +217,15 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: 35,
-                  top: 647,
+                  left: screenWidth * 0.07,
+                  top: screenHeight * 0.765,
                   child: Container(
-                    width: 360,
-                    height: 58,
+                    width: screenWidth * 0.870,
+                    height: screenHeight * 0.072,
                     decoration: ShapeDecoration(
                       color: Color(0xFF007AFF),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: BorderRadius.circular(screenHeight * 0.036),
                       ),
                       shadows: [
                         BoxShadow(
@@ -230,22 +233,20 @@ class _MyAppState extends State<MyApp> {
                           blurRadius: 4,
                           offset: Offset(0, 4),
                           spreadRadius: 0,
-                        )
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  left: 163,
-                  top: 661,
-                  child: Text(
-                    'Continue',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
+                    child: Center(
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: screenWidth * 0.048,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
                     ),
                   ),
                 ),
