@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'page4.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,24 +17,30 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFF6FB457),
+          elevation: 0,
+        ),
         body: SafeArea(
           child: Builder(
             builder: (BuildContext builderContext) {
               return Container(
-                width: 430,
-                height: 932,
+                width: screenWidth * 1,
+                height: screenHeight * 1,
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(color: const Color(0xFF6FB457)),
                 child: Stack(
                   children: [
                     Positioned(
-                      left: 0,
-                      top: 222,
+                      left: screenWidth * 0.0,
+                      top: screenHeight * 0.28,
                       child: Container(
-                        width: 392,
-                        height: 710,
+                        width: screenWidth * 1.0,
+                        height: screenHeight * 0.718,
                         decoration: ShapeDecoration(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -48,13 +53,13 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 361,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.43,
                       child: Text(
                         'Phone Number',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: screenWidth * 0.050,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -62,14 +67,14 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 130,
-                      top: 113,
+                      left: screenWidth * 0.32,
+                      top: screenHeight * 0.1,
                       child: Center(
                         child: Text(
                           'Wasail',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 48,
+                            fontSize: screenWidth * 0.120,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                             height: 0,
@@ -78,13 +83,13 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 254,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.320,
                       child: Text(
                         'Login',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 32,
+                          fontSize: screenWidth * 0.075,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -92,107 +97,23 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 35,
-                      top: 847,
-                      child: Container(
-                        width: 330,
-                        height: 58,
-                        decoration: ShapeDecoration(
-                          color: const Color(0xFF007AFF),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: const Color(0x3F000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 188,
-                      top: 861,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Close the keyboard when tapping the login button
-                          FocusScope.of(context).unfocus();
-
-                          // Retrieve values from text fields
-                          String phoneNumber = phoneNumberController.text;
-                          String password = passwordController.text;
-
-                          // Navigate to the next page using the context obtained from Builder
-                          Navigator.push(
-                            builderContext,
-                            MaterialPageRoute(
-                              builder: (context) => Page4(
-                                phoneNumber: phoneNumber,
-                                password: password,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightBlueAccent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                        ),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 11,
-                      top: 69,
-                      child: Container(
-                        width: 122,
-                        height: 25,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 20,
-                      top: 72,
+                      left: screenWidth * 0.023,
+                      top: screenHeight * 0.001,
                       child: Row(
                         children: [
-                          Icon(Icons.language, size: 16, color: Colors.white),
-                          SizedBox(width: 5),
-                          Text(
-                            'Languages',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                              height: 0,
-                            ),
-                          ),
+                          Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.white),
+                          SizedBox(width: screenWidth * 0.012,),
                         ],
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 473,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.59,
                       child: Text(
                         'Password',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: screenWidth * 0.050,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -200,8 +121,8 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 585,
+                      left: screenWidth * 0.0625,
+                      top: screenHeight * 0.72,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -209,7 +130,7 @@ class _MyAppState extends State<MyApp> {
                               text: 'Reset',
                               style: TextStyle(
                                 color: const Color(0xFF007AFF),
-                                fontSize: 20,
+                                fontSize: screenWidth * 0.05,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -220,7 +141,7 @@ class _MyAppState extends State<MyApp> {
                               text: ' ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
+                                fontSize: screenWidth * 0.05,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -231,7 +152,7 @@ class _MyAppState extends State<MyApp> {
                               text: 'Password',
                               style: TextStyle(
                                 color: const Color(0xFF007AFF),
-                                fontSize: 20,
+                                fontSize: screenWidth * 0.05,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -243,28 +164,29 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 517,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.64,
                       child: Container(
-                        width: 340,
-                        height: 42,
+                        width: screenWidth * 0.85,
+                        height: screenHeight * 0.065,
                         decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
                       ),
                     ),
                     Positioned(
-                      left: 27,
-                      top: 405,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.49,
                       child: Container(
-                        width: 340,
-                        height: 42,
+                        width: screenWidth * 0.85,
+                        height: screenHeight * 0.065,
                         decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 45, top: 425),
+                      margin: EdgeInsets.only(left: screenWidth * 0.1,
+                        top: screenHeight * 0.520,),
                       child: SizedBox(
-                        width: 300,
-                        height: 20,
+                        width: screenWidth * 0.703,
+                        height: screenHeight * 0.023,
                         child: TextField(
                           controller: phoneNumberController,
                           decoration: InputDecoration(
@@ -274,10 +196,11 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 45, top: 538),
+                      margin: EdgeInsets.only(left: screenWidth * 0.1,
+                        top: screenHeight * 0.672,),
                       child: SizedBox(
-                        width: 300,
-                        height: 20,
+                        width: screenWidth * 0.703,
+                        height: screenHeight * 0.023,
                         child: TextField(
                           controller: passwordController,
                           obscureText: true,
@@ -288,8 +211,8 @@ class _MyAppState extends State<MyApp> {
                       ),
                     ),
                     Positioned(
-                      left: 30,
-                      top: 680,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.8,
                       child: GestureDetector(
                         onTap: () {
                           // Close the keyboard when tapping the login button
@@ -311,21 +234,21 @@ class _MyAppState extends State<MyApp> {
                           );
                         },
                         child: Positioned(
-                          left: 30,
-                          top: 680,
+                          left: screenWidth * 0.07,
+                          top: screenHeight * 0.765,
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFF007AFF),
-                              borderRadius: BorderRadius.circular(100),
+                              borderRadius: BorderRadius.circular(screenHeight * 0.036),
                             ),
-                            height: 50,
-                            width: 340,
+                            width: screenWidth * 0.870,
+                            height: screenHeight * 0.072,
                             child: Center(
                               child: Text(
                                 'Login',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 23,
+                                  fontSize: screenWidth * 0.058,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.w400,
                                   height: 0,

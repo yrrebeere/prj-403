@@ -12,6 +12,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isSelectedEN = true;
+  bool isSelectedUR = false;
+  bool isSelectedAR = false;
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -49,13 +53,13 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.35,
-                  top: screenHeight * 0.053,
+                  left: screenWidth * 0.32,
+                  top: screenHeight * 0.1,
                   child: Text(
                     'Wasail',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: screenWidth * 0.12,
+                      fontSize: screenWidth * 0.120,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -63,79 +67,110 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.0875,
+                  left: screenWidth * 0.07,
                   top: screenHeight * 0.320,
                   child: Text(
                     'Select Language',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.06,
+                      fontSize: screenWidth * 0.075,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
                     ),
                   ),
                 ),
+                // EN Container
                 Positioned(
-                  left: screenWidth * 0.0875,
-                  top: screenHeight * 0.395,
-                  child: Container(
-                    width: screenWidth * 0.83,
-                    height: screenHeight * 0.091,
-                    decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
+                  left: screenWidth * 0.07,
+                  top: screenHeight * 0.43,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSelectedEN = true;
+                        isSelectedUR = false;
+                        isSelectedAR = false;
+                      });
+                    },
+                    child: Container(
+                      width: screenWidth * 0.864,
+                      height: screenHeight * 0.091,
+                      decoration: BoxDecoration(
+                        color: isSelectedEN ? Colors.blueAccent : Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                // UR Container
                 Positioned(
-                  left: screenWidth * 0.0875,
-                  top: screenHeight * 0.495,
-                  child: Container(
-                    width: screenWidth * 0.83,
-                    height: screenHeight * 0.091,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
+                  left: screenWidth * 0.07,
+                  top: screenHeight * 0.53,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSelectedEN = false;
+                        isSelectedUR = true;
+                        isSelectedAR = false;
+                      });
+                    },
+                    child: Container(
+                      width: screenWidth * 0.864,
+                      height: screenHeight * 0.091,
+                      decoration: BoxDecoration(
+                        color: isSelectedUR ? Colors.blueAccent : Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                // AR Container
                 Positioned(
-                  left: screenWidth * 0.0875,
-                  top: screenHeight * 0.595,
-                  child: Container(
-                    width: screenWidth * 0.83,
-                    height: screenHeight * 0.091,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
+                  left: screenWidth * 0.07,
+                  top: screenHeight * 0.63,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSelectedEN = false;
+                        isSelectedUR = false;
+                        isSelectedAR = true;
+                      });
+                    },
+                    child: Container(
+                      width: screenWidth * 0.864,
+                      height: screenHeight * 0.091,
+                      decoration: BoxDecoration(
+                        color: isSelectedAR ? Colors.blueAccent : Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3F000000),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+                // EN Text
                 Positioned(
-                  left: screenWidth * 0.175,
-                  top: screenHeight * 0.425,
+                  left: screenWidth * 0.23,
+                  top: screenHeight * 0.46,
                   child: SizedBox(
                     width: screenWidth * 0.8,
                     child: Text.rich(
@@ -166,9 +201,10 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
+                // UR Text
                 Positioned(
-                  left: screenWidth * 0.175,
-                  top: screenHeight * 0.525,
+                  left: screenWidth * 0.23,
+                  top: screenHeight * 0.56,
                   child: SizedBox(
                     width: screenWidth * 0.72,
                     child: Text.rich(
@@ -199,9 +235,10 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
+                // AR Text
                 Positioned(
-                  left: screenWidth * 0.175,
-                  top: screenHeight * 0.625,
+                  left: screenWidth * 0.23,
+                  top: screenHeight * 0.66,
                   child: SizedBox(
                     width: screenWidth * 0.72,
                     child: Text(
@@ -216,9 +253,10 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                 ),
+                // Continue Button
                 Positioned(
                   left: screenWidth * 0.07,
-                  top: screenHeight * 0.765,
+                  top: screenHeight * 0.798,
                   child: Container(
                     width: screenWidth * 0.870,
                     height: screenHeight * 0.072,
@@ -227,21 +265,13 @@ class _MyAppState extends State<MyApp> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(screenHeight * 0.036),
                       ),
-                      shadows: [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
                     ),
                     child: Center(
                       child: Text(
                         'Continue',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: screenWidth * 0.048,
+                          fontSize: screenWidth * 0.058,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
