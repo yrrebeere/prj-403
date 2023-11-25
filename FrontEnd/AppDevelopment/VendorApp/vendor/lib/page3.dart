@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+
+class Page3 extends StatefulWidget {
+  final String phoneNumber;
+
+  const Page3({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Page3> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<Page3> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -99,11 +99,17 @@ class _MyAppState extends State<MyApp> {
                     Positioned(
                       left: screenWidth * 0.023,
                       top: screenHeight * 0.001,
-                      child: Row(
-                        children: [
-                          Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.white),
-                          SizedBox(width: screenWidth * 0.012,),
-                        ],
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navigate back to the previous page
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.white),
+                            SizedBox(width: screenWidth * 0.012,),
+                          ],
+                        ),
                       ),
                     ),
                     Positioned(
@@ -181,17 +187,16 @@ class _MyAppState extends State<MyApp> {
                         decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(left: screenWidth * 0.1,
-                        top: screenHeight * 0.520,),
-                      child: SizedBox(
-                        width: screenWidth * 0.703,
-                        height: screenHeight * 0.023,
-                        child: TextField(
-                          controller: phoneNumberController,
-                          decoration: InputDecoration(
-                            hintText: 'Enter Phone Number',
-                          ),
+                    Positioned(
+                      left: screenWidth * 0.10,
+                      top: screenHeight * 0.502,
+                      child: Text(
+                        '${widget.phoneNumber}',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.062,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -219,7 +224,6 @@ class _MyAppState extends State<MyApp> {
                           FocusScope.of(context).unfocus();
 
                           // Retrieve values from text fields
-                          String phoneNumber = phoneNumberController.text;
                           String password = passwordController.text;
 
                           // Navigate to the next page using the context obtained from Builder
@@ -227,7 +231,6 @@ class _MyAppState extends State<MyApp> {
                             builderContext,
                             MaterialPageRoute(
                               builder: (context) => Page4(
-                                phoneNumber: phoneNumber,
                                 password: password,
                               ),
                             ),
@@ -271,10 +274,10 @@ class _MyAppState extends State<MyApp> {
 }
 
 class Page4 extends StatelessWidget {
-  final String phoneNumber;
+
   final String password;
 
-  const Page4({Key? key, required this.phoneNumber, required this.password})
+  const Page4({Key? key, required this.password})
       : super(key: key);
 
   @override
@@ -287,7 +290,6 @@ class Page4 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Phone Number: $phoneNumber'),
             Text('Password: $password'),
           ],
         ),
