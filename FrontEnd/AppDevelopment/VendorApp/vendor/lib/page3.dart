@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-
+import 'page4.dart';
 
 class Page3 extends StatefulWidget {
   final String phoneNumber;
@@ -232,6 +231,7 @@ class _MyAppState extends State<Page3> {
                             MaterialPageRoute(
                               builder: (context) => Page4(
                                 password: password,
+                                phoneNumber: widget.phoneNumber,
                               ),
                             ),
                           );
@@ -267,31 +267,6 @@ class _MyAppState extends State<Page3> {
               );
             },
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class Page4 extends StatelessWidget {
-
-  final String password;
-
-  const Page4({Key? key, required this.password})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Next Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Password: $password'),
-          ],
         ),
       ),
     );
