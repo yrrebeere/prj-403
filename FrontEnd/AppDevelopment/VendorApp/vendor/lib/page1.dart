@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'page2.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: MyApp(),
-  ));
+  runApp(
+      MaterialApp(
+        home: MyApp(
+          
+        ),
+      )
+  );
 }
 
 class MyApp extends StatefulWidget {
