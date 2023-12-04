@@ -6,3 +6,4 @@
 | M2   | Facebook Prophet with `D5.csv`        |
 | M3   | Facebook Prophet with `D4.csv`        |
 | M4   | XGBoost with `D5.csv`                 |
+| M5   | Long Short-Term Memory with `D5.csv`  |
