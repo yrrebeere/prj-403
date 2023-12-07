@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22e5e769-4646-410e-a8b5-7fb9d776ca78" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../FrontEnd/AppDevelopment/VendorApp/vendor/lib/page1.dart" beforeDir="false" afterPath="$PROJECT_DIR$/../FrontEnd/AppDevelopment/VendorApp/vendor/lib/page1.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/M4.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/Models/M4.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Models/M_Glossary.md" beforeDir="false" afterPath="$PROJECT_DIR$/Models/M_Glossary.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,15 +37,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/yrrebeere/Documents/University/7th Semester/Final Year Project/prj-403/MachineLearning/Models"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/yrrebeere/Documents/University/7th Semester/Final Year Project/prj-403/MachineLearning/Models&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Models" />

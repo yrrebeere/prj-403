@@ -7,7 +7,7 @@ void main() {
         home: MyApp(
           
         ),
-      )
+      ),
   );
 }
 
