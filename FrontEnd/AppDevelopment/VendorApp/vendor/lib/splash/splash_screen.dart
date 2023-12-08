@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/page2.dart';
 import '../../constants.dart';
-import 'package:vendor/page1.dart';
+import '../page1.dart';
 import 'components/splash_content.dart';
 
 void main() {
@@ -14,7 +15,6 @@ void main() {
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
-
 
   const SplashScreen({super.key});
 

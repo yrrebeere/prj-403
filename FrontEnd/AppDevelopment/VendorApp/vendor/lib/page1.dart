@@ -1,24 +1,15 @@
 import 'package:flutter/material.dart';
 import 'page2.dart';
 
-void main() {
-  runApp(
-      MaterialApp(
-        home: MyApp(
-          
-        ),
-      ),
-  );
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Page1 extends StatefulWidget {
+  const Page1({Key? key}) : super(key: key);
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<Page1> createState() => _Page1State();
 }
 
-class _MyAppState extends State<MyApp> {
+class _Page1State extends State<Page1> {
+  static const String routeName = "/page1";
   String selectedLanguage = '';
 
   @override
@@ -29,7 +20,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF6FB457),
+          backgroundColor: Colors.white,
           elevation: 0,
         ),
         body: SafeArea(
@@ -39,12 +30,12 @@ class _MyAppState extends State<MyApp> {
                 width: screenWidth,
                 height: screenHeight,
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: Color(0xFF6FB457)),
+                decoration: BoxDecoration(color: Colors.white),
                 child: Stack(
                   children: [
                     Positioned(
                       left: 0,
-                      top: screenHeight * 0.28,
+                      top: screenHeight * 0.1,
                       child: Container(
                         width: screenWidth * 1.0,
                         height: screenHeight * 0.718,
@@ -52,21 +43,21 @@ class _MyAppState extends State<MyApp> {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
                             ),
                           ),
                         ),
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.32,
-                      top: screenHeight * 0.1,
+                      left: screenWidth * 0.36,
+                      top: screenHeight * 0.01,
                       child: Text(
-                        'Wasail',
+                        'WASAIL',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: screenWidth * 0.120,
+                          color: Color(0xFF6FB457),
+                          fontSize: 32,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -75,12 +66,12 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.320,
+                      top: screenHeight * 0.2,
                       child: Text(
                         'Select Language',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.075,
+                          fontSize: screenWidth * 0.06,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -89,7 +80,7 @@ class _MyAppState extends State<MyApp> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.43,
+                      top: screenHeight * 0.35,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -112,12 +103,24 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ],
                           ),
+                          child: Center(
+                            child: Text(
+                              'EN                         English',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.048,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.53,
+                      top: screenHeight * 0.45,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -140,12 +143,24 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ],
                           ),
+                          child: Center(
+                            child: Text(
+                              'UR                             Urdu',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.048,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.63,
+                      top: screenHeight * 0.55,
                       child: GestureDetector(
                         onTap: () {
                           setState(() {
@@ -168,94 +183,106 @@ class _MyAppState extends State<MyApp> {
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: screenWidth * 0.23,
-                      top: screenHeight * 0.46,
-                      child: SizedBox(
-                        width: screenWidth * 0.8,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'EN                         ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.048,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
+                          child: Center(
+                            child: Text(
+                              'اردو                                اب',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.048,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
                               ),
-                              TextSpan(
-                                text: 'English',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.79),
-                                  fontSize: screenWidth * 0.048,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
+                    // Positioned(
+                    //   left: screenWidth * 0.26,
+                    //   top: screenHeight * 0.382,
+                    //   child: SizedBox(
+                    //     width: screenWidth * 0.8,
+                    //     child: Text.rich(
+                    //       TextSpan(
+                    //         children: [
+                    //           TextSpan(
+                    //             text: 'EN                         ',
+                    //             style: TextStyle(
+                    //               color: Colors.black,
+                    //               fontSize: screenWidth * 0.048,
+                    //               fontFamily: 'Inter',
+                    //               fontWeight: FontWeight.w400,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //           TextSpan(
+                    //             text: 'English',
+                    //             style: TextStyle(
+                    //               color: Colors.black.withOpacity(0.79),
+                    //               fontSize: screenWidth * 0.048,
+                    //               fontFamily: 'Inter',
+                    //               fontWeight: FontWeight.w400,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   left: screenWidth * 0.26,
+                    //   top: screenHeight * 0.482,
+                    //   child: SizedBox(
+                    //     width: screenWidth * 0.72,
+                    //     child: Text.rich(
+                    //       TextSpan(
+                    //         children: [
+                    //           TextSpan(
+                    //             text: 'UR                             ',
+                    //             style: TextStyle(
+                    //               color: Colors.black,
+                    //               fontSize: screenWidth * 0.048,
+                    //               fontFamily: 'Inter',
+                    //               fontWeight: FontWeight.w400,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //           TextSpan(
+                    //             text: 'Urdu',
+                    //             style: TextStyle(
+                    //               color: Colors.black.withOpacity(0.79),
+                    //               fontSize: screenWidth * 0.048,
+                    //               fontFamily: 'Inter',
+                    //               fontWeight: FontWeight.w400,
+                    //               height: 0,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   left: screenWidth * 0.26,
+                    //   top: screenHeight * 0.582,
+                    //   child: SizedBox(
+                    //     width: screenWidth * 0.72,
+                    //     child: Text(
+                    //       'اردو                                اب',
+                    //       style: TextStyle(
+                    //         color: Colors.black,
+                    //         fontSize: screenWidth * 0.048,
+                    //         fontFamily: 'Inter',
+                    //         fontWeight: FontWeight.w400,
+                    //         height: 0,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Positioned(
-                      left: screenWidth * 0.23,
-                      top: screenHeight * 0.56,
-                      child: SizedBox(
-                        width: screenWidth * 0.72,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'UR                             ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.048,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'Urdu',
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.79),
-                                  fontSize: screenWidth * 0.048,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: screenWidth * 0.23,
-                      top: screenHeight * 0.66,
-                      child: SizedBox(
-                        width: screenWidth * 0.72,
-                        child: Text(
-                          'اردو                                اب',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.048,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: screenWidth * 0.07,
+                      left: screenWidth * 0.4,
                       top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
@@ -269,25 +296,14 @@ class _MyAppState extends State<MyApp> {
                           }
                         },
                         child: Container(
-                          width: screenWidth * 0.870,
-                          height: screenHeight * 0.072,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF007AFF),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(screenHeight * 0.036),
-                            ),
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                            color: Colors.blue,  // You can customize the container's appearance
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Center(
-                            child: Text(
-                              'Continue',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.058,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                            ),
+                          child: const Text(
+                            "Continue",
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                       ),
