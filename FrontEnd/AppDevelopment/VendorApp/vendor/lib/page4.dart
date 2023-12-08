@@ -59,7 +59,7 @@ class _MyAppState extends State<Page4> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFFF2F2F6),
+          backgroundColor: Colors.white,
           elevation: 0,
         ),
         body: SafeArea(
@@ -69,17 +69,33 @@ class _MyAppState extends State<Page4> {
                 width: screenWidth,
                 height: screenHeight,
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: Color(0xFFF2F2F6)),
+                decoration: BoxDecoration(color: Colors.white),
                 child: Stack(
                   children: [
                     Positioned(
-                      left: screenWidth * 0.06,
-                      top: screenHeight * 0.09,
+                      left: screenWidth * 0.36,
+                      top: screenHeight * 0.01,
+                      child: Center(
+                        child: Text(
+                          'Wasail',
+                          style: TextStyle(
+                            color: Color(0xFF6FB457),
+                            fontSize: 32,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            height: 0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.2,
                       child: Text(
                         'Enter your code',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.07,
+                          fontSize: screenWidth * 0.06,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                         ),
@@ -102,8 +118,8 @@ class _MyAppState extends State<Page4> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.06,
-                      top: screenHeight * 0.15,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.26,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -111,16 +127,16 @@ class _MyAppState extends State<Page4> {
                               text: 'Code sent on',
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.85),
-                                fontSize: screenHeight * 0.024,
+                                fontSize: screenHeight * 0.02,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
                             TextSpan(
-                              text: ' ${widget.phoneNumber} ',
+                              text: ' 0${widget.phoneNumber} ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: screenHeight * 0.024,
+                                fontSize: screenHeight * 0.02,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -131,7 +147,7 @@ class _MyAppState extends State<Page4> {
                     ),
                     Positioned(
                       left: screenWidth * 0.09,
-                      top: screenHeight * 0.25,
+                      top: screenHeight * 0.3,
                       child: Row(
                         children: List.generate(4, (index) {
                           return Padding(
@@ -167,7 +183,7 @@ class _MyAppState extends State<Page4> {
                     ),
                     Positioned(
                       left: screenWidth * 0.09,
-                      top: screenHeight * 0.3545,
+                      top: screenHeight * 0.4,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -175,7 +191,7 @@ class _MyAppState extends State<Page4> {
                               text: 'Re-send',
                               style: TextStyle(
                                 color: _timerSeconds == 0 ? Color(0xFF007AFF) : Color(0xFF99999D),
-                                fontSize: screenHeight * 0.025,
+                                fontSize: screenHeight * 0.02,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -184,18 +200,9 @@ class _MyAppState extends State<Page4> {
                               text: ' code in ',
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.85),
-                                fontSize: screenHeight * 0.025,
+                                fontSize: screenHeight * 0.02,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '00:${_timerSeconds.toString().padLeft(2, '0')}',
-                              style: TextStyle(
-                                color: Colors.black.withOpacity(0.85),
-                                fontSize: screenHeight * 0.025,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w700,
                               ),
                             ),
                           ],
@@ -203,8 +210,21 @@ class _MyAppState extends State<Page4> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.07,
-                      top: screenHeight * 0.765,
+                      left: screenWidth * 0.42,
+                      top: screenHeight * 0.4,
+                      child: TweenAnimationBuilder(
+                        tween: Tween(begin: 30.0, end: 0.0),
+                        duration: const Duration(seconds: 30),
+                        builder: (_, dynamic value, child) => Text(
+                          "00:${value.toInt()}",
+                          style: const TextStyle(color: Colors.cyan,fontSize:18 ),
+                        ),
+                      ),
+
+                    ),
+                    Positioned(
+                      left: screenWidth * 0.4,
+                      top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
                           // Check if all text fields are filled
@@ -226,8 +246,8 @@ class _MyAppState extends State<Page4> {
                           }
                         },
                         child: Container(
-                          width: screenWidth * 0.870,
-                          height: screenHeight * 0.072,
+                          width: screenWidth * 0.2,
+                          height: screenHeight * 0.055,
                           decoration: ShapeDecoration(
                             color: Color(0xFF007AFF),
                             shape: RoundedRectangleBorder(
@@ -242,15 +262,15 @@ class _MyAppState extends State<Page4> {
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: screenWidth * 0.058,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                              ),
+                          child: Container(
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              color: Colors.blue,  // You can customize the container's appearance
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: const Text(
+                              "Submit",
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         ),

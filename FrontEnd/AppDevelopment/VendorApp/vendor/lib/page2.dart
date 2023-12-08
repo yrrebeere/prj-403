@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'page3.dart';
 
-void main() {
-  runApp(const Page2());
-}
-
 class Page2 extends StatefulWidget {
   const Page2({Key? key}) : super(key: key);
 
@@ -23,7 +19,7 @@ class _MyAppState extends State<Page2> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color(0xFF6FB457),
+          backgroundColor: Colors.white,
           elevation: 0,
         ),
         body: SafeArea(
@@ -31,12 +27,12 @@ class _MyAppState extends State<Page2> {
             width: screenWidth * 1,
             height: screenHeight * 1,
             clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(color: const Color(0xFF6FB457)),
+            decoration: BoxDecoration(color: Colors.white),
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
-                  top: screenHeight * 0.28,
+                  top: screenHeight * 0.2,
                   child: Container(
                     width: screenWidth,
                     height: screenHeight * 0.718,
@@ -44,8 +40,8 @@ class _MyAppState extends State<Page2> {
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
                         ),
                       ),
                     ),
@@ -61,20 +57,20 @@ class _MyAppState extends State<Page2> {
                     },
                     child: Row(
                       children: [
-                        Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.white),
+                        Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
                         SizedBox(width: screenWidth * 0.012,),
                       ],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.32,
-                  top: screenHeight * 0.1,
+                  left: screenWidth * 0.36,
+                  top: screenHeight * 0.01,
                   child: Text(
-                    'Wasail',
+                    'WASAIL',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: screenWidth * 0.12,
+                      color: Color(0xFF6FB457),
+                      fontSize: 32,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -83,44 +79,27 @@ class _MyAppState extends State<Page2> {
                 ),
                 Positioned(
                   left: screenWidth * 0.07,
-                  top: screenHeight * 0.32,
+                  top: screenHeight * 0.2,
                   child: Text(
                     'Enter Phone Number',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.075,
+                      fontSize: screenWidth * 0.06,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
                     ),
                   ),
                 ),
-                Positioned(
-                  left: screenWidth * 0.39,
-                  top: screenHeight * 0.50625,
-                  child: Container(
-                    width: screenWidth * 0.55,
-                    height: screenHeight * 0.07625,
-                    decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
-                  ),
-                ),
-                Positioned(
-                  left: screenWidth * 0.07,
-                  top: screenHeight * 0.50625,
-                  child: Container(
-                    width: screenWidth * 0.3,
-                    height: screenHeight * 0.07625,
-                    decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
-                  ),
-                ),
+
                 Positioned(
                   left: screenWidth * 0.2,
-                  top: screenHeight * 0.52625,
+                  top: screenHeight * 0.4,
                   child: Text(
                     '+92',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.058,
+                      fontSize: screenWidth * 0.04,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
@@ -129,22 +108,22 @@ class _MyAppState extends State<Page2> {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: screenWidth * 0.43,
-                    top: screenHeight * 0.538,),
+                    top: screenHeight * 0.41,),
                   child: SizedBox(
-                    width: screenWidth * 0.47,
-                    height: screenHeight * 0.023,
+                    width: screenWidth * 0.45,
+                    height: screenHeight * 0.025,
                     child: TextField(
                       controller: phoneNumberController,
                       decoration: InputDecoration(
                         hintText: 'Eg.3144364288',
-                        hintStyle: TextStyle(fontSize: screenWidth * 0.05),
+                        hintStyle: TextStyle(fontSize: screenWidth * 0.035),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
                   left: screenWidth * 0.1,
-                  top: screenHeight * 0.52625,
+                  top: screenHeight * 0.4,
                   child: Container(
                     width: screenWidth * 0.07,
                     height: screenHeight * 0.03,
@@ -152,8 +131,8 @@ class _MyAppState extends State<Page2> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.07,
-                  top: screenHeight * 0.8,
+                  left: screenWidth * 0.4,
+                  top: screenHeight * 0.798,
                   child: GestureDetector(
                     onTap: () {
                       // Navigate to Page3 and pass the entered phone number
@@ -165,23 +144,14 @@ class _MyAppState extends State<Page2> {
                       );
                     },
                     child: Container(
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF007AFF),
-                        borderRadius: BorderRadius.circular(screenHeight * 0.036),
+                        color: Colors.blue,  // You can customize the container's appearance
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
-                      width: screenWidth * 0.87,
-                      height: screenHeight * 0.072,
-                      child: Center(
-                        child: Text(
-                          'Next',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.058,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
+                      child: const Text(
+                        "Next",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

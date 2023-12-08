@@ -21,7 +21,7 @@ class _MyAppState extends State<Page3> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF6FB457),
+          backgroundColor: Colors.white,
           elevation: 0,
         ),
         body: SafeArea(
@@ -31,12 +31,12 @@ class _MyAppState extends State<Page3> {
                 width: screenWidth * 1,
                 height: screenHeight * 1,
                 clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(color: const Color(0xFF6FB457)),
+                decoration: BoxDecoration(color: Colors.white),
                 child: Stack(
                   children: [
                     Positioned(
-                      left: screenWidth * 0.0,
-                      top: screenHeight * 0.28,
+                      left: 0,
+                      top: screenHeight * 0.2,
                       child: Container(
                         width: screenWidth * 1.0,
                         height: screenHeight * 0.718,
@@ -44,8 +44,8 @@ class _MyAppState extends State<Page3> {
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
                             ),
                           ),
                         ),
@@ -53,12 +53,12 @@ class _MyAppState extends State<Page3> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.43,
+                      top: screenHeight * 0.33,
                       child: Text(
                         'Phone Number',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.050,
+                          fontSize: screenWidth * 0.04,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -66,14 +66,14 @@ class _MyAppState extends State<Page3> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.32,
-                      top: screenHeight * 0.1,
+                      left: screenWidth * 0.36,
+                      top: screenHeight * 0.01,
                       child: Center(
                         child: Text(
-                          'Wasail',
+                          'WASAIL',
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.120,
+                            color: Color(0xFF6FB457),
+                            fontSize: 32,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
                             height: 0,
@@ -83,12 +83,12 @@ class _MyAppState extends State<Page3> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.320,
+                      top: screenHeight * 0.2,
                       child: Text(
                         'Login',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.075,
+                          fontSize: screenWidth * 0.06,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -105,7 +105,7 @@ class _MyAppState extends State<Page3> {
                         },
                         child: Row(
                           children: [
-                            Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.white),
+                            Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
                             SizedBox(width: screenWidth * 0.012,),
                           ],
                         ),
@@ -113,12 +113,12 @@ class _MyAppState extends State<Page3> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.59,
+                      top: screenHeight * 0.46,
                       child: Text(
                         'Password',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: screenWidth * 0.050,
+                          fontSize: screenWidth * 0.04,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           height: 0,
@@ -126,8 +126,8 @@ class _MyAppState extends State<Page3> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.0625,
-                      top: screenHeight * 0.72,
+                      left: screenWidth * 0.07,
+                      top: screenHeight * 0.6,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -135,7 +135,7 @@ class _MyAppState extends State<Page3> {
                               text: 'Reset',
                               style: TextStyle(
                                 color: const Color(0xFF007AFF),
-                                fontSize: screenWidth * 0.05,
+                                fontSize: screenWidth * 0.04,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -146,7 +146,7 @@ class _MyAppState extends State<Page3> {
                               text: ' ',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: screenWidth * 0.05,
+                                fontSize: screenWidth * 0.04,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -157,7 +157,7 @@ class _MyAppState extends State<Page3> {
                               text: 'Password',
                               style: TextStyle(
                                 color: const Color(0xFF007AFF),
-                                fontSize: screenWidth * 0.05,
+                                fontSize: screenWidth * 0.04,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                                 decoration: TextDecoration.underline,
@@ -170,29 +170,41 @@ class _MyAppState extends State<Page3> {
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.64,
+                      top: screenHeight * 0.5,
                       child: Container(
                         width: screenWidth * 0.85,
                         height: screenHeight * 0.065,
-                        decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color to white
+                          border: Border.all(
+                            color: Colors.black, // Set the border color to black
+                            width: 1.0, // Set the border width (adjust as needed)
+                          ),
+                        ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.07,
-                      top: screenHeight * 0.49,
+                      top: screenHeight * 0.37,
                       child: Container(
                         width: screenWidth * 0.85,
                         height: screenHeight * 0.065,
-                        decoration: BoxDecoration(color: const Color(0x72D9D9D9)),
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color to white
+                          border: Border.all(
+                            color: Colors.black, // Set the border color to black
+                            width: 1.0, // Set the border width (adjust as needed)
+                          ),
+                        ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.10,
-                      top: screenHeight * 0.502,
+                      top: screenHeight * 0.387,
                       child: Text(
-                        '${widget.phoneNumber}',
+                        '0${widget.phoneNumber}',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.062,
+                          fontSize: screenWidth * 0.045,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
@@ -201,7 +213,7 @@ class _MyAppState extends State<Page3> {
                     ),
                     Container(
                       margin: EdgeInsets.only(left: screenWidth * 0.1,
-                        top: screenHeight * 0.672,),
+                        top: screenHeight * 0.53,),
                       child: SizedBox(
                         width: screenWidth * 0.703,
                         height: screenHeight * 0.023,
@@ -215,8 +227,8 @@ class _MyAppState extends State<Page3> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.07,
-                      top: screenHeight * 0.8,
+                      left: screenWidth * 0.4,
+                      top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
                           // Close the keyboard when tapping the login button
@@ -237,25 +249,22 @@ class _MyAppState extends State<Page3> {
                           );
                         },
                         child: Positioned(
-                          left: screenWidth * 0.07,
-                          top: screenHeight * 0.765,
+                          left: screenWidth * 0.4,
+                          top: screenHeight * 0.798,
                           child: Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFF007AFF),
-                              borderRadius: BorderRadius.circular(screenHeight * 0.036),
+                              borderRadius: BorderRadius.circular(screenHeight * 0.03),
                             ),
-                            width: screenWidth * 0.870,
-                            height: screenHeight * 0.072,
-                            child: Center(
-                              child: Text(
-                                'Login',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: screenWidth * 0.058,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
-                                ),
+                            child: Container(
+                              padding: const EdgeInsets.all(16.0),
+                              decoration: BoxDecoration(
+                                color: Colors.blue,  // You can customize the container's appearance
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
