@@ -75,7 +75,7 @@ class _MyAppState extends State<Page3> {
                             color: Color(0xFF6FB457),
                             fontSize: 32,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.bold,
                             height: 0,
                           ),
                         ),
@@ -217,9 +217,10 @@ class _MyAppState extends State<Page3> {
                       child: SizedBox(
                         width: screenWidth * 0.703,
                         height: screenHeight * 0.023,
-                        child: TextField(
+                        child: TextFormField(
                           controller: passwordController,
                           obscureText: true,
+                          keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             hintText: 'Enter Password',
                           ),

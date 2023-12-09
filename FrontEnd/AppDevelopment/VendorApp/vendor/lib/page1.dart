@@ -59,7 +59,7 @@ class _Page1State extends State<Page1> {
                           color: Color(0xFF6FB457),
                           fontSize: 32,
                           fontFamily: 'Inter',
-                          fontWeight: FontWeight.w400,
+                          fontWeight: FontWeight.bold,
                           height: 0,
                         ),
                       ),

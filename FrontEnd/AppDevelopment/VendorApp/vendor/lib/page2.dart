@@ -72,7 +72,7 @@ class _MyAppState extends State<Page2> {
                       color: Color(0xFF6FB457),
                       fontSize: 32,
                       fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.bold,
                       height: 0,
                     ),
                   ),
@@ -91,7 +91,21 @@ class _MyAppState extends State<Page2> {
                     ),
                   ),
                 ),
-
+                Positioned(
+                  left: screenWidth * 0.09,
+                  top: screenHeight * 0.38,
+                  child: Container(
+                    width: screenWidth * 0.8,
+                    height: screenHeight * 0.07,
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Set the background color to white
+                      border: Border.all(
+                        color: Colors.black, // Set the border color to black
+                        width: 1.0, // Set the border width (adjust as needed)
+                      ),
+                    ),
+                  ),
+                ),
                 Positioned(
                   left: screenWidth * 0.2,
                   top: screenHeight * 0.4,
@@ -99,16 +113,17 @@ class _MyAppState extends State<Page2> {
                     '+92',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: screenWidth * 0.04,
+                      fontSize: screenWidth * 0.045,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w400,
                       height: 0,
                     ),
                   ),
                 ),
+
                 Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.43,
-                    top: screenHeight * 0.41,),
+                  margin: EdgeInsets.only(left: screenWidth * 0.37,
+                    top: screenHeight * 0.415,),
                   child: SizedBox(
                     width: screenWidth * 0.45,
                     height: screenHeight * 0.025,
@@ -116,7 +131,7 @@ class _MyAppState extends State<Page2> {
                       controller: phoneNumberController,
                       decoration: InputDecoration(
                         hintText: 'Eg.3144364288',
-                        hintStyle: TextStyle(fontSize: screenWidth * 0.035),
+                        hintStyle: TextStyle(fontSize: screenWidth * 0.048,fontWeight: FontWeight.w400,),
                       ),
                     ),
                   ),

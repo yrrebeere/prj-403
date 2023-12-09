@@ -77,12 +77,12 @@ class _MyAppState extends State<Page4> {
                       top: screenHeight * 0.01,
                       child: Center(
                         child: Text(
-                          'Wasail',
+                          'WASAIL',
                           style: TextStyle(
                             color: Color(0xFF6FB457),
                             fontSize: 32,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.bold,
                             height: 0,
                           ),
                         ),

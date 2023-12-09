@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vendor/page2.dart';
 import '../../constants.dart';
 import '../page1.dart';
 import 'components/splash_content.dart';
