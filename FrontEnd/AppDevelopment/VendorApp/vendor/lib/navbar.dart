@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/menu.dart';
+import 'package:vendor/orders.dart';
 import 'home.dart';
+import 'orders.dart';
+import 'menu.dart';
 
 void main() {
   runApp(
@@ -9,7 +13,6 @@ void main() {
       )
   );
 }
-
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
@@ -21,9 +24,9 @@ class _NavBarState extends State<NavBar> {
   int index=0;
   final screens = [
     Home(),
-    Center(child: Text('Orders', style: TextStyle(fontSize:72),),),
+    Order(),
     Center(child: Text('Inventory', style: TextStyle(fontSize:72),),),
-    Center(child: Text('Menu', style: TextStyle(fontSize:72),),)
+    Menu(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -34,9 +37,17 @@ class _NavBarState extends State<NavBar> {
       home: Scaffold(
       appBar: AppBar(
       backgroundColor: Color(0xFF6FB457),
-      title: Center(child: Text('WASAIL')),
-
+      title:Padding(
+        padding: const EdgeInsets.only(left: 90),
+        child: Text('WASAIL'),
+      ),
       elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios), // Replace with your desired icon
+          onPressed: () {
+            // Handle the icon tap (e.g., open a drawer)
+          },
+        ),
     ),
     body:  screens[index],
     bottomNavigationBar: NavigationBarTheme(
