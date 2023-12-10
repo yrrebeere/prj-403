@@ -1,8 +1,10 @@
 .DS_Store
-Data/Kaggle/store-sales-time-series-forecasting/holidays_events.csv
-Data/Kaggle/store-sales-time-series-forecasting/oil.csv
-Data/Kaggle/store-sales-time-series-forecasting/sample_submission.csv
-Data/Kaggle/store-sales-time-series-forecasting/stores.csv
-Data/Kaggle/store-sales-time-series-forecasting/test.csv
-Data/Kaggle/store-sales-time-series-forecasting/train.csv
-Data/Kaggle/store-sales-time-series-forecasting/transactions.csv
+Data/Kaggle/StoreSales/holidays_events.csv
+Data/Kaggle/StoreSales/oil.csv
+Data/Kaggle/StoreSales/sample_submission.csv
+Data/Kaggle/StoreSales/stores.csv
+Data/Kaggle/StoreSales/test.csv
+Data/Kaggle/StoreSales/train.csv
+Data/Kaggle/StoreSales/transactions.csv
+Data/Kaggle/StoreSales/new_test.csv
+Data/Kaggle/StoreSales/new_train.csv
