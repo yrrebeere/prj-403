@@ -4,6 +4,7 @@ import 'package:vendor/orders.dart';
 import 'home.dart';
 import 'orders.dart';
 import 'menu.dart';
+import 'inventory.dart';
 
 void main() {
   runApp(
@@ -25,7 +26,7 @@ class _NavBarState extends State<NavBar> {
   final screens = [
     Home(),
     Order(),
-    Center(child: Text('Inventory', style: TextStyle(fontSize:72),),),
+    Inventory(),
     Menu(),
   ];
   @override
