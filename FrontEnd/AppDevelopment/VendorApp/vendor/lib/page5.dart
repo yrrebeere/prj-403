@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'home.dart';
 
 void main() {
   runApp(
@@ -13,577 +14,382 @@ class Page5 extends StatefulWidget {
   _Page5State createState() => _Page5State();
 }
 
-bool agreeToTerms = false;
-
 class _Page5State extends State<Page5> {
+  final TextEditingController phoneNumberController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController shopNameController = TextEditingController();
+  final TextEditingController shopAddressController = TextEditingController();
+  final TextEditingController shopLocationController = TextEditingController();
+
+  bool agreeToTerms = false;
+  String selectedCountryCode = '+92';
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
-        body: Center(child: SafeArea(
-          child: Builder(
-            builder: (BuildContext builderContext) {
-              return SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Positioned(
-                  top: 30,
-                  right: 150,
-                  child: Container(
-                      width: 430,
-                      height: 1330,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(242, 242, 246, 1),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              width: screenWidth * 1,
+              height: screenHeight * 1,
+              margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(color: Colors.white),
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: screenWidth * 0.8,
+                    top: screenHeight * 0.001,
+                    child: GestureDetector(
+                      onTap: () {
+                        // Navigate back to the previous page
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
+                          SizedBox(width: screenWidth * 0.012,),
+                        ],
                       ),
-                      child: Stack(children: <Widget>[
-                        Positioned(
-                            top: 165,
-                            left: 2,
-                            right: 28,
-                            child: Container(
-                                width: 426,
-                                height: 1065,
-                                decoration: BoxDecoration(),
-                                child: Stack(children: <Widget>[
-                                  Positioned(
-                                      top: 9,
-                                      left: 22,
-                                      child: Container(
-                                          width: 423,
-                                          height: 1022,
-                                          child: Stack(children: <Widget>[
-                                            Positioned(
-                                                top: 0,
-                                                left: 0,
-                                                child: Text(
-                                                  'Mobile Number',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 109,
-                                                left: 0,
-                                                child: Text(
-                                                  'Password',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 36,
-                                                left: 115,
-                                                child: Container(
-                                                    width: 265,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 153,
-                                                left: 0,
-                                                child: Container(
-                                                    width: 380,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 161,
-                                                left: 19,
-                                                child: Text(
-                                                  'Enter Password',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 226,
-                                                left: 2,
-                                                child: Text(
-                                                  'Confirm Password',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 270,
-                                                left: 2,
-                                                child: Container(
-                                                    width: 380,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 278,
-                                                left: 21,
-                                                child: Text(
-                                                  'Re-Enter Password',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 461,
-                                                left: 2,
-                                                child: Text(
-                                                  'Shop Name',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 505,
-                                                left: 2,
-                                                child: Container(
-                                                    width: 380,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 513,
-                                                left: 21,
-                                                child: Text(
-                                                  'Enter your shop name',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 579,
-                                                left: 0,
-                                                child: Text(
-                                                  'Shop Address',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 623,
-                                                left: 0,
-                                                child: Container(
-                                                    width: 380,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 631,
-                                                left: 19,
-                                                child: Text(
-                                                  'Enter your shop address',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 732,
-                                                left: 0,
-                                                child: Text(
-                                                  'Please enter your shop’s current location',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 16,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                              top: 900,
-                                              left: 120,
-                                              child: Container(
-                                                  width: 200,
-                                                  height: 200,
-                                                  child: Text(
-                                                    'Map here',
-                                                    style: TextStyle(
-                                                      fontSize: 24,
-                                                    ),
-                                                  )),
-                                            ),
-                                            Positioned(
-                                              top: 980,
-                                              left: -10,
-                                              child: Row(
-                                                children: [
-                                                  Checkbox(
-                                                    value: agreeToTerms,
-                                                    onChanged: (bool? value) {
-                                                      setState(() {
-                                                        agreeToTerms =
-                                                            value ?? false;
-                                                      });
-                                                    },
-                                                  ),
-                                                  Text(
-                                                    'I agree to the Terms & Conditions and Privacy\nPolicy',
-                                                    textAlign: TextAlign.left,
-                                                    style: TextStyle(
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 14,
-                                                      letterSpacing: 0,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Positioned(
-                                                top: 698,
-                                                left: 0,
-                                                child: Text(
-                                                  'Shop Location',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 343,
-                                                left: 0,
-                                                child: Text(
-                                                  'Name',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0, 0, 0, 1),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 387,
-                                                left: 0,
-                                                child: Container(
-                                                    width: 380,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 395,
-                                                left: 19,
-                                                child: Text(
-                                                  'Enter your full name',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 20,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 36,
-                                                left: 10,
-                                                child: Container(
-                                                    width: 99,
-                                                    height: 42,
-                                                    decoration: BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                          217,
-                                                          217,
-                                                          217,
-                                                          0.44999998807907104),
-                                                    ))),
-                                            Positioned(
-                                                top: 44,
-                                                left: 45,
-                                                child: Text(
-                                                  '+92',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 24,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 44,
-                                                left: 174,
-                                                child: Text(
-                                                  '3144364288',
-                                                  textAlign: TextAlign.left,
-                                                  style: TextStyle(
-                                                      color: Color.fromRGBO(
-                                                          0,
-                                                          0,
-                                                          0,
-                                                          0.5799999833106995),
-                                                      fontFamily: 'Inter',
-                                                      fontSize: 24,
-                                                      letterSpacing:
-                                                      0 /*percentages not used in flutter. defaulting to zero*/,
-                                                      fontWeight:
-                                                      FontWeight.normal,
-                                                      height: 1),
-                                                )),
-                                            Positioned(
-                                                top: 49,
-                                                left: 9,
-                                                child: Container(
-                                                    width: 30,
-                                                    height: 15,
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                          image: AssetImage(
-                                                              'assets/images/Rectangle9.png'),
-                                                          fit: BoxFit.fitWidth),
-                                                    ))),
-                                          ]))),
-                                  Positioned(
-                                    top: 1076,
-                                    left: 28,
-                                    child: Container(
-                                      width: 360,
-                                      height: 58,
-                                      decoration: BoxDecoration(
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                            Color.fromRGBO(0, 0, 0, 0.25),
-                                            offset: Offset(0, 4),
-                                            blurRadius: 4,
-                                          )
-                                        ],
-                                        color: agreeToTerms
-                                            ? Color.fromRGBO(0, 122, 255,
-                                            1) // Blue color if agreeToTerms is true
-                                            : Colors
-                                            .grey, // Grey color if agreeToTerms is false
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          'Register',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'Inter',
-                                            fontSize: 24,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.normal,
-                                            height: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ]))),
-                        Positioned(
-                            top: -20,
-                            left: -35,
-                            child: Container(
-                                width: 500,
-                                height: 153.67596435546875,
-                                child: Stack(children: <Widget>[
-                                  Positioned(
-                                      top: 0,
-                                      left: 35,
-                                      child: Container(
-                                          width: 430,
-                                          height: 139,
-                                          decoration: BoxDecoration(
-                                            color: Color.fromRGBO(
-                                                255, 255, 255, 1),
-                                          ))),
-                                  Positioned(
-                                    left: 50,
-                                    top: 70,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // Navigate back to the previous page
-                                        // Navigator.pop(context);
-                                      },
+                    ),
+                  ),
+                  Positioned(
+                    left: screenWidth * 0.31,
+                    top: screenHeight * 0.01,
+                    child: Text(
+                      'WASAIL',
+                      style: TextStyle(
+                        color: Color(0xFF6FB457),
+                        fontSize: 32,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.bold,
+                        height: 0,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: screenWidth * 0.15,
+                    top: screenHeight * 0.08,
+                    child: Text(
+                      'Enter Registration Details',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: screenWidth * 0.05,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: screenWidth * 0.0,
+                    top: screenHeight * 0.14,
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.1,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 0.0),
+                            child: Text(
+                              'Mobile Number:',
+                              style: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                width: screenWidth * 0.2,
+                                child: DropdownButton<String>(
+                                  value: selectedCountryCode,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedCountryCode = newValue!;
+                                    });
+                                  },
+                                  items: <String>['+92', '+1', '+44', '+81']
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
                                       child: Row(
                                         children: [
-                                          Icon(Icons.chevron_left_outlined,
-                                              size: 40, color: Colors.black),
+                                          SizedBox(width: 8),
+                                          Text(value),
                                         ],
                                       ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                              Container(
+                                width: screenWidth * 0.6,
+                                child: TextField(
+                                  controller: phoneNumberController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Eg. 3355600598',
+                                    hintStyle: TextStyle(
+                                      fontSize: screenWidth * 0.035,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  Positioned(
-                                    top: 70,
-                                    left: 170,
-                                    child: Center(
-                                      child: Text(
-                                        'WASAIL',
-                                        style: TextStyle(
-                                          color: Color(0xFF6FB457),
-                                          fontSize: 32,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.w400,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                      top: 110,
-                                      left: 150,
-                                      child: Text(
-                                        'Register Now',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(0, 0, 0, 1),
-                                            fontFamily: 'Inter',
-                                            fontSize: 24,
-                                            letterSpacing:
-                                            0 /*percentages not used in flutter. defaulting to zero*/,
-                                            fontWeight: FontWeight.normal,
-                                            height: 1),
-                                      )),
-                                ]))),
-                      ])),
-                ),
-              );
-            },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.25,
+                    child: Text(
+                      'Password',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.28,
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.05,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your password',
+                          hintStyle: TextStyle(
+                            fontSize: screenWidth * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.38,
+                    child: Text(
+                      'Confirm Password',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.41,
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.05,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextField(
+                        controller: confirmPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Confirm your password',
+                          hintStyle: TextStyle(
+                            fontSize: screenWidth * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.51,
+                    child: Text(
+                      'Full Name',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.55,
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.05,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextField(
+                        controller: nameController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your full name',
+                          hintStyle: TextStyle(
+                            fontSize: screenWidth * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.66,
+                    child: Text(
+                      'Shop Address',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.7,
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: screenHeight * 0.05,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      child: TextField(
+                        controller: shopAddressController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your shop address',
+                          hintStyle: TextStyle(
+                            fontSize: screenWidth * 0.035,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 0,
+                    top: screenHeight * 0.8,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: agreeToTerms,
+                          onChanged: (value) {
+                            setState(() {
+                              agreeToTerms = value!;
+                            });
+                          },
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: 'I agree to the ',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                            children: [
+                              TextSpan(
+                                text: 'Terms and Conditions',
+                                style: TextStyle(
+                                  color:Color(0xFF6FB457),
+                                  fontSize: 12,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' and ',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Privacy Policy',
+                                style: TextStyle(
+                                  color:Color(0xFF6FB457),
+                                  fontSize: 12,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: screenHeight * 0.9,
+                    left: screenWidth * 0.4,
+                    bottom: screenHeight * 0.05,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (agreeToTerms) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Home(
+                                // phoneNumber: phoneNumberController.text,
+                                // Pass other registration data here
+                                //where is this data going
+                              ),
+                            ),
+                          );
+                        } else {
+                          print(
+                              'Please agree to Terms and Conditions and Privacy Policy.');
+                        }
+                      },
+                      child: IgnorePointer(
+                        ignoring: !agreeToTerms,
+                        child: Opacity(
+                          opacity: agreeToTerms ? 1.0 : 0.5,
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            margin: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color:Color(0xFF6FB457),
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: const Text(
+                              "Register",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
