@@ -1,7 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -30,14 +30,14 @@ const pool = mysql.createPool({
   connectionLimit : 10,
   host : 'localhost',
   user : 'root',
-  password : '',
+  password : '12345678',
   database : 'wasail',
 })
 
-app.get('/grocery_store',(req,res) => {
+app.get('/user_table',(req,res) => {
   pool.getConnection((err,connection) => {
     if (err) throw err
-    connection.query("Select * from grocery_store",(err,rows) => {
+    connection.query("Select * from user_table",(err,rows) => {
       connection.release();
       if(!err){
         res.send(rows)
@@ -49,10 +49,10 @@ app.get('/grocery_store',(req,res) => {
   })
 })
 
-app.get('/:store_id',(req,res) => {
-  pool.getConnection((err,connection) => {
+app.get('/:user_id',(req,res) => {
+  pool.getConnection ((err,connection) => {
     if (err) throw err
-    connection.query("Select * from grocery_store WHERE store_id = ?",[req.params.store_id],(err,rows) => {
+    connection.query("Select * from user_table WHERE user_id = ?",[req.params.user_id],(err,rows) => {
       connection.release();
       if(!err){
         res.send(rows)
@@ -64,14 +64,14 @@ app.get('/:store_id',(req,res) => {
   })
 })
 
-app.delete('/:store_id',(req,res) => {
+app.delete('/:user_id',(req,res) => {
   pool.getConnection((err,connection) => {
     if (err) throw err
     console.log(`connected as id ${connection.threadId}`)
-    connection.query("DELETE from grocery_store WHERE store_id = ?",[req.params.store_id],(err,rows) => {
+    connection.query("DELETE from user_table WHERE user_id = ?",[req.params.user_id],(err,rows) => {
       connection.release();
       if(!err){
-        res.send(`Grocery Store with the Record ID: ${[req.params.store_id]} has been removed.`)
+        res.send(`User with the Record ID: ${[req.params.user_id]} has been removed.`)
       }
       else{
         console.log(err)
@@ -87,10 +87,10 @@ app.post('',(req,res) => {
 
     const params = req.body
 
-    connection.query("INSERT INTO grocery_store SET ?",params,(err,rows) => {
+    connection.query("INSERT INTO user_table SET ?",params,(err,rows) => {
       connection.release();
       if(!err){
-        res.send(`Grocery Store with the Record ID: ${params.store_id} has been added.`)
+        res.send(`User with the Record ID: ${params.user_id} has been added.`)
       }
       else{
         console.log(err)
@@ -105,12 +105,16 @@ app.put('',(req,res) => {
     if (err) throw err
     console.log(`connected as id ${connection.threadId}`)
 
-    const {store_id, name, store_name,store_address,mobile_number} = req.body
+    const {user_id, phone_number, name, password,username,language,user_type} = req.body
 
-    connection.query("UPDATE grocery_store SET name =  ? WHERE store_id = ?",[name,store_id],(err,rows) => {
+    connection.query("UPDATE user_table SET name =  ? WHERE user_id = ?",[name,user_id],(err,rows) => {
       connection.release();
       if(!err){
+<<<<<<< Updated upstream
         res.send(`Grocery Store has been updated.`)
+=======
+        res.send(`User with the Record ID: has been added.`)
+>>>>>>> Stashed changes
       }
       else{
         console.log(err)
