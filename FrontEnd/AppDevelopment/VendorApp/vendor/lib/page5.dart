@@ -19,12 +19,11 @@ class _Page5State extends State<Page5> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController shopNameController = TextEditingController();
-  final TextEditingController shopAddressController = TextEditingController();
-  final TextEditingController shopLocationController = TextEditingController();
+  final TextEditingController deliveryAreasController = TextEditingController();
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
+  String selectedArea = 'DHA Phase II';
 
   @override
   Widget build(BuildContext context) {
@@ -250,7 +249,7 @@ class _Page5State extends State<Page5> {
                       ),
                       child: TextField(
                         controller: nameController,
-                        obscureText: true,
+                        obscureText: false,
                         decoration: InputDecoration(
                           hintText: 'Enter your full name',
                           hintStyle: TextStyle(
@@ -265,7 +264,7 @@ class _Page5State extends State<Page5> {
                     left: 0,
                     top: screenHeight * 0.66,
                     child: Text(
-                      'Shop Address',
+                      'Delivery Areas',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,
@@ -283,16 +282,19 @@ class _Page5State extends State<Page5> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                       ),
-                      child: TextField(
-                        controller: shopAddressController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your shop address',
-                          hintStyle: TextStyle(
-                            fontSize: screenWidth * 0.035,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+                      child: DropdownButton<String>(
+                        value: selectedArea,
+                        onChanged: (String? newValue) {
+                          // Handle dropdown value change here
+                          // You can update the state or controller accordingly
+                        },
+                        items: <String>['DHA Phase I', 'DHA Phase II', 'DHA Phase III', 'DHA Phase IV']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
