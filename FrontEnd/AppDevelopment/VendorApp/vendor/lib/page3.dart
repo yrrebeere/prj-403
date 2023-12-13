@@ -101,7 +101,6 @@ class _MyAppState extends State<Page3> {
                       top: screenHeight * 0.001,
                       child: GestureDetector(
                         onTap: () {
-                          // Navigate back to the previous page
                           Navigator.pop(context);
                         },
                         child: Row(
@@ -176,10 +175,10 @@ class _MyAppState extends State<Page3> {
                         width: screenWidth * 0.85,
                         height: screenHeight * 0.065,
                         decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color to white
+                          color: Colors.white,
                           border: Border.all(
-                            color: Colors.black, // Set the border color to black
-                            width: 1.0, // Set the border width (adjust as needed)
+                            color: Colors.black,
+                            width: 1.0,
                           ),
                         ),
                       ),
@@ -191,10 +190,10 @@ class _MyAppState extends State<Page3> {
                         width: screenWidth * 0.85,
                         height: screenHeight * 0.065,
                         decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color to white
+                          color: Colors.white,
                           border: Border.all(
-                            color: Colors.black, // Set the border color to black
-                            width: 1.0, // Set the border width (adjust as needed)
+                            color: Colors.black,
+                            width: 1.0,
                           ),
                         ),
                       ),
@@ -233,13 +232,8 @@ class _MyAppState extends State<Page3> {
                       top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
-                          // Close the keyboard when tapping the login button
                           FocusScope.of(context).unfocus();
-
-                          // Retrieve values from text fields
                           String password = passwordController.text;
-
-                          // Navigate to the next page using the context obtained from Builder
                           Navigator.push(
                             builderContext,
                             MaterialPageRoute(
@@ -261,7 +255,7 @@ class _MyAppState extends State<Page3> {
                             child: Container(
                               padding: const EdgeInsets.all(16.0),
                               decoration: BoxDecoration(
-                                color: Colors.blue,  // You can customize the container's appearance
+                                color: Colors.blue,
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: const Text(

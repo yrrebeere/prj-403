@@ -39,16 +39,10 @@ class _NavBarState extends State<NavBar> {
       appBar: AppBar(
       backgroundColor: Color(0xFF6FB457),
       title:Padding(
-        padding: const EdgeInsets.only(left: 90),
+        padding: const EdgeInsets.only(left: 145),
         child: Text('WASAIL'),
       ),
       elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios), // Replace with your desired icon
-          onPressed: () {
-            // Handle the icon tap (e.g., open a drawer)
-          },
-        ),
     ),
     body:  screens[index],
     bottomNavigationBar: NavigationBarTheme(

@@ -60,7 +60,6 @@ class _MyAppState extends State<Page2> {
                   top: screenHeight * 0.001,
                   child: GestureDetector(
                     onTap: () {
-                      // Navigate back to the previous page
                       Navigator.pop(context);
                     },
                     child: Row(
@@ -106,10 +105,10 @@ class _MyAppState extends State<Page2> {
                     width: screenWidth * 0.8,
                     height: screenHeight * 0.07,
                     decoration: BoxDecoration(
-                      color: Colors.white, // Set the background color to white
+                      color: Colors.white,
                       border: Border.all(
-                        color: Colors.black, // Set the border color to black
-                        width: 1.0, // Set the border width (adjust as needed)
+                        color: Colors.black,
+                        width: 1.0,
                       ),
                     ),
                   ),
@@ -150,7 +149,7 @@ class _MyAppState extends State<Page2> {
                   child: Container(
                     width: screenWidth * 0.07,
                     height: screenHeight * 0.03,
-                    child: Image.asset("assets/images/pakistan.png"), // Adjust the path accordingly
+                    child: Image.asset("assets/images/pakistan.png"),
                   ),
                 ),
                 Positioned(
@@ -158,7 +157,6 @@ class _MyAppState extends State<Page2> {
                   top: screenHeight * 0.798,
                   child: GestureDetector(
                     onTap: () {
-                      // Navigate to Page3 and pass the entered phone number
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -169,7 +167,7 @@ class _MyAppState extends State<Page2> {
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue,  // You can customize the container's appearance
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: const Text(

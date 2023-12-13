@@ -108,7 +108,6 @@ class _MyAppState extends State<Page4> {
                       top: screenHeight * 0.001,
                       child: GestureDetector(
                         onTap: () {
-                          // Navigate back to the previous page
                           Navigator.pop(context);
                         },
                         child: Row(
@@ -167,7 +166,7 @@ class _MyAppState extends State<Page4> {
                                     } else {
                                       _focusNodes[index].unfocus();
                                     }
-                                    _startTimer(); // Start the timer when any digit is entered
+                                    _startTimer();
                                   }
                                 },
                                 style: Theme.of(context).textTheme.headline6,
@@ -229,17 +228,14 @@ class _MyAppState extends State<Page4> {
                       top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
-                          // Check if all text fields are filled
                           if (_controllers.every((controller) => controller.text.isNotEmpty)) {
-                            // Navigate to page 5
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Page5(), // Replace Page5 with the actual widget for page 5
+                                builder: (context) => Page5(),
                               ),
                             );
                           } else {
-                            // Show a message or perform an action if not all fields are filled
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('Please fill in all fields.'),
@@ -267,7 +263,7 @@ class _MyAppState extends State<Page4> {
                           child: Container(
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color: Colors.blue,  // You can customize the container's appearance
+                              color: Colors.blue,
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: const Text(
