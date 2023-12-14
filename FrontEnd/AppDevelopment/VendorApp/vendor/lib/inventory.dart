@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'search.dart';
+
 class Inventory extends StatefulWidget {
   const Inventory({Key? key}) : super(key: key);
 
@@ -297,6 +299,10 @@ class _InventoryState extends State<Inventory> {
           right: 16.0,
           child: FloatingActionButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SearchBarApp()),
+              );
             },
             backgroundColor: Color(0xFF6FB457),
             child: Icon(Icons.add),

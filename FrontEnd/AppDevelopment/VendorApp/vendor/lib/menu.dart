@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'storelist.dart';
+import 'ThemeProvider.dart';
+import 'package:provider/provider.dart';
 
 class Menu extends StatefulWidget {
   const Menu({Key? key}) : super(key: key);
@@ -294,8 +296,29 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     Text('Logout',style: TextStyle(fontSize: 20, color: Colors.red, decoration: TextDecoration.underline),)
+
                   ],
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Center(
+                    child: Tooltip(
+                      message: 'Change brightness mode',
+                      child: IconButton(
+                        onPressed: () {
+                          Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+                        },
+                        icon: const Icon(Icons.wb_sunny_outlined),
+                        selectedIcon: const Icon(Icons.brightness_2_outlined),
+                        isSelected: Provider.of<ThemeProvider>(context).isDark,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
