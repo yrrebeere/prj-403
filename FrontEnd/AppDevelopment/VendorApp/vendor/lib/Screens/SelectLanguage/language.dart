@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'page2.dart';
+import '../PhoneNumber/phonenumber.dart';
 
-class Page1 extends StatefulWidget {
-  const Page1({Key? key}) : super(key: key);
+class Language extends StatefulWidget {
+  const Language({Key? key}) : super(key: key);
 
   @override
-  State<Page1> createState() => _Page1State();
+  State<Language> createState() => _LanguageState();
 }
 
-class _Page1State extends State<Page1> {
+class _LanguageState extends State<Language> {
   static const String routeName = "/page1";
   String selectedLanguage = '';
 
@@ -220,7 +220,7 @@ class _Page1State extends State<Page1> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Page2(),
+                                builder: (context) => PhoneNumber(),
                               ),
                             );
                           }

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'page4.dart';
+import '../OTP/otp.dart';
 
-
-class Page3 extends StatefulWidget {
+class Login extends StatefulWidget {
   final String phoneNumber;
 
-  const Page3({Key? key, required this.phoneNumber}) : super(key: key);
+  const Login({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
-  State<Page3> createState() => _MyAppState();
+  State<Login> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Page3> {
+class _MyAppState extends State<Login> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -237,7 +236,7 @@ class _MyAppState extends State<Page3> {
                           Navigator.push(
                             builderContext,
                             MaterialPageRoute(
-                              builder: (context) => Page4(
+                              builder: (context) => OTP(
                                 password: password,
                                 phoneNumber: widget.phoneNumber,
                               ),

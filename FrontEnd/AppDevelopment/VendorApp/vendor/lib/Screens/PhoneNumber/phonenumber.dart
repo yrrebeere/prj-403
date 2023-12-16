@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'page3.dart';
+import '../Login/login.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: Page2(),
-    ),
-  );
-}
-
-class Page2 extends StatefulWidget {
-  const Page2({Key? key}) : super(key: key);
+class PhoneNumber extends StatefulWidget {
+  const PhoneNumber({Key? key}) : super(key: key);
 
   @override
-  State<Page2> createState() => _MyAppState();
+  State<PhoneNumber> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Page2> {
+class _MyAppState extends State<PhoneNumber> {
   final TextEditingController phoneNumberController = TextEditingController();
 
   @override
@@ -166,7 +158,7 @@ class _MyAppState extends State<Page2> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Page3(phoneNumber: phoneNumberController.text),
+                          builder: (context) => Login(phoneNumber: phoneNumberController.text),
                         ),
                       );
                     },

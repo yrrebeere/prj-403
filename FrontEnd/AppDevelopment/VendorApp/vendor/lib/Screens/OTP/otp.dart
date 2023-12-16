@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'page5.dart';
-import 'page5.dart';
+import '../Registeration/registeration.dart';
 
-
-class Page4 extends StatefulWidget {
+class OTP extends StatefulWidget {
   final String password;
   final String phoneNumber;
 
-  const Page4({Key? key, required this.password, required this.phoneNumber}) : super(key: key);
+  const OTP({Key? key, required this.password, required this.phoneNumber}) : super(key: key);
 
   @override
-  State<Page4> createState() => _MyAppState();
+  State<OTP> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<Page4> {
+class _MyAppState extends State<OTP> {
   final List<TextEditingController> _controllers = List.generate(4, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
 
@@ -232,7 +230,7 @@ class _MyAppState extends State<Page4> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Page5(),
+                                builder: (context) => Registeration(),
                               ),
                             );
                           } else {

@@ -1,20 +1,12 @@
 import 'package:flutter/material.dart';
-import 'home.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: Page5(),
-    ),
-  );
-}
-
-class Page5 extends StatefulWidget {
+class Registeration extends StatefulWidget {
   @override
-  _Page5State createState() => _Page5State();
+  _RegisterationState createState() => _RegisterationState();
 }
 
-class _Page5State extends State<Page5> {
+class _RegisterationState extends State<Registeration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
@@ -355,11 +347,7 @@ class _Page5State extends State<Page5> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Home(
-                                // phoneNumber: phoneNumberController.text,
-                                // Pass other registration data here
-                                //where is this data going
-                              ),
+                              builder: (context) => NavBar(),
                             ),
                           );
                         } else {

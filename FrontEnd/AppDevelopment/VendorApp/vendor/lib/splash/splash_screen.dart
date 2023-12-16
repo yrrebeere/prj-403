@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
-import '../page1.dart';
+import 'components/constants.dart';
+import '../Screens/SelectLanguage/language.dart';
 import 'components/splash_content.dart';
-
-void main() {
-  runApp(
-      MaterialApp(
-        home: SplashScreen(
-        ),
-      )
-  );
-}
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
@@ -92,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Page1()),
+                            MaterialPageRoute(builder: (context) => Language()),
                           );
                         },
                         child: Container(
