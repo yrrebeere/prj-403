@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'page3.dart';
 
 void main() {
@@ -25,6 +26,11 @@ class _MyAppState extends State<Page2> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('ur', 'en'),
+
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -71,10 +77,10 @@ class _MyAppState extends State<Page2> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.36,
+                  left: screenWidth * 0.39,
                   top: screenHeight * 0.01,
                   child: Text(
-                    'WASAIL',
+                    AppLocalizations.of(context)!.app_name,
                     style: TextStyle(
                       color: Color(0xFF6FB457),
                       fontSize: 32,
@@ -88,7 +94,7 @@ class _MyAppState extends State<Page2> {
                   left: screenWidth * 0.07,
                   top: screenHeight * 0.2,
                   child: Text(
-                    'Enter Phone Number',
+                    AppLocalizations.of(context)!.enter_number,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: screenWidth * 0.06,
@@ -137,7 +143,7 @@ class _MyAppState extends State<Page2> {
                     child: TextField(
                       controller: phoneNumberController,
                       decoration: InputDecoration(
-                        hintText: 'Eg.3144364288',
+                        hintText: '3144364288',
                         hintStyle: TextStyle(fontSize: screenWidth * 0.048,fontWeight: FontWeight.w400,),
                       ),
                     ),

@@ -1,3 +1,6 @@
 {
-  "app_name": "Wasail"
+  "app_name": "WASAIL",
+  "select_lang": "Select Language",
+  "continue_button": "Continue",
+  "enter_number": "Enter Phone Number"
 }

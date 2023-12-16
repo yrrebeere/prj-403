@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'page2.dart';
 
 class Page1 extends StatefulWidget {
@@ -18,6 +19,18 @@ class _Page1State extends State<Page1> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      builder: (context, child) {
+        // Determine text direction based on selected language
+        TextDirection textDirection = selectedLanguage == 'Urdu' ? TextDirection.rtl : TextDirection.ltr;
+
+        return Directionality(
+          textDirection: textDirection,
+          child: child!,
+        );
+      },
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('ur', 'en'),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -51,10 +64,10 @@ class _Page1State extends State<Page1> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.36,
+                      left: screenWidth * 0.38,
                       top: screenHeight * 0.01,
                       child: Text(
-                        'WASAIL',
+                        AppLocalizations.of(context)!.app_name,
                         style: TextStyle(
                           color: Color(0xFF6FB457),
                           fontSize: 32,
@@ -65,10 +78,10 @@ class _Page1State extends State<Page1> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.07,
+                      left: screenWidth * 0.3,
                       top: screenHeight * 0.2,
                       child: Text(
-                        'Select Language',
+                        AppLocalizations.of(context)!.select_lang,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.06,
@@ -218,8 +231,8 @@ class _Page1State extends State<Page1> {
                             color: Colors.blue,  // You can customize the container's appearance
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: const Text(
-                            "Continue",
+                          child: Text(
+                            AppLocalizations.of(context)!.continue_button,
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
