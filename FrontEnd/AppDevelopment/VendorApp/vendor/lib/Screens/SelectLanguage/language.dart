@@ -213,7 +213,7 @@ class _LanguageState extends State<Language> {
                     ),
                     Positioned(
                       left: screenWidth * 0.4,
-                      top: screenHeight * 0.798,
+                      top: screenHeight * 0.76,
                       child: GestureDetector(
                         onTap: () {
                           if (selectedLanguage.isNotEmpty) {

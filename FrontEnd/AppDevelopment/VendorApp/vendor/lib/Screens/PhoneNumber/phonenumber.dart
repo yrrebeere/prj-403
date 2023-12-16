@@ -152,7 +152,7 @@ class _MyAppState extends State<PhoneNumber> {
                 ),
                 Positioned(
                   left: screenWidth * 0.4,
-                  top: screenHeight * 0.798,
+                  top: screenHeight * 0.76,
                   child: GestureDetector(
                     onTap: () {
                       Navigator.push(
