@@ -2,29 +2,29 @@ var createError = require('http-errors');
 var express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-var path = require('path');
+// var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
 // var app = express();
 const app = express()
 const port = 4000
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
 
 const pool = mysql.createPool({
   connectionLimit : 10,
@@ -110,11 +110,11 @@ app.put('',(req,res) => {
     connection.query("UPDATE user_table SET name =  ? WHERE user_id = ?",[name,user_id],(err,rows) => {
       connection.release();
       if(!err){
-<<<<<<< Updated upstream
+
         res.send(`Grocery Store has been updated.`)
-=======
+
         res.send(`User with the Record ID: has been added.`)
->>>>>>> Stashed changes
+
       }
       else{
         console.log(err)
@@ -139,7 +139,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+
 });
 
 module.exports = app;
