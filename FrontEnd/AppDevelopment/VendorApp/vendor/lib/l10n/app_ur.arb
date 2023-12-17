@@ -4,6 +4,11 @@
   "continue_button": "جاری رہے",
   "enter_number": "فون نمبر درج کریں",
   "welcome_msg": "وصیل میں خوش آمدید",
-  "next_button" : "اگلے"
+  "next_button" : "اگلے",
+  "login" : "لاگ ان",
+  "phone_number" : "فون نمبر",
+  "password" : "پاس ورڈ",
+  "reset" : "ری سیٹ",
+  "enter_password" : "پاس ورڈ درج کریں"
 
 }

@@ -4,5 +4,10 @@
   "continue_button": "Continue",
   "enter_number": "Enter Phone Number",
   "welcome_msg" : "Welcome to Wasail",
-  "next_button" : "Next"
+  "next_button" : "Next",
+  "login" : "Login",
+  "phone_number" : "Phone Number",
+  "password" : "Password",
+  "reset" : "Reset",
+  "enter_password" : "Enter Password"
 }

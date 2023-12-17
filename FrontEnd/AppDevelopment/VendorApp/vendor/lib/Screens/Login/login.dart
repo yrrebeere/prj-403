@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../OTP/otp.dart';
 import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   final String phoneNumber;
-  final String password;
 
-  const Login({Key? key, required this.phoneNumber, required this.password}) : super(key: key);
+  const Login({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<Login> createState() => _MyAppState();
@@ -23,6 +23,9 @@ class _MyAppState extends State<Login> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('ur', 'en'),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -61,7 +64,7 @@ class _MyAppState extends State<Login> {
                         left: screenWidth * 0.07,
                         top: screenHeight * 0.33,
                         child: Text(
-                          'Phone Number',
+                          AppLocalizations.of(context)!.phone_number,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.04,
@@ -76,7 +79,7 @@ class _MyAppState extends State<Login> {
                         top: screenHeight * 0.01,
                         child: Center(
                           child: Text(
-                            'WASAIL',
+                            AppLocalizations.of(context)!.app_name,
                             style: TextStyle(
                               color: Color(0xFF6FB457),
                               fontSize: 32,
@@ -91,7 +94,7 @@ class _MyAppState extends State<Login> {
                         left: screenWidth * 0.07,
                         top: screenHeight * 0.2,
                         child: Text(
-                          'Login',
+                          AppLocalizations.of(context)!.login,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.06,
@@ -104,15 +107,21 @@ class _MyAppState extends State<Login> {
                       Positioned(
                         left: screenWidth * 0.023,
                         top: screenHeight * 0.001,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            children: [
-                              Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
-                              SizedBox(width: screenWidth * 0.012,),
-                            ],
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.chevron_left_outlined,
+                                    size: screenWidth * 0.106, color: Colors.black),
+                                SizedBox(
+                                  width: screenWidth * 0.012,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -120,7 +129,7 @@ class _MyAppState extends State<Login> {
                         left: screenWidth * 0.07,
                         top: screenHeight * 0.46,
                         child: Text(
-                          'Password',
+                          AppLocalizations.of(context)!.password,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.04,
@@ -137,7 +146,7 @@ class _MyAppState extends State<Login> {
                           TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Reset',
+                                text: AppLocalizations.of(context)!.reset,
                                 style: TextStyle(
                                   color: const Color(0xFF007AFF),
                                   fontSize: screenWidth * 0.04,
@@ -159,7 +168,7 @@ class _MyAppState extends State<Login> {
                                 ),
                               ),
                               TextSpan(
-                                text: 'Password',
+                                text: AppLocalizations.of(context)!.password,
                                 style: TextStyle(
                                   color: const Color(0xFF007AFF),
                                   fontSize: screenWidth * 0.04,
@@ -223,7 +232,7 @@ class _MyAppState extends State<Login> {
                               ),
                               filled: true,
                               prefixIcon: Icon(Icons.lock, color: Colors.teal, size: 25),
-                              hintText: 'Enter Password',
+                              hintText: AppLocalizations.of(context)!.enter_password,
                               suffixStyle: TextStyle(fontSize: 25),
                               hintStyle: TextStyle(color: Colors.teal),
                             ),
@@ -255,7 +264,7 @@ class _MyAppState extends State<Login> {
                                 builderContext,
                                 MaterialPageRoute(
                                   builder: (context) => OTP(
-                                    password: password,  // Use the controller's text instead of password variable
+                                    password: password,
                                     phoneNumber: widget.phoneNumber,
                                   ),
                                 ),
@@ -273,8 +282,8 @@ class _MyAppState extends State<Login> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: const Text(
-                                "Login",
+                              child:  Text(
+                                  AppLocalizations.of(context)!.login,
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

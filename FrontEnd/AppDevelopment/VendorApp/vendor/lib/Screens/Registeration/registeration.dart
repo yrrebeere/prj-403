@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 
 class Registeration extends StatefulWidget {
@@ -9,7 +10,8 @@ class Registeration extends StatefulWidget {
 class _RegisterationState extends State<Registeration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
 
@@ -23,6 +25,9 @@ class _RegisterationState extends State<Registeration> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: Locale('ur', 'en'),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -41,16 +46,22 @@ class _RegisterationState extends State<Registeration> {
                   Positioned(
                     right: screenWidth * 0.8,
                     top: screenHeight * 0.001,
-                    child: GestureDetector(
-                      onTap: () {
-                        // Navigate back to the previous page
-                        Navigator.pop(context);
-                      },
-                      child: Row(
-                        children: [
-                          Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
-                          SizedBox(width: screenWidth * 0.012,),
-                        ],
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: GestureDetector(
+                        onTap: () {
+                          // Navigate back to the previous page
+                          Navigator.pop(context);
+                        },
+                        child: Row(
+                          children: [
+                            Icon(Icons.chevron_left_outlined,
+                                size: screenWidth * 0.106, color: Colors.black),
+                            SizedBox(
+                              width: screenWidth * 0.012,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -115,7 +126,8 @@ class _RegisterationState extends State<Registeration> {
                                     });
                                   },
                                   items: <String>['+92', '+1', '+44', '+81']
-                                      .map<DropdownMenuItem<String>>((String value) {
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
                                       child: Row(
@@ -280,8 +292,12 @@ class _RegisterationState extends State<Registeration> {
                           // Handle dropdown value change here
                           // You can update the state or controller accordingly
                         },
-                        items: <String>['DHA Phase I', 'DHA Phase II', 'DHA Phase III', 'DHA Phase IV']
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: <String>[
+                          'DHA Phase I',
+                          'DHA Phase II',
+                          'DHA Phase III',
+                          'DHA Phase IV'
+                        ].map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -311,7 +327,7 @@ class _RegisterationState extends State<Registeration> {
                               TextSpan(
                                 text: 'Terms and Conditions',
                                 style: TextStyle(
-                                  color:Color(0xFF6FB457),
+                                  color: Color(0xFF6FB457),
                                   fontSize: 12,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -326,7 +342,7 @@ class _RegisterationState extends State<Registeration> {
                               TextSpan(
                                 text: 'Privacy Policy',
                                 style: TextStyle(
-                                  color:Color(0xFF6FB457),
+                                  color: Color(0xFF6FB457),
                                   fontSize: 12,
                                   decoration: TextDecoration.underline,
                                 ),
@@ -363,7 +379,7 @@ class _RegisterationState extends State<Registeration> {
                             padding: const EdgeInsets.all(8.0),
                             margin: EdgeInsets.only(bottom: 8.0),
                             decoration: BoxDecoration(
-                              color:Color(0xFF6FB457),
+                              color: Color(0xFF6FB457),
                               borderRadius: BorderRadius.circular(4.0),
                             ),
                             child: const Text(
