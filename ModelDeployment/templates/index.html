@@ -6,8 +6,8 @@
 <body>
     <h1>Demand Forecasting System</h1>
     <form method="POST" action="/predict">
-        <label for="family">Family:</label>
-        <select id="family" name="family" required>
+        <label for="family_encoded">Family:</label>
+        <select id="family_encoded" name="family_encoded" required>
             <option value="AUTOMOTIVE">AUTOMOTIVE</option>
             <option value="BABY CARE">BABY CARE</option>
             <option value="BEAUTY">BEAUTY</option>
@@ -45,7 +45,7 @@
         <button type="submit">Predict Sales</button>
     </form>
     <h2>
-        {{ family }}
+        Prediction: {{ prediction }}
     </h2>
 </body>
 </html>
