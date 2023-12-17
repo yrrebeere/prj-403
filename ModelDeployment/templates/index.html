@@ -5,15 +5,47 @@
 </head>
 <body>
     <h1>Demand Forecasting System</h1>
-    <form method="post">
-        Product <input name="product-name">
-        <button>Submit</button>
-        <a href="/">
-            <button>Reset</button>
-        </a>
+    <form method="POST" action="/predict">
+        <label for="family">Family:</label>
+        <select id="family" name="family" required>
+            <option value="AUTOMOTIVE">AUTOMOTIVE</option>
+            <option value="BABY CARE">BABY CARE</option>
+            <option value="BEAUTY">BEAUTY</option>
+            <option value="BEVERAGES">BEVERAGES</option>
+            <option value="BOOKS">BOOKS</option>
+            <option value="BREAD/BAKERY">BREAD/BAKERY</option>
+            <option value="CELEBRATION">CELEBRATION</option>
+            <option value="CLEANING">CLEANING</option>
+            <option value="DAIRY">DAIRY</option>
+            <option value="DELI">DELI</option>
+            <option value="EGGS">EGGS</option>
+            <option value="FROZEN FOODS">FROZEN FOODS</option>
+            <option value="GROCERY I">GROCERY I</option>
+            <option value="GROCERY II">GROCERY II</option>
+            <option value="HARDWARE">HARDWARE</option>
+            <option value="HOME AND KITCHEN I">HOME AND KITCHEN I</option>
+            <option value="HOME AND KITCHEN II">HOME AND KITCHEN II</option>
+            <option value="HOME APPLIANCES">HOME APPLIANCES</option>
+            <option value="HOME CARE">HOME CARE</option>
+            <option value="LADIESWEAR">LADIESWEAR</option>
+            <option value="LAWN AND GARDEN">LAWN AND GARDEN</option>
+            <option value="LINGERIE">LINGERIE</option>
+            <option value="LIQUOR,WINE,BEER">LIQUOR,WINE,BEER</option>
+            <option value="MAGAZINES">MAGAZINES</option>
+            <option value="MEATS">MEATS</option>
+            <option value="PERSONAL CARE">PERSONAL CARE</option>
+            <option value="PET SUPPLIES">PET SUPPLIES</option>
+            <option value="PLAYERS AND ELECTRONICS">PLAYERS AND ELECTRONICS</option>
+            <option value="POULTRY">POULTRY</option>
+            <option value="PREPARED FOODS">PREPARED FOODS</option>
+            <option value="PRODUCE">PRODUCE</option>
+            <option value="SCHOOL AND OFFICE SUPPLIES">SCHOOL AND OFFICE SUPPLIES</option>
+            <option value="SEAFOOD">SEAFOOD</option>
+        </select><br><br>
+        <button type="submit">Predict Sales</button>
     </form>
     <h2>
-        {{ text }}
+        {{ family }}
     </h2>
 </body>
 </html>
