@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Login/login.dart';
+import '../OTP/otp.dart';
 
 class PhoneNumber extends StatefulWidget {
   const PhoneNumber({Key? key}) : super(key: key);
@@ -11,6 +12,7 @@ class PhoneNumber extends StatefulWidget {
 
 class _MyAppState extends State<PhoneNumber> {
   final TextEditingController phoneNumberController = TextEditingController();
+  String selectedCountryCode = '+92';
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +20,9 @@ class _MyAppState extends State<PhoneNumber> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('ur', 'en'),
-
+      locale: Locale('ur','en'),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -56,15 +56,21 @@ class _MyAppState extends State<PhoneNumber> {
                 Positioned(
                   left: screenWidth * 0.023,
                   top: screenHeight * 0.001,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Row(
-                      children: [
-                        Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
-                        SizedBox(width: screenWidth * 0.012,),
-                      ],
+                  child: Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.chevron_left_outlined,
+                              size: screenWidth * 0.106, color: Colors.black),
+                          SizedBox(
+                            width: screenWidth * 0.012,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -97,8 +103,8 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.09,
-                  top: screenHeight * 0.38,
+                  left: screenWidth * 0.15,
+                  top: screenHeight * 0.388,
                   child: Container(
                     width: screenWidth * 0.8,
                     height: screenHeight * 0.07,
@@ -109,45 +115,62 @@ class _MyAppState extends State<PhoneNumber> {
                         width: 1.0,
                       ),
                     ),
-                  ),
-                ),
-                Positioned(
-                  left: screenWidth * 0.2,
-                  top: screenHeight * 0.4,
-                  child: Text(
-                    '+92',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: screenWidth * 0.045,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: screenWidth * 0.07,
+                          child: Image.asset(
+                            "assets/images/pakistan.png",
+                            width: screenWidth * 0.07,
+                            height: screenHeight * 0.03,
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * 0.2,
+                          child: DropdownButton<String>(
+                            value: selectedCountryCode,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCountryCode = newValue!;
+                              });
+                            },
+                            items: <String>['+92', '+1', '+44', '+81']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 8),
+                                    Text(
+                                      value,
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.045,
+                                        fontFamily: 'Inter',
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        Container(
+                          width: screenWidth * 0.45,
+                          child: TextField(
+                            controller: phoneNumberController,
+                            decoration: InputDecoration(
+                              hintText: '3144364288',
+                              hintStyle: TextStyle(
+                                fontSize: screenWidth * 0.048,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-
-                Container(
-                  margin: EdgeInsets.only(left: screenWidth * 0.37,
-                    top: screenHeight * 0.415,),
-                  child: SizedBox(
-                    width: screenWidth * 0.45,
-                    height: screenHeight * 0.025,
-                    child: TextField(
-                      controller: phoneNumberController,
-                      decoration: InputDecoration(
-                        hintText: '3144364288',
-                        hintStyle: TextStyle(fontSize: screenWidth * 0.048,fontWeight: FontWeight.w400,),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: screenWidth * 0.1,
-                  top: screenHeight * 0.4,
-                  child: Container(
-                    width: screenWidth * 0.07,
-                    height: screenHeight * 0.03,
-                    child: Image.asset("assets/images/pakistan.png"),
                   ),
                 ),
                 Positioned(
@@ -158,7 +181,8 @@ class _MyAppState extends State<PhoneNumber> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Login(phoneNumber: phoneNumberController.text),
+                          builder: (context) =>
+                              Login(phoneNumber: phoneNumberController.text),
                         ),
                       );
                     },
@@ -168,8 +192,8 @@ class _MyAppState extends State<PhoneNumber> {
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: const Text(
-                        "Next",
+                      child: Text(
+                        AppLocalizations.of(context)!.next_button,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

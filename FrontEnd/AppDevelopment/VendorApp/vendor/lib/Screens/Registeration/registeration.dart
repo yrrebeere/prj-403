@@ -133,7 +133,7 @@ class _RegisterationState extends State<Registeration> {
                                 child: TextField(
                                   controller: phoneNumberController,
                                   decoration: InputDecoration(
-                                    hintText: 'Eg. 3355600598',
+                                    hintText: '3355600598',
                                     hintStyle: TextStyle(
                                       fontSize: screenWidth * 0.035,
                                       fontWeight: FontWeight.w400,

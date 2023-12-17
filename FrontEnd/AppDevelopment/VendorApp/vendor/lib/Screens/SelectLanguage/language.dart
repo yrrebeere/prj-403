@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../PhoneNumber/phonenumber.dart';
+import 'package:vendor/splash/splash_screen.dart';
 
 class Language extends StatefulWidget {
   const Language({Key? key}) : super(key: key);
@@ -11,7 +11,7 @@ class Language extends StatefulWidget {
 
 class _LanguageState extends State<Language> {
   static const String routeName = "/page1";
-  String selectedLanguage = '';
+  String selectedLanguage = 'Urdu';
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +19,7 @@ class _LanguageState extends State<Language> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-      builder: (context, child) {
-        // Determine text direction based on selected language
-        TextDirection textDirection = selectedLanguage == 'Urdu' ? TextDirection.rtl : TextDirection.ltr;
 
-        return Directionality(
-          textDirection: textDirection,
-          child: child!,
-        );
-      },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale('ur', 'en'),
@@ -78,7 +70,7 @@ class _LanguageState extends State<Language> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.3,
+                      left: screenWidth * 0.1,
                       top: screenHeight * 0.2,
                       child: Text(
                         AppLocalizations.of(context)!.select_lang,
@@ -220,7 +212,7 @@ class _LanguageState extends State<Language> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PhoneNumber(),
+                                builder: (context) => SplashScreen(),
                               ),
                             );
                           }

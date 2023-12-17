@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vendor/splash/splash_screen.dart';
+import 'package:vendor/Screens/SelectLanguage/language.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:SplashScreen(),
+      home:Language(),
     );
   }
 }

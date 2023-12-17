@@ -2,5 +2,7 @@
   "app_name": "WASAIL",
   "select_lang": "Select Language",
   "continue_button": "Continue",
-  "enter_number": "Enter Phone Number"
+  "enter_number": "Enter Phone Number",
+  "welcome_msg" : "Welcome to Wasail",
+  "next_button" : "Next"
 }

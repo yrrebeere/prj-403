@@ -2,5 +2,8 @@
   "app_name": "وسائل",
   "select_lang":"زبان منتخب کریں",
   "continue_button": "جاری رہے",
-  "enter_number": "فون نمبر درج کریں"
+  "enter_number": "فون نمبر درج کریں",
+  "welcome_msg": "وصیل میں خوش آمدید",
+  "next_button" : "اگلے"
+
 }

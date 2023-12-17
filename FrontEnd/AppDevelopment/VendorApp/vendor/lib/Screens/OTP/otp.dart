@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'dart:async';
 import '../Registeration/registeration.dart';
 
-class OTP extends StatefulWidget {
-  final String password;
-  final String phoneNumber;
 
-  const OTP({Key? key, required this.password, required this.phoneNumber}) : super(key: key);
+class OTP extends StatefulWidget {
+  final String phoneNumber;
+  final String password;
+
+  const OTP({Key? key, required this.phoneNumber, required this.password}) : super(key: key);
 
   @override
   State<OTP> createState() => _MyAppState();

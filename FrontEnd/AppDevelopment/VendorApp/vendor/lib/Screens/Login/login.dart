@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 
 class Login extends StatefulWidget {
   final String phoneNumber;
+  final String password;
 
-  const Login({Key? key, required this.phoneNumber}) : super(key: key);
+  const Login({Key? key, required this.phoneNumber, required this.password}) : super(key: key);
 
   @override
   State<Login> createState() => _MyAppState();
@@ -254,7 +255,7 @@ class _MyAppState extends State<Login> {
                                 builderContext,
                                 MaterialPageRoute(
                                   builder: (context) => OTP(
-                                    password: password,
+                                    password: password,  // Use the controller's text instead of password variable
                                     phoneNumber: widget.phoneNumber,
                                   ),
                                 ),
