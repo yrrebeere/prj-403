@@ -9,7 +9,7 @@ const basename = path.basename(__filename);
 // const config = require(__dirname + '/../config/config.json')[env];
 const config = require('../config/config');
 const db = {};
-
+db.user_table = require('./usertable')
 console.log(config);
 
 // let sequelize;
@@ -46,6 +46,12 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
+db.user_table.hasOne(db.vendor);
+
+console.log("2");
+
+db.vendor.belongsTo(db.user_table);
 
 sequelize
     .authenticate()

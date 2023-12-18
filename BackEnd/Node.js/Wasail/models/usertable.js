@@ -1,10 +1,11 @@
 'use strict';
 
-module.exports = (sequelize, Datatypes)=>{
+module.exports = (sequelize, Datatypes)=>{  
     return sequelize.define('user_table',{
         user_id:{
             type: Datatypes.INTEGER,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         phone_number:{
             type: Datatypes.BIGINT,
