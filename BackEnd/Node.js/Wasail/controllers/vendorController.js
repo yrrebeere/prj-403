@@ -1,6 +1,6 @@
 const db = require('../models')
 
-const Vendor = db.vendors
+const Vendor = db.vendor
 
 const addVendor = async (req, res) => {
 
@@ -20,7 +20,34 @@ const getAllVendors = async (req, res) => {
 
 }
 
+const getOneVendor = async (req, res) => {
+
+    let vendor_id = req.params.vendor_id
+    let vendor = await Vendor.findOne({ where: { vendor_id: vendor_id }})
+    res.status(200).send(vendor)
+
+}
+
+const updateVendor = async (req, res) => {
+
+    let vendor_id = req.params.vendor_id
+    const vendor = await Vendor.update(req.body, { where: { vendor_id: vendor_id }})
+    res.status(200).send(vendor)
+
+}
+
+const deleteVendor = async (req, res) => {
+
+    let vendor_id = req.params.vendor_id
+    await Vendor.destroy({ where: { vendor_id: vendor_id }} )
+    res.status(200).send('Vendor is deleted !')
+
+}
+
 module.exports = {
     addVendor,
-    getAllVendors
+    getAllVendors,
+    getOneVendor,
+    updateVendor,
+    deleteVendor
 }

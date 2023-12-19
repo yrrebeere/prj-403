@@ -2,6 +2,11 @@
 
 module.exports = (sequelize, Datatypes)=>{
     return sequelize.define('vendor',{
+        vendor_id:{
+            type: Datatypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
         vendor_name:{
             type: Datatypes.STRING,
             isAlpha: true,

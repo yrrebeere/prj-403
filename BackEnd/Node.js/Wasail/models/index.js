@@ -44,6 +44,15 @@ db.Sequelize = Sequelize;
 db.user_table.hasOne(db.vendor);
 db.vendor.belongsTo(db.user_table);
 
+// db.user_table.hasOne(db.vendor,{
+//     foreignKey: 'user_id',
+//     as: 'vendor'
+// });
+// db.vendor.belongsTo(db.user_table,{
+//     foreignKey: 'user_id',
+//     as: 'user_table'
+// });
+
 sequelize
     .authenticate()
     .then(() => {

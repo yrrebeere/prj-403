@@ -8,28 +8,22 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-const vendorsRouter = require('./routes/vendors')
-
+var vendorsRouter = require('./routes/vendors');
 
 // var app = express();
 const app = express()
 const port = 4000
 
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 // app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/user_table',require('./API_Gateways/Usertable_Gateway'));
-
+// app.use('/user_table',require('./API_Gateways/Usertable_Gateway'));
 
 app.use('/api/user_table',usersRouter)
 app.use('/api/vendor',vendorsRouter)
-
-// app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
 const pool = mysql.createPool({
   connectionLimit : 10,
