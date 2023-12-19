@@ -7,7 +7,8 @@ const process = require('process');
 const basename = path.basename(__filename);
 const config = require('../config/config');
 const db = {};
-db.user_table = require('./usertable')
+db.user_table = require('./usertable');
+db.vendor = require('./vendor');
 console.log(config);
 
 
@@ -41,7 +42,6 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.user_table.hasOne(db.vendor);
-
 db.vendor.belongsTo(db.user_table);
 
 sequelize

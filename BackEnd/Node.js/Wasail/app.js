@@ -8,6 +8,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+const vendorsRouter = require('./routes/vendors')
 
 
 // var app = express();
@@ -23,7 +24,9 @@ app.use(cookieParser());
 
 app.use('/user_table',require('./API_Gateways/Usertable_Gateway'));
 
+
 app.use('/api/user_table',usersRouter)
+app.use('/api/vendor',vendorsRouter)
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
