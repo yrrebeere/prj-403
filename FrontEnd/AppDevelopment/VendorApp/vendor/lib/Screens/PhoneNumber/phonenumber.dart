@@ -21,7 +21,7 @@ class _MyAppState extends State<PhoneNumber> {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('ur','en'),
+      locale: Locale('en'),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -102,7 +102,7 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.15,
+                  left: screenWidth * 0.11,
                   top: screenHeight * 0.388,
                   child: Container(
                     width: screenWidth * 0.8,
@@ -173,7 +173,7 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.4,
+                  left: screenWidth * 0.35,
                   top: screenHeight * 0.76,
                   child: GestureDetector(
                     onTap: () {
