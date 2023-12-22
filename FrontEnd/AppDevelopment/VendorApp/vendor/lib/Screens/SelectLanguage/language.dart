@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/splash/splash_screen.dart';
+import 'package:provider/provider.dart';
+import 'languageprovider.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LanguageProvider>(
+          create: (context) => LanguageProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Language(),
+      ),
+    );
+  }
+}
 
 class Language extends StatefulWidget {
   const Language({Key? key}) : super(key: key);
@@ -10,11 +34,14 @@ class Language extends StatefulWidget {
 }
 
 class _LanguageState extends State<Language> {
-  static const String routeName = "/page1";
-  String selectedLanguage = 'Urdu';
+  String selectedLanguage = 'English';
 
   @override
   Widget build(BuildContext context) {
+    LanguageProvider languageProvider =
+        Provider.of<LanguageProvider>(context, listen: false);
+    Locale? selectedLocale = languageProvider.selectedLocale;
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -22,7 +49,8 @@ class _LanguageState extends State<Language> {
 
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('ur', 'en'),
+      locale: selectedLocale ?? Locale('en'), // Fallback to 'en' if selectedLocale is null
+
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -31,6 +59,10 @@ class _LanguageState extends State<Language> {
         body: SafeArea(
           child: Builder(
             builder: (BuildContext context) {
+              LanguageProvider languageProvider =
+                  Provider.of<LanguageProvider>(context, listen: false);
+              Locale? selectedLocale = languageProvider.selectedLocale;
+
               return Container(
                 width: screenWidth,
                 height: screenHeight,
@@ -91,6 +123,8 @@ class _LanguageState extends State<Language> {
                           setState(() {
                             selectedLanguage = 'English';
                           });
+                          Provider.of<LanguageProvider>(context, listen: false)
+                              .setSelectedLocale(Locale('en'));
                         },
                         child: Container(
                           width: screenWidth * 0.864,
@@ -131,52 +165,14 @@ class _LanguageState extends State<Language> {
                           setState(() {
                             selectedLanguage = 'Urdu';
                           });
+                          Provider.of<LanguageProvider>(context, listen: false)
+                              .setSelectedLocale(Locale('ur'));
                         },
                         child: Container(
                           width: screenWidth * 0.864,
                           height: screenHeight * 0.091,
                           decoration: BoxDecoration(
                             color: selectedLanguage == 'Urdu'
-                                ? Colors.blueAccent
-                                : Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Color(0x3F000000),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                                spreadRadius: 0,
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              'UR                             Urdu',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screenWidth * 0.048,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                                height: 0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: screenWidth * 0.07,
-                      top: screenHeight * 0.55,
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            selectedLanguage = 'Arabic';
-                          });
-                        },
-                        child: Container(
-                          width: screenWidth * 0.864,
-                          height: screenHeight * 0.091,
-                          decoration: BoxDecoration(
-                            color: selectedLanguage == 'Arabic'
                                 ? Colors.blueAccent
                                 : Colors.white,
                             boxShadow: [
@@ -204,11 +200,12 @@ class _LanguageState extends State<Language> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.4,
+                      left: screenWidth * 0.35,
                       top: screenHeight * 0.76,
                       child: GestureDetector(
                         onTap: () {
-                          if (selectedLanguage.isNotEmpty) {
+                          if (selectedLocale != null &&
+                              selectedLocale.languageCode.isNotEmpty) {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -218,14 +215,18 @@ class _LanguageState extends State<Language> {
                           }
                         },
                         child: Container(
+                          width: screenWidth * 0.3,
+                          // Adjust the width as needed
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: Colors.blue,  // You can customize the container's appearance
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Text(
-                            AppLocalizations.of(context)!.continue_button,
-                            style: TextStyle(color: Colors.white),
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.continue_button,
+                              style: TextStyle(color: Colors.white),
+                            ),
                           ),
                         ),
                       ),

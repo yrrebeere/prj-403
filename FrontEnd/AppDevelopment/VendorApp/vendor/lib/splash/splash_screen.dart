@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
 import 'components/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'components/splash_content.dart';
+import '../Screens/SelectLanguage/languageprovider.dart';
 
 class SplashScreen extends StatefulWidget {
   static String routeName = "/splash";
@@ -24,6 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
+    Locale? selectedLocale = languageProvider.selectedLocale;
 
     splashData = [
       {
@@ -39,10 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
         "image": "assets/images/splash_3.png"
       },
     ];
+
+    // Set the locale based on the selectedLocale from the provider
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('ur','en'),
+      locale: selectedLocale ?? Locale('en'), // Fallback to 'en' if selectedLocale is null
       home: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -123,4 +129,3 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-

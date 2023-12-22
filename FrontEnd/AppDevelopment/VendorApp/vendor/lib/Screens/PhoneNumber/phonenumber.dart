@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Login/login.dart';
+import '../Registeration/registeration.dart';
 
 class PhoneNumber extends StatefulWidget {
   const PhoneNumber({Key? key}) : super(key: key);
 
   @override
   State<PhoneNumber> createState() => _MyAppState();
+
 }
 
 class _MyAppState extends State<PhoneNumber> {
@@ -177,24 +179,36 @@ class _MyAppState extends State<PhoneNumber> {
                   top: screenHeight * 0.76,
                   child: GestureDetector(
                     onTap: () {
+                      //To be checked against database to see which route happens
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) =>
+                      //         Login(phoneNumber: phoneNumberController.text),
+                      //   ),
+                      // );
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              Login(phoneNumber: phoneNumberController.text),
+                          builder: (context) => Registeration(),
                         ),
                       );
+
                     },
                     child: Container(
+                      width: screenWidth * 0.3,
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Colors.blue,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: Text(
-                        AppLocalizations.of(context)!.next_button,
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.next_button,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
                     ),
                   ),
                 ),

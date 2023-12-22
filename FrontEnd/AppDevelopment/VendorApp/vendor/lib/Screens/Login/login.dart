@@ -126,65 +126,8 @@ class _MyAppState extends State<Login> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.07,
-                        top: screenHeight * 0.46,
-                        child: Text(
-                          AppLocalizations.of(context)!.password,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: screenWidth * 0.04,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        left: screenWidth * 0.07,
-                        top: screenHeight * 0.6,
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              TextSpan(
-                                text: AppLocalizations.of(context)!.reset,
-                                style: TextStyle(
-                                  color: const Color(0xFF007AFF),
-                                  fontSize: screenWidth * 0.04,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.underline,
-                                  height: 0,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ' ',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: screenWidth * 0.04,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.underline,
-                                  height: 0,
-                                ),
-                              ),
-                              TextSpan(
-                                text: AppLocalizations.of(context)!.password,
-                                style: TextStyle(
-                                  color: const Color(0xFF007AFF),
-                                  fontSize: screenWidth * 0.04,
-                                  fontFamily: 'Inter',
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.underline,
-                                  height: 0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
                         left: screenWidth * 0.10,
-                        top: screenHeight * 0.387,
+                        top: screenHeight * 0.39,
                         child: Container(
                           width: screenWidth * 0.800,
                           height: screenHeight * 0.06,
@@ -214,41 +157,44 @@ class _MyAppState extends State<Login> {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(left: screenWidth * 0.1, top: screenHeight * 0.52),
-                        child: SizedBox(
-                          width: screenWidth * 0.800,
-                          height: screenHeight * 0.06,
-                          child: TextFormField(
-                            controller: passwordController,
-                            obscureText: true,
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.teal),
+                      // Centered the password TextField horizontally
+                      Center(
+                        child: Container(
+                          margin: EdgeInsets.only(top: screenHeight * 0.2),
+                          child: SizedBox(
+                            width: screenWidth * 0.800,
+                            height: screenHeight * 0.06,
+                            child: TextFormField(
+                              controller: passwordController,
+                              obscureText: true,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.teal),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.teal),
+                                ),
+                                filled: true,
+                                prefixIcon: Icon(Icons.lock, color: Colors.teal, size: 25),
+                                hintText: AppLocalizations.of(context)!.enter_password,
+                                suffixStyle: TextStyle(fontSize: 25),
+                                hintStyle: TextStyle(color: Colors.teal),
                               ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.teal),
-                              ),
-                              filled: true,
-                              prefixIcon: Icon(Icons.lock, color: Colors.teal, size: 25),
-                              hintText: AppLocalizations.of(context)!.enter_password,
-                              suffixStyle: TextStyle(fontSize: 25),
-                              hintStyle: TextStyle(color: Colors.teal),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Password is required';
+                                } else if (value.length < 8) {
+                                  return 'Password should be at least 8 digits long';
+                                } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                                  return 'Password should contain at least one special character';
+                                }
+                                return null; // Return null if the password is valid
+                              },
                             ),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password is required';
-                              } else if (value.length < 8) {
-                                return 'Password should be at least 8 digits long';
-                              } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-                                return 'Password should contain at least one special character';
-                              }
-                              return null; // Return null if the password is valid
-                            },
                           ),
                         ),
                       ),
@@ -272,6 +218,7 @@ class _MyAppState extends State<Login> {
                             }
                           },
                           child: Container(
+                            width: screenWidth * 0.2, // Adjust the width as needed
                             decoration: BoxDecoration(
                               color: const Color(0xFF007AFF),
                               borderRadius: BorderRadius.circular(screenHeight * 0.03),
@@ -282,9 +229,11 @@ class _MyAppState extends State<Login> {
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child:  Text(
+                              child: Center(
+                                child: Text(
                                   AppLocalizations.of(context)!.login,
-                                style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           ),
