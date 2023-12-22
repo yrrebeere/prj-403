@@ -4,6 +4,10 @@ import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Inventory/inventory.dart';
 
+void main() {
+  runApp(NavBar());
+}
+
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
