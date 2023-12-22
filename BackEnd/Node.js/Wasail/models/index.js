@@ -9,6 +9,7 @@ const config = require('../config/config');
 const db = {};
 db.user_table = require('./usertable');
 db.vendor = require('./vendor');
+db.grocery_store = require('./grocerystore')
 console.log(config);
 
 
@@ -44,14 +45,8 @@ db.Sequelize = Sequelize;
 db.user_table.hasOne(db.vendor);
 db.vendor.belongsTo(db.user_table);
 
-// db.user_table.hasOne(db.vendor,{
-//     foreignKey: 'user_id',
-//     as: 'vendor'
-// });
-// db.vendor.belongsTo(db.user_table,{
-//     foreignKey: 'user_id',
-//     as: 'user_table'
-// });
+db.user_table.hasOne(db.grocery_store);
+db.grocery_store.belongsTo(db.user_table);
 
 sequelize
     .authenticate()
