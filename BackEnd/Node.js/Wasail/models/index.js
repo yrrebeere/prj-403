@@ -9,7 +9,8 @@ const config = require('../config/config');
 const db = {};
 db.user_table = require('./usertable');
 db.vendor = require('./vendor');
-db.grocery_store = require('./grocerystore')
+db.grocery_store = require('./grocerystore');
+db.order = require('./order');
 console.log(config);
 
 
@@ -47,6 +48,12 @@ db.vendor.belongsTo(db.user_table);
 
 db.user_table.hasOne(db.grocery_store);
 db.grocery_store.belongsTo(db.user_table);
+
+db.grocery_store.hasOne(db.order);
+db.order.belongsTo(db.grocery_store);
+
+db.vendor.hasOne(db.order);
+db.order.belongsTo(db.vendor);
 
 sequelize
     .authenticate()

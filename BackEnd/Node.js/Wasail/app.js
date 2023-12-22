@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var vendorsRouter = require('./routes/vendors');
 var storesRouter = require('./routes/stores');
+var ordersRouter = require('./routes/orders');
 
 // var app = express();
 const app = express()
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use('/api/user_table',usersRouter)
 app.use('/api/vendor',vendorsRouter)
 app.use('/api/grocery_store',storesRouter)
+app.use('/api/order',ordersRouter)
 
 const pool = mysql.createPool({
   connectionLimit : 10,
