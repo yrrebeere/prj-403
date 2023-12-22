@@ -9,5 +9,16 @@
   "phone_number" : "Phone Number",
   "password" : "Password",
   "reset" : "Reset",
-  "enter_password" : "Enter Password"
+  "enter_password" : "Enter Password",
+  "enter_reg_details" : "Enter Registration Details",
+  "confirm_password" : "Confirm Password",
+  "full_name" : "Full Name",
+  "delivery_areas" : "Delivery Areas",
+  "i_agree_to": "I agree to the",
+  "terms_and_conditions" : "Terms and Conditions",
+  "and" : "and",
+  "privacy_and_policy": "Privacy Policy",
+  "register" : "Register"
+
+
 }

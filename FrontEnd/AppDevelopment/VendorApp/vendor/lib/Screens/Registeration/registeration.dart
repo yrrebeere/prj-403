@@ -12,8 +12,7 @@ class Registeration extends StatefulWidget {
 class _RegisterationState extends State<Registeration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
 
@@ -32,6 +31,14 @@ class _RegisterationState extends State<Registeration> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: languageProvider.selectedLocale,
+
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+
           home: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -50,8 +57,6 @@ class _RegisterationState extends State<Registeration> {
                       Positioned(
                         right: screenWidth * 0.8,
                         top: screenHeight * 0.001,
-                        child: Directionality(
-                          textDirection: TextDirection.ltr,
                           child: GestureDetector(
                             onTap: () {
                               // Navigate back to the previous page
@@ -68,13 +73,12 @@ class _RegisterationState extends State<Registeration> {
                               ],
                             ),
                           ),
-                        ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.31,
-                        top: screenHeight * 0.01,
+                        left: screenWidth * 0.34,
+                        top: screenHeight * 0.00,
                         child: Text(
-                          'WASAIL',
+                          AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
                             color: Color(0xFF6FB457),
                             fontSize: 32,
@@ -88,7 +92,7 @@ class _RegisterationState extends State<Registeration> {
                         left: screenWidth * 0.15,
                         top: screenHeight * 0.08,
                         child: Text(
-                          'Enter Registration Details',
+                          AppLocalizations.of(context)!.enter_reg_details,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: screenWidth * 0.05,
@@ -112,7 +116,7 @@ class _RegisterationState extends State<Registeration> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 0.0),
                                 child: Text(
-                                  'Mobile Number:',
+                                  AppLocalizations.of(context)!.phone_number,
                                   style: TextStyle(
                                     fontSize: screenWidth * 0.035,
                                     fontWeight: FontWeight.w600,
@@ -133,16 +137,16 @@ class _RegisterationState extends State<Registeration> {
                                       items: <String>['+92', '+1', '+44', '+81']
                                           .map<DropdownMenuItem<String>>(
                                               (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Row(
-                                            children: [
-                                              SizedBox(width: 8),
-                                              Text(value),
-                                            ],
-                                          ),
-                                        );
-                                      }).toList(),
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(width: 8),
+                                                  Text(value),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList(),
                                     ),
                                   ),
                                   Container(
@@ -168,7 +172,7 @@ class _RegisterationState extends State<Registeration> {
                         left: 0,
                         top: screenHeight * 0.25,
                         child: Text(
-                          'Password',
+                          AppLocalizations.of(context)!.password,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -190,7 +194,7 @@ class _RegisterationState extends State<Registeration> {
                             controller: passwordController,
                             obscureText: true,
                             decoration: InputDecoration(
-                              hintText: 'Enter your password',
+                              hintText: AppLocalizations.of(context)!.enter_password,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
@@ -203,7 +207,7 @@ class _RegisterationState extends State<Registeration> {
                         left: 0,
                         top: screenHeight * 0.38,
                         child: Text(
-                          'Confirm Password',
+                          AppLocalizations.of(context)!.confirm_password,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -225,7 +229,7 @@ class _RegisterationState extends State<Registeration> {
                             controller: confirmPasswordController,
                             obscureText: true,
                             decoration: InputDecoration(
-                              hintText: 'Confirm your password',
+                              hintText: AppLocalizations.of(context)!.enter_password,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
@@ -238,7 +242,7 @@ class _RegisterationState extends State<Registeration> {
                         left: 0,
                         top: screenHeight * 0.51,
                         child: Text(
-                          'Full Name',
+                          AppLocalizations.of(context)!.full_name,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -260,7 +264,7 @@ class _RegisterationState extends State<Registeration> {
                             controller: nameController,
                             obscureText: false,
                             decoration: InputDecoration(
-                              hintText: 'Enter your full name',
+                              hintText: AppLocalizations.of(context)!.full_name,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
@@ -273,7 +277,7 @@ class _RegisterationState extends State<Registeration> {
                         left: 0,
                         top: screenHeight * 0.66,
                         child: Text(
-                          'Delivery Areas',
+                          AppLocalizations.of(context)!.delivery_areas,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -314,54 +318,57 @@ class _RegisterationState extends State<Registeration> {
                       Positioned(
                         left: 0,
                         top: screenHeight * 0.8,
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              value: agreeToTerms,
-                              onChanged: (value) {
-                                setState(() {
-                                  agreeToTerms = value!;
-                                });
-                              },
+                        child: Container(
+                          width: screenWidth * 0.9,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                  value: agreeToTerms,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      agreeToTerms = value!;
+                                    });
+                                  },
+                                ),
+                                RichText(
+                                  text: TextSpan(
+                                    text: AppLocalizations.of(context)!.i_agree_to,
+                                    style: TextStyle(color: Colors.black, fontSize: 12),
+                                    children: [
+                                      TextSpan(
+                                        text: AppLocalizations.of(context)!.terms_and_conditions,
+                                        style: TextStyle(
+                                          color: Color(0xFF6FB457),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: AppLocalizations.of(context)!.and,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: AppLocalizations.of(context)!.privacy_and_policy,
+                                        style: TextStyle(
+                                          color: Color(0xFF6FB457),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                            RichText(
-                              text: TextSpan(
-                                text: 'I agree to the ',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                                children: [
-                                  TextSpan(
-                                    text: 'Terms and Conditions',
-                                    style: TextStyle(
-                                      color: Color(0xFF6FB457),
-                                      fontSize: 12,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' and ',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Privacy Policy',
-                                    style: TextStyle(
-                                      color: Color(0xFF6FB457),
-                                      fontSize: 12,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.9,
-                        left: screenWidth * 0.4,
+                        top: screenHeight * 0.89,
+                        left: screenWidth * 0.37,
                         bottom: screenHeight * 0.05,
                         child: GestureDetector(
                           onTap: () {
@@ -382,18 +389,18 @@ class _RegisterationState extends State<Registeration> {
                             child: Opacity(
                               opacity: agreeToTerms ? 1.0 : 0.5,
                               child: Container(
-                                padding: const EdgeInsets.all(8.0),
-                                margin: EdgeInsets.only(bottom: 8.0),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
-                                  borderRadius: BorderRadius.circular(4.0),
-                                ),
-                                child: Center(
-                                  child: const Text(
-                                    "Register",
-                                    style: TextStyle(color: Colors.white),
+                                  padding: const EdgeInsets.all(8.0),
+                                  margin: EdgeInsets.only(bottom: 8.0),
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFF6FB457),
+                                    borderRadius: BorderRadius.circular(4.0),
                                   ),
-                                )
+                                  child: Center(
+                                    child:  Text(
+                                      AppLocalizations.of(context)!.register,
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  )
                               ),
                             ),
                           ),

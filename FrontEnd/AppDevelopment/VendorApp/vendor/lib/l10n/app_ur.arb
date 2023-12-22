@@ -9,6 +9,16 @@
   "phone_number" : "فون نمبر",
   "password" : "پاس ورڈ",
   "reset" : "ری سیٹ",
-  "enter_password" : "پاس ورڈ درج کریں"
+  "enter_password" : "پاس ورڈ درج کریں",
+  "enter_reg_details" : "رجسٹریشن کی تفصیلات درج کریں",
+  "confirm_password" : "پاس ورڈ کی تصدیق کریں",
+  "full_name" : "پورا نام",
+  "delivery_areas" : "ترسیل کے علاقے",
+  "i_agree_to" : " میں ",
+  "terms_and_conditions" : " شرائط و ضوابط ",
+  "and" : " اور ",
+  "privacy_and_policy" : " رازداری کی پالیسی سے اتفاق کرتا ہوں ",
+  "register" : "رجسٹر کریں"
+
 
 }

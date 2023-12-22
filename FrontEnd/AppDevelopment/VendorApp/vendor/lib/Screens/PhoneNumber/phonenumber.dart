@@ -24,6 +24,14 @@ class _MyAppState extends State<PhoneNumber> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale('en'),
+
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.ltr,
+          child: child!,
+        );
+      },
+
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -90,7 +98,7 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.07,
+                  left: screenWidth * 0.3,
                   top: screenHeight * 0.2,
                   child: Text(
                     AppLocalizations.of(context)!.enter_number,
@@ -200,7 +208,7 @@ class _MyAppState extends State<PhoneNumber> {
                       width: screenWidth * 0.3,
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Color(0xFF6FB457),
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Center(

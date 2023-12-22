@@ -102,7 +102,7 @@ class _LanguageState extends State<Language> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.1,
+                      left: screenWidth * 0.28,
                       top: screenHeight * 0.2,
                       child: Text(
                         AppLocalizations.of(context)!.select_lang,
@@ -131,7 +131,7 @@ class _LanguageState extends State<Language> {
                           height: screenHeight * 0.091,
                           decoration: BoxDecoration(
                             color: selectedLanguage == 'English'
-                                ? Colors.blueAccent
+                                ? Color(0xFF6FB457)
                                 : Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -173,7 +173,7 @@ class _LanguageState extends State<Language> {
                           height: screenHeight * 0.091,
                           decoration: BoxDecoration(
                             color: selectedLanguage == 'Urdu'
-                                ? Colors.blueAccent
+                                ? Color(0xFF6FB457)
                                 : Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -219,7 +219,7 @@ class _LanguageState extends State<Language> {
                           // Adjust the width as needed
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: Colors.blue,
+                            color: Color(0xFF6FB457),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Center(

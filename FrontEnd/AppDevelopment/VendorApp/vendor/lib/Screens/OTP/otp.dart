@@ -263,7 +263,7 @@ class _MyAppState extends State<OTP> {
                           child: Container(
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color: Colors.blue,
+                              color: Color(0xFF6FB457),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: const Text(
