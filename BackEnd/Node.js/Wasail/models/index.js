@@ -11,6 +11,7 @@ db.user_table = require('./usertable');
 db.vendor = require('./vendor');
 db.grocery_store = require('./grocerystore');
 db.order = require('./order');
+db.order_detail = require('./orderdetail');
 console.log(config);
 
 
@@ -49,11 +50,14 @@ db.vendor.belongsTo(db.user_table);
 db.user_table.hasOne(db.grocery_store);
 db.grocery_store.belongsTo(db.user_table);
 
-db.grocery_store.hasOne(db.order);
+db.grocery_store.hasMany(db.order);
 db.order.belongsTo(db.grocery_store);
 
-db.vendor.hasOne(db.order);
+db.vendor.hasMany(db.order);
 db.order.belongsTo(db.vendor);
+
+db.order.hasMany(db.order_detail);
+db.order_detail.belongsTo(db.order);
 
 sequelize
     .authenticate()
