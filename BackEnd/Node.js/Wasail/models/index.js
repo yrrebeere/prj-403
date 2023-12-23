@@ -12,6 +12,7 @@ db.vendor = require('./vendor');
 db.grocery_store = require('./grocerystore');
 db.order = require('./order');
 db.order_detail = require('./orderdetail');
+db.product_category = require('./productcategory');
 console.log(config);
 
 
@@ -44,21 +45,27 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//user_table-vendor
 db.user_table.hasOne(db.vendor);
 db.vendor.belongsTo(db.user_table);
 
+//user_table-grocery_store
 db.user_table.hasOne(db.grocery_store);
 db.grocery_store.belongsTo(db.user_table);
 
+//grocery_store/vendor-order
 db.grocery_store.hasMany(db.order);
 db.order.belongsTo(db.grocery_store);
-
 db.vendor.hasMany(db.order);
 db.order.belongsTo(db.vendor);
 
+//order-order_details
 db.order.hasMany(db.order_detail);
 db.order_detail.belongsTo(db.order);
 
+//gorcery_store-vendor
+db.grocery_store.belongsToMany(db.vendor, {through: 'list'})
+db.vendor.belongsToMany(db.grocery_store, {through: 'list'})
 sequelize
     .authenticate()
     .then(() => {
