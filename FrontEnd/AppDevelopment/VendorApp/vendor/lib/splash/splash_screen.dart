@@ -26,6 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     LanguageProvider languageProvider = Provider.of<LanguageProvider>(context);
     Locale? selectedLocale = languageProvider.selectedLocale;
 
@@ -44,11 +47,10 @@ class _SplashScreenState extends State<SplashScreen> {
       },
     ];
 
-    // Set the locale based on the selectedLocale from the provider
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: selectedLocale ?? Locale('en'), // Fallback to 'en' if selectedLocale is null
+      locale: selectedLocale ?? Locale('en'), //
       home: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -56,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
             width: double.infinity,
             child: Column(
               children: <Widget>[
+
                 Expanded(
                   flex: 3,
                   child: PageView.builder(
@@ -97,6 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                         ),
                         const Spacer(flex: 3),
+
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -105,19 +109,23 @@ class _SplashScreenState extends State<SplashScreen> {
                             );
                           },
                           child: Container(
+                            width: screenWidth * 0.3,
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
                               color: Color(0xFF6FB457),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: Text(
-                              AppLocalizations.of(context)!.continue_button,
-                              style: TextStyle(color: Colors.white),
-                            ),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.continue_button,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
                           ),
                         ),
                         const Spacer(),
                       ],
+
                     ),
                   ),
                 ),

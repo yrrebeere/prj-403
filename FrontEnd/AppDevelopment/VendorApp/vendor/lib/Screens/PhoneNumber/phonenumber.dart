@@ -98,7 +98,7 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
-                  left: screenWidth * 0.3,
+                  left: screenWidth * 0.2,
                   top: screenHeight * 0.2,
                   child: Text(
                     AppLocalizations.of(context)!.enter_number,

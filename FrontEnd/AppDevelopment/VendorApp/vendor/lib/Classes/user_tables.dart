@@ -1,5 +1,5 @@
 class UserTables {
-  // final int userId;
+  final int userId;
   final int phoneNumber;
   final String name;
   // final String password;
@@ -10,7 +10,7 @@ class UserTables {
   // final DateTime updatedAt;
 
   UserTables({
-    // required this.userId,
+    required this.userId,
     required this.phoneNumber,
     required this.name,
     // required this.password,
@@ -23,7 +23,7 @@ class UserTables {
 
   factory UserTables.fromJson(Map<String, dynamic> json) {
     return UserTables(
-      // userId: json['userId'],
+      userId: json['user_id'],
       phoneNumber: json['phone_number'],
       name: json['name'],
       // password: json['password'],

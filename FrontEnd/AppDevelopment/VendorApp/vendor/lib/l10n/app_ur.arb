@@ -1,8 +1,8 @@
 {
-  "app_name": "وسائل",
+  "app_name": "وسائل ",
   "select_lang":"زبان منتخب کریں",
   "continue_button": "جاری رہے",
-  "enter_number": "فون نمبر درج کریں",
+  "enter_number": "      فون نمبر درج کریں   ",
   "welcome_msg": "وصیل میں خوش آمدید",
   "next_button" : "اگلے مرحلے پر",
   "login" : "لاگ ان",
@@ -10,7 +10,7 @@
   "password" : "پاس ورڈ",
   "reset" : "ری سیٹ",
   "enter_password" : "پاس ورڈ درج کریں",
-  "enter_reg_details" : "رجسٹریشن کی تفصیلات درج کریں",
+  "enter_reg_details" : "رجسٹریشن کی تفصیلات درج کریں ",
   "confirm_password" : "پاس ورڈ کی تصدیق کریں",
   "full_name" : "پورا نام",
   "delivery_areas" : "ترسیل کے علاقے",
@@ -18,7 +18,7 @@
   "terms_and_conditions" : " شرائط و ضوابط ",
   "and" : " اور ",
   "privacy_and_policy" : " رازداری کی پالیسی سے اتفاق کرتا ہوں ",
-  "register" : "رجسٹر کریں"
-
+  "register" : "رجسٹر کریں",
+  "username" : "صارف نام"
 
 }

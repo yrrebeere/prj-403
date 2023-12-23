@@ -2,7 +2,7 @@
   "app_name": "WASAIL",
   "select_lang": "Select Language",
   "continue_button": "Continue",
-  "enter_number": "Enter Phone Number",
+  "enter_number": "  Enter Phone Number",
   "welcome_msg" : "Welcome to Wasail",
   "next_button" : "Next",
   "login" : "Login",
@@ -10,15 +10,16 @@
   "password" : "Password",
   "reset" : "Reset",
   "enter_password" : "Enter Password",
-  "enter_reg_details" : "Enter Registration Details",
+  "enter_reg_details" : "   Enter Registration Details",
   "confirm_password" : "Confirm Password",
   "full_name" : "Full Name",
   "delivery_areas" : "Delivery Areas",
-  "i_agree_to": "I agree to the",
-  "terms_and_conditions" : "Terms and Conditions",
+  "i_agree_to": "I agree to the ",
+  "terms_and_conditions" : "Terms and Conditions ",
   "and" : "and",
-  "privacy_and_policy": "Privacy Policy",
-  "register" : "Register"
+  "privacy_and_policy": " Privacy Policy",
+  "register" : "Register",
+  "username" : "Username"
 
 
 }

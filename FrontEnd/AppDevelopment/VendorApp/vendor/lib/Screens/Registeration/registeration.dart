@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
+import 'package:vendor/main.dart';
 
 class Registeration extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class _RegisterationState extends State<Registeration> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
+  final TextEditingController userNameController = TextEditingController();
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
@@ -59,7 +61,6 @@ class _RegisterationState extends State<Registeration> {
                         top: screenHeight * 0.001,
                           child: GestureDetector(
                             onTap: () {
-                              // Navigate back to the previous page
                               Navigator.pop(context);
                             },
                             child: Row(
@@ -90,7 +91,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: screenWidth * 0.15,
-                        top: screenHeight * 0.08,
+                        top: screenHeight * 0.07,
                         child: Text(
                           AppLocalizations.of(context)!.enter_reg_details,
                           style: TextStyle(
@@ -103,7 +104,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: screenWidth * 0.0,
-                        top: screenHeight * 0.14,
+                        top: screenHeight * 0.12,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.1,
@@ -154,7 +155,7 @@ class _RegisterationState extends State<Registeration> {
                                     child: TextField(
                                       controller: phoneNumberController,
                                       decoration: InputDecoration(
-                                        hintText: '3355600598',
+                                        hintText: 'XXXXXXXXXX',
                                         hintStyle: TextStyle(
                                           fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.w400,
@@ -170,7 +171,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.25,
+                        top: screenHeight * 0.23,
                         child: Text(
                           AppLocalizations.of(context)!.password,
                           style: TextStyle(
@@ -183,7 +184,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.28,
+                        top: screenHeight * 0.25,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -205,7 +206,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.38,
+                        top: screenHeight * 0.34,
                         child: Text(
                           AppLocalizations.of(context)!.confirm_password,
                           style: TextStyle(
@@ -218,7 +219,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.41,
+                        top: screenHeight * 0.36,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -240,7 +241,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.51,
+                        top: screenHeight * 0.45,
                         child: Text(
                           AppLocalizations.of(context)!.full_name,
                           style: TextStyle(
@@ -253,7 +254,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.55,
+                        top: screenHeight * 0.47,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -275,7 +276,42 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.66,
+                        top: screenHeight * 0.56,
+                        child: Text(
+                          AppLocalizations.of(context)!.username,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: screenHeight * 0.58,
+                        child: Container(
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.05,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: TextField(
+                            controller: userNameController,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.username,
+                              hintStyle: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: screenHeight * 0.67,
                         child: Text(
                           AppLocalizations.of(context)!.delivery_areas,
                           style: TextStyle(
@@ -288,7 +324,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.7,
+                        top: screenHeight * 0.71,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -298,8 +334,7 @@ class _RegisterationState extends State<Registeration> {
                           child: DropdownButton<String>(
                             value: selectedArea,
                             onChanged: (String? newValue) {
-                              // Handle dropdown value change here
-                              // You can update the state or controller accordingly
+
                             },
                             items: <String>[
                               'DHA Phase I',
@@ -368,7 +403,7 @@ class _RegisterationState extends State<Registeration> {
                       ),
                       Positioned(
                         top: screenHeight * 0.89,
-                        left: screenWidth * 0.37,
+                        left: screenWidth * 0.30,
                         bottom: screenHeight * 0.05,
                         child: GestureDetector(
                           onTap: () {
@@ -389,11 +424,11 @@ class _RegisterationState extends State<Registeration> {
                             child: Opacity(
                               opacity: agreeToTerms ? 1.0 : 0.5,
                               child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  margin: EdgeInsets.only(bottom: 8.0),
+                                  width: screenWidth * 0.3,
+                                  padding: const EdgeInsets.all(16.0),
                                   decoration: BoxDecoration(
                                     color: Color(0xFF6FB457),
-                                    borderRadius: BorderRadius.circular(4.0),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: Center(
                                     child:  Text(

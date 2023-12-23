@@ -22,6 +22,7 @@ const getAllUsers = async (req, res) => {
 
     let users = await User.findAll({
         attributes: [
+            'user_id',
             'phone_number',
             'name',
             'username',
