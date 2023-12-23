@@ -13,6 +13,7 @@ db.grocery_store = require('./grocerystore');
 db.order = require('./order');
 db.order_detail = require('./orderdetail');
 db.product_category = require('./productcategory');
+db.product = require('./product');
 console.log(config);
 
 
@@ -63,9 +64,14 @@ db.order.belongsTo(db.vendor);
 db.order.hasMany(db.order_detail);
 db.order_detail.belongsTo(db.order);
 
-//gorcery_store-vendor
+//grocery_store-vendor
 db.grocery_store.belongsToMany(db.vendor, {through: 'list'})
 db.vendor.belongsToMany(db.grocery_store, {through: 'list'})
+
+//productcategory-product
+db.product_category.belongsToMany(db.product, {through: 'productcategorylink'})
+db.product.belongsToMany(db.product_category, {through: 'productcategorylink'})
+
 sequelize
     .authenticate()
     .then(() => {

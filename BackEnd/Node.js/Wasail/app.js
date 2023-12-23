@@ -13,6 +13,7 @@ var storesRouter = require('./routes/stores');
 var ordersRouter = require('./routes/orders');
 var detailsRouter = require('./routes/details');
 var categoriesRouter = require('./routes/categories');
+var productsRouter = require('./routes/products');
 
 // var app = express();
 const app = express()
@@ -32,6 +33,7 @@ app.use('/api/grocery_store',storesRouter)
 app.use('/api/order',ordersRouter)
 app.use('/api/order_detail',detailsRouter)
 app.use('/api/product_category',categoriesRouter)
+app.use('/api/product',productsRouter)
 
 const pool = mysql.createPool({
   connectionLimit : 10,
