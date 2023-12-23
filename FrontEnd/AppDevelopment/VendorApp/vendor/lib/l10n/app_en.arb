@@ -19,7 +19,6 @@
   "and" : "and",
   "privacy_and_policy": " Privacy Policy",
   "register" : "Register",
-  "username" : "Username"
-
-
+  "username" : "Username",
+  "enter_reg_details" : "Enter Registration Details"
 }

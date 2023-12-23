@@ -10,6 +10,7 @@ class VendorApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: UsersScreen(),
+      // home: ,
     );
   }
 }
@@ -100,8 +101,8 @@ class _UsersScreenState extends State<UsersScreen> {
     TextEditingController nameController = TextEditingController();
     TextEditingController usernameController = TextEditingController();
     TextEditingController phoneNumberController = TextEditingController();
-    TextEditingController languageController = TextEditingController();
-    TextEditingController userTypeController = TextEditingController();
+    String selectedLanguage = 'English';
+    String selectedUserType = 'Vendor';
 
     await showDialog(
       context: context,
@@ -123,13 +124,50 @@ class _UsersScreenState extends State<UsersScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: 'Phone Number'),
               ),
-              TextField(
-                controller: languageController,
-                decoration: InputDecoration(labelText: 'Language'),
+              Row(
+                children: [
+                  Text('User Type: '),
+                  DropdownButton<String>(
+                    value: selectedUserType,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedUserType = newValue!;
+                      });
+                    },
+                    items: <String>['Vendor', 'Grocery Store', 'Admin']
+                        .map<DropdownMenuItem<String>>(
+                          (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    hint: Text('Select User Type'),
+                  ),
+                ],
               ),
-              TextField(
-                controller: userTypeController,
-                decoration: InputDecoration(labelText: 'User Type'),
+              Row(
+                children: [
+                  Text('Language: '),
+                  DropdownButton<String>(
+                    value: selectedLanguage,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedLanguage = newValue!;
+                      });
+                    },
+                    items: <String>['English', 'Urdu'].map<DropdownMenuItem<String>>(
+                          (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    hint: Text('Select Language'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -146,8 +184,8 @@ class _UsersScreenState extends State<UsersScreen> {
                   nameController.text,
                   usernameController.text,
                   phoneNumberController.text,
-                  languageController.text,
-                  userTypeController.text,
+                  selectedLanguage,
+                  selectedUserType,
                 );
                 Navigator.of(context).pop();
               },
@@ -192,7 +230,17 @@ class _UsersScreenState extends State<UsersScreen> {
     TextEditingController usernameController = TextEditingController();
     TextEditingController phoneNumberController = TextEditingController();
     TextEditingController languageController = TextEditingController();
-    TextEditingController userTypeController = TextEditingController();
+    String selectedUserType = 'Vendor';
+
+    // Fetch existing user details
+    UserTables existingUser = await _fetchUserDetails(userId);
+
+    // Set default values for the text controllers
+    nameController.text = existingUser.name;
+    usernameController.text = existingUser.username;
+    phoneNumberController.text = existingUser.phoneNumber.toString();
+    languageController.text = existingUser.language;
+    selectedUserType = existingUser.userType;
 
     await showDialog(
       context: context,
@@ -214,13 +262,50 @@ class _UsersScreenState extends State<UsersScreen> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(labelText: 'Phone Number'),
               ),
-              TextField(
-                controller: languageController,
-                decoration: InputDecoration(labelText: 'Language'),
+              Row(
+                children: [
+                  Text('Language: '),
+                  DropdownButton<String>(
+                    value: languageController.text, // Set existing value
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        languageController.text = newValue!;
+                      });
+                    },
+                    items: <String>['English', 'Urdu'].map<DropdownMenuItem<String>>(
+                          (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    hint: Text('Select Language'),
+                  ),
+                ],
               ),
-              TextField(
-                controller: userTypeController,
-                decoration: InputDecoration(labelText: 'User Type'),
+              Row(
+                children: [
+                  Text('User Type: '),
+                  DropdownButton<String>(
+                    value: selectedUserType,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedUserType = newValue!;
+                      });
+                    },
+                    items: <String>['Vendor', 'Grocery Store', 'Admin']
+                        .map<DropdownMenuItem<String>>(
+                          (String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      },
+                    ).toList(),
+                    hint: Text('Select User Type'),
+                  ),
+                ],
               ),
             ],
           ),
@@ -239,7 +324,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   usernameController.text,
                   phoneNumberController.text,
                   languageController.text,
-                  userTypeController.text,
+                  selectedUserType,
                 );
                 Navigator.of(context).pop();
               },
@@ -249,6 +334,21 @@ class _UsersScreenState extends State<UsersScreen> {
         );
       },
     );
+  }
+
+
+  Future<UserTables> _fetchUserDetails(int userId) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'),
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic json = jsonDecode(response.body);
+      return UserTables.fromJson(json);
+    } else {
+      print('Failed to load user details by ID');
+      throw Exception('Failed to load user details by ID');
+    }
   }
 
   Future<void> _performUpdate(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Login/login.dart';
 import '../Registeration/registeration.dart';
+import 'package:flutter/services.dart';
 
 class PhoneNumber extends StatefulWidget {
   const PhoneNumber({Key? key}) : super(key: key);
@@ -169,8 +170,13 @@ class _MyAppState extends State<PhoneNumber> {
                           width: screenWidth * 0.45,
                           child: TextField(
                             controller: phoneNumberController,
+                            keyboardType: TextInputType.number,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly,
+                              LengthLimitingTextInputFormatter(10),
+                            ],
                             decoration: InputDecoration(
-                              hintText: '3144364288',
+                              hintText: 'XXXXXXXXX',
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.048,
                                 fontWeight: FontWeight.w400,

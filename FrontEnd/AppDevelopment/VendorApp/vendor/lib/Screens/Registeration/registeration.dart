@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
+import 'package:flutter/services.dart';
 import 'package:vendor/main.dart';
 
 class Registeration extends StatefulWidget {
@@ -154,8 +155,13 @@ class _RegisterationState extends State<Registeration> {
                                     width: screenWidth * 0.6,
                                     child: TextField(
                                       controller: phoneNumberController,
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                                        LengthLimitingTextInputFormatter(9),
+                                      ],
                                       decoration: InputDecoration(
-                                        hintText: 'XXXXXXXXXX',
+                                        hintText: 'XXXXXXXXX',
                                         hintStyle: TextStyle(
                                           fontSize: screenWidth * 0.035,
                                           fontWeight: FontWeight.w400,
