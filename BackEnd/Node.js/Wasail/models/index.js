@@ -14,6 +14,7 @@ db.order = require('./order');
 db.order_detail = require('./orderdetail');
 db.product_category = require('./productcategory');
 db.product = require('./product');
+db.product_inventory = require('./productinventory');
 console.log(config);
 
 
@@ -71,6 +72,13 @@ db.vendor.belongsToMany(db.grocery_store, {through: 'list'})
 //productcategory-product
 db.product_category.belongsToMany(db.product, {through: 'productcategorylink'})
 db.product.belongsToMany(db.product_category, {through: 'productcategorylink'})
+
+//product-productinventory || productinventory-vendor
+db.product.hasMany(db.product_inventory);
+db.product_inventory.belongsTo(db.product);
+db.product_inventory.belongsToMany(db.vendor, {through: 'vendorproductinventory'})
+db.vendor.belongsToMany(db.product_inventory, {through: 'vendorproductinventory'})
+
 
 sequelize
     .authenticate()
