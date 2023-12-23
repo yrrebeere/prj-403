@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
+import '../../Utility/user_utility.dart';
 import 'package:vendor/main.dart';
 
 class Registeration extends StatefulWidget {
@@ -22,6 +23,45 @@ class _RegisterationState extends State<Registeration> {
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
   String selectedArea = 'DHA Phase II';
+
+  void _registerUser() async {
+    String phoneNumber = phoneNumberController.text;
+    String password = passwordController.text;
+    String name = nameController.text;
+    String username = userNameController.text;
+
+    String vendorName = name;
+    String deliveryLocation = selectedArea;
+
+    User user = User(
+      name: name,
+      username: username,
+      phoneNumber: phoneNumber,
+      language: 'English', // fetch this from the provider
+      userType: 'Vendor',
+    );
+
+    Vendor vendor = Vendor(
+      // name: name,
+      // username: username,
+      // phoneNumber: phoneNumber,
+      // language: 'English',
+      // userType: 'Vendor',
+      vendorName: vendorName,
+      deliveryLocation: deliveryLocation,
+    );
+
+    await UserService.createUser(user);
+    await UserService.createVendor(vendor);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => NavBar(),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +197,8 @@ class _RegisterationState extends State<Registeration> {
                                       controller: phoneNumberController,
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
-                                        FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                                        LengthLimitingTextInputFormatter(9),
+                                        FilteringTextInputFormatter.digitsOnly,
+                                        LengthLimitingTextInputFormatter(10),
                                       ],
                                       decoration: InputDecoration(
                                         hintText: 'XXXXXXXXX',
@@ -340,7 +380,9 @@ class _RegisterationState extends State<Registeration> {
                           child: DropdownButton<String>(
                             value: selectedArea,
                             onChanged: (String? newValue) {
-
+                              setState(() {
+                                selectedArea = newValue!;
+                              });
                             },
                             items: <String>[
                               'DHA Phase I',
@@ -414,6 +456,7 @@ class _RegisterationState extends State<Registeration> {
                         child: GestureDetector(
                           onTap: () {
                             if (agreeToTerms) {
+                              _registerUser();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
