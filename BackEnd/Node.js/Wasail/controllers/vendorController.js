@@ -6,7 +6,8 @@ const addVendor = async (req, res) => {
 
     let data = {
         vendor_name: req.body.vendor_name,
-        delivery_locations: req.body.delivery_locations
+        delivery_locations: req.body.delivery_locations,
+        user_table_user_id: req.body.user_table_user_id
     }
 
     const vendor = await Vendor.create(data)

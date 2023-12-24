@@ -14,7 +14,8 @@ router.get('/allusers', usertableController.getAllUsers)
 router.get('/:user_id', usertableController.getOneUser)
 router.put('/:user_id', usertableController.updateUser)
 router.delete('/:user_id', usertableController.deleteUser)
-
+router.get('/numberexists/:phone_number', usertableController.numberExists)
+router.get('/usernameexists/:username', usertableController.usernameExists)
 
 
 module.exports = router;

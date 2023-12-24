@@ -7,7 +7,8 @@ const addProductInventory = async (req, res) => {
     let data = {
         price: req.body.vendor_price,
         available_amount: req.body.available_amount,
-        listed_amount: req.body.listed_amount
+        listed_amount: req.body.listed_amount,
+        product_product_id: req.body.product_product_id
     }
 
     const inventory = await Inventory.create(data)

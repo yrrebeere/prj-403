@@ -8,7 +8,9 @@ const addOrder = async (req, res) => {
         order_date: req.body.order_date,
         delivery_date: req.body.delivery_date,
         total_bill: req.body.total_bill,
-        order_status: req.body.order_status
+        order_status: req.body.order_status,
+        grocery_store_store_id: req.body.grocery_store_store_id,
+        vendor_vendor_id: req.body.vendor_vendor_id
     }
 
     const order = await Order.create(data)

@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const { Op } = require("sequelize");
 const User = db.user_table
 
 const addUser = async (req, res) => {
@@ -58,10 +58,63 @@ const deleteUser = async (req, res) => {
 
 }
 
+const numberExists = async (req, res) => {
+    try {
+        let phone_number = req.params.phone_number;
+
+        let user = await User.findOne({
+            where: {
+                phone_number: {
+                    [Op.eq]: phone_number,
+                },
+            },
+        });
+
+        if(user == null) {
+            res.status(200).send(false)
+        }
+        else
+            res.status(200).send(true)
+    }
+    catch (error) {
+        console.error('Error checking phone number existence:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const usernameExists = async (req, res) => {
+    try {
+        let username = req.params.username;
+
+        let user = await User.findOne({
+            where: {
+                username: {
+                    [Op.eq]: phone_number,
+                },
+            },
+        });
+
+        if(user == null) {
+            res.status(200).send(false)
+        }
+        else
+            res.status(200).send(true)
+    }
+    catch (error) {
+        console.error('Error checking phone number existence:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
+
 module.exports = {
     addUser,
     getAllUsers,
     getOneUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    numberExists,
+    usernameExists
 }

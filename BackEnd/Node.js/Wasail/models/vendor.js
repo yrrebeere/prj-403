@@ -14,7 +14,7 @@ module.exports = (sequelize, Datatypes)=>{
         },
 
         delivery_locations:{
-            type: Datatypes.ENUM('Dha', 'Gulberg', 'State Life ')
+            type: Datatypes.ENUM('Dha', 'Gulberg', 'State Life')
         },
     },{
         underscored:true
