@@ -30,7 +30,27 @@ class _RegistrationState extends State<Registration> {
   String selectedCountryCode = '+92';
   String selectedArea = 'Dha';
   String? passwordError;
-  bool showPassword = false; // Track whether to show or hide the password
+  bool showPassword = false;
+  String usernameError = '';// Track whether to show or hide the password
+
+  Future<bool> checkUsernameAvailability(String username) async {
+    final String url = "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
+    bool usernameExists = false;
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+      final dynamic json = jsonDecode(response.body);
+      usernameExists = json;
+      return usernameExists;
+    }
+    catch (e) {
+      return false;
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -450,26 +470,37 @@ class _RegistrationState extends State<Registration> {
                         left: screenWidth * 0.30,
                         bottom: screenHeight * 0.05,
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             if (agreeToTerms) {
-                              createUser(
-                                nameController.text,
-                                userNameController.text,
-                                phoneNumberController.text,
-                                "English",
-                                "Vendor",
-                                selectedArea,  // Add the missing argument for the delivery area
-                              );
+                              // Check if the username is available
+                              bool usernameExists = await checkUsernameAvailability(userNameController.text);
+                              print('phone number:');
+                              print(widget.phoneNumberController.text);
+                              if (!usernameExists) {
+                                // Username is available, proceed with registration
+                                createUser(
+                                  nameController.text,
+                                  userNameController.text,
+                                  widget.phoneNumberController.text,
+                                  "English",
+                                  "Vendor",
+                                  selectedArea,
+                                );
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NavBar(),
-                                ),
-                              );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => NavBar(),
+                                  ),
+                                );
+                              } else {
+                                // Username is not available
+                                setState(() {
+                                  usernameError = "Username is already taken";
+                                });
+                              }
                             } else {
-                              print(
-                                  'Please agree to Terms and Conditions and Privacy Policy.');
+                              print('Please agree to Terms and Conditions and Privacy Policy.');
                             }
                           },
                           child: IgnorePointer(
@@ -493,6 +524,7 @@ class _RegistrationState extends State<Registration> {
                             ),
                           ),
                         ),
+
                       ),
                     ],
                   ),
