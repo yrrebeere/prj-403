@@ -50,8 +50,6 @@ class _RegistrationState extends State<Registration> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

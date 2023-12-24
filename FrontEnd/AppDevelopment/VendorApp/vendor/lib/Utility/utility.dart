@@ -47,3 +47,26 @@ Future<void> createVendor(String vendorName, String deliveryLocations, int userI
 
 }
 
+Future<void> createProductInventory(int price, int availableAmount, int listedAmount, int vendorId, int productId) async {
+
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+    body: jsonEncode({
+      'price': price,
+      'available_amount': availableAmount,
+      'listed_amount': listedAmount,
+      'vendor_vendor_id': vendorId,
+      'product_product_id': productId,
+    }),
+    headers: {'Content-Type': 'application/json'},
+  );
+
+  if (response.statusCode == 201) {
+    print("Product Inventory added");
+  }
+  else {
+    throw Exception('Failed to add product inventory');
+  }
+
+}
+

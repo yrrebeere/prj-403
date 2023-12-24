@@ -5,9 +5,10 @@ const Inventory = db.product_inventory
 const addProductInventory = async (req, res) => {
 
     let data = {
-        price: req.body.vendor_price,
+        price: req.body.price,
         available_amount: req.body.available_amount,
         listed_amount: req.body.listed_amount,
+        vendor_vendor_id: req.body.vendor_vendor_id,
         product_product_id: req.body.product_product_id
     }
 
@@ -34,7 +35,7 @@ const updateProductInventory = async (req, res) => {
 
     let product_inventory_id = req.params.product_inventory_id
     const inventory = await Inventory.update(req.body, { where: { product_inventory_id: product_inventory_id }})
-    res.status(200).send(vendor)
+    res.status(200).send(inventory)
 
 }
 
