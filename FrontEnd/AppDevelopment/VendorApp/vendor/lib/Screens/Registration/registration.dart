@@ -31,25 +31,28 @@ class _RegistrationState extends State<Registration> {
   String selectedArea = 'Dha';
   String? passwordError;
   bool showPassword = false;
-  String usernameError = '';// Track whether to show or hide the password
+  String usernameError = '';
+  String usernameAvailabilityMessage = '';
 
-  Future<bool> checkUsernameAvailability(String username) async {
+
+
+  Future<String> checkUsernameAvailability(String username) async {
     final String url = "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
-    bool usernameExists = false;
 
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
       );
       final dynamic json = jsonDecode(response.body);
-      usernameExists = json;
-      return usernameExists;
-    }
-    catch (e) {
-      return false;
+      bool usernameExists = json;
+
+      return usernameExists
+          ? "Username is already taken"
+          : "Username is available";
+    } catch (e) {
+      return "Error checking username availability";
     }
   }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -353,14 +356,37 @@ class _RegistrationState extends State<Registration> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                           ),
-                          child: TextField(
+                          child:TextField(
                             controller: userNameController,
                             obscureText: false,
+                            onTap: () {
+                              if (userNameController.text.isNotEmpty) {
+                                checkUsernameAvailability(userNameController.text).then((availabilityMessage) {
+                                  setState(() {
+                                    usernameAvailabilityMessage = availabilityMessage;
+                                  });
+                                });
+                              }
+                            },
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!.username,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: userNameController.text.isEmpty ? Colors.blue : usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.red,
+                                ),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: userNameController.text.isEmpty ? Colors.grey : usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.green,
+                                ),
+                              ),
+                              errorText: userNameController.text.isNotEmpty ? usernameAvailabilityMessage : null,
+                              errorStyle: TextStyle(
+                                color: usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.red,
                               ),
                             ),
                           ),
@@ -471,10 +497,13 @@ class _RegistrationState extends State<Registration> {
                           onTap: () async {
                             if (agreeToTerms) {
                               // Check if the username is available
-                              bool usernameExists = await checkUsernameAvailability(userNameController.text);
-                              print('phone number:');
-                              print(widget.phoneNumberController.text);
-                              if (!usernameExists) {
+                              String availabilityMessage = await checkUsernameAvailability(userNameController.text);
+
+                              setState(() {
+                                usernameAvailabilityMessage = availabilityMessage;
+                              });
+
+                              if (availabilityMessage == "Username is available") {
                                 // Username is available, proceed with registration
                                 createUser(
                                   nameController.text,
