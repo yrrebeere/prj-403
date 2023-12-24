@@ -303,45 +303,89 @@ class ItemDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Item Details'),
+        backgroundColor: Color(0xFF6FB457),
+        title:Padding(
+          padding: const EdgeInsets.only(left: 90),
+          child: Text('WASAIL'),
+        ),
+        elevation: 0,
+        leading: IconButton(
+          icon: GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              item.name,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-            ),
-            SizedBox(height: 16),
             Container(
-              height: 100,
-              width: 100,
+              height: 650,
+              width: 370,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                border: Border.all(color: Colors.black, width: 1.0),
-                image: DecorationImage(
-                  image: NetworkImage(item.imageUrl),
-                  fit: BoxFit.cover,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 20),
+                    Container(
+                      height: 250,
+                      width: 250,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black, width: 1.0),
+                        image: DecorationImage(
+                          image: NetworkImage(item.imageUrl),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      item.name,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        onDelete();
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                      ),
+                      child: Text('Delete Item'),
+                    ),
+                    SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Available Qty: ${item.availableQty}', style: TextStyle(color: Color(0xFF007AFF))),
+                        Text('Listed Qty: ${item.listedQty}', style: TextStyle(color: Color(0xFF007AFF))),
+                        Text('Unit Cost: ${item.unitCost}', style: TextStyle(color: Color(0xFF6FB457))),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            Text('Available Qty: ${item.availableQty}', style: TextStyle(color: Color(0xFF007AFF))),
-            Text('Listed Qty: ${item.listedQty}', style: TextStyle(color: Color(0xFF007AFF))),
-            Text('Unit Cost: ${item.unitCost}', style: TextStyle(color: Color(0xFF6FB457))),
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                onDelete();
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-              child: Text('Delete Item'),
-            ),
+
           ],
         ),
       ),

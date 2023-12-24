@@ -3,18 +3,37 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Login/login.dart';
 import '../Registration/registration.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PhoneNumber extends StatefulWidget {
   const PhoneNumber({Key? key}) : super(key: key);
 
   @override
   State<PhoneNumber> createState() => _MyAppState();
-
 }
 
 class _MyAppState extends State<PhoneNumber> {
   final TextEditingController phoneNumberController = TextEditingController();
   String selectedCountryCode = '+92';
+
+  Future<bool> checkPhoneNumberExists(String phoneNumber) async {
+    final String url = "http://10.0.2.2:3000/api/user_table/checkPhoneNumber/$phoneNumber";
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+
+      final dynamic json = jsonDecode(response.body);
+      bool phoneNumberExists = json;
+
+      return phoneNumberExists;
+    } catch (e) {
+      print("Error checking phone number existence: $e");
+      return false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -204,14 +223,35 @@ class _MyAppState extends State<PhoneNumber> {
                   left: screenWidth * 0.35,
                   top: screenHeight * 0.76,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Registration(phoneNumberController: phoneNumberController),
-                        ),
-                      );
+                    onTap: () async {
+                      print("Register button tapped");
+                      String phoneNumber = phoneNumberController.text;
+
+                      // Check if the phone number exists in the database
+                      bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
+
+                      print("Phone Number Exists: $phoneNumberExists");
+
+                      // Navigate accordingly
+                      if (phoneNumberExists) {
+                        print("Navigating to Login");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Login(phoneNumber: phoneNumber),
+                          ),
+                        );
+                      } else {
+                        print("Navigating to Registration");
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Registration(phoneNumberController: phoneNumberController),
+                          ),
+                        );
+                      }
                     },
+
                     child: Container(
                       width: screenWidth * 0.3,
                       padding: const EdgeInsets.all(16.0),
@@ -224,7 +264,7 @@ class _MyAppState extends State<PhoneNumber> {
                           AppLocalizations.of(context)!.next_button,
                           style: TextStyle(color: Colors.white),
                         ),
-                      )
+                      ),
                     ),
                   ),
                 ),
@@ -236,4 +276,3 @@ class _MyAppState extends State<PhoneNumber> {
     );
   }
 }
-
