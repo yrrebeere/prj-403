@@ -20,6 +20,14 @@ module.exports = (sequelize, Datatypes)=>{
             notNull: true,
 
         },
+        order_order_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'orders',
+                key: 'order_id'
+            },
+            allowNull: false
+        },
     },{
         underscored:true
     })

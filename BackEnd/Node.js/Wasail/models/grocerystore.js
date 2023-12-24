@@ -16,6 +16,14 @@ module.exports = (sequelize, Datatypes)=>{
             type: Datatypes.STRING,
             notNull: true,
         },
+        user_table_user_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'user_tables',
+                key: 'user_id'
+            },
+            allowNull: false
+        },
     },{
         underscored:true
     })

@@ -26,6 +26,23 @@ module.exports = (sequelize, Datatypes)=>{
             isInt: true,
             notNull: true,
         },
+        vendor_vendor_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'vendors',
+                key: 'vendor_id'
+            },
+            allowNull: false
+        },
+
+        product_product_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'products',
+                key: 'product_id'
+            },
+            allowNull: false
+        },
 
     },{
         underscored:true

@@ -66,18 +66,19 @@ db.order.hasMany(db.order_detail);
 db.order_detail.belongsTo(db.order);
 
 //grocery_store-vendor
-db.grocery_store.belongsToMany(db.vendor, {through: 'list'})
-db.vendor.belongsToMany(db.grocery_store, {through: 'list'})
+db.grocery_store.belongsToMany(db.vendor, {through: 'lists'})
+db.vendor.belongsToMany(db.grocery_store, {through: 'lists'})
 
 //productcategory-product
-db.product_category.belongsToMany(db.product, {through: 'productcategorylink'})
-db.product.belongsToMany(db.product_category, {through: 'productcategorylink'})
+db.product_category.belongsToMany(db.product, {through: 'product_category_links'})
+db.product.belongsToMany(db.product_category, {through: 'product_category_links'})
 
 //product-productinventory || productinventory-vendor
 db.product.hasMany(db.product_inventory);
 db.product_inventory.belongsTo(db.product);
-db.product_inventory.belongsToMany(db.vendor, {through: 'vendorproductinventory'})
-db.vendor.belongsToMany(db.product_inventory, {through: 'vendorproductinventory'})
+db.vendor.hasMany(db.product_inventory);
+db.product_inventory.belongsTo(db.vendor);
+
 
 
 sequelize
