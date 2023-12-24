@@ -15,7 +15,6 @@ const addUser = async (req, res) => {
 
     const user = await User.create(info)
     res.status(201).send(user)
-    console.log(user)
 }
 
 const getAllUsers = async (req, res) => {

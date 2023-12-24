@@ -417,7 +417,7 @@ class _RegisterationState extends State<Registeration> {
                         child: GestureDetector(
                           onTap: () {
                             if (agreeToTerms) {
-                              createUser(nameController.text, userNameController.text, phoneNumberController.text, "English", "Vendor");
+                              createUser(nameController.text, userNameController.text, phoneNumberController.text, "English", "Vendor", selectedArea);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

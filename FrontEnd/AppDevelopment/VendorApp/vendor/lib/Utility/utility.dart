@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<void> createUser(String name, String username, String phoneNumber, String language, String userType) async {
+Future<void> createUser(String name, String username, String phoneNumber, String language, String userType, String deliveryLocations) async {
 
   final response = await http.post(
     Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
@@ -18,7 +18,7 @@ Future<void> createUser(String name, String username, String phoneNumber, String
   if (response.statusCode == 201) {
     print("User added");
     final dynamic json = jsonDecode(response.body);
-    createVendor(name, 'Dha', json['user_id']);
+    createVendor(name, deliveryLocations, json['user_id']);
   }
   else {
     throw Exception('Failed to add user');
