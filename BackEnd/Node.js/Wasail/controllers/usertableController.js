@@ -88,7 +88,7 @@ const usernameExists = async (req, res) => {
         let user = await User.findOne({
             where: {
                 username: {
-                    [Op.eq]: phone_number,
+                    [Op.eq]: username,
                 },
             },
         });
