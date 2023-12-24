@@ -4,6 +4,7 @@ import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Inventory/inventory.dart';
 
+
 void main() {
   runApp(NavBar());
 }

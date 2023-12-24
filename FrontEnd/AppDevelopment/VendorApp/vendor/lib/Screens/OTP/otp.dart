@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:async';
-import '../Registeration/registeration.dart';
+import '../Registration/registration.dart';
 
 
 class OTP extends StatefulWidget {
@@ -227,22 +227,22 @@ class _MyAppState extends State<OTP> {
                       left: screenWidth * 0.4,
                       top: screenHeight * 0.798,
                       child: GestureDetector(
-                        onTap: () {
-                          if (_controllers.every((controller) => controller.text.isNotEmpty)) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Registeration(),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Please fill in all fields.'),
-                              ),
-                            );
-                          }
-                        },
+                        // onTap: () {
+                        //   if (_controllers.every((controller) => controller.text.isNotEmpty)) {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => Registration(phoneNumberController: phoneNumberController),
+                        //       ),
+                        //     );
+                        //   } else {
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         content: Text('Please fill in all fields.'),
+                        //       ),
+                        //     );
+                        //   }
+                        // },
                         child: Container(
                           width: screenWidth * 0.2,
                           height: screenHeight * 0.055,

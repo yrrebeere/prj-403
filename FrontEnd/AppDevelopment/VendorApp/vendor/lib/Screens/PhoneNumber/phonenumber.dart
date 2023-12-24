@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Login/login.dart';
-import '../Registeration/registeration.dart';
+import '../Registration/registration.dart';
 import 'package:flutter/services.dart';
 
 class PhoneNumber extends StatefulWidget {
@@ -113,16 +113,26 @@ class _MyAppState extends State<PhoneNumber> {
                   ),
                 ),
                 Positioned(
+                  left: screenWidth * 0.43,
+                  top: screenHeight * 0.28,
+                  child: Image.asset(
+                    'assets/images/mobile_icon.png',
+                    width: screenWidth * 0.2,
+                    height: screenWidth * 0.2,
+                  ),
+                ),
+                SizedBox(height: 15),
+                Positioned(
                   left: screenWidth * 0.11,
-                  top: screenHeight * 0.388,
+                  top: screenHeight * 0.4,
                   child: Container(
                     width: screenWidth * 0.8,
                     height: screenHeight * 0.07,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
-                        color: Colors.black,
-                        width: 1.0,
+                        color: Colors.grey,
+                        width: 0,
                       ),
                     ),
                     child: Row(
@@ -145,7 +155,8 @@ class _MyAppState extends State<PhoneNumber> {
                                 selectedCountryCode = newValue!;
                               });
                             },
-                            items: <String>['+92', '+1', '+44', '+81']
+                            underline: Container(),
+                            items: <String>['+92']
                                 .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -176,7 +187,8 @@ class _MyAppState extends State<PhoneNumber> {
                               LengthLimitingTextInputFormatter(10),
                             ],
                             decoration: InputDecoration(
-                              hintText: 'XXXXXXXXX',
+                              border: InputBorder.none,
+                              hintText: 'XXXXXXXXXX',
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.048,
                                 fontWeight: FontWeight.w400,
@@ -193,22 +205,12 @@ class _MyAppState extends State<PhoneNumber> {
                   top: screenHeight * 0.76,
                   child: GestureDetector(
                     onTap: () {
-                      //To be checked against database to see which route happens
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) =>
-                      //         Login(phoneNumber: phoneNumberController.text),
-                      //   ),
-                      // );
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Registeration(),
+                          builder: (context) => Registration(phoneNumberController: phoneNumberController),
                         ),
                       );
-
                     },
                     child: Container(
                       width: screenWidth * 0.3,
@@ -234,3 +236,4 @@ class _MyAppState extends State<PhoneNumber> {
     );
   }
 }
+

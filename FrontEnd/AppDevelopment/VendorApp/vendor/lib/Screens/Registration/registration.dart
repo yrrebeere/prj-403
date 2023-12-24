@@ -5,15 +5,20 @@ import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
+import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class Registeration extends StatefulWidget {
+class Registration extends StatefulWidget {
+  final TextEditingController phoneNumberController;
+
+  Registration({required this.phoneNumberController});
+
   @override
-  _RegisterationState createState() => _RegisterationState();
+  _RegistrationState createState() => _RegistrationState();
 }
 
-class _RegisterationState extends State<Registeration> {
+class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
@@ -24,6 +29,8 @@ class _RegisterationState extends State<Registeration> {
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
   String selectedArea = 'Dha';
+  String? passwordError;
+  bool showPassword = false; // Track whether to show or hide the password
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +43,12 @@ class _RegisterationState extends State<Registeration> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: languageProvider.selectedLocale,
-
           builder: (context, child) {
             return Directionality(
               textDirection: TextDirection.ltr,
               child: child!,
             );
           },
-
           home: Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
@@ -62,21 +67,21 @@ class _RegisterationState extends State<Registeration> {
                       Positioned(
                         right: screenWidth * 0.8,
                         top: screenHeight * 0.001,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Row(
-                              children: [
-                                Icon(Icons.chevron_left_outlined,
-                                    size: screenWidth * 0.106,
-                                    color: Colors.black),
-                                SizedBox(
-                                  width: screenWidth * 0.012,
-                                ),
-                              ],
-                            ),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.chevron_left_outlined,
+                                  size: screenWidth * 0.106,
+                                  color: Colors.black),
+                              SizedBox(
+                                width: screenWidth * 0.012,
+                              ),
+                            ],
                           ),
+                        ),
                       ),
                       Positioned(
                         left: screenWidth * 0.34,
@@ -138,6 +143,7 @@ class _RegisterationState extends State<Registeration> {
                                           selectedCountryCode = newValue!;
                                         });
                                       },
+                                      underline: Container(),
                                       items: <String>['+92']
                                           .map<DropdownMenuItem<String>>(
                                               (String value) {
@@ -155,20 +161,9 @@ class _RegisterationState extends State<Registeration> {
                                   ),
                                   Container(
                                     width: screenWidth * 0.6,
-                                    child: TextField(
-                                      controller: phoneNumberController,
-                                      keyboardType: TextInputType.number,
-                                      inputFormatters: [
-                                        FilteringTextInputFormatter.digitsOnly,
-                                        LengthLimitingTextInputFormatter(10),
-                                      ],
-                                      decoration: InputDecoration(
-                                        hintText: 'XXXXXXXXX',
-                                        hintStyle: TextStyle(
-                                          fontSize: screenWidth * 0.035,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                    child: Text(
+                                      '0${widget.phoneNumberController.text}',
+                                      style: TextStyle(fontSize: 15),
                                     ),
                                   ),
                                 ],
@@ -199,16 +194,37 @@ class _RegisterationState extends State<Registeration> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                           ),
-                          child: TextField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.enter_password,
-                              hintStyle: TextStyle(
-                                fontSize: screenWidth * 0.035,
-                                fontWeight: FontWeight.w400,
+                          child: Stack(
+                            alignment: Alignment.centerRight,
+                            children: [
+                              TextField(
+                                controller: passwordController,
+                                obscureText: !showPassword,
+                                onChanged: (value) {
+                                  // Validate password whenever it changes
+                                  validatePassword();
+                                },
+                                decoration: InputDecoration(
+                                  errorText: passwordError, // Display error text if any
+                                  hintText: AppLocalizations.of(context)!.enter_password,
+                                  hintStyle: TextStyle(
+                                    fontSize: screenWidth * 0.035,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                icon: Icon(
+                                  showPassword ? Icons.visibility : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    showPassword = !showPassword;
+                                  });
+                                },
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -236,12 +252,27 @@ class _RegisterationState extends State<Registeration> {
                           ),
                           child: TextField(
                             controller: confirmPasswordController,
-                            obscureText: true,
+                            obscureText: !showPassword,
+                            onChanged: (value) {
+                              // Validate confirm password whenever it changes
+                              validatePassword();
+                            },
                             decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.enter_password,
+                              hintText: AppLocalizations.of(context)!
+                                  .enter_password,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
+                              ),
+                              hintMaxLines: 1,
+                              suffixIcon: Icon(
+                                Icons.check,
+                                color: _isPasswordValid(
+                                    passwordController.text) &&
+                                    passwordController.text ==
+                                        confirmPasswordController.text
+                                    ? Colors.green
+                                    : Colors.red,
                               ),
                             ),
                           ),
@@ -378,11 +409,14 @@ class _RegisterationState extends State<Registeration> {
                                 ),
                                 RichText(
                                   text: TextSpan(
-                                    text: AppLocalizations.of(context)!.i_agree_to,
-                                    style: TextStyle(color: Colors.black, fontSize: 12),
+                                    text: AppLocalizations.of(context)!
+                                        .i_agree_to,
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 12),
                                     children: [
                                       TextSpan(
-                                        text: AppLocalizations.of(context)!.terms_and_conditions,
+                                        text: AppLocalizations.of(context)!
+                                            .terms_and_conditions,
                                         style: TextStyle(
                                           color: Color(0xFF6FB457),
                                           fontSize: 12,
@@ -396,7 +430,8 @@ class _RegisterationState extends State<Registeration> {
                                         ),
                                       ),
                                       TextSpan(
-                                        text: AppLocalizations.of(context)!.privacy_and_policy,
+                                        text: AppLocalizations.of(context)!
+                                            .privacy_and_policy,
                                         style: TextStyle(
                                           color: Color(0xFF6FB457),
                                           fontSize: 12,
@@ -417,7 +452,15 @@ class _RegisterationState extends State<Registeration> {
                         child: GestureDetector(
                           onTap: () {
                             if (agreeToTerms) {
-                              createUser(nameController.text, userNameController.text, phoneNumberController.text, "English", "Vendor", selectedArea);
+                              createUser(
+                                nameController.text,
+                                userNameController.text,
+                                phoneNumberController.text,
+                                "English",
+                                "Vendor",
+                                selectedArea,  // Add the missing argument for the delivery area
+                              );
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -434,18 +477,18 @@ class _RegisterationState extends State<Registeration> {
                             child: Opacity(
                               opacity: agreeToTerms ? 1.0 : 0.5,
                               child: Container(
-                                  width: screenWidth * 0.3,
-                                  padding: const EdgeInsets.all(16.0),
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFF6FB457),
-                                    borderRadius: BorderRadius.circular(8.0),
+                                width: screenWidth * 0.3,
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF6FB457),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.register,
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                                  child: Center(
-                                    child:  Text(
-                                      AppLocalizations.of(context)!.register,
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  )
+                                ),
                               ),
                             ),
                           ),
@@ -460,5 +503,26 @@ class _RegisterationState extends State<Registeration> {
         );
       },
     );
+  }
+
+  void validatePassword() {
+    String password = passwordController.text;
+    String confirmPassword = confirmPasswordController.text;
+
+    bool isPasswordValid = _isPasswordValid(password);
+
+    // Update the UI based on password validation
+    setState(() {
+      passwordError = isPasswordValid
+          ? null
+          : "Password must be 8 characters long and contain special characters";
+    });
+  }
+
+  bool _isPasswordValid(String password) {
+    // Add your password validation logic here
+    // For example, requiring at least 8 characters and special characters
+    return password.length >= 8 &&
+        RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vendor/splash/splash_screen.dart';
+import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
 import 'package:provider/provider.dart';
 import 'languageprovider.dart';
 
@@ -207,7 +207,7 @@ class _LanguageState extends State<Language> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => SplashScreen(),
+                                builder: (context) => PhoneNumber(),
                               ),
                             );
                           }
