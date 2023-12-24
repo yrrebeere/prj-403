@@ -11,7 +11,7 @@ const addVendor = async (req, res) => {
     }
 
     const vendor = await Vendor.create(data)
-    res.status(200).send(vendor)
+    res.status(201).send(vendor)
 }
 
 const getAllVendors = async (req, res) => {

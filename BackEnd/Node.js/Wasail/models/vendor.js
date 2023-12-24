@@ -16,6 +16,15 @@ module.exports = (sequelize, Datatypes)=>{
         delivery_locations:{
             type: Datatypes.ENUM('Dha', 'Gulberg', 'State Life')
         },
+
+        user_table_user_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'user_tables',
+                key: 'user_id'
+            },
+            allowNull: false
+        },
     },{
         underscored:true
     })

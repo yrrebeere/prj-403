@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:vendor/Classes/user_tables.dart';
 
-void main() => runApp(VendorApp());
+void main() => runApp(
+    VendorApp()
+);
 
 class VendorApp extends StatelessWidget {
   @override
@@ -200,7 +202,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Future<void> _createUser(String name, String username, String phoneNumber,
       String language, String userType) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/user_table/addUser'),
+      Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
       body: jsonEncode({
         'name': name,
         'username': username,
@@ -527,13 +529,13 @@ class _UsersScreenState extends State<UsersScreen> {
                     return ListTile(
                       title: Text(_users[index].name),
                       subtitle: Text(_users[index].username),
-                      trailing: ElevatedButton(
-                        onPressed: () async {
-                          await _deleteUserConfirmation(
-                              context, _users[index].userId);
-                        },
-                        child: Text('Delete User'),
-                      ),
+                      // trailing: ElevatedButton(
+                      //   onPressed: () async {
+                      //     await _deleteUserConfirmation(
+                      //         context, _users[index].userId);
+                      //   },
+                      //   child: Text('Delete User'),
+                      // ),
                     );
                   },
                 ),

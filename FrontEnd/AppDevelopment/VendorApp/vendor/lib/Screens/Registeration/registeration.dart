@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
-import '../../Utility/user_utility.dart';
-import 'package:vendor/main.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Registeration extends StatefulWidget {
   @override
@@ -22,46 +23,7 @@ class _RegisterationState extends State<Registeration> {
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
-  String selectedArea = 'DHA Phase II';
-
-  void _registerUser() async {
-    String phoneNumber = phoneNumberController.text;
-    String password = passwordController.text;
-    String name = nameController.text;
-    String username = userNameController.text;
-
-    String vendorName = name;
-    String deliveryLocation = selectedArea;
-
-    User user = User(
-      name: name,
-      username: username,
-      phoneNumber: phoneNumber,
-      language: 'English', // fetch this from the provider
-      userType: 'Vendor',
-    );
-
-    Vendor vendor = Vendor(
-      // name: name,
-      // username: username,
-      // phoneNumber: phoneNumber,
-      // language: 'English',
-      // userType: 'Vendor',
-      vendorName: vendorName,
-      deliveryLocation: deliveryLocation,
-    );
-
-    await UserService.createUser(user);
-    await UserService.createVendor(vendor);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NavBar(),
-      ),
-    );
-  }
-
+  String selectedArea = 'Dha';
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +138,7 @@ class _RegisterationState extends State<Registeration> {
                                           selectedCountryCode = newValue!;
                                         });
                                       },
-                                      items: <String>['+92', '+1', '+44', '+81']
+                                      items: <String>['+92']
                                           .map<DropdownMenuItem<String>>(
                                               (String value) {
                                             return DropdownMenuItem<String>(
@@ -385,10 +347,9 @@ class _RegisterationState extends State<Registeration> {
                               });
                             },
                             items: <String>[
-                              'DHA Phase I',
-                              'DHA Phase II',
-                              'DHA Phase III',
-                              'DHA Phase IV'
+                              'Dha',
+                              'State Life',
+                              'Gulberg'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -456,7 +417,7 @@ class _RegisterationState extends State<Registeration> {
                         child: GestureDetector(
                           onTap: () {
                             if (agreeToTerms) {
-                              _registerUser();
+                              createUser(nameController.text, userNameController.text, phoneNumberController.text, "English", "Vendor");
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

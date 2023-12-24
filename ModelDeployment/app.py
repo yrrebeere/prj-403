@@ -77,6 +77,10 @@ def predict():
 
     prediction = model.predict(X)
 
+    prediction = int(np.ceil(np.maximum(prediction, 0)))
+    # prediction = np.maximum(prediction, 0)
+
+
     return render_template(
         'index.html', 
         prediction = prediction
