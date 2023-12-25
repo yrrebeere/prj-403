@@ -47,6 +47,8 @@ const deleteProductInventory = async (req, res) => {
 
 }
 
+
+
 module.exports = {
     addProductInventory,
     getAllProductInventories,
