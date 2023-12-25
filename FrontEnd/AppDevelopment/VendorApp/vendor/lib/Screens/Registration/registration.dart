@@ -5,7 +5,6 @@ import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
-import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 

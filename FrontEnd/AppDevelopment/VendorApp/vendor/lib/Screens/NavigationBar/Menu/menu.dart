@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:vendor/Screens/Login/login.dart';
 import 'storelist.dart';
 
 class Menu extends StatefulWidget {
-  const Menu({Key? key}) : super(key: key);
+  // final String phoneNumber;
+  // const Menu({Key? key, required this.phoneNumber}) : super(key: key);
 
   @override
   State<Menu> createState() => _MenuState();
@@ -293,7 +295,22 @@ class _MenuState extends State<Menu> {
                         ),
                       ],
                     ),
-                    Text('Logout',style: TextStyle(fontSize: 20, color: Colors.red, decoration: TextDecoration.underline),)
+                    GestureDetector(
+                      // onTap: () {
+                      //   Navigator.pushReplacement(
+                      //     context,
+                      //     MaterialPageRoute(builder: (context) => Login(phoneNumber: widget.phoneNumber)),
+                      //   );
+                      // },
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.red,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
 
                   ],
                 ),
