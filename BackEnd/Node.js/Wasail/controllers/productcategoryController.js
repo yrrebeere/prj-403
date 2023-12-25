@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const { Op } = require("sequelize");
 const Category = db.product_category
 
 const addProductCategory = async (req, res) => {
@@ -43,10 +43,36 @@ const deleteProductCategory = async (req, res) => {
 
 }
 
+const searchProductCategory = async (req, res) => {
+    try {
+        let category_name = req.params.category_name;
+
+        if (!category_name) {
+            return res.status(400).json({ error: 'Search term is required.' });
+        }
+
+        const category = await Category.findAll({
+            where: {
+
+                category_name: {
+                    [Op.like]: `%${category_name}%`,
+                },
+
+            },
+        });
+
+        res.status(200).send(category)
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     addProductCategory,
     getAllProductCategories,
     getOneProductCategory,
     updateProductCategory,
-    deleteProductCategory
+    deleteProductCategory,
+    searchProductCategory
 }

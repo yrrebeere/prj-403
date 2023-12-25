@@ -14,5 +14,6 @@ router.get('/allproductcategories',productcategoryController.getAllProductCatego
 router.get('/:product_category_id', productcategoryController.getOneProductCategory)
 router.put('/:product_category_id', productcategoryController.updateProductCategory)
 router.delete('/:product_category_id', productcategoryController.deleteProductCategory)
+router.get('/searchproductcategory/:category_name', productcategoryController.searchProductCategory)
 
 module.exports = router;
