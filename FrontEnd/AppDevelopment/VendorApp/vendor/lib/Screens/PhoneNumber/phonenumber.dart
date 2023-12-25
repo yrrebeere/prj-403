@@ -16,6 +16,7 @@ class PhoneNumber extends StatefulWidget {
 class _MyAppState extends State<PhoneNumber> {
   final TextEditingController phoneNumberController = TextEditingController();
   String selectedCountryCode = '+92';
+  String phoneNumberError = '';
 
   Future<bool> checkPhoneNumberExists(String phoneNumber) async {
     final String url = "http://10.0.2.2:3000/api/user_table/numberExists/$phoneNumber";
@@ -34,7 +35,6 @@ class _MyAppState extends State<PhoneNumber> {
       return false;
     }
   }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -144,79 +144,115 @@ class _MyAppState extends State<PhoneNumber> {
                 Positioned(
                   left: screenWidth * 0.11,
                   top: screenHeight * 0.4,
-                  child: Container(
-                    width: screenWidth * 0.8,
-                    height: screenHeight * 0.07,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 0,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: screenWidth * 0.07,
-                          child: Image.asset(
-                            "assets/images/pakistan.png",
-                            width: screenWidth * 0.07,
-                            height: screenHeight * 0.03,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: screenWidth * 0.8,
+                        height: screenHeight * 0.07,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 0,
                           ),
                         ),
-                        Container(
-                          width: screenWidth * 0.2,
-                          child: DropdownButton<String>(
-                            value: selectedCountryCode,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedCountryCode = newValue!;
-                              });
-                            },
-                            underline: Container(),
-                            items: <String>['+92']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 8),
-                                    Text(
-                                      value,
-                                      style: TextStyle(
-                                        fontSize: screenWidth * 0.045,
-                                        fontFamily: 'Inter',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              width: screenWidth * 0.07,
+                              child: Image.asset(
+                                "assets/images/pakistan.png",
+                                width: screenWidth * 0.07,
+                                height: screenHeight * 0.03,
+                              ),
+                            ),
+                            Container(
+                              width: screenWidth * 0.2,
+                              child: DropdownButton<String>(
+                                value: selectedCountryCode,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedCountryCode = newValue!;
+                                  });
+                                },
+                                underline: Container(),
+                                items: <String>['+92']
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 8),
+                                        Text(
+                                          value,
+                                          style: TextStyle(
+                                            fontSize: screenWidth * 0.045,
+                                            fontFamily: 'Inter',
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            Container(
+                              width: screenWidth * 0.45,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  TextField(
+                                    controller: phoneNumberController,
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(10),
+                                    ],
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'XXXXXXXXXX',
+                                      hintStyle: TextStyle(
+                                        fontSize: screenWidth * 0.048,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        Container(
-                          width: screenWidth * 0.45,
-                          child: TextField(
-                            controller: phoneNumberController,
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(10),
-                            ],
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'XXXXXXXXXX',
-                              hintStyle: TextStyle(
-                                fontSize: screenWidth * 0.048,
-                                fontWeight: FontWeight.w400,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        phoneNumberError = '';
+                                      });
+                                      if (value.isNotEmpty && !value.startsWith('3')) {
+                                        setState(() {
+                                          phoneNumberError = 'Phone number must start with 3';
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      if (phoneNumberError.isNotEmpty)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                phoneNumberError,
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: screenWidth * 0.035,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -226,13 +262,24 @@ class _MyAppState extends State<PhoneNumber> {
                     onTap: () async {
                       print("Register button tapped");
                       String phoneNumber = phoneNumberController.text;
-
-                      // Check if the phone number exists in the database
+                      if (phoneNumber.length != 10) {
+                        setState(() {
+                          phoneNumberError = 'Phone number must be 10 digits long';
+                        });
+                        return;
+                      }
+                      if (!phoneNumber.startsWith('3')) {
+                        setState(() {
+                          phoneNumberError = 'Phone number must start with 3';
+                        });
+                        return;
+                      }
+                      setState(() {
+                        phoneNumberError = '';
+                      });
                       bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
 
                       print("Phone Number Exists: $phoneNumberExists");
-
-                      // Navigate accordingly
                       if (phoneNumberExists) {
                         print("Navigating to Login");
                         Navigator.push(

@@ -152,41 +152,24 @@ class _RegistrationState extends State<Registration> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    width: screenWidth * 0.2,
-                                    child: DropdownButton<String>(
-                                      value: selectedCountryCode,
-                                      onChanged: (String? newValue) {
-                                        setState(() {
-                                          selectedCountryCode = newValue!;
-                                        });
-                                      },
-                                      underline: Container(),
-                                      items: <String>['+92']
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(width: 8),
-                                                  Text(value),
-                                                ],
-                                              ),
-                                            );
-                                          }).toList(),
+                              Padding(
+                                padding: const EdgeInsets.only(top:20.0),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      child: Text('+92',style: TextStyle(fontSize: 15),
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: screenWidth * 0.6,
-                                    child: Text(
-                                      '0${widget.phoneNumberController.text}',
-                                      style: TextStyle(fontSize: 15),
+                                    SizedBox(width: 5,),
+                                    Container(
+                                      width: screenWidth * 0.6,
+                                      child: Text(
+                                        '${widget.phoneNumberController.text}',
+                                        style: TextStyle(fontSize: 15),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -221,11 +204,10 @@ class _RegistrationState extends State<Registration> {
                                 controller: passwordController,
                                 obscureText: !showPassword,
                                 onChanged: (value) {
-                                  // Validate password whenever it changes
                                   validatePassword();
                                 },
                                 decoration: InputDecoration(
-                                  errorText: passwordError, // Display error text if any
+                                  errorText: passwordError,
                                   hintText: AppLocalizations.of(context)!.enter_password,
                                   hintStyle: TextStyle(
                                     fontSize: screenWidth * 0.035,
@@ -274,7 +256,6 @@ class _RegistrationState extends State<Registration> {
                             controller: confirmPasswordController,
                             obscureText: !showPassword,
                             onChanged: (value) {
-                              // Validate confirm password whenever it changes
                               validatePassword();
                             },
                             decoration: InputDecoration(
@@ -503,7 +484,6 @@ class _RegistrationState extends State<Registration> {
                               });
 
                               if (availabilityMessage == "Username is available") {
-                                // Username is available, proceed with registration
                                 createUser(
                                   nameController.text,
                                   userNameController.text,
@@ -512,15 +492,14 @@ class _RegistrationState extends State<Registration> {
                                   "Vendor",
                                   selectedArea,
                                 );
-
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => NavBar(),
                                   ),
                                 );
-                              } else {
-                                // Username is not available
+                              }
+                              else {
                                 setState(() {
                                   usernameError = "Username is already taken";
                                 });
@@ -550,7 +529,6 @@ class _RegistrationState extends State<Registration> {
                             ),
                           ),
                         ),
-
                       ),
                     ],
                   ),
@@ -562,24 +540,19 @@ class _RegistrationState extends State<Registration> {
       },
     );
   }
-
   void validatePassword() {
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
 
     bool isPasswordValid = _isPasswordValid(password);
 
-    // Update the UI based on password validation
     setState(() {
       passwordError = isPasswordValid
           ? null
           : "Password must be 8 characters long and contain special characters";
     });
   }
-
   bool _isPasswordValid(String password) {
-    // Add your password validation logic here
-    // For example, requiring at least 8 characters and special characters
     return password.length >= 8 &&
         RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
   }
