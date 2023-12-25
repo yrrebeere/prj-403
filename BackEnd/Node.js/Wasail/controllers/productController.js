@@ -7,7 +7,8 @@ const Product = db.product
 const addProduct = async (req, res) => {
 
     let data = {
-        product_name: req.body.product_name
+        product_name: req.body.product_name,
+        image: req.body.image,
     }
 
     const product = await Product.create(data)
@@ -45,29 +46,6 @@ const deleteProduct = async (req, res) => {
 
 }
 
-// const searchProduct = async (req, res) => {
-//     try {
-//         let product_name = req.params.product_name;
-//
-//         let product = await Product.findAll({
-//             where: {
-//                 product_name: {
-//                     [Op.eq]: product_name,
-//                 },
-//             },
-//         });
-//
-//         if(product == null) {
-//             res.status(200).send(false)
-//         }
-//         else
-//             res.status(200).send(true)
-//     }
-//     catch (error) {
-//         console.error('Error checking phone number existence:', error);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// };
 
 const searchProduct = async (req, res) => {
     try {
@@ -79,11 +57,11 @@ const searchProduct = async (req, res) => {
 
         const product = await Product.findAll({
             where: {
-                // Define your search criteria here
+
                 product_name: {
-                    [Op.like]: `%${product_name}%`, // Case-insensitive search
+                    [Op.like]: `%${product_name}%`,
                 },
-                // Add more search criteria as needed
+
             },
         });
 

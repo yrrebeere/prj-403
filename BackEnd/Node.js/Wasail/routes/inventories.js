@@ -14,5 +14,6 @@ router.get('/allproductinventories',productinventoryController.getAllProductInve
 router.get('/:product_inventory_id', productinventoryController.getOneProductInventory)
 router.put('/:product_inventory_id', productinventoryController.updateProductInventory)
 router.delete('/:product_inventory_id', productinventoryController.deleteProductInventory)
+router.get('/search/:vendor_vendor_id', productinventoryController.searchProductByVID)
 
 module.exports = router;
