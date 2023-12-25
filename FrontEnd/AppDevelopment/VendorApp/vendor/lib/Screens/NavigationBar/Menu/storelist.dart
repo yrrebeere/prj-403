@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
 
 class Store {
   final String storeName;
@@ -101,7 +102,8 @@ class _StoreListState extends State<StoreList> {
                           return Column(
                             children: [
                               buildStoreCard(stores[index]),
-                              SizedBox(height: 20), // Add some spacing between stores
+                              SizedBox(height: 20),
+                              // Add some spacing between stores
                             ],
                           );
                         },
@@ -119,63 +121,75 @@ class _StoreListState extends State<StoreList> {
   }
 
   Widget buildStoreCard(Store store) {
-    return Container(
-      height: 160,
-      width: 370,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
+    return GestureDetector(
+      onTap: () {
+        // Navigate to StoreDetails page when the store card is tapped
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => StoreDetails(storeName: store.storeName),
           ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: Colors.black, width: 1.0),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Column(
-                children: [
-                  Text(
-                    store.storeName,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                ],
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Icon(Icons.arrow_forward_ios, color: Colors.black),
-                ),
-              ],
+        );
+      },
+      child: Container(
+        height: 160,
+        width: 370,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
             ),
           ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(color: Colors.black, width: 1.0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Column(
+                  children: [
+                    Text(
+                      store.storeName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 19),
+                    ),
+                  ],
+                ),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10.0),
+                    child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
