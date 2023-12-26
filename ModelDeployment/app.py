@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
-import pickle
 from joblib import load
+from tensorflow.keras.models import load_model
+
 
 app = Flask(__name__)
 
@@ -15,13 +16,13 @@ def predict():
 
     data = {
         'store_nbr': 1,
-        'family_encoded': "",
+        'family': "",
         'onpromotion': 0,
-        'typeholiday_encoded': "Holiday",
+        'typeholiday': "Holiday",
         'dcoilwtico': 46.8,
-        'city_encoded': "Quito",
-        'state_encoded': "Pichincha",
-        'typestores_encoded': "D",
+        'city': "Quito",
+        'state': "Pichincha",
+        'typestores': "D",
         'cluster': 13,
         'day_of_week': 3,
         'day': 16,
@@ -32,54 +33,73 @@ def predict():
     df = pd.DataFrame([data])
 
     if request.method == 'POST':
-        df['family_encoded'] = request.form.get('family_encoded')
+        df['family'] = request.form.get('family')
+    
+    print("Family" + df['family'])
     
     with open('models/family_encoder.pkl', 'rb') as file:
-        family_encoder = pickle.load(file)
+        family_encoder = load(file)
 
     with open('models/typeholiday_encoder.pkl', 'rb') as file:
-        typeholiday_encoder = pickle.load(file)
+        typeholiday_encoder = load(file)
 
     with open('models/city_encoder.pkl', 'rb') as file:
-        city_encoder = pickle.load(file)
+        city_encoder = load(file)
 
     with open('models/state_encoder.pkl', 'rb') as file:
-        state_encoder = pickle.load(file)
+        state_encoder = load(file)
 
     with open('models/typestores_encoder.pkl', 'rb') as file:
-        typestores_encoder = pickle.load(file)
+        typestores_encoder = load(file)
 
-    df['family_encoded'] = family_encoder.transform([df['family_encoded'].iloc[0]])[0]
-    df['typeholiday_encoded'] = typeholiday_encoder.transform([df['typeholiday_encoded'].iloc[0]])[0]
-    df['city_encoded'] = city_encoder.transform([df['city_encoded'].iloc[0]])[0]
-    df['state_encoded'] = state_encoder.transform([df['state_encoded'].iloc[0]])[0]
-    df['typestores_encoded'] = typestores_encoder.transform([df['typestores_encoded'].iloc[0]])[0]
+    df['family'] = family_encoder.transform([df['family'].iloc[0]])[0]
+    df['typeholiday'] = typeholiday_encoder.transform([df['typeholiday'].iloc[0]])[0]
+    df['city'] = city_encoder.transform([df['city'].iloc[0]])[0]
+    df['state'] = state_encoder.transform([df['state'].iloc[0]])[0]
+    df['typestores'] = typestores_encoder.transform([df['typestores'].iloc[0]])[0]
 
     features = [
         'store_nbr',
+        'family',
         'onpromotion',
+        'typeholiday',
         'dcoilwtico',
+        'city', 
+        'state',
+        'typestores',
         'cluster',
         'day_of_week',
         'day',
         'month',
         'year',
-        'family_encoded',
-        'typeholiday_encoded',
-        'city_encoded', 
-        'state_encoded',
-        'typestores_encoded',
     ]
 
     X = df[features]
 
-    model = load('models/M10.joblib')
+    scaler = load('models/scaler.joblib')
 
-    prediction = model.predict(X)
+    scaled_test_features = scaler.transform(X[features])
+
+    sequence_length = 10
+
+    test_sequences = []
+
+    for i in range(len(scaled_test_features) - sequence_length):
+        seq = scaled_test_features[i:i+sequence_length]
+        test_sequences.append(seq)
+    
+    test_sequences = np.array(test_sequences)
+
+    print(test_sequences.shape)
+
+    # m10 = load('models/M10.joblib')
+    # prediction = m10.predict(X)
+    
+    # m12 = load('models/M12.joblib')
+    m12 = load_model('models/m12.h5')
+    prediction = m12.predict(test_sequences)
 
     prediction = int(np.ceil(np.maximum(prediction, 0)))
-    # prediction = np.maximum(prediction, 0)
-
 
     return render_template(
         'index.html', 
@@ -88,5 +108,4 @@ def predict():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
-
-# flask run --port=8000
+    # app.run(host='0.0.0.0', port=8000, debug=True)
