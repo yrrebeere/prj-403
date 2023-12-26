@@ -14,3 +14,5 @@ FrontEnd/AppDevelopment/VendorApp/vendor/lib/mix.dart
 Data/Kaggle/StoreSales/processed_train.csv
 Data/Kaggle/StoreSales/processed_test.csv
 Data/Kaggle/StoreSales/submission_lstm.csv
+Data/Kaggle/StoreSales/processed_test_v2.csv
+Data/Kaggle/StoreSales/processed_train_v2.csv
