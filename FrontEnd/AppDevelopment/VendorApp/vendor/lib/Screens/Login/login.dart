@@ -141,28 +141,32 @@ class _MyAppState extends State<Login> {
                                 decoration: BoxDecoration(
                                   color: Colors.grey[100],
                                 ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.phone,
-                                      color: Colors.teal,
-                                    ),
-                                    Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Directionality(
-                                          textDirection: TextDirection.ltr,
-                                          child: Text(
-                                            '0${widget.phoneNumber}',
-                                            style: TextStyle(
-                                              fontSize: screenWidth * 0.045,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.teal,
+                                child: Directionality(
+                                  
+                                  textDirection:  TextDirection.ltr,
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.phone,
+                                        color: Colors.teal,
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Directionality(
+                                            textDirection: TextDirection.ltr,
+                                            child: Text(
+                                              '0${widget.phoneNumber}',
+                                              style: TextStyle(
+                                                fontSize: screenWidth * 0.040,
+                                                fontFamily: 'Inter',
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.teal,
+                                              ),
                                             ),
-                                          ),
-                                        )
-                                    ),
-                                  ],
+                                          )
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -187,7 +191,7 @@ class _MyAppState extends State<Login> {
                                           filled: true,
                                           prefixIcon: Icon(Icons.lock, color: Colors.teal, size: 25),
                                           hintText: AppLocalizations.of(context)!.enter_password,
-                                          suffixStyle: TextStyle(fontSize: 25),
+                                          suffixStyle: TextStyle(fontSize: screenWidth * 0.040,),
                                           hintStyle: TextStyle(color: Colors.teal),
                                         ),
                                         validator: (value) {

@@ -30,14 +30,14 @@ class _HomeState extends State<Home> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              // Ensure that you're using the context from the Navigator widget
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => Order(),
-                ),
-              );
-            },
+            // onTap: () {
+            //   // Ensure that you're using the context from the Navigator widget
+            //   Navigator.of(context).push(
+            //     MaterialPageRoute(
+            //       builder: (context) => Order(),
+            //     ),
+            //   );
+            // },
             child: Container(
               height: 160,
               width: 380,
