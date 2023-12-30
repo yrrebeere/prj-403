@@ -18,8 +18,8 @@ def predict():
         'family': "",
         'onpromotion': 0,
         'typeholiday': "Holiday",
-        'dcoilwtico': 46.8,
-        'city': "Quito",
+        'dcoilwtico': 0.0,
+        'city': "Quito", 
         'state': "Pichincha",
         'typestores': "D",
         'cluster': 13,
@@ -32,6 +32,14 @@ def predict():
 
     df = pd.DataFrame([data])
 
+    # df['date'] = request.form.get('datepicker')
+    # df['date'] = pd.to_datetime(df['date'])
+    # df['day_of_week'] = df['date'].dt.day_of_week
+    # df['day_of_week'] = df['day_of_week']+1
+    # df['day'] = df['date'].dt.day
+    # df['month'] = df['date'].dt.month
+    # df['year'] = df['date'].dt.year
+
     if request.method == 'POST':
         df['date'] = request.form.get('datepicker')
         df['date'] = pd.to_datetime(df['date'])
@@ -43,8 +51,19 @@ def predict():
 
     if request.method == 'POST':
         df['family'] = request.form.get('family')
-    
-    print("Family" + df['family'])
+
+    filtered_df = pd.read_csv("data/filtered_train.csv")
+
+    filtered_df = filtered_df[(filtered_df['day'] == int(df['day'])) & (filtered_df['month'] == int(df['month'])) & (filtered_df['year'] == int(df['year']))]
+
+    filtered_df = filtered_df[(filtered_df['family'] == str(df['family'].iloc[0]))]
+
+    print(filtered_df)
+
+    df['typeholiday'] = filtered_df['typeholiday'].iloc[0]
+    df['dcoilwtico'] = filtered_df['dcoilwtico'].iloc[0]
+    df['onpromotion'] = filtered_df['onpromotion'].iloc[0]
+    actual = round(filtered_df['sales'].iloc[0])
     
     with open('models/family_encoder.pkl', 'rb') as file:
         family_encoder = load(file)
@@ -112,7 +131,8 @@ def predict():
 
     return render_template(
         'index.html', 
-        prediction = prediction
+        prediction = prediction,
+        actual = actual
     )
 
 if __name__ == '__main__':
