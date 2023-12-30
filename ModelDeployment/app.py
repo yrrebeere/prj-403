@@ -2,7 +2,6 @@ from flask import Flask, render_template, request
 import pandas as pd
 import numpy as np
 from joblib import load
-from tensorflow.keras.models import load_model
 
 
 app = Flask(__name__)
@@ -24,13 +23,23 @@ def predict():
         'state': "Pichincha",
         'typestores': "D",
         'cluster': 13,
-        'day_of_week': 3,
-        'day': 16,
-        'month': 8,
-        'year': 2017
+        'day_of_week': 0,
+        'day': 0,
+        'month': 0,
+        'year': 0,
+        'date': 0
     }
 
     df = pd.DataFrame([data])
+
+    if request.method == 'POST':
+        df['date'] = request.form.get('datepicker')
+        df['date'] = pd.to_datetime(df['date'])
+        df['day_of_week'] = df['date'].dt.day_of_week
+        df['day_of_week'] = df['day_of_week']+1
+        df['day'] = df['date'].dt.day
+        df['month'] = df['date'].dt.month
+        df['year'] = df['date'].dt.year
 
     if request.method == 'POST':
         df['family'] = request.form.get('family')
@@ -76,28 +85,28 @@ def predict():
 
     X = df[features]
 
-    scaler = load('models/scaler.joblib')
+    # scaler = load('models/scaler.joblib')
 
-    scaled_test_features = scaler.transform(X[features])
+    # scaled_test_features = scaler.transform(X[features])
 
-    sequence_length = 10
+    # sequence_length = 10
 
-    test_sequences = []
+    # test_sequences = []
 
-    for i in range(len(scaled_test_features) - sequence_length):
-        seq = scaled_test_features[i:i+sequence_length]
-        test_sequences.append(seq)
+    # for i in range(len(scaled_test_features) - sequence_length):
+    #     seq = scaled_test_features[i:i+sequence_length]
+    #     test_sequences.append(seq)
     
-    test_sequences = np.array(test_sequences)
+    # test_sequences = np.array(test_sequences)
 
-    print(test_sequences.shape)
+    # print(test_sequences.shape)
 
-    # m10 = load('models/M10.joblib')
-    # prediction = m10.predict(X)
+    m10 = load('models/M10.joblib')
+    prediction = m10.predict(X)
     
     # m12 = load('models/M12.joblib')
-    m12 = load_model('models/m12.h5')
-    prediction = m12.predict(test_sequences)
+    # m12 = load_model('models/m12.h5')
+    # prediction = m12.predict(test_sequences)
 
     prediction = int(np.ceil(np.maximum(prediction, 0)))
 
@@ -107,5 +116,5 @@ def predict():
     )
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=True)
-    # app.run(host='0.0.0.0', port=8000, debug=True)
+    # app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)
