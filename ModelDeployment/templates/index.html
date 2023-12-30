@@ -1,52 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Wasail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Demand Forecasting System</h1>
-    <form method="POST" action="/predict">
-        <label for="family">Family:</label>
-        <select id="family" name="family" required>
-            <option value="AUTOMOTIVE">AUTOMOTIVE</option>
-            <option value="BABY CARE">BABY CARE</option>
-            <option value="BEAUTY">BEAUTY</option>
-            <option value="BEVERAGES">BEVERAGES</option>
-            <option value="BOOKS">BOOKS</option>
-            <option value="BREAD/BAKERY">BREAD/BAKERY</option>
-            <option value="CELEBRATION">CELEBRATION</option>
-            <option value="CLEANING">CLEANING</option>
-            <option value="DAIRY">DAIRY</option>
-            <option value="DELI">DELI</option>
-            <option value="EGGS">EGGS</option>
-            <option value="FROZEN FOODS">FROZEN FOODS</option>
-            <option value="GROCERY I">GROCERY I</option>
-            <option value="GROCERY II">GROCERY II</option>
-            <option value="HARDWARE">HARDWARE</option>
-            <option value="HOME AND KITCHEN I">HOME AND KITCHEN I</option>
-            <option value="HOME AND KITCHEN II">HOME AND KITCHEN II</option>
-            <option value="HOME APPLIANCES">HOME APPLIANCES</option>
-            <option value="HOME CARE">HOME CARE</option>
-            <option value="LADIESWEAR">LADIESWEAR</option>
-            <option value="LAWN AND GARDEN">LAWN AND GARDEN</option>
-            <option value="LINGERIE">LINGERIE</option>
-            <option value="LIQUOR,WINE,BEER">LIQUOR,WINE,BEER</option>
-            <option value="MAGAZINES">MAGAZINES</option>
-            <option value="MEATS">MEATS</option>
-            <option value="PERSONAL CARE">PERSONAL CARE</option>
-            <option value="PET SUPPLIES">PET SUPPLIES</option>
-            <option value="PLAYERS AND ELECTRONICS">PLAYERS AND ELECTRONICS</option>
-            <option value="POULTRY">POULTRY</option>
-            <option value="PREPARED FOODS">PREPARED FOODS</option>
-            <option value="PRODUCE">PRODUCE</option>
-            <option value="SCHOOL AND OFFICE SUPPLIES">SCHOOL AND OFFICE SUPPLIES</option>
-            <option value="SEAFOOD">SEAFOOD</option>
-        </select><br><br>
-        <button type="submit">Predict Sales</button>
-    </form>
-    <h2>
-        Prediction: {{ prediction }} <br>
-        Actual:
-    </h2>
+
+    <div class="container">
+        <h1>Demand Forecasting System</h1>
+        <br>
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="family">Family:</label>
+                <select class="form-control" id="family" name="family" required>
+                    <option value="BEVERAGES">BEVERAGES</option>
+                    <option value="DAIRY">DAIRY</option>
+                    <option value="FROZEN FOODS">FROZEN FOODS</option>
+                    <option value="MEATS">MEATS</option>
+                    <option value="SEAFOOD">SEAFOOD</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="datepicker">Select Date:</label>
+                <input type="text" class="form-control datepicker" id="datepicker" name="datepicker" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Predict Sales</button>
+        </form>
+        <br>
+        <h2>
+            Prediction: {{ prediction }} <br>
+            Actual: <br>
+        </h2>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '2017-08-16',
+                endDate: '2017-08-31',
+                autoclose: true
+            });
+        });
+    </script>
+
 </body>
 </html>
