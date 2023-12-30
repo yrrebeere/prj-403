@@ -16,7 +16,6 @@ class Registration extends StatefulWidget {
   @override
   _RegistrationState createState() => _RegistrationState();
 }
-
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -33,11 +32,8 @@ class _RegistrationState extends State<Registration> {
   String usernameError = '';
   String usernameAvailabilityMessage = '';
 
-
-
   Future<String> checkUsernameAvailability(String username) async {
     final String url = "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
-
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
@@ -52,6 +48,7 @@ class _RegistrationState extends State<Registration> {
       return "Error checking username availability";
     }
   }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -304,16 +301,24 @@ class _RegistrationState extends State<Registration> {
                           child: TextField(
                             controller: nameController,
                             obscureText: false,
+                            onChanged: (value) {
+                              validateName(value);
+                            },
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!.full_name,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
                               ),
+                              errorText: nameController.text.isNotEmpty &&
+                                  !isNameValid(nameController.text)
+                                  ? 'Name can only contain alphabets'
+                                  : null,
                             ),
                           ),
                         ),
                       ),
+
                       Positioned(
                         left: 0,
                         top: screenHeight * 0.56,
@@ -336,15 +341,28 @@ class _RegistrationState extends State<Registration> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                           ),
-                          child:TextField(
+                          child: TextField(
                             controller: userNameController,
                             obscureText: false,
                             onTap: () {
-                              if (userNameController.text.isNotEmpty) {
-                                checkUsernameAvailability(userNameController.text).then((availabilityMessage) {
-                                  setState(() {
-                                    usernameAvailabilityMessage = availabilityMessage;
-                                  });
+                              if (userNameController.text.isNotEmpty && !isUsernameValid(userNameController.text)) {
+                                setState(() {
+                                  usernameError = 'Username must start with alphabets';
+                                });
+                              } else {
+                                setState(() {
+                                  usernameError = '';
+                                });
+                              }
+                            },
+                            onChanged: (value) {
+                              if (userNameController.text.isNotEmpty && !isUsernameValid(userNameController.text)) {
+                                setState(() {
+                                  usernameError = 'Username must start with alphabets';
+                                });
+                              } else {
+                                setState(() {
+                                  usernameError = '';
                                 });
                               }
                             },
@@ -356,17 +374,17 @@ class _RegistrationState extends State<Registration> {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: userNameController.text.isEmpty ? Colors.blue : usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.red,
+                                  color: userNameController.text.isEmpty ? Colors.blue : usernameError.isNotEmpty ? Colors.red : Colors.green,
                                 ),
                               ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: userNameController.text.isEmpty ? Colors.grey : usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.green,
+                                  color: userNameController.text.isEmpty ? Colors.grey : usernameError.isNotEmpty ? Colors.red : Colors.green,
                                 ),
                               ),
-                              errorText: userNameController.text.isNotEmpty ? usernameAvailabilityMessage : null,
+                              errorText: usernameError.isNotEmpty ? usernameError : null,
                               errorStyle: TextStyle(
-                                color: usernameAvailabilityMessage == "Username is available" ? Colors.green : Colors.red,
+                                color: Colors.red,
                               ),
                             ),
                           ),
@@ -469,67 +487,76 @@ class _RegistrationState extends State<Registration> {
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: screenHeight * 0.89,
-                        left: screenWidth * 0.30,
-                        bottom: screenHeight * 0.05,
-                        child: GestureDetector(
-                          onTap: () async {
-                            if (agreeToTerms) {
-                              // Check if the username is available
-                              String availabilityMessage = await checkUsernameAvailability(userNameController.text);
+                  Positioned(
+                    top: screenHeight * 0.89,
+                    left: screenWidth * 0.30,
+                    bottom: screenHeight * 0.05,
+                    child: GestureDetector(
+                      onTap: () async {
+                        bool isAnyFieldEmpty = false;
 
-                              setState(() {
-                                usernameAvailabilityMessage = availabilityMessage;
-                              });
+                        // Check if any field is empty
+                        if (nameController.text.isEmpty ||
+                            userNameController.text.isEmpty ||
+                            !agreeToTerms) {
+                          isAnyFieldEmpty = true;
+                          setState(() {
+                            usernameError = 'Please fill all required fields.';
+                          });
+                        } else {
+                          setState(() {
+                            usernameError = ''; // Clear any previous error messages
+                          });
 
-                              if (availabilityMessage == "Username is available") {
-                                createUser(
-                                  nameController.text,
-                                  userNameController.text,
-                                  widget.phoneNumberController.text,
-                                  "English",
-                                  "Vendor",
-                                  selectedArea,
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => NavBar(),
-                                  ),
-                                );
-                              }
-                              else {
-                                setState(() {
-                                  usernameError = "Username is already taken";
-                                });
-                              }
-                            } else {
-                              print('Please agree to Terms and Conditions and Privacy Policy.');
-                            }
-                          },
-                          child: IgnorePointer(
-                            ignoring: !agreeToTerms,
-                            child: Opacity(
-                              opacity: agreeToTerms ? 1.0 : 0.5,
-                              child: Container(
-                                width: screenWidth * 0.3,
-                                padding: const EdgeInsets.all(16.0),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.register,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                          // Check if the username is available only if all fields are filled
+                          String availabilityMessage = await checkUsernameAvailability(
+                              userNameController.text);
+
+                          if (availabilityMessage == "Username is available") {
+                            // Register the user
+                            createUser(
+                              nameController.text,
+                              userNameController.text,
+                              widget.phoneNumberController.text,
+                              "English",
+                              "Vendor",
+                              selectedArea,
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavBar(),
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              usernameError = "Username is already taken";
+                            });
+                          }
+                        }
+                      },
+                      child: IgnorePointer(
+                        ignoring: !agreeToTerms || !isNameValid(nameController.text) || userNameController.text.isEmpty,
+                        child: Opacity(
+                          opacity: agreeToTerms && isNameValid(nameController.text) && userNameController.text.isNotEmpty ? 1.0 : 0.5,
+                          child: Container(
+                            width: screenWidth * 0.3,
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF6FB457),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.register,
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ),
                         ),
                       ),
+                    ),
+                  )
                     ],
                   ),
                 ),
@@ -543,9 +570,7 @@ class _RegistrationState extends State<Registration> {
   void validatePassword() {
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
-
     bool isPasswordValid = _isPasswordValid(password);
-
     setState(() {
       passwordError = isPasswordValid
           ? null
@@ -555,5 +580,18 @@ class _RegistrationState extends State<Registration> {
   bool _isPasswordValid(String password) {
     return password.length >= 8 &&
         RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
+  }
+  void validateName(String name) {
+    setState(() {
+      if (name.isNotEmpty && !isNameValid(name)) {
+        nameController.text = '';
+      }
+    });
+  }
+  bool isNameValid(String name) {
+    return RegExp(r'^[a-zA-Z ]+$').hasMatch(name);
+  }
+  bool isUsernameValid(String username) {
+    return RegExp(r'^[a-zA-Z]').hasMatch(username);
   }
 }
