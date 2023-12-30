@@ -11,7 +11,9 @@ module.exports = (sequelize, Datatypes)=>{
             type: Datatypes.STRING,
             notNull: true,
         },
-
+        image:{
+            type: Datatypes.STRING,
+        },
         store_address:{
             type: Datatypes.STRING,
             notNull: true,

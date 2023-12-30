@@ -15,6 +15,7 @@ db.order_detail = require('./orderdetail');
 db.product_category = require('./productcategory');
 db.product = require('./product');
 db.product_inventory = require('./productinventory');
+db.list = require('./list');
 console.log(config);
 
 
