@@ -3,7 +3,7 @@ import 'package:vendor/Screens/NavigationBar/Menu/menu.dart';
 import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Inventory/inventory.dart';
-import 'package:vendor/Screens/Login/login.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
 
 
 void main() {
