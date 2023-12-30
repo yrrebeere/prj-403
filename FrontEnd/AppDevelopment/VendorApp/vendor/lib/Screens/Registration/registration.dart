@@ -3,7 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
-import 'package:vendor/Screens/NavigationBar/navbar.dart';
+import '../Login/login.dart';
+import '../PhoneNumber/phonenumber.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,10 +17,12 @@ class Registration extends StatefulWidget {
   @override
   _RegistrationState createState() => _RegistrationState();
 }
+
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
@@ -33,7 +36,8 @@ class _RegistrationState extends State<Registration> {
   String usernameAvailabilityMessage = '';
 
   Future<String> checkUsernameAvailability(String username) async {
-    final String url = "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
+    final String url =
+        "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
@@ -150,14 +154,18 @@ class _RegistrationState extends State<Registration> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top:20.0),
+                                padding: const EdgeInsets.only(top: 20.0),
                                 child: Row(
                                   children: [
                                     Container(
-                                      child: Text('+92',style: TextStyle(fontSize: 15),
+                                      child: Text(
+                                        '+92',
+                                        style: TextStyle(fontSize: 15),
                                       ),
                                     ),
-                                    SizedBox(width: 5,),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     Container(
                                       width: screenWidth * 0.6,
                                       child: Text(
@@ -205,7 +213,8 @@ class _RegistrationState extends State<Registration> {
                                 },
                                 decoration: InputDecoration(
                                   errorText: passwordError,
-                                  hintText: AppLocalizations.of(context)!.enter_password,
+                                  hintText: AppLocalizations.of(context)!
+                                      .enter_password,
                                   hintStyle: TextStyle(
                                     fontSize: screenWidth * 0.035,
                                     fontWeight: FontWeight.w400,
@@ -214,7 +223,9 @@ class _RegistrationState extends State<Registration> {
                               ),
                               IconButton(
                                 icon: Icon(
-                                  showPassword ? Icons.visibility : Icons.visibility_off,
+                                  showPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
                                   color: Colors.grey,
                                 ),
                                 onPressed: () {
@@ -256,8 +267,8 @@ class _RegistrationState extends State<Registration> {
                               validatePassword();
                             },
                             decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!
-                                  .enter_password,
+                              hintText:
+                                  AppLocalizations.of(context)!.enter_password,
                               hintStyle: TextStyle(
                                 fontSize: screenWidth * 0.035,
                                 fontWeight: FontWeight.w400,
@@ -265,12 +276,12 @@ class _RegistrationState extends State<Registration> {
                               hintMaxLines: 1,
                               suffixIcon: Icon(
                                 Icons.check,
-                                color: _isPasswordValid(
-                                    passwordController.text) &&
-                                    passwordController.text ==
-                                        confirmPasswordController.text
-                                    ? Colors.green
-                                    : Colors.red,
+                                color:
+                                    _isPasswordValid(passwordController.text) &&
+                                            passwordController.text ==
+                                                confirmPasswordController.text
+                                        ? Colors.green
+                                        : Colors.red,
                               ),
                             ),
                           ),
@@ -311,14 +322,13 @@ class _RegistrationState extends State<Registration> {
                                 fontWeight: FontWeight.w400,
                               ),
                               errorText: nameController.text.isNotEmpty &&
-                                  !isNameValid(nameController.text)
+                                      !isNameValid(nameController.text)
                                   ? 'Name can only contain alphabets'
                                   : null,
                             ),
                           ),
                         ),
                       ),
-
                       Positioned(
                         left: 0,
                         top: screenHeight * 0.56,
@@ -345,9 +355,11 @@ class _RegistrationState extends State<Registration> {
                             controller: userNameController,
                             obscureText: false,
                             onTap: () {
-                              if (userNameController.text.isNotEmpty && !isUsernameValid(userNameController.text)) {
+                              if (userNameController.text.isNotEmpty &&
+                                  !isUsernameValid(userNameController.text)) {
                                 setState(() {
-                                  usernameError = 'Username must start with alphabets';
+                                  usernameError =
+                                      'Username must start with alphabets';
                                 });
                               } else {
                                 setState(() {
@@ -356,9 +368,11 @@ class _RegistrationState extends State<Registration> {
                               }
                             },
                             onChanged: (value) {
-                              if (userNameController.text.isNotEmpty && !isUsernameValid(userNameController.text)) {
+                              if (userNameController.text.isNotEmpty &&
+                                  !isUsernameValid(userNameController.text)) {
                                 setState(() {
-                                  usernameError = 'Username must start with alphabets';
+                                  usernameError =
+                                      'Username must start with alphabets';
                                 });
                               } else {
                                 setState(() {
@@ -374,15 +388,25 @@ class _RegistrationState extends State<Registration> {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: userNameController.text.isEmpty ? Colors.blue : usernameError.isNotEmpty ? Colors.red : Colors.green,
+                                  color: userNameController.text.isEmpty
+                                      ? Colors.blue
+                                      : usernameError.isNotEmpty
+                                          ? Colors.red
+                                          : Colors.green,
                                 ),
                               ),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: userNameController.text.isEmpty ? Colors.grey : usernameError.isNotEmpty ? Colors.red : Colors.green,
+                                  color: userNameController.text.isEmpty
+                                      ? Colors.grey
+                                      : usernameError.isNotEmpty
+                                          ? Colors.red
+                                          : Colors.green,
                                 ),
                               ),
-                              errorText: usernameError.isNotEmpty ? usernameError : null,
+                              errorText: usernameError.isNotEmpty
+                                  ? usernameError
+                                  : null,
                               errorStyle: TextStyle(
                                 color: Colors.red,
                               ),
@@ -419,11 +443,8 @@ class _RegistrationState extends State<Registration> {
                                 selectedArea = newValue!;
                               });
                             },
-                            items: <String>[
-                              'Dha',
-                              'State Life',
-                              'Gulberg'
-                            ].map<DropdownMenuItem<String>>((String value) {
+                            items: <String>['Dha', 'State Life', 'Gulberg']
+                                .map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
                                 child: Text(value),
@@ -487,76 +508,88 @@ class _RegistrationState extends State<Registration> {
                           ),
                         ),
                       ),
-                  Positioned(
-                    top: screenHeight * 0.89,
-                    left: screenWidth * 0.30,
-                    bottom: screenHeight * 0.05,
-                    child: GestureDetector(
-                      onTap: () async {
-                        bool isAnyFieldEmpty = false;
+                      Positioned(
+                        top: screenHeight * 0.89,
+                        left: screenWidth * 0.30,
+                        bottom: screenHeight * 0.05,
+                        child: GestureDetector(
+                          onTap: () async {
+                            bool isAnyFieldEmpty = false;
 
-                        // Check if any field is empty
-                        if (nameController.text.isEmpty ||
-                            userNameController.text.isEmpty ||
-                            !agreeToTerms) {
-                          isAnyFieldEmpty = true;
-                          setState(() {
-                            usernameError = 'Please fill all required fields.';
-                          });
-                        } else {
-                          setState(() {
-                            usernameError = ''; // Clear any previous error messages
-                          });
+                            // Check if any field is empty
+                            if (nameController.text.isEmpty ||
+                                userNameController.text.isEmpty ||
+                                !agreeToTerms) {
+                              isAnyFieldEmpty = true;
+                              setState(() {
+                                usernameError =
+                                    'Please fill all required fields.';
+                              });
+                            } else {
+                              setState(() {
+                                usernameError =
+                                    ''; // Clear any previous error messages
+                              });
 
-                          // Check if the username is available only if all fields are filled
-                          String availabilityMessage = await checkUsernameAvailability(
-                              userNameController.text);
+                              // Check if the username is available only if all fields are filled
+                              String availabilityMessage =
+                                  await checkUsernameAvailability(
+                                      userNameController.text);
 
-                          if (availabilityMessage == "Username is available") {
-                            // Register the user
-                            createUser(
-                              nameController.text,
-                              userNameController.text,
-                              widget.phoneNumberController.text,
-                              "English",
-                              "Vendor",
-                              selectedArea,
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NavBar(),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              usernameError = "Username is already taken";
-                            });
-                          }
-                        }
-                      },
-                      child: IgnorePointer(
-                        ignoring: !agreeToTerms || !isNameValid(nameController.text) || userNameController.text.isEmpty,
-                        child: Opacity(
-                          opacity: agreeToTerms && isNameValid(nameController.text) && userNameController.text.isNotEmpty ? 1.0 : 0.5,
-                          child: Container(
-                            width: screenWidth * 0.3,
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Center(
-                              child: Text(
-                                AppLocalizations.of(context)!.register,
-                                style: TextStyle(color: Colors.white),
+                              if (availabilityMessage ==
+                                  "Username is available") {
+                                // Register the user
+                                createUser(
+                                  nameController.text,
+                                  userNameController.text,
+                                  widget.phoneNumberController.text,
+                                  "English",
+                                  "Vendor",
+                                  selectedArea,
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Login(
+                                        phoneNumber:
+                                            widget.phoneNumberController.text),
+                                  ),
+                                );
+                              } else {
+                                setState(() {
+                                  usernameError = "Username is already taken";
+                                });
+                              }
+                            }
+                          },
+                          child: IgnorePointer(
+                            ignoring: !agreeToTerms ||
+                                !isNameValid(nameController.text) ||
+                                userNameController.text.isEmpty,
+                            child: Opacity(
+                              opacity: agreeToTerms &&
+                                      isNameValid(nameController.text) &&
+                                      userNameController.text.isNotEmpty
+                                  ? 1.0
+                                  : 0.5,
+                              child: Container(
+                                width: screenWidth * 0.3,
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF6FB457),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    AppLocalizations.of(context)!.register,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                  )
+                      )
                     ],
                   ),
                 ),
@@ -567,6 +600,7 @@ class _RegistrationState extends State<Registration> {
       },
     );
   }
+
   void validatePassword() {
     String password = passwordController.text;
     String confirmPassword = confirmPasswordController.text;
@@ -577,10 +611,12 @@ class _RegistrationState extends State<Registration> {
           : "Password must be 8 characters long and contain special characters";
     });
   }
+
   bool _isPasswordValid(String password) {
     return password.length >= 8 &&
         RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password);
   }
+
   void validateName(String name) {
     setState(() {
       if (name.isNotEmpty && !isNameValid(name)) {
@@ -588,9 +624,11 @@ class _RegistrationState extends State<Registration> {
       }
     });
   }
+
   bool isNameValid(String name) {
     return RegExp(r'^[a-zA-Z ]+$').hasMatch(name);
   }
+
   bool isUsernameValid(String username) {
     return RegExp(r'^[a-zA-Z]').hasMatch(username);
   }

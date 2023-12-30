@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class InventoryItem {
@@ -14,6 +16,16 @@ class InventoryItem {
     required this.unitCost,
     required this.imageUrl,
   });
+
+  factory InventoryItem.fromJson(Map<String, dynamic> json) {
+    return InventoryItem(
+      name: json['name'],
+      availableQty: json['availableQty'],
+      listedQty: json['listedQty'],
+      unitCost: json['unitCost'],
+      imageUrl: json['imageUrl'],
+    );
+  }
 }
 
 class SearchBarApp extends StatefulWidget {
@@ -25,9 +37,23 @@ class SearchBarApp extends StatefulWidget {
 
 class _SearchBarAppState extends State<SearchBarApp> {
   bool isDark = false;
+  List<InventoryItem> suggestions = [];
 
   Future<void> _handleProductSelection(InventoryItem selectedProduct) async {
     Navigator.pop(context, selectedProduct);
+  }
+
+  Future<List<InventoryItem>> _fetchProducts(String query) async {
+    final response = await http.get(
+      Uri.parse('http://localhost:3000/api/product/searchproduct/$query'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = json.decode(response.body);
+      return data.map((item) => InventoryItem.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load products');
+    }
   }
 
   @override
@@ -101,20 +127,23 @@ class _SearchBarAppState extends State<SearchBarApp> {
                         ),
                       )
                     ],
+                    onSubmitted: (query) async {
+                      final List<InventoryItem> products = await _fetchProducts(query);
+                      print(products);
+                      setState(() {
+                        suggestions = products;
+                      });
+                    },
                   );
                 },
                 suggestionsBuilder: (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String itemName = 'Product $index';
-                    final InventoryItem product = InventoryItem(
-                      name: itemName,
-                      availableQty: 50 + index * 10,
-                      listedQty: 30 + index * 5,
-                      unitCost: 10 + index * 2,
-                      imageUrl: 'https://example.com/image_$index.png',
-                    );
+                  if (suggestions.isEmpty) {
+                    return [ListTile(title: Text('No suggestions'))];
+                  }
+
+                  return suggestions.map((InventoryItem product) {
                     return ListTile(
-                      title: Text(itemName),
+                      title: Text(product.name),
                       subtitle: Text(
                         'Available Qty: ${product.availableQty}, Listed Qty: ${product.listedQty}, Unit Cost: ${product.unitCost}',
                       ),
@@ -125,7 +154,7 @@ class _SearchBarAppState extends State<SearchBarApp> {
                         child: Text('Add'),
                       ),
                     );
-                  });
+                  }).toList();
                 },
               ),
             ),
