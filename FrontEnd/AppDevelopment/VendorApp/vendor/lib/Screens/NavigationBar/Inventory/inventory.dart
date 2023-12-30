@@ -5,16 +5,19 @@ import 'package:flutter/material.dart';
 void main() => runApp(InventoryApp());
 
 class InventoryItem {
+  final int productId;
   final String name;
   final String imageUrl;
 
   InventoryItem({
+    required this.productId,
     required this.name,
     required this.imageUrl,
   });
 
   factory InventoryItem.fromJson(Map<String, dynamic> json) {
     return InventoryItem(
+      productId: json['product_id'],
       name: json['product_name'],
       imageUrl: json['image'],
     );
@@ -59,7 +62,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
                     await _fetchAndDisplayProducts(query);
                   },
                 ),
-
               ],
             ),
           ),
@@ -73,28 +75,39 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
                 print(imageUrl);
 
-                return ListTile(
-                  title: Text(product.name),
-                  leading:
-                  Image.asset(
-                    imageUrl,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                      return Icon(Icons.error);
-                    },
-                  ),
-                  trailing: ElevatedButton(
-                    onPressed: () async {
-                      await _showProductDetailsDialog(product);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF6FB457), // Set the green color
+                return GestureDetector(
+                  onTap: () async {
+                    await _showProductDetailsDialog(product);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
                     ),
-                    child: Text('Details'),
+                    child: ListTile(
+                      title: Text(product.name),
+                      leading: Image.asset(
+                        imageUrl,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                          return Icon(Icons.error);
+                        },
+                      ),
+                    ),
                   ),
                 );
+
               },
             ),
           ),
@@ -121,27 +134,107 @@ class _SearchBarPageState extends State<SearchBarPage> {
   Future<InventoryItem?> _showProductDetailsDialog(
       InventoryItem product,
       ) async {
+    TextEditingController listedAmountController = TextEditingController();
+    TextEditingController availableAmountController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
+
+    int vendorId = 1;
+
+
     return showDialog<InventoryItem>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(product.name),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Cancel'),
+        contentPadding: EdgeInsets.zero, // Set contentPadding to zero
+        content: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  product.name,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  height: 250,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1.0),
+                  ),
+                  child: Image.asset(
+                    product.imageUrl,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 16),
+                TextFormField(
+                  controller: listedAmountController,
+                  decoration: InputDecoration(labelText: 'Listed Amount'),
+                ),
+                TextFormField(
+                  controller: availableAmountController,
+                  decoration: InputDecoration(labelText: 'Available Amount'),
+                ),
+                TextFormField(
+                  controller: priceController,
+                  decoration: InputDecoration(labelText: 'Price'),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () async {
+                    String listedAmount = listedAmountController.text;
+                    String availableAmount = availableAmountController.text;
+                    String price = priceController.text;
+
+                    print(listedAmount); print("AHAHAHA"); print(availableAmount); print("NANANA"); print(price);
+
+                    await _addToInventory(listedAmount, availableAmount, price, vendorId, product.productId);
+
+                    Navigator.pop(context, product);
+                  },
+                  child: Text('Add'),
+                ),
+              ],
+            ),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context, product);
-            },
-            child: Text('Add'),
-          ),
-        ],
+        ),
       ),
     );
   }
+
+  Future<void> _addToInventory(
+      String listedAmount,
+      String availableAmount,
+      String price,
+      int vendorId,
+      int productProductId
+      ) async {
+    print("dsgsgbdsdhngs");
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+      body: jsonEncode({
+        'listed_amount' : listedAmount,
+        'available_amount' : availableAmount,
+        'price' : price,
+        'vendor_vendor_id': vendorId,
+        'product_product_id': productProductId
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      print('Product added to inventory successfully');
+    } else {
+      print('Failed to add product to inventory');
+    }
+  }
+
 }
 
 class InventoryApp extends StatelessWidget {
@@ -227,7 +320,6 @@ class _InventoryState extends State<Inventory> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(25),
                               ),
-
                             ),
                           ),
                         ],
@@ -264,7 +356,7 @@ class _InventoryState extends State<Inventory> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -276,7 +368,7 @@ class _InventoryState extends State<Inventory> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius:
-                                                BorderRadius.circular(50),
+                                                    BorderRadius.circular(50),
                                                 border: Border.all(
                                                     color: Colors.black,
                                                     width: 1.0),
@@ -289,7 +381,7 @@ class _InventoryState extends State<Inventory> {
                                         padding: const EdgeInsets.all(25.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               item.name,
@@ -302,7 +394,7 @@ class _InventoryState extends State<Inventory> {
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -433,7 +525,7 @@ class ItemDetailsPage extends StatelessWidget {
                     Text(
                       item.name,
                       style:
-                      TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                     ),
                     SizedBox(height: 16),
                     ElevatedButton(
