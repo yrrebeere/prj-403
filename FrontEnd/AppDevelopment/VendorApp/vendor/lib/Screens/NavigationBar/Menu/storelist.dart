@@ -5,8 +5,14 @@ import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
 
 class Store {
   final String storeName;
+  final String image;
+  final String storeAddress;
 
-  Store(this.storeName);
+  Store({
+    required this.storeName,
+    required this.image,
+    required this.storeAddress,
+  });
 }
 
 class StoreList extends StatefulWidget {

@@ -61,7 +61,7 @@ const searchStoreByVID = async (req, res) => {
 
         const groceryStoreIds = associatedStores.map((store) => store.grocery_store_store_id);
 
-     
+
         const groceryStores = await db.grocery_store.findAll({
             where: { store_id: groceryStoreIds },
         });
