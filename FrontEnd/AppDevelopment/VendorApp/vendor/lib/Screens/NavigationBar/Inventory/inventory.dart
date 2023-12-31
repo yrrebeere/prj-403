@@ -418,25 +418,25 @@ class _InventoryState extends State<Inventory> {
                                           CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "${item.productInventoryId}",
+                                              "Product No. ${item.productInventoryId}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 19),
                                             ),
                                             Text(
-                                              "${item.price}",
+                                              "Listed Amount: ${item.listedAmount}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15),
                                             ),
                                             Text(
-                                              "${item.availableAmount}",
+                                              "Available Amount: ${item.availableAmount}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15),
                                             ),
                                             Text(
-                                              "${item.listedAmount}",
+                                              "Price: ${item.price}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15),
@@ -517,6 +517,8 @@ class ItemDetailsPage extends StatefulWidget {
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
+
+
   late TextEditingController listedAmountController;
   late TextEditingController availableAmountController;
   late TextEditingController priceController;
@@ -619,9 +621,10 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       ),
                       SizedBox(height: 24),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           widget.onDelete();
                           Navigator.pop(context);
+                          await _deleteProductInventoryConfirmation();
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
@@ -638,6 +641,68 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       ),
     );
   }
+
+  Future<void> _deleteProductInventoryConfirmation() async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Product Inventory'),
+          content: Text('Are you sure you want to delete this product inventory?'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await _deleteProductInventory(widget.item.productInventoryId);
+                Navigator.of(context).pop();
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+  Future<void> _deleteProductInventory(int productInventoryId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+      );
+      if (response.statusCode == 200) {
+        widget.onDelete(); // Trigger the callback to update the UI in the parent widget
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Successfully deleted!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to delete. Please try again.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error deleting: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
 
   Future<void> _updateProductDetails(
       String listedAmount,
