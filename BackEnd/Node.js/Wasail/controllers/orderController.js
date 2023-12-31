@@ -95,6 +95,41 @@ const orderHistory = async (req, res) => {
     }
 };
 
+const searchOrderByGID = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_vendor_id;
+        const store_id = req.params.grocery_store_store_id;
+
+        if (!vendor_id && !store_id) {
+            return res.status(400).json({ error: 'Vendor ID or Grocery Store ID is required.' });
+        }
+
+        const whereClause = {};
+
+        if (vendor_id) {
+            whereClause.vendor_vendor_id = vendor_id;
+        }
+
+        if (store_id) {
+            whereClause.grocery_store_store_id = store_id;
+        }
+
+        const orders = await Order.findAll({
+            where: {
+                ...whereClause,
+                order_status: {
+                    [Op.in]: ['In Process', 'On Its Way'],
+                },
+            },
+        });
+
+        res.status(200).send(orders);
+    } catch (error) {
+        console.error('Error searching orders by vendor and store:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 
 module.exports = {
@@ -104,5 +139,6 @@ module.exports = {
     updateOrder,
     deleteOrder,
     searchOrderByVID,
-    orderHistory
+    orderHistory,
+    searchOrderByGID
 }
