@@ -24,6 +24,35 @@ class InventoryItem {
   }
 }
 
+class productInventory {
+  final int productInventoryId;
+  final int price;
+  final int availableAmount;
+  final int listedAmount;
+  final int vendorVendorId;
+  final int productProductId;
+
+  productInventory({
+    required this.productInventoryId,
+    required this.price,
+    required this.availableAmount,
+    required this.listedAmount,
+    required this.vendorVendorId,
+    required this.productProductId,
+  });
+
+  factory productInventory.fromJson(Map<String, dynamic> json) {
+    return productInventory(
+      productInventoryId: json['product_inventory_id'],
+      price: json['price'],
+      availableAmount: json['available_amount'],
+      listedAmount: json['listed_amount'],
+      vendorVendorId: json['vendor_vendor_id'],
+      productProductId: json['product_product_id'],
+    );
+  }
+}
+
 class SearchBarPage extends StatefulWidget {
   @override
   _SearchBarPageState createState() => _SearchBarPageState();
@@ -262,18 +291,25 @@ class Inventory extends StatefulWidget {
 }
 
 class _InventoryState extends State<Inventory> {
-  List<InventoryItem> suggestions = [];
-  final List<InventoryItem> inventoryItems = [];
+  List<productInventory> productInventories = [];
+  final List<productInventory> inventoryItems = [];
 
-  Future<void> _fetchAndDisplayProducts(String query) async {
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndDisplayProductInventories("1");
+  }
+
+  Future<void> _fetchAndDisplayProductInventories(String vendorId) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/product/searchproduct/$query'),
+      Uri.parse('http://10.0.2.2:3000/api/product_inventory/search/$vendorId'),
     );
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       setState(() {
-        suggestions = data.map((item) => InventoryItem.fromJson(item)).toList();
+        print(response.body);
+        productInventories = data.map((item) => productInventory.fromJson(item)).toList();
       });
     } else {
       print('Failed to load products');
@@ -304,7 +340,7 @@ class _InventoryState extends State<Inventory> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
-                            '${inventoryItems.length} Listed SKUs',
+                            '${productInventories.length} Listed SKUs',
                             style: TextStyle(fontSize: 24),
                           ),
                         ),
@@ -328,14 +364,14 @@ class _InventoryState extends State<Inventory> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
-                      itemCount: inventoryItems.length,
+                      itemCount: productInventories.length,
                       itemBuilder: (context, index) {
-                        InventoryItem item = inventoryItems[index];
+                        productInventory item = productInventories[index];
                         return Column(
                           children: [
                             GestureDetector(
                               onTap: () {
-                                _openItemDetails(item);
+                                // _openItemDetails(item);
                               },
                               child: Container(
                                 height: 160,
@@ -384,7 +420,7 @@ class _InventoryState extends State<Inventory> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              item.name,
+                                              "${item.productInventoryId}",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 19),
@@ -421,22 +457,22 @@ class _InventoryState extends State<Inventory> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final result = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SearchBarPage()),
-          );
-
-          if (result != null && result is InventoryItem) {
-            setState(() {
-              inventoryItems.add(result);
-            });
-          }
-        },
-        backgroundColor: Color(0xFF6FB457),
-        child: Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     final result = await Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => SearchBarPage()),
+      //     );
+      //
+      //     if (result != null && result is InventoryItem) {
+      //       setState(() {
+      //         inventoryItems.add(result);
+      //       });
+      //     }
+      //   },
+      //   backgroundColor: Color(0xFF6FB457),
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 

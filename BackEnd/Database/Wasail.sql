@@ -3,7 +3,6 @@ INSERT INTO user_tables (phone_number, name, password, username, language, user_
 (03215566778899, 'Fizza Adeel', 12345, 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.user_tables;
 
-INSERT INTO vendors (vendor_name, deuse wasail;
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES
 (03215566778899, 'Fizza Adeel', 12345, 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.user_tables;

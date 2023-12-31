@@ -104,28 +104,15 @@ def predict():
 
     X = df[features]
 
-    # scaler = load('models/scaler.joblib')
+    selectedModel = "m22"
 
-    # scaled_test_features = scaler.transform(X[features])
-
-    # sequence_length = 10
-
-    # test_sequences = []
-
-    # for i in range(len(scaled_test_features) - sequence_length):
-    #     seq = scaled_test_features[i:i+sequence_length]
-    #     test_sequences.append(seq)
+    if(selectedModel == "m10"):
+        model = load('models/M10.joblib')
     
-    # test_sequences = np.array(test_sequences)
+    else:
+        model = load('models/M22.joblib')
 
-    # print(test_sequences.shape)
-
-    m10 = load('models/M10.joblib')
-    prediction = m10.predict(X)
-    
-    # m12 = load('models/M12.joblib')
-    # m12 = load_model('models/m12.h5')
-    # prediction = m12.predict(test_sequences)
+    prediction = model.predict(X)
 
     prediction = int(np.ceil(np.maximum(prediction, 0)))
 
