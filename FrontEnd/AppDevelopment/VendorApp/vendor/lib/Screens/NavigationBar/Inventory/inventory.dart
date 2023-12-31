@@ -360,9 +360,6 @@ class _InventoryState extends State<Inventory> {
                       ),
                     ),
                     ListView.builder(
-
-
-
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: productInventories.length,
@@ -372,7 +369,7 @@ class _InventoryState extends State<Inventory> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                // _openItemDetails(item);
+                                _openItemDetails(item);
                               },
                               child: Container(
                                 height: 160,
@@ -393,7 +390,7 @@ class _InventoryState extends State<Inventory> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -405,7 +402,7 @@ class _InventoryState extends State<Inventory> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius:
-                                                    BorderRadius.circular(50),
+                                                BorderRadius.circular(50),
                                                 border: Border.all(
                                                     color: Colors.black,
                                                     width: 1.0),
@@ -418,7 +415,7 @@ class _InventoryState extends State<Inventory> {
                                         padding: const EdgeInsets.all(25.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "${item.productInventoryId}",
@@ -449,7 +446,7 @@ class _InventoryState extends State<Inventory> {
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -490,96 +487,199 @@ class _InventoryState extends State<Inventory> {
     );
   }
 
-  // void _openItemDetails(InventoryItem item) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => ItemDetailsPage(
-  //         item: item,
-  //         onDelete: () {
-  //           setState(() {
-  //             inventoryItems.remove(item);
-  //           });
-  //         },
-  //       ),
-  //     ),
-  //   );
-  // }
+  void _openItemDetails(productInventory item) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ItemDetailsPage(
+          item: item,
+          onDelete: () {
+            setState(() {
+              inventoryItems.remove(item);
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+
 }
 
-// class ItemDetailsPage extends StatelessWidget {
-//   final InventoryItem item;
-//   final VoidCallback onDelete;
-//
-//   const ItemDetailsPage({required this.item, required this.onDelete});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Container(
-//               height: 650,
-//               width: 370,
-//               decoration: BoxDecoration(
-//                 color: Colors.white,
-//                 borderRadius: BorderRadius.circular(20),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: Colors.grey.withOpacity(0.5),
-//                     spreadRadius: 2,
-//                     blurRadius: 5,
-//                     offset: Offset(0, 3),
-//                   ),
-//                 ],
-//               ),
-//               child: Padding(
-//                 padding: const EdgeInsets.all(10.0),
-//                 child: Column(
-//                   children: [
-//                     SizedBox(height: 20),
-//                     Container(
-//                       height: 250,
-//                       width: 250,
-//                       decoration: BoxDecoration(
-//                         border: Border.all(color: Colors.black, width: 1.0),
-//                         image: DecorationImage(
-//                           image: NetworkImage(item.imageUrl),
-//                           fit: BoxFit.cover,
-//                         ),
-//                       ),
-//                     ),
-//                     SizedBox(height: 16),
-//                     Text(
-//                       item.name,
-//                       style:
-//                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-//                     ),
-//                     SizedBox(height: 16),
-//                     ElevatedButton(
-//                       onPressed: () {
-//                         onDelete();
-//                         Navigator.pop(context);
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         primary: Colors.red,
-//                       ),
-//                       child: Text('Delete Item'),
-//                     ),
-//                     SizedBox(height: 24),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+class ItemDetailsPage extends StatefulWidget {
+  final productInventory item;
+  final VoidCallback onDelete;
+
+  const ItemDetailsPage({required this.item, required this.onDelete});
+
+  @override
+  _ItemDetailsPageState createState() => _ItemDetailsPageState();
+}
+
+class _ItemDetailsPageState extends State<ItemDetailsPage> {
+  late TextEditingController listedAmountController;
+  late TextEditingController availableAmountController;
+  late TextEditingController priceController;
+
+  @override
+  void initState() {
+    super.initState();
+    listedAmountController =
+        TextEditingController(text: widget.item.listedAmount.toString());
+    availableAmountController =
+        TextEditingController(text: widget.item.availableAmount.toString());
+    priceController = TextEditingController(text: widget.item.price.toString());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+              Container(
+                height: 650,
+                width: 370,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      Container(
+                        height: 250,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1.0),
+                          // image: DecorationImage(
+                          //   // image: NetworkImage(widget.item.imageUrl),
+                          //   fit: BoxFit.cover,
+                          // ),
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: listedAmountController,
+                        decoration: InputDecoration(labelText: 'Listed Amount'),
+                      ),
+                      TextFormField(
+                        controller: availableAmountController,
+                        decoration:
+                        InputDecoration(labelText: 'Available Amount'),
+                      ),
+                      TextFormField(
+                        controller: priceController,
+                        decoration: InputDecoration(labelText: 'Price'),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String listedAmount =
+                          listedAmountController.text.trim();
+                          String availableAmount =
+                          availableAmountController.text.trim();
+                          String price = priceController.text.trim();
+
+                          await _updateProductDetails(
+                            listedAmount,
+                            availableAmount,
+                            price,
+                            widget.item.productInventoryId,
+                          );
+
+                          Navigator.pop(context);
+                        },
+                        child: Text('Update'),
+                      ),
+                      SizedBox(height: 24),
+                      ElevatedButton(
+                        onPressed: () {
+                          widget.onDelete();
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                        ),
+                        child: Text('Delete Item'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _updateProductDetails(
+      String listedAmount,
+      String availableAmount,
+      String price,
+      int productInventoryId,
+      ) async {
+    try {
+      final response = await http.put(
+        Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+        body: jsonEncode({
+          'price': price,
+          'available_amount': availableAmount,
+          'listed_amount': listedAmount,
+        }),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        // await _fetchAllProductInventories();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Successfully updated!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to update. Please try again.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (error) {
+      print('Error updating: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An unexpected error occurred. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+}

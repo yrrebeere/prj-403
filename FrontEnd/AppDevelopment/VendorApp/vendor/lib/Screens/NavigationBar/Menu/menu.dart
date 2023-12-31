@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/Screens/Login/login.dart';
-<<<<<<< Updated upstream
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
-=======
 import 'package:vendor/main.dart';
->>>>>>> Stashed changes
 import 'storelist.dart';
 // import 'path_to_provider_vendor_id.dart';
 import '../../SelectLanguage/languageprovider.dart';
@@ -173,7 +170,7 @@ class _MenuState extends State<Menu> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => StoreList(),
+                                    builder: (context) => Storelist(),
                                   ),
                                 );
                               },
