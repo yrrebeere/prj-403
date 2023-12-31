@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
-import '../PhoneNumber/phonenumber.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,8 +20,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
@@ -34,6 +32,7 @@ class _RegistrationState extends State<Registration> {
   bool showPassword = false;
   String usernameError = '';
   String usernameAvailabilityMessage = '';
+
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
@@ -522,27 +521,27 @@ class _RegistrationState extends State<Registration> {
                                 !agreeToTerms) {
                               isAnyFieldEmpty = true;
                               setState(() {
-                                usernameError =
-                                    'Please fill all required fields.';
+                                usernameError = 'Please fill all required fields.';
                               });
                             } else {
                               setState(() {
-                                usernameError =
-                                    ''; // Clear any previous error messages
+                                usernameError = ''; // Clear any previous error messages
                               });
 
                               // Check if the username is available only if all fields are filled
                               String availabilityMessage =
-                                  await checkUsernameAvailability(
-                                      userNameController.text);
+                              await checkUsernameAvailability(userNameController.text);
 
-                              if (availabilityMessage ==
-                                  "Username is available") {
+                              if (availabilityMessage == "Username is available" &&
+                                  _isPasswordValid(passwordController.text) &&
+                                  _isPasswordValid(confirmPasswordController.text) &&
+                                  passwordController.text == confirmPasswordController.text) {
                                 // Register the user
                                 createUser(
-                                  nameController.text,
-                                  userNameController.text,
                                   widget.phoneNumberController.text,
+                                  nameController.text,
+                                  passwordController.text,
+                                  userNameController.text,
                                   "English",
                                   "Vendor",
                                   selectedArea,
@@ -551,12 +550,19 @@ class _RegistrationState extends State<Registration> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Login(
-                                        phoneNumber:
-                                            widget.phoneNumberController.text),
+                                      phoneNumber: widget.phoneNumberController.text,
+                                    ),
                                   ),
                                 );
                               } else {
                                 setState(() {
+                                  if (!_isPasswordValid(passwordController.text)) {
+                                    passwordError =
+                                    "Password must be 8 characters long and contain special characters";
+                                  }
+                                  if (passwordController.text != confirmPasswordController.text) {
+                                    passwordError = "Passwords do not match";
+                                  }
                                   usernameError = "Username is already taken";
                                 });
                               }
@@ -565,11 +571,21 @@ class _RegistrationState extends State<Registration> {
                           child: IgnorePointer(
                             ignoring: !agreeToTerms ||
                                 !isNameValid(nameController.text) ||
-                                userNameController.text.isEmpty,
+                                userNameController.text.isEmpty ||
+                                passwordController.text.length < 8 ||
+                                !_isPasswordValid(passwordController.text) ||
+                                confirmPasswordController.text.length < 8 || // New check
+                                !_isPasswordValid(confirmPasswordController.text) || // New check
+                                passwordController.text != confirmPasswordController.text, // New check
                             child: Opacity(
                               opacity: agreeToTerms &&
-                                      isNameValid(nameController.text) &&
-                                      userNameController.text.isNotEmpty
+                                  isNameValid(nameController.text) &&
+                                  userNameController.text.isNotEmpty &&
+                                  passwordController.text.length >= 8 &&
+                                  _isPasswordValid(passwordController.text) &&
+                                  confirmPasswordController.text.length >= 8 && // New check
+                                  _isPasswordValid(confirmPasswordController.text) && // New check
+                                  passwordController.text == confirmPasswordController.text // New check
                                   ? 1.0
                                   : 0.5,
                               child: Container(

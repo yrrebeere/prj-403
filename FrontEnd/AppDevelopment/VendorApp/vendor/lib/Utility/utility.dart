@@ -1,14 +1,15 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<void> createUser(String name, String username, String phoneNumber, String language, String userType, String deliveryLocations) async {
+Future<void> createUser(String phoneNumber,String name,String password, String username,String language, String userType, String deliveryLocations) async {
 
   final response = await http.post(
     Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
     body: jsonEncode({
-      'name': name,
-      'username': username,
       'phone_number': phoneNumber,
+      'name': name,
+      'password' : password,
+      'username': username,
       'language': language,
       'user_type': userType,
     }),
