@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const { Op } = require("sequelize");
 const Vendor = db.vendor
 
 const addVendor = async (req, res) => {
@@ -45,10 +45,36 @@ const deleteVendor = async (req, res) => {
 
 }
 
+const getVendorIdByUserId = async (req, res) => {
+    try {
+
+        const user_id = req.params.user_table_user_id;
+
+        if (!user_id) {
+            return res.status(400).json({ error: 'User ID is required.' });
+        }
+
+        const vendor = await Vendor.findOne({
+            where: {
+                user_table_user_id: {
+                    [Op.eq]: user_id,
+                },
+            },
+        });
+
+        res.status(200).send(vendor);
+
+    } catch (error) {
+        console.error('Error getting vendor id by user id:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     addVendor,
     getAllVendors,
     getOneVendor,
     updateVendor,
-    deleteVendor
+    deleteVendor,
+    getVendorIdByUserId
 }
