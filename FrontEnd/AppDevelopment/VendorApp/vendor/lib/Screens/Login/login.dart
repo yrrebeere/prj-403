@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vendor/Screens/Login/resetpassword.dart';
 import '../OTP/otp.dart';
 import 'package:flutter/services.dart';
 
@@ -210,6 +211,37 @@ class _MyAppState extends State<Login> {
                               ),
                             ),
                             Positioned(
+                              left: screenWidth * 0.10,
+                              top: screenHeight * 0.6,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.red,
+                                            width: 1.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Reset Password',
+                                        style: TextStyle(fontSize: 15, color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            Positioned(
                               left: screenWidth * 0.4,
                               top: screenHeight * 0.798,
                               child: GestureDetector(
@@ -229,7 +261,7 @@ class _MyAppState extends State<Login> {
                                   }
                                 },
                                 child: Container(
-                                  width: screenWidth * 0.2, // Adjust the width as needed
+                                  width: screenWidth * 0.2,
                                   decoration: BoxDecoration(
                                     color: const Color(0xFF007AFF),
                                     borderRadius: BorderRadius.circular(screenHeight * 0.03),
