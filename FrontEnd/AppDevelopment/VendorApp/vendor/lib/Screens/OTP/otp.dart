@@ -18,6 +18,7 @@ class OTP extends StatefulWidget {
 class _MyAppState extends State<OTP> {
   final List<TextEditingController> _controllers = List.generate(4, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(4, (index) => FocusNode());
+  String phoneNumberController = "";
 
   late Timer _timer;
   int _timerSeconds = 15;
@@ -227,22 +228,16 @@ class _MyAppState extends State<OTP> {
                       left: screenWidth * 0.4,
                       top: screenHeight * 0.798,
                       child: GestureDetector(
-                        // onTap: () {
-                        //   if (_controllers.every((controller) => controller.text.isNotEmpty)) {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => Registration(phoneNumberController: phoneNumberController),
-                        //       ),
-                        //     );
-                        //   } else {
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         content: Text('Please fill in all fields.'),
-                        //       ),
-                        //     );
-                        //   }
-                        // },
+                        onTap: () {
+                          print("Irtaza");
+                          print(widget.phoneNumber);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Registration(phoneNumberController: widget.phoneNumber),
+                            ),
+                          );
+                        },
                         child: Container(
                           width: screenWidth * 0.2,
                           height: screenHeight * 0.055,

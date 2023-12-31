@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Registration extends StatefulWidget {
-  final TextEditingController phoneNumberController;
+  String phoneNumberController;
 
   Registration({required this.phoneNumberController});
 
@@ -24,6 +24,7 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
+
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
@@ -168,7 +169,7 @@ class _RegistrationState extends State<Registration> {
                                     Container(
                                       width: screenWidth * 0.6,
                                       child: Text(
-                                        '${widget.phoneNumberController.text}',
+                                        '${widget.phoneNumberController}',
                                         style: TextStyle(fontSize: 15),
                                       ),
                                     ),
@@ -538,7 +539,7 @@ class _RegistrationState extends State<Registration> {
                                   passwordController.text == confirmPasswordController.text) {
                                 // Register the user
                                 createUser(
-                                  widget.phoneNumberController.text,
+                                  widget.phoneNumberController,
                                   nameController.text,
                                   passwordController.text,
                                   userNameController.text,
@@ -550,7 +551,7 @@ class _RegistrationState extends State<Registration> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => Login(
-                                      phoneNumber: widget.phoneNumberController.text,
+                                      phoneNumber: widget.phoneNumberController,
                                     ),
                                   ),
                                 );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vendor/Screens/OTP/otp.dart';
 import '../Login/login.dart';
 import '../Registration/registration.dart';
 import 'package:flutter/services.dart';
@@ -91,7 +92,11 @@ class _MyAppState extends State<PhoneNumber> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Registration(phoneNumberController: phoneNumberController),
+          builder: (context) => OTP(
+            phoneNumber: phoneNumberController.text,
+            password: '', // Pass any other parameters if needed
+
+          ),
         ),
       );
     }
@@ -225,7 +230,7 @@ class _MyAppState extends State<PhoneNumber> {
                             Container(
                               width: screenWidth * 0.07,
                               child: Image.asset(
-                                "Assets/Images/pakistan.png",
+                                "pakistan.png",
                                 width: screenWidth * 0.07,
                                 height: screenHeight * 0.03,
                               ),
