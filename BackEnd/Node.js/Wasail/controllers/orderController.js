@@ -47,11 +47,33 @@ const deleteOrder = async (req, res) => {
     res.status(200).send('Order is deleted !')
 
 }
+const searchOrderByVID = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_vendor_id;
+
+        if (!vendor_id) {
+            return res.status(400).json({ error: 'Vendor ID is required.' });
+        }
+
+        const orders = await Order.findAll({
+            where: {
+
+                vendor_vendor_id: vendor_id,
+            },
+        });
+
+        res.status(200).send(orders);
+    } catch (error) {
+        console.error('Error searching products by vendor:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 module.exports = {
     addOrder,
     getAllOrders,
     getOneOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    searchOrderByVID
 }

@@ -14,7 +14,7 @@ router.get('/allorders', orderController.getAllOrders)
 router.get('/:order_id', orderController.getOneOrder)
 router.put('/:order_id', orderController.updateOrder)
 router.delete('/:order_id', orderController.deleteOrder)
-
+router.get('/search/:vendor_vendor_id', orderController.searchOrderByVID)
 
 
 module.exports = router;
