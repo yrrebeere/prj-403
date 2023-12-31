@@ -35,6 +35,68 @@ class _MyAppState extends State<PhoneNumber> {
       return false;
     }
   }
+
+  Future<void> _showConfirmationDialog(String phoneNumber) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Number Confirmation'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Is this your correct phone number?'),
+                Text(
+                  '$selectedCountryCode $phoneNumber',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Edit'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Yes, Confirm'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _handleConfirmation(phoneNumber);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _handleConfirmation(String phoneNumber) async {
+    bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
+
+    print("Phone Number Exists: $phoneNumberExists");
+    if (phoneNumberExists) {
+      print("Navigating to Login");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Login(phoneNumber: phoneNumber),
+        ),
+      );
+    } else {
+      print("Navigating to Registration");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Registration(phoneNumberController: phoneNumberController),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -135,7 +197,7 @@ class _MyAppState extends State<PhoneNumber> {
                   left: screenWidth * 0.43,
                   top: screenHeight * 0.28,
                   child: Image.asset(
-                    'assets/images/mobile_icon.png',
+                    'Assets/Images/mobile_icon.png',
                     width: screenWidth * 0.2,
                     height: screenWidth * 0.2,
                   ),
@@ -163,7 +225,7 @@ class _MyAppState extends State<PhoneNumber> {
                             Container(
                               width: screenWidth * 0.07,
                               child: Image.asset(
-                                "assets/images/pakistan.png",
+                                "Assets/Images/pakistan.png",
                                 width: screenWidth * 0.07,
                                 height: screenHeight * 0.03,
                               ),
@@ -277,28 +339,10 @@ class _MyAppState extends State<PhoneNumber> {
                       setState(() {
                         phoneNumberError = '';
                       });
-                      bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
 
-                      print("Phone Number Exists: $phoneNumberExists");
-                      if (phoneNumberExists) {
-                        print("Navigating to Login");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Login(phoneNumber: phoneNumber),
-                          ),
-                        );
-                      } else {
-                        print("Navigating to Registration");
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Registration(phoneNumberController: phoneNumberController),
-                          ),
-                        );
-                      }
+                      // Show the confirmation dialog
+                      await _showConfirmationDialog(phoneNumber);
                     },
-
                     child: Container(
                       width: screenWidth * 0.3,
                       padding: const EdgeInsets.all(16.0),
