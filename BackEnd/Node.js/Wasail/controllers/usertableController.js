@@ -106,7 +106,32 @@ const usernameExists = async (req, res) => {
 };
 
 
+const userAuthentication = async (req, res) => {
+    try {
+        let phone_number = req.params.phone_number;
 
+        if (!phone_number) {
+            return res.status(400).json({ error: 'Phone number and password are required.' });
+        }
+
+        const user = await User.findOne({
+            where: {
+                phone_number: {
+                    [Op.eq]: phone_number,
+                },
+            },
+        });
+
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid phone number or password.' });
+        }
+
+        res.status(200).send(user);
+    } catch (error) {
+        console.error('Error during user authentication:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 module.exports = {
     addUser,
@@ -115,5 +140,6 @@ module.exports = {
     updateUser,
     deleteUser,
     numberExists,
-    usernameExists
+    usernameExists,
+    userAuthentication
 }
