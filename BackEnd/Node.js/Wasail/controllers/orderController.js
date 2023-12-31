@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const { Op } = require("sequelize");
 const Order = db.order
 
 const addOrder = async (req, res) => {
@@ -57,8 +57,10 @@ const searchOrderByVID = async (req, res) => {
 
         const orders = await Order.findAll({
             where: {
-
                 vendor_vendor_id: vendor_id,
+                order_status: {
+                    [Op.in]: ['In Process', 'On Its Way'],
+                },
             },
         });
 
@@ -69,11 +71,38 @@ const searchOrderByVID = async (req, res) => {
     }
 };
 
+const orderHistory = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_vendor_id;
+
+        if (!vendor_id) {
+            return res.status(400).json({ error: 'Vendor ID is required.' });
+        }
+
+        const orders = await Order.findAll({
+            where: {
+                vendor_vendor_id: vendor_id,
+                order_status: {
+                    [Op.in]: ['Delivered'],
+                },
+            },
+        });
+
+        res.status(200).send(orders);
+    } catch (error) {
+        console.error('Error searching products by vendor:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 module.exports = {
     addOrder,
     getAllOrders,
     getOneOrder,
     updateOrder,
     deleteOrder,
-    searchOrderByVID
+    searchOrderByVID,
+    orderHistory
 }
