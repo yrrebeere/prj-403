@@ -80,7 +80,13 @@ class _SearchBarPageState extends State<SearchBarPage> {
                   child: TextField(
                     controller: searchController,
                     decoration: InputDecoration(
-                      labelText: 'Search',
+                      filled: true,
+                      fillColor: Color(0xfff2f2f6),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Search",
                     ),
                   ),
                 ),
@@ -244,7 +250,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
       int vendorId,
       int productProductId
       ) async {
-    print("dsgsgbdsdhngs");
     final response = await http.post(
       Uri.parse('http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
       body: jsonEncode({
@@ -292,6 +297,7 @@ class Inventory extends StatefulWidget {
 
 class _InventoryState extends State<Inventory> {
   List<productInventory> productInventories = [];
+
   final List<productInventory> inventoryItems = [];
 
   @override
@@ -319,14 +325,6 @@ class _InventoryState extends State<Inventory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF6FB457),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 145),
-          child: Text('WASAIL'),
-        ),
-        elevation: 0,
-      ),
       body: Column(
         children: [
           Expanded(
@@ -362,6 +360,9 @@ class _InventoryState extends State<Inventory> {
                       ),
                     ),
                     ListView.builder(
+
+
+
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       itemCount: productInventories.length,
@@ -425,6 +426,24 @@ class _InventoryState extends State<Inventory> {
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 19),
                                             ),
+                                            Text(
+                                              "${item.price}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              "${item.availableAmount}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              "${item.listedAmount}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 15),
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -457,134 +476,110 @@ class _InventoryState extends State<Inventory> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     final result = await Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => SearchBarPage()),
-      //     );
-      //
-      //     if (result != null && result is InventoryItem) {
-      //       setState(() {
-      //         inventoryItems.add(result);
-      //       });
-      //     }
-      //   },
-      //   backgroundColor: Color(0xFF6FB457),
-      //   child: Icon(Icons.add),
-      // ),
-    );
-  }
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SearchBarPage()),
+          );
 
-  void _openItemDetails(InventoryItem item) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ItemDetailsPage(
-          item: item,
-          onDelete: () {
-            setState(() {
-              inventoryItems.remove(item);
-            });
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class ItemDetailsPage extends StatelessWidget {
-  final InventoryItem item;
-  final VoidCallback onDelete;
-
-  const ItemDetailsPage({required this.item, required this.onDelete});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+        },
         backgroundColor: Color(0xFF6FB457),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 90),
-          child: Text('WASAIL'),
-        ),
-        elevation: 0,
-        leading: IconButton(
-          icon: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 650,
-              width: 370,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    Container(
-                      height: 250,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 1.0),
-                        image: DecorationImage(
-                          image: NetworkImage(item.imageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      item.name,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                    ),
-                    SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        onDelete();
-                        Navigator.pop(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                      ),
-                      child: Text('Delete Item'),
-                    ),
-                    SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: Icon(Icons.add),
       ),
     );
   }
+
+  // void _openItemDetails(InventoryItem item) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => ItemDetailsPage(
+  //         item: item,
+  //         onDelete: () {
+  //           setState(() {
+  //             inventoryItems.remove(item);
+  //           });
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
 }
+
+// class ItemDetailsPage extends StatelessWidget {
+//   final InventoryItem item;
+//   final VoidCallback onDelete;
+//
+//   const ItemDetailsPage({required this.item, required this.onDelete});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Container(
+//               height: 650,
+//               width: 370,
+//               decoration: BoxDecoration(
+//                 color: Colors.white,
+//                 borderRadius: BorderRadius.circular(20),
+//                 boxShadow: [
+//                   BoxShadow(
+//                     color: Colors.grey.withOpacity(0.5),
+//                     spreadRadius: 2,
+//                     blurRadius: 5,
+//                     offset: Offset(0, 3),
+//                   ),
+//                 ],
+//               ),
+//               child: Padding(
+//                 padding: const EdgeInsets.all(10.0),
+//                 child: Column(
+//                   children: [
+//                     SizedBox(height: 20),
+//                     Container(
+//                       height: 250,
+//                       width: 250,
+//                       decoration: BoxDecoration(
+//                         border: Border.all(color: Colors.black, width: 1.0),
+//                         image: DecorationImage(
+//                           image: NetworkImage(item.imageUrl),
+//                           fit: BoxFit.cover,
+//                         ),
+//                       ),
+//                     ),
+//                     SizedBox(height: 16),
+//                     Text(
+//                       item.name,
+//                       style:
+//                           TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+//                     ),
+//                     SizedBox(height: 16),
+//                     ElevatedButton(
+//                       onPressed: () {
+//                         onDelete();
+//                         Navigator.pop(context);
+//                       },
+//                       style: ElevatedButton.styleFrom(
+//                         primary: Colors.red,
+//                       ),
+//                       child: Text('Delete Item'),
+//                     ),
+//                     SizedBox(height: 24),
+//                     Row(
+//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

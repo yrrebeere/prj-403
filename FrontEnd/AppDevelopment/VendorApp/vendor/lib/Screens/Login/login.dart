@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/Login/resetpassword.dart';
 import '../OTP/otp.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import '../PhoneNumber/phonenumberprovider.dart';
 
 class Login extends StatefulWidget {
   final String phoneNumber;
@@ -17,6 +19,13 @@ class _MyAppState extends State<Login> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<PhoneNumberProvider>(context, listen: false).setPhoneNumber(widget.phoneNumber);
+  }
+
 
   @override
   Widget build(BuildContext context) {

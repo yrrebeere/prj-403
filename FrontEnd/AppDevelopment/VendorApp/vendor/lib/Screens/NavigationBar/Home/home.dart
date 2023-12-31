@@ -1,5 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
+import 'dart:convert';
+
+class searchProductInventory {
+  final int productId;
+  final String name;
+  final String imageUrl;
+
+
+  searchProductInventory({
+    required this.productId,
+    required this.name,
+    required this.imageUrl,
+
+  });
+
+  factory searchProductInventory.fromJson(Map<String, dynamic> json) {
+    return searchProductInventory(
+      productId: json['product_id'],
+      name: json['product_name'],
+      imageUrl: json['image'],
+    );
+  }
+}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -9,6 +33,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<searchProductInventory> searchResults = [];
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,17 +43,30 @@ class _HomeState extends State<Home> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Color(0xfff2f2f6),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide.none,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color(0xfff2f2f6),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: "Search My Inventory",
+                    ),
+                  ),
                 ),
-                hintText: "Search",
-                suffixIcon: Icon(Icons.search),
-              ),
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () async {
+                    String query = searchController.text;
+                    await _searchProductById(query);
+                  },
+                ),
+              ],
             ),
           ),
           GestureDetector(
@@ -75,4 +115,20 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  Future<void> _searchProductById(String query) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:3000/api/search/$query'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      setState(() {
+        searchResults = data.map((item) => searchProductInventory.fromJson(item)).toList();
+      });
+    } else {
+      print('Failed to load products');
+    }
+  }
+
 }

@@ -3,7 +3,9 @@ import 'package:vendor/Screens/NavigationBar/Menu/menu.dart';
 import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Inventory/inventory.dart';
+import 'package:provider/provider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
+import '../SelectLanguage/languageprovider.dart'; //
 
 
 void main() {

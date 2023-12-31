@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:vendor/Screens/Login/login.dart';
+<<<<<<< Updated upstream
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
+=======
+import 'package:vendor/main.dart';
+>>>>>>> Stashed changes
 import 'storelist.dart';
+// import 'path_to_provider_vendor_id.dart';
+import '../../SelectLanguage/languageprovider.dart';
+import '../../SelectLanguage/language.dart';
+
+
+class VendorIdManager {
+  static int? vendorId;
+
+  static void logout() {
+    vendorId = null;
+  }
+}
 
 class Menu extends StatefulWidget {
 
@@ -153,15 +169,15 @@ class _MenuState extends State<Menu> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => Storelist(),
-                                ),
-                              );
-                            },
-                            child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StoreList(),
+                                  ),
+                                );
+                              },
+                              child: Icon(Icons.arrow_forward_ios, color: Colors.black,size: 20,)
                           ),
                         ),
                       ],
@@ -335,12 +351,14 @@ class _MenuState extends State<Menu> {
                       ],
                     ),
                     GestureDetector(
-                      // onTap: () {
-                      //   Navigator.pushReplacement(
-                      //     context,
-                      //     MaterialPageRoute(builder: (context) => Login(phoneNumber: widget.phoneNumber)),
-                      //   );
-                      // },
+                      onTap: () {
+                        VendorIdManager.logout();
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyVendorApp()),
+                        );
+                      },
                       child: Text(
                         'Logout',
                         style: TextStyle(
