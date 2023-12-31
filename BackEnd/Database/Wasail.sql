@@ -1,3 +1,4 @@
+create database wasail;
 use wasail;
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES
 (03215566778899, 'Fizza Adeel', 12345, 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
@@ -11,8 +12,8 @@ INSERT INTO vendors (vendor_name, delivery_locations, created_at, updated_at, us
 ('Jalal Sons', 'Dha', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
 SELECT * FROM wasail.vendors;
 
-INSERT INTO grocery_stores (store_name, store_address, created_at, updated_at, user_table_user_id) VALUES
-('Alfatah', '522-Statelife', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
+INSERT INTO grocery_stores (store_name, image, store_address, created_at, updated_at, user_table_user_id) VALUES
+('Alfatah', 'Assets/Images/Products/lays-salted.png', '522-Statelife', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
 SELECT * FROM wasail.grocery_stores;
 
 INSERT INTO orders (order_date, delivery_date, total_bill, order_status, created_at, updated_at, grocery_store_store_id, vendor_vendor_id) VALUES
@@ -43,8 +44,7 @@ SELECT * FROM wasail.product_categories;
 
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
 ('200','50', '25', 1, 1,'2023-12-19T12:34:56','2023-12-19T12:34:56');
-SELECT * FROM wasail.product_inventories;livery_locations, created_at, updated_at, user_table_user_id) VALUES
-('Jalal Sons', 'Dha', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
+SELECT * FROM wasail.product_inventories;
 SELECT * FROM wasail.vendors;
 
 INSERT INTO grocery_stores (store_name, store_address, created_at, updated_at, user_table_user_id) VALUES
@@ -70,3 +70,7 @@ SELECT * FROM wasail.product_categories;
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
 ('200','50', '25', 1, 1,'2023-12-19T12:34:56','2023-12-19T12:34:56');
 SELECT * FROM wasail.product_inventories;
+
+INSERT INTO lists (created_at, updated_at, grocery_store_store_id, vendor_vendor_id) VALUES
+('2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 1);
+SELECT * FROM wasail.lists;

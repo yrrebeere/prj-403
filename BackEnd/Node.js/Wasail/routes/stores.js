@@ -7,7 +7,6 @@ const grocerystoreController = require('../controllers/grocerystoreController')
 //   res.send('respond with a resource');
 // });
 
-
 //vendor
 router.post('/addstore',grocerystoreController.addStore)
 router.get('/allstores',grocerystoreController.getAllStores)

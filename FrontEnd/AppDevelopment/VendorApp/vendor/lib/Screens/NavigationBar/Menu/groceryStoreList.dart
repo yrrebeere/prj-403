@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
 
 void main() => runApp(
   MyApp(),
@@ -46,22 +45,21 @@ class Storelist extends StatefulWidget {
 
 
 class _StorelistState extends State<Storelist> {
-
-
   List<Store> _groceryStoreList = [];
+  int vendorId = 1;
 
   @override
   void initState() {
     super.initState();
-    _fetchAllGroceryStores();
+    _fetchGroceryStoresList();
   }
 
-  Future<void> _fetchAllGroceryStores() async {
+  Future<void> _fetchGroceryStoresList() async {
     final response = await http.get(
-      Uri.parse('http://192.168.1.2:3000/api/grocery_store/allstores'),
+      Uri.parse('http://10.0.2.2:3000/api/grocery_store/searchstore/$vendorId'),
     );
-    
-    print('fizza');
+
+    print(response.body);
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
@@ -79,10 +77,6 @@ class _StorelistState extends State<Storelist> {
     return Scaffold(
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () => _fetchAllGroceryStores(),
-            child: Text('Fetch All Grocery Stores'),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: _groceryStoreList.length,
