@@ -153,14 +153,14 @@ class _MenuState extends State<Menu> {
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: GestureDetector(
-                            // onTap: () {
-                            //   Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //       builder: (context) => StoreList(),
-                            //     ),
-                            //   );
-                            // },
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Storelist(),
+                                ),
+                              );
+                            },
                             child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
                           ),
                         ),

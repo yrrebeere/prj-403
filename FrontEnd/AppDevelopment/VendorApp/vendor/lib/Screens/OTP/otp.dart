@@ -229,8 +229,6 @@ class _MyAppState extends State<OTP> {
                       top: screenHeight * 0.798,
                       child: GestureDetector(
                         onTap: () {
-                          print("Irtaza");
-                          print(widget.phoneNumber);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
