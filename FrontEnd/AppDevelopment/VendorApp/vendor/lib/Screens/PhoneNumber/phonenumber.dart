@@ -44,7 +44,7 @@ class _MyAppState extends State<PhoneNumber> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.number_confirmation),
+          title: Text('Number Confirmation'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
