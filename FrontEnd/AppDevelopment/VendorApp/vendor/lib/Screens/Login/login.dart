@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/Login/resetpassword.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import '../OTP/otp.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -261,10 +262,7 @@ class _MyAppState extends State<Login> {
                                     Navigator.push(
                                       builderContext,
                                       MaterialPageRoute(
-                                        builder: (context) => OTP(
-                                          password: password,
-                                          phoneNumber: widget.phoneNumber,
-                                        ),
+                                        builder: (context) => NavBar(),
                                       ),
                                     );
                                   }
