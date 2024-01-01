@@ -37,17 +37,18 @@ class _MyAppState extends State<PhoneNumber> {
     }
   }
 
-  Future<void> _showConfirmationDialog(String phoneNumber) async {
+  Future<void> _showConfirmationDialog(BuildContext context, String phoneNumber) async {
+
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Number Confirmation'),
+          title: Text(AppLocalizations.of(context)!.number_confirmation),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Is this your correct phone number?'),
+                Text(AppLocalizations.of(context)!.confirm_number),
                 Text(
                   '$selectedCountryCode $phoneNumber',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -57,13 +58,13 @@ class _MyAppState extends State<PhoneNumber> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Edit'),
+              child: Text(AppLocalizations.of(context)!.edit),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Yes, Confirm'),
+              child: Text(AppLocalizations.of(context)!.confirm),
               onPressed: () {
                 Navigator.of(context).pop();
                 _handleConfirmation(phoneNumber);
@@ -74,6 +75,7 @@ class _MyAppState extends State<PhoneNumber> {
       },
     );
   }
+
 
   void _handleConfirmation(String phoneNumber) async {
     bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
@@ -110,7 +112,6 @@ class _MyAppState extends State<PhoneNumber> {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('en'),
 
       builder: (context, child) {
         return Directionality(
@@ -345,8 +346,7 @@ class _MyAppState extends State<PhoneNumber> {
                         phoneNumberError = '';
                       });
 
-                      // Show the confirmation dialog
-                      await _showConfirmationDialog(phoneNumber);
+                      await _showConfirmationDialog(context, phoneNumber);
                     },
                     child: Container(
                       width: screenWidth * 0.3,

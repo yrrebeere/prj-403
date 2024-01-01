@@ -20,5 +20,9 @@
   "privacy_and_policy": " Privacy Policy",
   "register" : "Register",
   "username" : "Username",
-  "enter_reg_details" : "Enter Registration Details"
+  "enter_reg_details" : "Enter Registration Details",
+  "number_confirmation" : "Number Confirmation",
+  "edit" : "Edit",
+  "confirm" : "Confirm",
+  "confirm_number" : "Is this your correct phone number?"
 }
