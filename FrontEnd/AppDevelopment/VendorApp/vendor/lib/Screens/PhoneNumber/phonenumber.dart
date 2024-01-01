@@ -48,7 +48,7 @@ class _MyAppState extends State<PhoneNumber> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(AppLocalizations.of(context)!.confirm_number),
+                Text('Is this your correct phone number?'),
                 Text(
                   '$selectedCountryCode $phoneNumber',
                   style: TextStyle(fontWeight: FontWeight.bold),
@@ -58,13 +58,13 @@ class _MyAppState extends State<PhoneNumber> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(AppLocalizations.of(context)!.edit),
+              child: Text('Edit'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text(AppLocalizations.of(context)!.confirm),
+              child: Text('Yes, Confirm'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _handleConfirmation(phoneNumber);
