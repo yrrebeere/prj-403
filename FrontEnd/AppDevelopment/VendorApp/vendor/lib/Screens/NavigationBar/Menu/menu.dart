@@ -3,7 +3,6 @@ import 'package:vendor/Screens/Login/login.dart';
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:vendor/main.dart';
 import 'storelist.dart';
-// import 'path_to_provider_vendor_id.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import '../../SelectLanguage/language.dart';
 

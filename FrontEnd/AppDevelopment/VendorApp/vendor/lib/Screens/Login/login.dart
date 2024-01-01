@@ -219,36 +219,36 @@ class _MyAppState extends State<Login> {
                                 ),
                               ),
                             ),
-                            Positioned(
-                              left: screenWidth * 0.10,
-                              top: screenHeight * 0.6,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => ResetPasswordPage()),
-                                  );
-                                },
-                                child: Row(
-                                  children: [
-                                    DecoratedBox(
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          bottom: BorderSide(
-                                            color: Colors.red,
-                                            width: 1.0,
-                                          ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Reset Password',
-                                        style: TextStyle(fontSize: 15, color: Colors.red),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Positioned(
+                            //   left: screenWidth * 0.10,
+                            //   top: screenHeight * 0.6,
+                            //   child: GestureDetector(
+                            //     onTap: () {
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(builder: (context) => ResetPasswordPage()),
+                            //       );
+                            //     },
+                            //     child: Row(
+                            //       children: [
+                            //         DecoratedBox(
+                            //           decoration: BoxDecoration(
+                            //             border: Border(
+                            //               bottom: BorderSide(
+                            //                 color: Colors.red,
+                            //                 width: 1.0,
+                            //               ),
+                            //             ),
+                            //           ),
+                            //           child: Text(
+                            //             'Reset Password',
+                            //             style: TextStyle(fontSize: 15, color: Colors.red),
+                            //           ),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
 
                             Positioned(
                               left: screenWidth * 0.4,
