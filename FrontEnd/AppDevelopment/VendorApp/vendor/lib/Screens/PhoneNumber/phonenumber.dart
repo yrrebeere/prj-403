@@ -37,44 +37,49 @@ class _MyAppState extends State<PhoneNumber> {
     }
   }
 
-  Future<void> _showConfirmationDialog(BuildContext context, String phoneNumber) async {
-
+  Future<void> _showConfirmationDialog(BuildContext mainContext, String phoneNumber) async {
+    await Future.delayed(Duration(milliseconds: 100));
     return showDialog<void>(
-      context: context,
+      context: mainContext,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Number Confirmation'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Is this your correct phone number?'),
-                Text(
-                  '$selectedCountryCode $phoneNumber',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+        return Builder(
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(AppLocalizations.of(mainContext)!.number_confirmation),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(AppLocalizations.of(mainContext)!.confirm_number),
+                    Text(
+                      '$selectedCountryCode $phoneNumber',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text(AppLocalizations.of(mainContext)!.edit),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text(AppLocalizations.of(mainContext)!.confirm),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _handleConfirmation(phoneNumber);
+                  },
                 ),
               ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Edit'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Yes, Confirm'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _handleConfirmation(phoneNumber);
-              },
-            ),
-          ],
+            );
+          },
         );
       },
     );
   }
+
 
 
   void _handleConfirmation(String phoneNumber) async {

@@ -24,6 +24,10 @@
   "number_confirmation" : "نمبر کی تصدیق",
   "edit" : "ترمیم",
   "confirm" : "جی ہاں",
-  "confirm_number" : "کیا یہ آپ کا صحیح فون نمبر ہے؟"
-
+  "confirm_number" : "کیا یہ آپ کا صحیح فون نمبر ہے؟",
+  "enter_otp": "اپنا OTP درج کریں",
+  "code_sent" : "کوڈ اس نمبر پر بھیجا گی",
+  "resend" : "دوبارہ بھیجیں",
+  "code" : "کوڈ",
+  "submit": "کرائیں"
 }

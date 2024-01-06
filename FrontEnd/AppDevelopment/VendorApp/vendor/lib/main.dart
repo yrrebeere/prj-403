@@ -3,9 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'Screens/SelectLanguage/languageprovider.dart';
 import 'Screens/SelectLanguage/language.dart';
-import 'Screens/PhoneNumber/phonenumber.dart';
 import 'Screens/PhoneNumber/phonenumberprovider.dart';
-import 'package:vendor/Screens/Login/login.dart';
 import 'package:vendor/Screens/Login/loginprovider.dart';
 
 void main() => runApp(MyVendorApp());

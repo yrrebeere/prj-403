@@ -579,7 +579,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.black, width: 1.0),
                           // image: DecorationImage(
-                          //   // image: NetworkImage(widget.item.imageUrl),
+                          //   image: NetworkImage(widget.item.imageUrl),
                           //   fit: BoxFit.cover,
                           // ),
                         ),

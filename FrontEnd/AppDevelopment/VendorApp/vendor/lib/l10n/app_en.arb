@@ -24,5 +24,10 @@
   "number_confirmation" : "Number Confirmation",
   "edit" : "Edit",
   "confirm" : "Confirm",
-  "confirm_number" : "Is this your correct phone number?"
+  "confirm_number" : "Is this your correct phone number?",
+  "enter_otp" : "Enter your OTP",
+  "code_sent": "Code sent to",
+  "resend" : "Re-send",
+  "code" : "code",
+  "submit" : "Submit"
 }

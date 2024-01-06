@@ -76,11 +76,11 @@ class _MyAppState extends State<OTP> {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: screenWidth * 0.36,
+                      left: screenWidth * 0.38,
                       top: screenHeight * 0.01,
                       child: Center(
                         child: Text(
-                          'WASAIL',
+                          AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
                             color: Color(0xFF6FB457),
                             fontSize: 32,
@@ -95,7 +95,7 @@ class _MyAppState extends State<OTP> {
                       left: screenWidth * 0.07,
                       top: screenHeight * 0.2,
                       child: Text(
-                        'Enter your code',
+                        AppLocalizations.of(context)!.enter_otp,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: screenWidth * 0.06,
@@ -120,13 +120,14 @@ class _MyAppState extends State<OTP> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.07,
+                      left: screenWidth * 0.08,
                       top: screenHeight * 0.26,
                       child: Text.rich(
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Code sent on',
+                              text:AppLocalizations.of(context)!.code_sent,
+
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.85),
                                 fontSize: screenHeight * 0.02,
@@ -135,7 +136,7 @@ class _MyAppState extends State<OTP> {
                               ),
                             ),
                             TextSpan(
-                              text: ' 0${widget.phoneNumber} ',
+                              text: '\n0${widget.phoneNumber} ',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenHeight * 0.02,
@@ -190,7 +191,7 @@ class _MyAppState extends State<OTP> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Re-send',
+                              text: AppLocalizations.of(context)!.resend,
                               style: TextStyle(
                                 color: _timerSeconds == 0 ? Color(0xFF007AFF) : Color(0xFF99999D),
                                 fontSize: screenHeight * 0.02,
@@ -198,8 +199,13 @@ class _MyAppState extends State<OTP> {
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
+                            WidgetSpan(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 2), // Adjust the horizontal padding as needed
+                              ),
+                            ),
                             TextSpan(
-                              text: ' code in ',
+                              text:AppLocalizations.of(context)!.code,
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.85),
                                 fontSize: screenHeight * 0.02,
@@ -212,7 +218,7 @@ class _MyAppState extends State<OTP> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.42,
+                      left: screenWidth * 0.40,
                       top: screenHeight * 0.4,
                       child: TweenAnimationBuilder(
                         tween: Tween(begin: 30.0, end: 0.0),
@@ -254,14 +260,15 @@ class _MyAppState extends State<OTP> {
                             ],
                           ),
                           child: Container(
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),                            decoration: BoxDecoration(
                               color: Color(0xFF6FB457),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            child: const Text(
-                              "Submit",
-                              style: TextStyle(color: Colors.white),
+                            child: Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.submit,
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
                           ),
                         ),
