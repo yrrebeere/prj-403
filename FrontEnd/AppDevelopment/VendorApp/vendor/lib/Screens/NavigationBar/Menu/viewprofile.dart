@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'editprofile.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../SelectLanguage/languageprovider.dart';
+import 'package:provider/provider.dart';
 
 class ViewProfile extends StatefulWidget {
   @override
@@ -17,7 +21,8 @@ class _ViewProfileState extends State<ViewProfile> {
         backgroundColor: Color(0xFF6FB457),
         title: Padding(
           padding: const EdgeInsets.only(left: 90),
-          child: Text('WASAIL'),
+          child: Text(AppLocalizations.of(context)!.app_name,
+          ),
         ),
         elevation: 0,
         leading: IconButton(
@@ -80,7 +85,7 @@ class _ViewProfileState extends State<ViewProfile> {
                   });
                 }
               },
-              child: Text('Edit Profile'),
+              child: Text(AppLocalizations.of(context)!.edit),
             ),
 
             // Add more profile information widgets here

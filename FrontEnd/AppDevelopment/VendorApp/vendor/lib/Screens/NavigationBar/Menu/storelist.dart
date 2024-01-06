@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
+import 'package:provider/provider.dart';
+import '../../SelectLanguage/languageprovider.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
 
 void main() => runApp(
-  MyApp(),
-);
+      MyApp(),
+    );
 
 class MyApp extends StatelessWidget {
   @override
@@ -44,8 +49,6 @@ class Storelist extends StatefulWidget {
   State<Storelist> createState() => _StorelistState();
 }
 
-
-
 class _StorelistState extends State<Storelist> {
   List<Store> _groceryStoreList = [];
   int vendorId = 1;
@@ -75,59 +78,70 @@ class _StorelistState extends State<Storelist> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF6FB457),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 90),
-            child: Text('WASAIL'),
-          ),
-          elevation: 0,
-          leading: IconButton(
-            icon: GestureDetector(
-              onTap: () {
+    return Consumer<LanguageProvider>(
+        builder: (context, languageProvider, child) {
+      return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: languageProvider.selectedLocale,
+        builder: (context, child) {
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: child!,
+          );
+        },
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFF6FB457),
+            title: Padding(
+              padding: const EdgeInsets.only(left: 90),
+              child: Text(  AppLocalizations.of(context)!.app_name),
+            ),
+            elevation: 0,
+            leading: IconButton(
+              icon: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_back_ios),
+              ),
+              onPressed: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
-        ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Container(
-            color: Color(0xfff2f2f6),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    'Store List',
-                    style: TextStyle(fontSize: 20),
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Container(
+              color: Color(0xfff2f2f6),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.store_list,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
-                ),
-                // Use ListView.builder to dynamically build the store list
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: _groceryStoreList.length,
-                  itemBuilder: (context, index) {
-                    return buildStoreCard(_groceryStoreList[index]);
-                  },
-                ),
-                SizedBox(height: 20),
-              ],
+                  // Use ListView.builder to dynamically build the store list
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _groceryStoreList.length,
+                    itemBuilder: (context, index) {
+                      return buildStoreCard(_groceryStoreList[index]);
+                    },
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Widget buildStoreCard(Store store) {

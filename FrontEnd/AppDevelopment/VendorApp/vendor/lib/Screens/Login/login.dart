@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/Login/resetpassword.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
-import '../OTP/otp.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../PhoneNumber/phonenumberprovider.dart';
@@ -24,8 +23,13 @@ class _MyAppState extends State<Login> {
   @override
   void initState() {
     super.initState();
-    Provider.of<PhoneNumberProvider>(context, listen: false).setPhoneNumber(widget.phoneNumber);
+
+    Future.delayed(Duration.zero, () {
+      Provider.of<PhoneNumberProvider>(context, listen: false)
+          .setPhoneNumber(widget.phoneNumber);
+    });
   }
+
 
 
   @override

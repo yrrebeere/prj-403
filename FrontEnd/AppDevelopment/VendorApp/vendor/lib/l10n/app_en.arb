@@ -29,5 +29,26 @@
   "code_sent": "Code sent to",
   "resend" : "Re-send",
   "code" : "code",
-  "submit" : "Submit"
+  "submit" : "Submit",
+  "search" : "Search",
+  "you_have" : "You have",
+  "orders_today": "Total Orders Today",
+  "home" : "Home",
+  "orders" : "Orders",
+  "inventory": "Inventory",
+  "menu": "Menu",
+  "view_profile": "View Profile",
+  "store_list": "Store List",
+  "other" : "Other",
+  "general_settings" : "General Settings",
+  "about" :"About",
+  "privacy_policy": "Privacy Policy",
+  "language" : "Language",
+  "change_address": "Change Address",
+  "change_phone_number" : "Change Phone Number",
+  "logout" : "Logout",
+  "enter_name": "Name",
+  "company_name": "Company Name",
+  "save_changes" : "Save Changes"
+
 }
