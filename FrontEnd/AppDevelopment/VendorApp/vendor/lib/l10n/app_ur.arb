@@ -49,6 +49,12 @@
   "logout" : "لاگ آوٹ",
   "enter_name": "نام",
   "company_name": "کمپنی کا نام",
-  "save_changes" : "تبدیلیاں محفوظ کرو"
+  "save_changes" : "تبدیلیاں محفوظ کرو",
+  "search_page" : "تلاش صفحہ",
+  "listed_amount" : "درج نمبر",
+  "available_amount": "دستیاب نمبر",
+  "price": "قیمت",
+  "add" : "شامل کریں",
+  "listed_sku": "درج کردہ SKUs"
 
 }

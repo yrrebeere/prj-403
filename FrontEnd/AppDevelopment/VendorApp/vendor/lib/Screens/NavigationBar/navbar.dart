@@ -10,7 +10,8 @@ import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(NavBar());
+  runApp(
+      NavBar());
 }
 
 class NavBar extends StatefulWidget {
@@ -36,6 +37,7 @@ class _NavBarState extends State<NavBar> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
+          print("Selected Locale: ${languageProvider.selectedLocale}");
       return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

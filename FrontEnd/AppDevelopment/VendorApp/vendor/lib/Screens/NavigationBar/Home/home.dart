@@ -43,7 +43,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
-      return MaterialApp(
+          print("Selected Locale: ${languageProvider.selectedLocale}");
+
+          return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProvider.selectedLocale,

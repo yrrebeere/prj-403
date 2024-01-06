@@ -1,6 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../SelectLanguage/languageprovider.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(InventoryApp());
 
@@ -64,91 +69,106 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Search Page'),
-        backgroundColor: Color(0xFF6FB457),
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: searchController,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xfff2f2f6),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: "Search",
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () async {
-                    String query = searchController.text;
-                    await _fetchAndDisplayProducts(query);
-                  },
-                ),
-              ],
-            ),
+    return Consumer<LanguageProvider>(
+        builder: (context, languageProvider, child) {
+      return MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        locale: languageProvider.selectedLocale,
+        builder: (context, child) {
+          return Directionality(
+            textDirection: TextDirection.ltr,
+            child: child!,
+          );
+        },
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text(AppLocalizations.of(context)!.search_page),
+            backgroundColor: Color(0xFF6FB457),
+            centerTitle: true,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: suggestions.length,
-              itemBuilder: (context, index) {
-                final product = suggestions[index];
-
-                final imageUrl = product.imageUrl;
-
-                print(imageUrl);
-
-                return GestureDetector(
-                  onTap: () async {
-                    await _showProductDetailsDialog(product);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xfff2f2f6),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          hintText: AppLocalizations.of(context)!.search,
                         ),
-                      ],
-                    ),
-                    child: ListTile(
-                      title: Text(product.name),
-                      leading: Image.asset(
-                        imageUrl,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                        errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                          return Icon(Icons.error);
-                        },
                       ),
                     ),
-                  ),
-                );
+                    IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () async {
+                        String query = searchController.text;
+                        await _fetchAndDisplayProducts(query);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: suggestions.length,
+                  itemBuilder: (context, index) {
+                    final product = suggestions[index];
 
-              },
-            ),
+                    final imageUrl = product.imageUrl;
+
+                    print(imageUrl);
+
+                    return GestureDetector(
+                      onTap: () async {
+                        await _showProductDetailsDialog(product);
+                      },
+                      child: Container(
+                        margin:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 5,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: ListTile(
+                          title: Text(product.name),
+                          leading: Image.asset(
+                            imageUrl,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                            errorBuilder: (BuildContext context, Object error,
+                                StackTrace? stackTrace) {
+                              return Icon(Icons.error);
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    });
   }
 
   Future<void> _fetchAndDisplayProducts(String query) async {
@@ -167,95 +187,113 @@ class _SearchBarPageState extends State<SearchBarPage> {
   }
 
   Future<InventoryItem?> _showProductDetailsDialog(
-      InventoryItem product,
-      ) async {
+    InventoryItem product,
+  ) async {
     TextEditingController listedAmountController = TextEditingController();
     TextEditingController availableAmountController = TextEditingController();
     TextEditingController priceController = TextEditingController();
 
     int vendorId = 1;
 
+    await Future.delayed(Duration(milliseconds: 100));
 
     return showDialog<InventoryItem>(
       context: context,
-      builder: (context) => AlertDialog(
-        contentPadding: EdgeInsets.zero, // Set contentPadding to zero
-        content: SingleChildScrollView(
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  product.name,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.zero, // Set contentPadding to zero
+          content: Builder(
+            builder: (BuildContext context) {
+              return SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        product.name,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      Container(
+                        height: 250,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black, width: 1.0),
+                        ),
+                        child: Image.asset(
+                          product.imageUrl,
+                          width: 50,
+                          height: 50,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                      TextFormField(
+                        controller: listedAmountController,
+                        decoration: InputDecoration(
+                          labelText:
+                              AppLocalizations.of(context)!.listed_amount,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: availableAmountController,
+                        decoration:
+                            InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
+                      ),
+                      TextFormField(
+                        controller: priceController,
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
+                      ),
+                      SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () async {
+                          String listedAmount = listedAmountController.text;
+                          String availableAmount =
+                              availableAmountController.text;
+                          String price = priceController.text;
+
+                          print(listedAmount);
+                          print("AHAHAHA");
+                          print(availableAmount);
+                          print("NANANA");
+                          print(price);
+
+                          await _addToInventory(
+                            listedAmount,
+                            availableAmount,
+                            price,
+                            vendorId,
+                            product.productId,
+                          );
+
+                          Navigator.pop(context, product);
+                        },
+                        child: Text(AppLocalizations.of(context)!.add),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 16),
-                Container(
-                  height: 250,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1.0),
-                  ),
-                  child: Image.asset(
-                    product.imageUrl,
-                    width: 50,
-                    height: 50,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                SizedBox(height: 16),
-                TextFormField(
-                  controller: listedAmountController,
-                  decoration: InputDecoration(labelText: 'Listed Amount'),
-                ),
-                TextFormField(
-                  controller: availableAmountController,
-                  decoration: InputDecoration(labelText: 'Available Amount'),
-                ),
-                TextFormField(
-                  controller: priceController,
-                  decoration: InputDecoration(labelText: 'Price'),
-                ),
-                SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    String listedAmount = listedAmountController.text;
-                    String availableAmount = availableAmountController.text;
-                    String price = priceController.text;
-
-                    print(listedAmount); print("AHAHAHA"); print(availableAmount); print("NANANA"); print(price);
-
-                    await _addToInventory(listedAmount, availableAmount, price, vendorId, product.productId);
-
-                    Navigator.pop(context, product);
-                  },
-                  child: Text('Add'),
-                ),
-              ],
-            ),
+              );
+            },
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
-  Future<void> _addToInventory(
-      String listedAmount,
-      String availableAmount,
-      String price,
-      int vendorId,
-      int productProductId
-      ) async {
+  Future<void> _addToInventory(String listedAmount, String availableAmount,
+      String price, int vendorId, int productProductId) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+      Uri.parse(
+          'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
       body: jsonEncode({
-        'listed_amount' : listedAmount,
-        'available_amount' : availableAmount,
-        'price' : price,
+        'listed_amount': listedAmount,
+        'available_amount': availableAmount,
+        'price': price,
         'vendor_vendor_id': vendorId,
         'product_product_id': productProductId
       }),
@@ -268,7 +306,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
       print('Failed to add product to inventory');
     }
   }
-
 }
 
 class InventoryApp extends StatelessWidget {
@@ -315,7 +352,8 @@ class _InventoryState extends State<Inventory> {
       final List<dynamic> data = jsonDecode(response.body);
       setState(() {
         print(response.body);
-        productInventories = data.map((item) => productInventory.fromJson(item)).toList();
+        productInventories =
+            data.map((item) => productInventory.fromJson(item)).toList();
       });
     } else {
       print('Failed to load products');
@@ -338,12 +376,13 @@ class _InventoryState extends State<Inventory> {
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
-                            '${productInventories.length} Listed SKUs',
+                            '${productInventories.length} ${AppLocalizations.of(context)!.listed_sku}',
                             style: TextStyle(fontSize: 24),
                           ),
                         ),
                       ],
                     ),
+
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -390,7 +429,7 @@ class _InventoryState extends State<Inventory> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -402,7 +441,7 @@ class _InventoryState extends State<Inventory> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius:
-                                                BorderRadius.circular(50),
+                                                    BorderRadius.circular(50),
                                                 border: Border.all(
                                                     color: Colors.black,
                                                     width: 1.0),
@@ -415,7 +454,7 @@ class _InventoryState extends State<Inventory> {
                                         padding: const EdgeInsets.all(25.0),
                                         child: Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               "Product No. ${item.productInventoryId}",
@@ -446,7 +485,7 @@ class _InventoryState extends State<Inventory> {
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -479,7 +518,6 @@ class _InventoryState extends State<Inventory> {
             context,
             MaterialPageRoute(builder: (context) => SearchBarPage()),
           );
-
         },
         backgroundColor: Color(0xFF6FB457),
         child: Icon(Icons.add),
@@ -502,8 +540,6 @@ class _InventoryState extends State<Inventory> {
       ),
     );
   }
-
-
 }
 
 class ItemDetailsPage extends StatefulWidget {
@@ -517,8 +553,6 @@ class ItemDetailsPage extends StatefulWidget {
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
-
-
   late TextEditingController listedAmountController;
   late TextEditingController availableAmountController;
   late TextEditingController priceController;
@@ -593,7 +627,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       TextFormField(
                         controller: availableAmountController,
                         decoration:
-                        InputDecoration(labelText: 'Available Amount'),
+                            InputDecoration(labelText: 'Available Amount'),
                       ),
                       TextFormField(
                         controller: priceController,
@@ -603,9 +637,9 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       ElevatedButton(
                         onPressed: () async {
                           String listedAmount =
-                          listedAmountController.text.trim();
+                              listedAmountController.text.trim();
                           String availableAmount =
-                          availableAmountController.text.trim();
+                              availableAmountController.text.trim();
                           String price = priceController.text.trim();
 
                           await _updateProductDetails(
@@ -648,7 +682,8 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Delete Product Inventory'),
-          content: Text('Are you sure you want to delete this product inventory?'),
+          content:
+              Text('Are you sure you want to delete this product inventory?'),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -669,14 +704,15 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     );
   }
 
-
   Future<void> _deleteProductInventory(int productInventoryId) async {
     try {
       final response = await http.delete(
-        Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+        Uri.parse(
+            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
       );
       if (response.statusCode == 200) {
-        widget.onDelete(); // Trigger the callback to update the UI in the parent widget
+        widget
+            .onDelete(); // Trigger the callback to update the UI in the parent widget
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -703,16 +739,16 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     }
   }
 
-
   Future<void> _updateProductDetails(
-      String listedAmount,
-      String availableAmount,
-      String price,
-      int productInventoryId,
-      ) async {
+    String listedAmount,
+    String availableAmount,
+    String price,
+    int productInventoryId,
+  ) async {
     try {
       final response = await http.put(
-        Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+        Uri.parse(
+            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
         body: jsonEncode({
           'price': price,
           'available_amount': availableAmount,
