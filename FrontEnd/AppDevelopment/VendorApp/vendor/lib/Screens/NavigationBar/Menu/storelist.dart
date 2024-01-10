@@ -183,10 +183,10 @@ class _StorelistState extends State<Storelist> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: Colors.black, width: 1.0),
+                    // border: Border.all(color: Colors.black, width: 1.0),
                   ),
-                  child: Image.network(
-                    store.image,
+                  child: Image.asset(
+                    store.image, // Assuming store.image is the local asset path
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
@@ -221,4 +221,5 @@ class _StorelistState extends State<Storelist> {
       ),
     );
   }
+
 }
