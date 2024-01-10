@@ -37,7 +37,7 @@ class _NavBarState extends State<NavBar> {
     double screenHeight = MediaQuery.of(context).size.height;
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
-          print("Selected Locale: ${languageProvider.selectedLocale}");
+          print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
       return MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

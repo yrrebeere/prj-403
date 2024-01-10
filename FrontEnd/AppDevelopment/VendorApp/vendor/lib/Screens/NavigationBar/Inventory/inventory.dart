@@ -334,8 +334,67 @@ class Inventory extends StatefulWidget {
 
 class _InventoryState extends State<Inventory> {
   List<productInventory> productInventories = [];
-
   final List<productInventory> inventoryItems = [];
+  List<InventoryItem> suggestions = [];
+
+  Future<void> _fetchAndDisplayCombinedData(String vendorId) async {
+    final response = await http.get(
+      Uri.parse('http://10.0.2.2:3000/api/product_inventory/search/$vendorId'),
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      List<productInventory> tempProductInventories = [];
+      List<InventoryItem> tempSuggestions = [];
+
+      for (final item in data) {
+        final productInventoryItem = productInventory.fromJson(item as Map<String, dynamic>);
+
+        final productId = productInventoryItem.productProductId;
+        final productInventoryResponse = await http.get(
+          Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productId'),
+        );
+
+        if (productInventoryResponse.statusCode == 200) {
+          final Map<String, dynamic> productInventoryData = jsonDecode(productInventoryResponse.body);
+
+          final String productName = productInventoryData['product_name'];
+          final String imageUrl = productInventoryData['image'];
+
+          final combinedProduct = InventoryItem(
+            productId: productId,
+            name: productName,
+            imageUrl: imageUrl,
+          );
+
+          final combinedProductInventory = productInventory(
+            productInventoryId: productInventoryItem.productInventoryId,
+            price: productInventoryItem.price,
+            availableAmount: productInventoryItem.availableAmount,
+            listedAmount: productInventoryItem.listedAmount,
+            vendorVendorId: productInventoryItem.vendorVendorId,
+            productProductId: productInventoryItem.productProductId,
+          );
+
+          tempProductInventories.add(combinedProductInventory);
+          tempSuggestions.add(combinedProduct);
+        } else {
+          print('Failed to load additional product information');
+        }
+      }
+
+      setState(() {
+        // Update your state with the combined data
+        productInventories = tempProductInventories;
+        suggestions = tempSuggestions;
+      });
+    } else {
+      print('Failed to load products');
+    }
+  }
+
+
+
 
   @override
   void initState() {
@@ -359,6 +418,7 @@ class _InventoryState extends State<Inventory> {
       print('Failed to load products');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -404,6 +464,13 @@ class _InventoryState extends State<Inventory> {
                       itemCount: productInventories.length,
                       itemBuilder: (context, index) {
                         productInventory item = productInventories[index];
+
+                        // Find the corresponding InventoryItem using productProductId
+                        InventoryItem productItem = suggestions.firstWhere(
+                              (inventoryItem) => inventoryItem.productId == item.productProductId,
+                          orElse: () => InventoryItem(productId: -1, name: '', imageUrl: ''),
+                        );
+
                         return Column(
                           children: [
                             GestureDetector(
@@ -428,8 +495,7 @@ class _InventoryState extends State<Inventory> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -440,11 +506,17 @@ class _InventoryState extends State<Inventory> {
                                               width: 100,
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(50),
-                                                border: Border.all(
-                                                    color: Colors.black,
-                                                    width: 1.0),
+                                                borderRadius: BorderRadius.circular(50),
+                                                border: Border.all(color: Colors.black, width: 1.0),
+                                              ),
+                                              child: Image.asset(
+                                                productItem.imageUrl,
+                                                width: 50,
+                                                height: 50,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                  return Icon(Icons.error);
+                                                },
                                               ),
                                             ),
                                           ],
@@ -452,46 +524,48 @@ class _InventoryState extends State<Inventory> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(25.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Product No. ${item.productInventoryId}",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 19),
-                                            ),
-                                            Text(
-                                              "Listed Amount: ${item.listedAmount}",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
-                                            ),
-                                            Text(
-                                              "Available Amount: ${item.availableAmount}",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
-                                            ),
-                                            Text(
-                                              "Price: ${item.price}",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 15),
-                                            ),
-                                          ],
-                                        ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              // Expanded(
+                                              //   child: Text(
+                                              //     "Product No. ${item.productInventoryId}",
+                                              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                                              //   ),
+                                              // ),
+                                              Expanded(
+                                                child: Text(
+                                                  "Name: ${productItem.name}",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "Listed Amount: ${item.listedAmount}",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "Available Amount: ${item.availableAmount}",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  "Price: ${item.price}",
+                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                       ),
                                       Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10.0),
-                                            child: Icon(Icons.arrow_forward_ios,
-                                                color: Colors.black),
+                                            padding: const EdgeInsets.only(bottom: 10.0),
+                                            child: Icon(Icons.arrow_forward_ios, color: Colors.black),
                                           ),
                                         ],
                                       ),
@@ -505,6 +579,8 @@ class _InventoryState extends State<Inventory> {
                         );
                       },
                     ),
+
+
                   ],
                 ),
               ),

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'package:provider/provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
 
-void main() => runApp(
-      MyApp(),
-    );
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
@@ -43,7 +39,7 @@ class Store {
 }
 
 class Storelist extends StatefulWidget {
-  const Storelist({super.key});
+  const Storelist({Key? key});
 
   @override
   State<Storelist> createState() => _StorelistState();
@@ -78,82 +74,125 @@ class _StorelistState extends State<Storelist> {
     }
   }
 
+  void _showStoreDetailsDialog(Store store) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  store.storeName,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Image.asset(
+                  store.image,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Address: ${store.storeAddress}',
+                  style: TextStyle(fontSize: 16.0),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text('Close'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-      return MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: languageProvider.selectedLocale,
-        builder: (context, child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: child!,
-          );
-        },
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFF6FB457),
-            title: Padding(
-              padding: const EdgeInsets.only(left: 90),
-              child: Text(  AppLocalizations.of(context)!.app_name),
-            ),
-            elevation: 0,
-            leading: IconButton(
-              icon: GestureDetector(
-                onTap: () {
+      builder: (context, languageProvider, child) {
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: languageProvider.selectedLocale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+          home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color(0xFF6FB457),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 90),
+                child: Text(AppLocalizations.of(context)!.app_name),
+              ),
+              elevation: 0,
+              leading: IconButton(
+                icon: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(Icons.arrow_back_ios),
+                ),
+                onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_back_ios),
               ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
-          ),
-          backgroundColor: Colors.white,
-          body: SingleChildScrollView(
-            child: Container(
-              color: Color(0xfff2f2f6),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      AppLocalizations.of(context)!.store_list,
-                      style: TextStyle(fontSize: 20),
+            backgroundColor: Colors.white,
+            body: SingleChildScrollView(
+              child: Container(
+                color: Color(0xfff2f2f6),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        AppLocalizations.of(context)!.store_list,
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                  ),
-                  // Use ListView.builder to dynamically build the store list
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: _groceryStoreList.length,
-                    itemBuilder: (context, index) {
-                      return buildStoreCard(_groceryStoreList[index]);
-                    },
-                  ),
-                  SizedBox(height: 20),
-                ],
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: _groceryStoreList.length,
+                      itemBuilder: (context, index) {
+                        return buildStoreCard(_groceryStoreList[index]);
+                      },
+                    ),
+                    SizedBox(height: 20),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Widget buildStoreCard(Store store) {
     return GestureDetector(
       onTap: () {
-        // Navigate to StoreDetails page when the store card is tapped
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StoreDetails(storeName: store.storeName),
-          ),
-        );
+        _showStoreDetailsDialog(store);
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -183,10 +222,9 @@ class _StorelistState extends State<Storelist> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
-                    // border: Border.all(color: Colors.black, width: 1.0),
                   ),
                   child: Image.asset(
-                    store.image, // Assuming store.image is the local asset path
+                    store.image,
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
@@ -221,5 +259,4 @@ class _StorelistState extends State<Storelist> {
       ),
     );
   }
-
 }
