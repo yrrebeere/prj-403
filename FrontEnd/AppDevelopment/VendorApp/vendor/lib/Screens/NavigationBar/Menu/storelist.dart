@@ -185,7 +185,12 @@ class _StorelistState extends State<Storelist> {
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(color: Colors.black, width: 1.0),
                   ),
-                  // Add your image widget here based on the store.image
+                  child: Image.network(
+                    store.image,
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ],
             ),
