@@ -352,7 +352,7 @@ class _InventoryState extends State<Inventory> {
 
         final productId = productInventoryItem.productProductId;
         final productInventoryResponse = await http.get(
-          Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productId'),
+          Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
         );
 
         if (productInventoryResponse.statusCode == 200) {
@@ -400,6 +400,7 @@ class _InventoryState extends State<Inventory> {
   void initState() {
     super.initState();
     _fetchAndDisplayProductInventories("1");
+    _fetchAndDisplayCombinedData("1");
   }
 
   Future<void> _fetchAndDisplayProductInventories(String vendorId) async {
@@ -507,7 +508,7 @@ class _InventoryState extends State<Inventory> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.circular(50),
-                                                border: Border.all(color: Colors.black, width: 1.0),
+                                                // border: Border.all(color: Colors.black, width: 1.0),
                                               ),
                                               child: Image.asset(
                                                 productItem.imageUrl,
@@ -535,7 +536,7 @@ class _InventoryState extends State<Inventory> {
                                               // ),
                                               Expanded(
                                                 child: Text(
-                                                  "Name: ${productItem.name}",
+                                                  "${productItem.name}",
                                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                                                 ),
                                               ),
