@@ -72,8 +72,9 @@ const numberExists = async (req, res) => {
         if(user == null) {
             res.status(200).send(false)
         }
-        else
-            res.status(200).send(true)
+        else {
+            res.status(200).json({ exists: true, userId: user.user_id });
+        }
     }
     catch (error) {
         console.error('Error checking phone number existence:', error);
