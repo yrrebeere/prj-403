@@ -3,9 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'Screens/SelectLanguage/languageprovider.dart';
 import 'Screens/SelectLanguage/language.dart';
+import 'Screens/PhoneNumber/phonenumber.dart';
 import 'Screens/PhoneNumber/phonenumberprovider.dart';
 import 'package:vendor/Screens/Login/loginprovider.dart';
 import 'package:vendor/Screens/Registration/registrationprovider.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:vendor/Screens/OTP/otp.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +22,14 @@ class MyVendorApp extends StatelessWidget {
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
         ),
+        ChangeNotifierProvider<UserIdProvider>(
+            create: (_) => UserIdProvider()
+        ),
         ChangeNotifierProvider<PhoneNumberProvider>(
           create: (context) => PhoneNumberProvider(),
-        ),
-        ChangeNotifierProvider<LoginChangeNotifier>(
-          create: (context) => LoginChangeNotifier(),
-        ),
-        ChangeNotifierProvider(create: (_) => UserProvider()),
-
+        ),// ChangeNotifierProvider<LoginChangeNotifier>(
+        //   create: (context) => LoginChangeNotifier(),
+        // ),
       ],
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,

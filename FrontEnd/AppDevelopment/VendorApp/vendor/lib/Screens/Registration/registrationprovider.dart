@@ -1,11 +1,14 @@
-// user_provider.dart
+// user_id_provider.dart
+
 import 'package:flutter/material.dart';
 
-class UserProvider extends ChangeNotifier {
-  String? userId;
+class UserIdProvider extends ChangeNotifier {
+  int? _userId;
 
-  void setUserId(String id) {
-    userId = id;
+  int? get userId => _userId;
+
+  void setUserId(int? userId) {
+    _userId = userId;
     notifyListeners();
   }
 }

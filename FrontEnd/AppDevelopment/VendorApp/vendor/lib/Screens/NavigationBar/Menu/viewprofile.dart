@@ -6,13 +6,24 @@ import '../../SelectLanguage/languageprovider.dart';
 import 'package:provider/provider.dart';
 
 class ViewProfile extends StatefulWidget {
+  final Map<String, dynamic>? userData;
+
+  ViewProfile({required this.userData});
+
   @override
   _ViewProfileState createState() => _ViewProfileState();
 }
 
 class _ViewProfileState extends State<ViewProfile> {
-  String name = "John Doe"; // Initial values for demonstration
-  String companyName = "ABC Company";
+  late String name;
+  late String companyName;
+
+  @override
+  void initState() {
+    super.initState();
+    name = widget.userData?['name'] ?? '';
+    companyName = widget.userData?['companyName'] ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +32,8 @@ class _ViewProfileState extends State<ViewProfile> {
         backgroundColor: Color(0xFF6FB457),
         title: Padding(
           padding: const EdgeInsets.only(left: 90),
-          child: Text(AppLocalizations.of(context)!.app_name,
+          child: Text(
+            AppLocalizations.of(context)!.app_name,
           ),
         ),
         elevation: 0,

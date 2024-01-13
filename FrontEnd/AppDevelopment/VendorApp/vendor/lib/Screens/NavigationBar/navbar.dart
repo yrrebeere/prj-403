@@ -6,6 +6,7 @@ import 'Inventory/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
@@ -28,6 +29,8 @@ class _NavBarState extends State<NavBar> {
 
   @override
   Widget build(BuildContext context) {
+    var userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Consumer<LanguageProvider>(

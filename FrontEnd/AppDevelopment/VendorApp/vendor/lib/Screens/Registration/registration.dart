@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import '../../Utility/utility.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'registrationprovider.dart';
 
 class Registration extends StatefulWidget {
   String phoneNumberController;
@@ -20,11 +20,11 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
-
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
@@ -33,7 +33,6 @@ class _RegistrationState extends State<Registration> {
   bool showPassword = false;
   String usernameError = '';
   String usernameAvailabilityMessage = '';
-
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
@@ -50,6 +49,62 @@ class _RegistrationState extends State<Registration> {
           : "Username is available";
     } catch (e) {
       return "Error checking username availability";
+    }
+  }
+
+  Future<void> createUser(
+      String phoneNumber,
+      String name,
+      String password,
+      String username,
+      String language,
+      String userType,
+      String deliveryLocations) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
+      body: jsonEncode({
+        'phone_number': phoneNumber,
+        'name': name,
+        'password': password,
+        'username': username,
+        'language': language,
+        'user_type': userType,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      print("User added");
+      final dynamic json = jsonDecode(response.body);
+
+      // Get the UserIdProvider instance
+      // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
+
+      // Set the user ID
+      // userIdProvider.setUserId(json['user_id']);
+
+      await createVendor(name, deliveryLocations, json['user_id']);
+    } else {
+      throw Exception('Failed to add user');
+    }
+  }
+
+  Future<void> createVendor(
+      String vendorName, String deliveryLocations, int userId) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:3000/api/vendor/addvendor'),
+      body: jsonEncode({
+        'vendor_name': vendorName,
+        'delivery_locations': deliveryLocations,
+        'user_table_user_id': userId,
+      }),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      print("Vendor added");
+    } else {
+      throw Exception('Failed to add user');
     }
   }
 
@@ -514,60 +569,7 @@ class _RegistrationState extends State<Registration> {
                         bottom: screenHeight * 0.05,
                         child: GestureDetector(
                           onTap: () async {
-                            bool isAnyFieldEmpty = false;
-
-                            // Check if any field is empty
-                            if (nameController.text.isEmpty ||
-                                userNameController.text.isEmpty ||
-                                !agreeToTerms) {
-                              isAnyFieldEmpty = true;
-                              setState(() {
-                                usernameError = 'Please fill all required fields.';
-                              });
-                            } else {
-                              setState(() {
-                                usernameError = ''; // Clear any previous error messages
-                              });
-
-                              // Check if the username is available only if all fields are filled
-                              String availabilityMessage =
-                              await checkUsernameAvailability(userNameController.text);
-
-                              if (availabilityMessage == "Username is available" &&
-                                  _isPasswordValid(passwordController.text) &&
-                                  _isPasswordValid(confirmPasswordController.text) &&
-                                  passwordController.text == confirmPasswordController.text) {
-                                // Register the user
-                                createUser(
-                                  widget.phoneNumberController,
-                                  nameController.text,
-                                  passwordController.text,
-                                  userNameController.text,
-                                  "English",
-                                  "Vendor",
-                                  selectedArea,
-                                );
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Login(
-                                      phoneNumber: widget.phoneNumberController,
-                                    ),
-                                  ),
-                                );
-                              } else {
-                                setState(() {
-                                  if (!_isPasswordValid(passwordController.text)) {
-                                    passwordError =
-                                    "Password must be 8 characters long and contain special characters";
-                                  }
-                                  if (passwordController.text != confirmPasswordController.text) {
-                                    passwordError = "Passwords do not match";
-                                  }
-                                  usernameError = "Username is already taken";
-                                });
-                              }
-                            }
+                            await handleRegistration();
                           },
                           child: IgnorePointer(
                             ignoring: !agreeToTerms ||
@@ -575,18 +577,26 @@ class _RegistrationState extends State<Registration> {
                                 userNameController.text.isEmpty ||
                                 passwordController.text.length < 8 ||
                                 !_isPasswordValid(passwordController.text) ||
-                                confirmPasswordController.text.length < 8 || // New check
-                                !_isPasswordValid(confirmPasswordController.text) || // New check
-                                passwordController.text != confirmPasswordController.text, // New check
+                                confirmPasswordController.text.length <
+                                    8 || // New check
+                                !_isPasswordValid(confirmPasswordController
+                                    .text) || // New check
+                                passwordController.text !=
+                                    confirmPasswordController.text, // New check
                             child: Opacity(
                               opacity: agreeToTerms &&
-                                  isNameValid(nameController.text) &&
-                                  userNameController.text.isNotEmpty &&
-                                  passwordController.text.length >= 8 &&
-                                  _isPasswordValid(passwordController.text) &&
-                                  confirmPasswordController.text.length >= 8 && // New check
-                                  _isPasswordValid(confirmPasswordController.text) && // New check
-                                  passwordController.text == confirmPasswordController.text // New check
+                                      isNameValid(nameController.text) &&
+                                      userNameController.text.isNotEmpty &&
+                                      passwordController.text.length >= 8 &&
+                                      _isPasswordValid(
+                                          passwordController.text) &&
+                                      confirmPasswordController.text.length >=
+                                          8 && // New check
+                                      _isPasswordValid(confirmPasswordController
+                                          .text) && // New check
+                                      passwordController.text ==
+                                          confirmPasswordController
+                                              .text // New check
                                   ? 1.0
                                   : 0.5,
                               child: Container(
@@ -616,6 +626,64 @@ class _RegistrationState extends State<Registration> {
         );
       },
     );
+  }
+
+  Future<void> handleRegistration() async {
+    bool isAnyFieldEmpty = false;
+
+    // Check if any field is empty
+    if (nameController.text.isEmpty ||
+        userNameController.text.isEmpty ||
+        !agreeToTerms) {
+      isAnyFieldEmpty = true;
+      setState(() {
+        usernameError = 'Please fill all required fields.';
+      });
+    } else {
+      setState(() {
+        usernameError = ''; // Clear any previous error messages
+      });
+
+      // Check if the username is available only if all fields are filled
+      String availabilityMessage =
+          await checkUsernameAvailability(userNameController.text);
+
+      if (availabilityMessage == "Username is available" &&
+          _isPasswordValid(passwordController.text) &&
+          _isPasswordValid(confirmPasswordController.text) &&
+          passwordController.text == confirmPasswordController.text) {
+        // Register the user
+        await createUser(
+          widget.phoneNumberController!,
+          nameController.text,
+          passwordController.text,
+          userNameController.text,
+          "English",
+          "Vendor",
+          selectedArea,
+        );
+        // Navigate to the login screen
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Login(
+                phoneNumber: widget.phoneNumberController!, // Corrected usage
+                // Include the userId if you have it),
+              ),
+            ));
+      } else {
+        setState(() {
+          if (!_isPasswordValid(passwordController.text)) {
+            passwordError =
+                "Password must be 8 characters long and contain special characters";
+          }
+          if (passwordController.text != confirmPasswordController.text) {
+            passwordError = "Passwords do not match";
+          }
+          usernameError = "Username is already taken";
+        });
+      }
+    }
   }
 
   void validatePassword() {

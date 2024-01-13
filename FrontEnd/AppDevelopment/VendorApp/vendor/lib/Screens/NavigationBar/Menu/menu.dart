@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../Registration/registrationprovider.dart';
 
 
 class VendorIdManager {
@@ -30,26 +31,32 @@ class Menu extends StatefulWidget {
 }
 
 class _MenuState extends State<Menu> {
-  String name = "John Doe"; // Initial values for demonstration
-  String companyName = "ABC Company";
+  String name = ""; // Initial values for demonstration
+  String number = "";
 
   @override
   void initState() {
     super.initState();
+    String userId = '1'; // Replace with the actual user ID
+
     fetchUserInfo(); // Fetch user information when the widget is initialized
   }
 
   Future<void> fetchUserInfo() async {
+    // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
+    // final userId = userIdProvider.userId;
+    String userId = '1'; // Replace with the actual user ID
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
-      final response = await http.get(Uri.parse('YOUR_API_ENDPOINT'));
+      final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        print('Phone Number Type: ${data['phone_number'].runtimeType}');
         // Update user information based on the response
         setState(() {
           name = data['name'];
-          companyName = data['companyName'];
+          number = data['phone_number'].toString().trim(); // Trim leading/trailing whitespaces
         });
       } else {
         // Handle error response
@@ -112,7 +119,7 @@ class _MenuState extends State<Menu> {
                               ),
                             ),
                             Text(name, style: TextStyle(fontSize: 20)),
-                            Text(companyName,
+                            Text('0$number',
                                 style: TextStyle(
                                     fontSize: 17, color: Colors.grey)),
                             SizedBox(
@@ -123,14 +130,18 @@ class _MenuState extends State<Menu> {
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewProfile(),
+                                    builder: (context) => ViewProfile(userData: {
+                                      'name': name,
+                                      'number': number,
+                                      // Add other user data fields if needed
+                                    }),
                                   ),
                                 );
 
                                 if (result != null) {
                                   setState(() {
                                     name = result['name'];
-                                    companyName = result['companyName'];
+                                    number = result['number'];
                                   });
                                 }
                               },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
+import 'package:vendor/Screens/Registration/registrationprovider.dart';
+import '../PhoneNumber/phonenumberprovider.dart';
 import 'package:provider/provider.dart';
 import 'languageprovider.dart';
 
@@ -14,6 +16,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
         ),
+        ChangeNotifierProvider<UserIdProvider>(
+            create: (_) => UserIdProvider()
+        ),
+        ChangeNotifierProvider<PhoneNumberProvider>(
+          create: (context) => PhoneNumberProvider(),
+        ),// ChangeNotifierProvider<LoginChangeNotifier>(
+        //   create: (context) => LoginChangeNotifier(),
+        // ),
       ],
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
