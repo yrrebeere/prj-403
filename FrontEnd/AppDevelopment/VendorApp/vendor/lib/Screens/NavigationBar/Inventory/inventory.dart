@@ -59,11 +59,18 @@ class productInventory {
 }
 
 class SearchBarPage extends StatefulWidget {
+  final List<productInventory> productInventories;
+
+  SearchBarPage({required this.productInventories});
+
   @override
   _SearchBarPageState createState() => _SearchBarPageState();
 }
 
 class _SearchBarPageState extends State<SearchBarPage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   List<InventoryItem> suggestions = [];
   TextEditingController searchController = TextEditingController();
 
@@ -82,10 +89,17 @@ class _SearchBarPageState extends State<SearchBarPage> {
           );
         },
         home: Scaffold(
+          key: _scaffoldKey, // Assign the key to the scaffold
           appBar: AppBar(
             title: Text(AppLocalizations.of(context)!.search_page),
             backgroundColor: Color(0xFF6FB457),
             centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.chevron_left),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           body: Column(
             children: [
@@ -256,11 +270,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
                               availableAmountController.text;
                           String price = priceController.text;
 
-                          print(listedAmount);
-                          print("AHAHAHA");
-                          print(availableAmount);
-                          print("NANANA");
-                          print(price);
 
                           await _addToInventory(
                             listedAmount,
@@ -287,25 +296,49 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   Future<void> _addToInventory(String listedAmount, String availableAmount,
       String price, int vendorId, int productProductId) async {
-    final response = await http.post(
-      Uri.parse(
-          'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
-      body: jsonEncode({
-        'listed_amount': listedAmount,
-        'available_amount': availableAmount,
-        'price': price,
-        'vendor_vendor_id': vendorId,
-        'product_product_id': productProductId
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
+    // Check if the product is already in the inventory
+    bool isDuplicate = widget.productInventories.any((product) => product.productProductId == productProductId);
 
-    if (response.statusCode == 200) {
-      print('Product added to inventory successfully');
+    void _showDuplicateProductAlert() {
+      Navigator.of(context).pop(); // Close the AlertDialog
+
+      final snackBar = SnackBar(
+        content: Text('This product is already in the inventory.'),
+        duration: Duration(seconds: 5), // Adjust the duration as needed
+        action: SnackBarAction(
+          label: 'Close',
+          onPressed: () {},
+        ),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+
+    if (isDuplicate) {
+      print('Product is a duplicate');
+      _showDuplicateProductAlert();
     } else {
-      print('Failed to add product to inventory');
+      final response = await http.post(
+        Uri.parse(
+            'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+        body: jsonEncode({
+          'listed_amount': listedAmount,
+          'available_amount': availableAmount,
+          'price': price,
+          'vendor_vendor_id': vendorId,
+          'product_product_id': productProductId
+        }),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        print('Product added to inventory successfully');
+      } else {
+        print('Failed to add product to inventory');
+      }
     }
   }
+
 }
 
 class InventoryApp extends StatelessWidget {
@@ -593,7 +626,7 @@ class _InventoryState extends State<Inventory> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchBarPage()),
+            MaterialPageRoute(builder: (context) => SearchBarPage(productInventories: productInventories,)),
           );
         },
         backgroundColor: Color(0xFF6FB457),
