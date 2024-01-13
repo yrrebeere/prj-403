@@ -5,6 +5,10 @@ import 'Screens/SelectLanguage/languageprovider.dart';
 import 'Screens/SelectLanguage/language.dart';
 import 'Screens/PhoneNumber/phonenumberprovider.dart';
 import 'package:vendor/Screens/Login/loginprovider.dart';
+import 'package:vendor/Screens/Registration/registrationprovider.dart';
+import 'package:vendor/Screens/OTP/otp.dart';
+import 'package:provider/provider.dart';
+
 
 void main() => runApp(MyVendorApp());
 
@@ -22,6 +26,7 @@ class MyVendorApp extends StatelessWidget {
         ChangeNotifierProvider<LoginChangeNotifier>(
           create: (context) => LoginChangeNotifier(),
         ),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
 
       ],
       child: MaterialApp(

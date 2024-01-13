@@ -9,11 +9,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
-void main() {
-  runApp(
-      NavBar());
-}
-
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
