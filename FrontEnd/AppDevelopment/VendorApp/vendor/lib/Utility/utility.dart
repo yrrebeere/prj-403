@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+//save provider vendor+user id
 Future<void> createUser(String phoneNumber,String name,String password, String username,String language, String userType, String deliveryLocations) async {
 
   final response = await http.post(

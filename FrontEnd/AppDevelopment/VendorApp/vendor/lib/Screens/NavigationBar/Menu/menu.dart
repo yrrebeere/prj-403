@@ -8,6 +8,9 @@ import '../../SelectLanguage/languageprovider.dart';
 import '../../SelectLanguage/language.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class VendorIdManager {
   static int? vendorId;
@@ -33,6 +36,29 @@ class _MenuState extends State<Menu> {
   @override
   void initState() {
     super.initState();
+    fetchUserInfo(); // Fetch user information when the widget is initialized
+  }
+
+  Future<void> fetchUserInfo() async {
+    try {
+      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
+      final response = await http.get(Uri.parse('YOUR_API_ENDPOINT'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        // Update user information based on the response
+        setState(() {
+          name = data['name'];
+          companyName = data['companyName'];
+        });
+      } else {
+        // Handle error response
+        print('Failed to fetch user information. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      // Handle network or other errors
+      print('Error during HTTP request: $error');
+    }
   }
 
   @override

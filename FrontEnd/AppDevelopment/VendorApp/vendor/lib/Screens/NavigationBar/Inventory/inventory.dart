@@ -59,11 +59,18 @@ class productInventory {
 }
 
 class SearchBarPage extends StatefulWidget {
+  final List<productInventory> productInventories;
+
+  SearchBarPage({required this.productInventories});
+
   @override
   _SearchBarPageState createState() => _SearchBarPageState();
 }
 
 class _SearchBarPageState extends State<SearchBarPage> {
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   List<InventoryItem> suggestions = [];
   TextEditingController searchController = TextEditingController();
 
@@ -82,10 +89,17 @@ class _SearchBarPageState extends State<SearchBarPage> {
           );
         },
         home: Scaffold(
+          key: _scaffoldKey, // Assign the key to the scaffold
           appBar: AppBar(
             title: Text(AppLocalizations.of(context)!.search_page),
             backgroundColor: Color(0xFF6FB457),
             centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.chevron_left),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           body: Column(
             children: [
@@ -256,11 +270,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
                               availableAmountController.text;
                           String price = priceController.text;
 
-                          print(listedAmount);
-                          print("AHAHAHA");
-                          print(availableAmount);
-                          print("NANANA");
-                          print(price);
 
                           await _addToInventory(
                             listedAmount,
@@ -287,25 +296,65 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   Future<void> _addToInventory(String listedAmount, String availableAmount,
       String price, int vendorId, int productProductId) async {
-    final response = await http.post(
-      Uri.parse(
-          'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
-      body: jsonEncode({
-        'listed_amount': listedAmount,
-        'available_amount': availableAmount,
-        'price': price,
-        'vendor_vendor_id': vendorId,
-        'product_product_id': productProductId
-      }),
-      headers: {'Content-Type': 'application/json'},
-    );
+    bool isDuplicate = widget.productInventories.any((product) => product.productProductId == productProductId);
 
-    if (response.statusCode == 200) {
-      print('Product added to inventory successfully');
+    Future<void> _showDuplicateProductAlert(int duplicateProductId) async {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Product already in inventory'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      // Find the duplicate product in the productInventories list
+      productInventory duplicateProduct = widget.productInventories.firstWhere(
+            (product) => product.productProductId == duplicateProductId,
+        orElse: () => productInventory(
+          productInventoryId: -1,
+          price: -1,
+          availableAmount: -1,
+          listedAmount: -1,
+          vendorVendorId: -1,
+          productProductId: -1,
+        ),
+      );
+
+      // Open the details page for the duplicate product
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ItemDetailsPage(
+              item: duplicateProduct,
+              onDelete: () {}),
+        ),
+      );
+    }
+
+    if (isDuplicate) {
+      print('Product is a duplicate');
+      _showDuplicateProductAlert(productProductId);
     } else {
-      print('Failed to add product to inventory');
+      final response = await http.post(
+        Uri.parse(
+            'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+        body: jsonEncode({
+          'listed_amount': listedAmount,
+          'available_amount': availableAmount,
+          'price': price,
+          'vendor_vendor_id': vendorId,
+          'product_product_id': productProductId
+        }),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        print('Product added to inventory successfully');
+      } else {
+        print('Failed to add product to inventory');
+      }
     }
   }
+
 }
 
 class InventoryApp extends StatelessWidget {
@@ -352,7 +401,7 @@ class _InventoryState extends State<Inventory> {
 
         final productId = productInventoryItem.productProductId;
         final productInventoryResponse = await http.get(
-          Uri.parse('http://10.0.2.2:3000/api/product_inventory/$productId'),
+          Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
         );
 
         if (productInventoryResponse.statusCode == 200) {
@@ -400,6 +449,7 @@ class _InventoryState extends State<Inventory> {
   void initState() {
     super.initState();
     _fetchAndDisplayProductInventories("1");
+    _fetchAndDisplayCombinedData("1");
   }
 
   Future<void> _fetchAndDisplayProductInventories(String vendorId) async {
@@ -507,7 +557,7 @@ class _InventoryState extends State<Inventory> {
                                               decoration: BoxDecoration(
                                                 color: Colors.white,
                                                 borderRadius: BorderRadius.circular(50),
-                                                border: Border.all(color: Colors.black, width: 1.0),
+                                                // border: Border.all(color: Colors.black, width: 1.0),
                                               ),
                                               child: Image.asset(
                                                 productItem.imageUrl,
@@ -535,7 +585,7 @@ class _InventoryState extends State<Inventory> {
                                               // ),
                                               Expanded(
                                                 child: Text(
-                                                  "Name: ${productItem.name}",
+                                                  "${productItem.name}",
                                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                                                 ),
                                               ),
@@ -592,7 +642,7 @@ class _InventoryState extends State<Inventory> {
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SearchBarPage()),
+            MaterialPageRoute(builder: (context) => SearchBarPage(productInventories: productInventories,)),
           );
         },
         backgroundColor: Color(0xFF6FB457),
@@ -616,13 +666,19 @@ class _InventoryState extends State<Inventory> {
       ),
     );
   }
+
+
 }
 
 class ItemDetailsPage extends StatefulWidget {
   final productInventory item;
+
   final VoidCallback onDelete;
 
-  const ItemDetailsPage({required this.item, required this.onDelete});
+  const ItemDetailsPage({
+    required this.item,
+    required this.onDelete
+  });
 
   @override
   _ItemDetailsPageState createState() => _ItemDetailsPageState();
@@ -632,6 +688,9 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   late TextEditingController listedAmountController;
   late TextEditingController availableAmountController;
   late TextEditingController priceController;
+  late String productName; // Add this line
+  late String imageUrl; // Add this line
+
 
   @override
   void initState() {
@@ -641,7 +700,31 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     availableAmountController =
         TextEditingController(text: widget.item.availableAmount.toString());
     priceController = TextEditingController(text: widget.item.price.toString());
+
+    _fetchAndDisplayProductDetails(widget.item.productProductId);
   }
+
+  Future<void> _fetchAndDisplayProductDetails(int productId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> productData = jsonDecode(response.body);
+
+        setState(() {
+          productName = productData['product_name'];
+          imageUrl = productData['image'];
+        });
+      } else {
+        print('Failed to load product details');
+      }
+    } catch (error) {
+      print('Error fetching product details: $error');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -682,19 +765,20 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: Column(
                     children: [
-                      SizedBox(height: 20),
-                      Container(
-                        height: 250,
-                        width: 250,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1.0),
-                          // image: DecorationImage(
-                          //   image: NetworkImage(widget.item.imageUrl),
-                          //   fit: BoxFit.cover,
-                          // ),
-                        ),
+                      SizedBox(height: 16),
+                      Text(
+                        productName,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
                       ),
                       SizedBox(height: 16),
+                      imageUrl != null
+                          ? Image.asset(
+                        imageUrl, // Assuming imageUrl is the asset path
+                        height: 150,
+                        width: 150,
+                        fit: BoxFit.cover,
+                      )
+                          : Container(),
                       SizedBox(height: 16),
                       TextFormField(
                         controller: listedAmountController,
