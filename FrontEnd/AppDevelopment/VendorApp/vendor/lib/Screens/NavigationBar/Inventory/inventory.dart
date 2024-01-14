@@ -487,7 +487,7 @@ class _InventoryState extends State<Inventory> {
                           padding: const EdgeInsets.all(15.0),
                           child: Text(
                             '${productInventories.length} ${AppLocalizations.of(context)!.listed_sku}',
-                            style: TextStyle(fontSize: 24),
+                            style: TextStyle(fontSize: 21),
                           ),
                         ),
                       ],

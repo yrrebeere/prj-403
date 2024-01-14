@@ -159,7 +159,7 @@ class _StorelistState extends State<Storelist> {
             backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Container(
-                color: Color(0xfff2f2f6),
+                color: Colors.white,
                 child: Column(
                   children: [
                     Padding(
