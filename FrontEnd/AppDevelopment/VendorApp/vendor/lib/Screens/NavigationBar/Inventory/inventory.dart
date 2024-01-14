@@ -591,19 +591,21 @@ class _InventoryState extends State<Inventory> {
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  "Listed Amount: ${item.listedAmount}",
+                                                  "${AppLocalizations.of(context)!.listed_amount}: ${item.listedAmount}",
                                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  "Available Amount: ${item.availableAmount}",
+                                                  "${AppLocalizations.of(context)!.available_amount}: ${item.availableAmount}",
                                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                                                 ),
                                               ),
                                               Expanded(
                                                 child: Text(
-                                                  "Price: ${item.price}",
+                                                  "${AppLocalizations.of(context)!.price}: ${item.price}",
+                                                  textDirection: TextDirection.ltr,
+
                                                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                                                 ),
                                               ),
@@ -695,6 +697,8 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   @override
   void initState() {
     super.initState();
+    productName="";
+    imageUrl="";
     listedAmountController =
         TextEditingController(text: widget.item.listedAmount.toString());
     availableAmountController =
@@ -782,16 +786,16 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       SizedBox(height: 16),
                       TextFormField(
                         controller: listedAmountController,
-                        decoration: InputDecoration(labelText: 'Listed Amount'),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.listed_amount),
                       ),
                       TextFormField(
                         controller: availableAmountController,
                         decoration:
-                            InputDecoration(labelText: 'Available Amount'),
+                            InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
                       ),
                       TextFormField(
                         controller: priceController,
-                        decoration: InputDecoration(labelText: 'Price'),
+                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
                       ),
                       SizedBox(height: 16),
                       ElevatedButton(
@@ -811,7 +815,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
                           Navigator.pop(context);
                         },
-                        child: Text('Update'),
+                        child: Text(AppLocalizations.of(context)!.update),
                       ),
                       SizedBox(height: 24),
                       ElevatedButton(
@@ -823,7 +827,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
                         ),
-                        child: Text('Delete Item'),
+                        child: Text(AppLocalizations.of(context)!.delete),
                       ),
                     ],
                   ),

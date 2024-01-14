@@ -7,7 +7,8 @@ class OrderHistoryPage extends StatelessWidget {
 
   OrderHistoryPage(this.vendorId);
 
-  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
+  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(
+      int vendorId) async {
     try {
       final response = await http.get(
         Uri.parse('http://10.0.2.2:3000/api/order/orderhistory/$vendorId'),
@@ -22,21 +23,24 @@ class OrderHistoryPage extends StatelessWidget {
           final deliveryDate = item['delivery_date'];
           final totalBill = item['total_bill'];
           final orderStatus = item['order_status'];
-          final groceryStoreId = item['groceryStoreStoreId']; // Corrected field name
+          final groceryStoreId =
+              item['groceryStoreStoreId']; // Corrected field name
 
           if (groceryStoreId != null) {
             print('Fetching grocery store data for ID: $groceryStoreId');
 
             final groceryStoreResponse = await http.get(
-              Uri.parse('http://10.0.2.2:3000/api/grocery_store/$groceryStoreId'),
+              Uri.parse(
+                  'http://10.0.2.2:3000/api/grocery_store/$groceryStoreId'),
             );
 
             if (groceryStoreResponse.statusCode == 200) {
-              final Map<String, dynamic> groceryStoreData = jsonDecode(groceryStoreResponse.body);
+              final Map<String, dynamic> groceryStoreData =
+                  jsonDecode(groceryStoreResponse.body);
 
-              final groceryStoreName = groceryStoreData['store_name']; // Update the key to 'store_name'
+              final groceryStoreName = groceryStoreData[
+                  'store_name']; // Update the key to 'store_name'
               final groceryStoreImage = groceryStoreData['image'];
-
 
               // Combine data
               combinedData.add({
@@ -49,10 +53,12 @@ class OrderHistoryPage extends StatelessWidget {
                 'image': groceryStoreImage,
               });
             } else {
-              print('Failed to load additional grocery store information: ${groceryStoreResponse.statusCode}');
+              print(
+                  'Failed to load additional grocery store information: ${groceryStoreResponse.statusCode}');
             }
           } else {
-            print('grocery_store_store_id is null. Skipping fetching grocery store data.');
+            print(
+                'grocery_store_store_id is null. Skipping fetching grocery store data.');
           }
         }
 
@@ -136,7 +142,6 @@ class OrderHistoryPage extends StatelessWidget {
                                 Text(
                                   '${data['store_name']}',
                                   style: TextStyle(
-                                    // fontWeight: FontWeight.bold,
                                     fontSize: 28,
                                   ),
                                 ),
@@ -165,24 +170,22 @@ class OrderHistoryPage extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(height: 25),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    isDelivered
-                                        ? Icon(
-                                      Icons.check,
-                                      color: Colors.green,
-                                    )
-                                        : SizedBox(),
-                                    Text(
-                                      'Order Status: ${data['order_status']}',
-                                      style: TextStyle(
-                                        color: isDelivered ? Colors.green : null,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                isDelivered
+                                    ? Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 40,
+                                      )
+                                    : SizedBox(),
+                                // No checkmark for non-delivered orders
+                                SizedBox(height: 5),
+                                Text(
+                                  'Order Status: ${data['order_status']}',
+                                  style: TextStyle(
+                                    color: isDelivered ? Colors.green : null,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
@@ -192,7 +195,6 @@ class OrderHistoryPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20), // Add space at the bottom
-
                 ],
               );
             }
@@ -201,6 +203,4 @@ class OrderHistoryPage extends StatelessWidget {
       ),
     );
   }
-
-
 }

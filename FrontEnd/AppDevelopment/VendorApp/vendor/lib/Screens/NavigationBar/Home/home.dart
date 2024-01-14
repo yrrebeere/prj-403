@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import '../../Login/login.dart';
 import 'orderhistory.dart';
+import 'currentorders.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -83,8 +84,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 hintText: AppLocalizations.of(context)!.search,
                               ),
-                              textDirection:
-                              TextDirection.ltr, // Set textDirection to LTR
+                              textDirection: TextDirection.ltr,
                             ),
                           ),
                           IconButton(
@@ -112,6 +112,12 @@ class _HomeState extends State<Home> {
                               Expanded(
                                 child: Row(
                                   children: [
+                                    Icon(
+                                      Icons.star,  // Added star icon for relevance
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                    SizedBox(width: 10),
                                     Text(
                                       AppLocalizations.of(context)!.you_have,
                                       style: TextStyle(
@@ -152,6 +158,65 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
+
+                    SizedBox(height: 70),  // Added more gap between the "15 Orders" tile and the next one
+
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to the page for current orders
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CurrentOrdersPage(vendorId),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 0),
+                        height: 120,
+                        width: 380,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6FB457),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(35.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.local_shipping,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .curr_orders,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                    // Moved the arrow icon here
+                                    Icon(Icons.arrow_forward_ios,
+                                        color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                              // Add other content for the Current Orders tile as needed
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     GestureDetector(
                       onTap: () {
                         // Navigate to the page for order history
@@ -163,7 +228,7 @@ class _HomeState extends State<Home> {
                         );
                       },
                       child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 80),
+                        margin: EdgeInsets.symmetric(vertical: 20),
                         height: 120,
                         width: 380,
                         decoration: BoxDecoration(

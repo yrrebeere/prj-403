@@ -57,6 +57,8 @@
   "add" : "Add",
   "listed_sku" : "Listed SKUs",
   "name_required": "Name required",
-  "order_history" : "Order History"
-
+  "order_history" : "Order History",
+  "delete": "Delete Item",
+  "update": "Update",
+  "curr_orders": "Current Orders"
 }

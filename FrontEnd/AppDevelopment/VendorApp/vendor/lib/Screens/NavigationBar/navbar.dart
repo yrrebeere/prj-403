@@ -51,7 +51,7 @@ class _NavBarState extends State<NavBar> {
             backgroundColor: Color(0xFF6FB457),
             title: Padding(
               padding: const EdgeInsets.only(left: 145),
-              child: Text('Wasail'),
+              child: Text(AppLocalizations.of(context)!.app_name),
             ),
             elevation: 0,
           ),
@@ -72,15 +72,15 @@ class _NavBarState extends State<NavBar> {
                   setState(() => this.index = index),
               destinations: [
                 NavigationDestination(
-                    icon: Icon(Icons.home, color: Colors.grey), label: 'Home'),
+                    icon: Icon(Icons.home, color: Colors.grey), label: AppLocalizations.of(context)!.home),
                 NavigationDestination(
                     icon: Icon(Icons.local_shipping, color: Colors.grey),
-                    label: 'Orders'),
+                    label:AppLocalizations.of(context)!.orders),
                 NavigationDestination(
                     icon: Icon(Icons.list_alt_sharp, color: Colors.grey),
-                    label: 'Inventory'),
+                    label: AppLocalizations.of(context)!.inventory),
                 NavigationDestination(
-                    icon: Icon(Icons.menu, color: Colors.grey), label: 'Menu'),
+                    icon: Icon(Icons.menu, color: Colors.grey), label: AppLocalizations.of(context)!.menu),
               ],
             ),
           ),

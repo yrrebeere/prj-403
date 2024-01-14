@@ -57,8 +57,9 @@
   "add" : "شامل کریں",
   "listed_sku": "درج کردہ SKUs",
   "name_required": "نام کی ضرورت ہے",
-  "order_history" : "آرڈرز کی تاریخ"
-
-
+  "order_history" : "آرڈرز کی تاریخ",
+  "delete": "حذف کریں",
+  "update": "اپ ڈیٹ",
+  "curr_orders": "موجودہ آرڈرز"
 
 }
