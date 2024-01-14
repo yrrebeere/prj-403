@@ -102,14 +102,18 @@ class _DetailsState extends State<Details> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Store Name: ${widget.store.storeName}',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            Center(
+              child: Text(
+                ' ${widget.store.storeName}',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
             ),
             SizedBox(height: 12),
-            Text(
-              'Store Address: ${widget.store.storeAddress}',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
+            Center(
+              child: Text(
+                'Store Address: ${widget.store.storeAddress}',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
             ),
             SizedBox(height: 24),
             if (_orderDetailsList.isNotEmpty)

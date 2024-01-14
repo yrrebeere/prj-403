@@ -7,19 +7,19 @@ import 'orderhistory.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
-class searchProductInventory {
+class SearchProductInventory {
   final int productId;
   final String name;
   final String imageUrl;
 
-  searchProductInventory({
+  SearchProductInventory({
     required this.productId,
     required this.name,
     required this.imageUrl,
   });
 
-  factory searchProductInventory.fromJson(Map<String, dynamic> json) {
-    return searchProductInventory(
+  factory SearchProductInventory.fromJson(Map<String, dynamic> json) {
+    return SearchProductInventory(
       productId: json['product_id'],
       name: json['product_name'],
       imageUrl: json['image'],
@@ -35,13 +35,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<searchProductInventory> searchResults = [];
+  List<SearchProductInventory> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
-
   int vendorId = 1;
-  int numberOfCurrentOrders = 15;
-
+  int numberOfCurrentOrders = 4;
 
   @override
   Widget build(BuildContext context) {
@@ -80,18 +78,29 @@ class _HomeState extends State<Home> {
                                 ),
                                 hintText: AppLocalizations.of(context)!.search,
                               ),
-                              textDirection: TextDirection.ltr,
                             ),
                           ),
+
                           IconButton(
                             icon: Icon(Icons.search),
                             onPressed: () async {
-                              String query = searchController.text;
-                              await _searchProductById(query);
+                              String productName = searchController.text;
+                              print('Searching for product: $productName'); // Add this debug print
+                              await _searchProductInInventory(productName);
                             },
                           ),
                         ],
                       ),
+                    ),
+                    Column(
+                      children: searchResults
+                          .map(
+                            (product) => ListTile(
+                          title: Text(product.name),
+                          // You can customize the display further based on your needs
+                        ),
+                      )
+                          .toList(),
                     ),
                     GestureDetector(
                       child: Container(
@@ -156,7 +165,6 @@ class _HomeState extends State<Home> {
                     ),
                     GestureDetector(
                       onTap: () {
-
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -219,19 +227,45 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<void> _searchProductById(String query) async {
-    final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/search/$query'),
-    );
+// Modify the _searchProductInInventory method
+  Future<void> _searchProductInInventory(String productName) async {
+    try {
+      print('Searching for product: $productName'); // Add this debug print
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/product/searchproductininventory/$vendorId/$productName'),
+      );
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      setState(() {
-        searchResults =
-            data.map((item) => searchProductInventory.fromJson(item)).toList();
-      });
-    } else {
-      print('Failed to load products');
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        print('Search results: $data'); // Debug print
+
+        // Displaying the name and image for each result
+        for (var item in data) {
+          print('Name: ${item['product_name']}, Image: ${item['image']}');
+        }
+
+        setState(() {
+          searchResults = data.map((item) => SearchProductInventory.fromJson(item)).toList();
+        });
+      } else {
+        print('Failed to load products');
+        // Show a snackbar with an error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to load products. Please try again.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    } catch (e) {
+      print('Error: $e');
+      // Show a snackbar with an error message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('An error occurred. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
     }
   }
 
