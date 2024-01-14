@@ -50,21 +50,16 @@ const deleteProduct = async (req, res) => {
 const searchProduct = async (req, res) => {
     try {
         let product_name = req.params.product_name;
-
         if (!product_name) {
             return res.status(400).json({ error: 'Search term is required.' });
         }
-
         const product = await Product.findAll({
             where: {
-
                 product_name: {
                     [Op.like]: `%${product_name}%`,
                 },
-
             },
         });
-
         res.status(200).send(product)
     } catch (error) {
         console.error('Error searching products:', error);
@@ -72,11 +67,44 @@ const searchProduct = async (req, res) => {
     }
 };
 
+const searchProductInInventory = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_vendor_id;
+        let product_name = req.params.product_name;
+
+        if (!vendor_id) {
+            return res.status(400).json({ error: 'Vendor ID is required.' });
+        }
+
+        const associatedInventories = await db.product_inventory.findAll({
+            where: { vendor_vendor_id: vendor_id },
+        });
+
+        const productInventoryIds = associatedInventories.map((inventory) => inventory.product_inventory_id);
+
+        const products = await db.product.findAll({
+            where: {
+                product_id: productInventoryIds,
+                product_name: {
+                    [Op.like]: `%${product_name}%`,
+                },
+            },
+        });
+
+        res.status(200).json(products);
+    } catch (error) {
+        console.error('Error searching products in inventory by vendor ID:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     addProduct,
     getAllProducts,
     getOneProduct,
     updateProduct,
     deleteProduct,
-    searchProduct
+    searchProduct,
+    searchProductInInventory
 }
