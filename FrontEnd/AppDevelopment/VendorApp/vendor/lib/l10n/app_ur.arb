@@ -55,6 +55,8 @@
   "available_amount": "دستیاب نمبر",
   "price": "قیمت",
   "add" : "شامل کریں",
-  "listed_sku": "درج کردہ SKUs"
+  "listed_sku": "درج کردہ SKUs",
+  "name_required": "نام کی ضرورت ہے"
+
 
 }

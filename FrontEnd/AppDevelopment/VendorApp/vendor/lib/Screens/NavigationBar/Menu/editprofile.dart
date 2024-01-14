@@ -12,7 +12,6 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
-  TextEditingController companyNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +57,17 @@ class _EditProfileState extends State<EditProfile> {
                   controller: nameController,
                   decoration: InputDecoration(labelText: AppLocalizations.of(context)!.enter_name),
                 ),
-                SizedBox(height: 16),
-                TextField(
-                  controller: companyNameController,
-                  decoration: InputDecoration(labelText: AppLocalizations.of(context)!.company_name),
-                ),
+
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () async {
                     // Add logic to save changes and update the profile
                     String newName = nameController.text;
-                    String newCompanyName = companyNameController.text;
 
                     print('New Name: $newName');
-                    print('New Company Name: $newCompanyName');
 
                     Map<String, String> updatedData = {
                       'name': newName,
-                      'companyName': newCompanyName
                     };
 
                     Navigator.pop(context, updatedData);

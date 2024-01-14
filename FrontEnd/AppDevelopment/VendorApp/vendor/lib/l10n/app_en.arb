@@ -55,6 +55,7 @@
   "available_amount": "Available Amount",
   "price": "Price",
   "add" : "Add",
-  "listed_sku" : "Listed SKUs"
+  "listed_sku" : "Listed SKUs",
+  "name_required": "Name required"
 
 }

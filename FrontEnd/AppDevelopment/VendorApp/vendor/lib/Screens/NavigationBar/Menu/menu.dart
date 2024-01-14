@@ -33,12 +33,11 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   String name = ""; // Initial values for demonstration
   String number = "";
+  String userId = '1'; // Replace with the actual user ID
 
   @override
   void initState() {
     super.initState();
-    String userId = '1'; // Replace with the actual user ID
-
     fetchUserInfo(); // Fetch user information when the widget is initialized
   }
 
@@ -130,11 +129,7 @@ class _MenuState extends State<Menu> {
                                 final result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ViewProfile(userData: {
-                                      'name': name,
-                                      'number': number,
-                                      // Add other user data fields if needed
-                                    }),
+                                    builder: (context) => ViewProfile(userId: userId,),
                                   ),
                                 );
 
