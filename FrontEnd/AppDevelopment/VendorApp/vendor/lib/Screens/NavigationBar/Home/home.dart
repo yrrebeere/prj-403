@@ -5,6 +5,7 @@ import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'package:provider/provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import '../../Login/login.dart';
+import 'orderhistory.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -35,121 +36,186 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+// ... (imports and other code)
+
 class _HomeState extends State<Home> {
   List<searchProductInventory> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
+  // Hardcoded vendorId as 1
+  int vendorId = 1;
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-          print("Selected Locale: ${languageProvider.selectedLocale}");
+      builder: (context, languageProvider, child) {
+        print("Selected Locale: ${languageProvider.selectedLocale}");
 
-          return MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: languageProvider.selectedLocale,
-        builder: (context, child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: child!,
-          );
-        },
-        home: Scaffold(
-          body: Container(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: Color(0xfff2f2f6),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                                borderSide: BorderSide.none,
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: languageProvider.selectedLocale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+          home: Scaffold(
+            body: Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              controller: searchController,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Color(0xfff2f2f6),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintText: AppLocalizations.of(context)!.search,
                               ),
-                              hintText: AppLocalizations.of(context)!.search,
+                              textDirection:
+                              TextDirection.ltr, // Set textDirection to LTR
                             ),
-                            textDirection:
-                                TextDirection.ltr, // Set textDirection to LTR
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: () async {
+                              String query = searchController.text;
+                              await _searchProductById(query);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      child: Container(
+                        height: 160,
+                        width: 380,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF141022),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(35.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!.you_have,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '15',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 30),
+                                    ),
+                                    Icon(Icons.arrow_forward_ios,
+                                        color: Colors.white),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      AppLocalizations.of(context)!
+                                          .orders_today,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: () async {
-                            String query = searchController.text;
-                            await _searchProductById(query);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      height: 160,
-                      width: 380,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF141022),
-                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(35.0),
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.you_have,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // Navigate to the page for order history
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderHistoryPage(vendorId),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 80),
+                        height: 120,
+                        width: 380,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6FB457),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(35.0),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.history,
+                                          color: Colors.white,
+                                          size: 30,
+                                        ),
+                                        SizedBox(width: 10),
+                                        Text(
+                                          AppLocalizations.of(context)!
+                                              .order_history,
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                    // Moved the arrow icon here
+                                    Icon(Icons.arrow_forward_ios,
+                                        color: Colors.white),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '15',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 30),
-                                  ),
-                                  Icon(Icons.arrow_forward_ios,
-                                      color: Colors.white),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Text(
-                                    AppLocalizations.of(context)!.orders_today,
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 18),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                              // Add other content for order history tile as needed
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Future<void> _searchProductById(String query) async {
