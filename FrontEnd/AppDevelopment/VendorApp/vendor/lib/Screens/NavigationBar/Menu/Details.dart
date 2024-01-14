@@ -96,38 +96,63 @@ class _DetailsState extends State<Details> {
   }
 
   Widget _buildBody() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Store Name: ${widget.store.storeName}'),
-          Text('Store Address: ${widget.store.storeAddress}'),
-          if (_orderDetailsList.isNotEmpty)
-            Expanded(
-              child: ListView.builder(
-                itemCount: _orderDetailsList.length,
-                itemBuilder: (context, index) {
-                  var orderDetails = _orderDetailsList[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text('Item ID: ${orderDetails.detailId}'),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Quantity: ${orderDetails.quantity}'),
-                          Text('Unit Price: ${orderDetails.unitPrice}'),
-                          Text('Total Price: ${orderDetails.totalPrice}'),
-                          Text('Order ID: ${orderDetails.orderOrderId}'),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Store Name: ${widget.store.storeName}',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
-          if (_orderDetailsList.isEmpty)
-            Text('No order details available'),
-        ],
+            SizedBox(height: 12),
+            Text(
+              'Store Address: ${widget.store.storeAddress}',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+            SizedBox(height: 24),
+            if (_orderDetailsList.isNotEmpty)
+              Expanded(
+                child: ListView.separated(
+                  itemCount: _orderDetailsList.length,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(height: 12);
+                  },
+                  itemBuilder: (context, index) {
+                    var orderDetails = _orderDetailsList[index];
+                    return Card(
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(16),
+                        title: Text(
+                          'Item ID: ${orderDetails.detailId}',
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
+                            Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
+                            Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
+                            Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            if (_orderDetailsList.isEmpty)
+              Text(
+                'No order details available',
+                style: TextStyle(fontSize: 18, color: Colors.grey),
+              ),
+          ],
+        ),
       ),
     );
   }
