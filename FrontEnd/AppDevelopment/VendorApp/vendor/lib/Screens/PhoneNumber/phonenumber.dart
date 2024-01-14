@@ -30,7 +30,7 @@ class _MyAppState extends State<PhoneNumber> {
       );
 
       final dynamic json = jsonDecode(response.body);
-      bool phoneNumberExists = json;
+      bool phoneNumberExists = json['exists'];
 
       return phoneNumberExists;
     } catch (e) {

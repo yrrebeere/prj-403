@@ -70,7 +70,7 @@ const numberExists = async (req, res) => {
         });
 
         if(user == null) {
-            res.status(200).send(false)
+            res.status(200).json({ exists: false });
         }
         else {
             res.status(200).json({ exists: true, userId: user.user_id });
