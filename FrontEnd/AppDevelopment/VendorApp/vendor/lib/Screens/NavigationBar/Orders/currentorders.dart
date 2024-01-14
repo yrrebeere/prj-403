@@ -13,6 +13,7 @@ class CurrentOrdersPage extends StatelessWidget {
         Uri.parse('http://10.0.2.2:3000/api/order/search/$vendorId'),
       );
 
+
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         List<Map<String, dynamic>> combinedData = [];
@@ -22,7 +23,7 @@ class CurrentOrdersPage extends StatelessWidget {
           final deliveryDate = item['delivery_date'];
           final totalBill = item['total_bill'];
           final orderStatus = item['order_status'];
-          final groceryStoreId = item['groceryStoreStoreId']; // Corrected field name
+          final groceryStoreId = item['groceryStoreStoreId'];
 
           if (groceryStoreId != null) {
             print('Fetching grocery store data for ID: $groceryStoreId');
@@ -34,10 +35,9 @@ class CurrentOrdersPage extends StatelessWidget {
             if (groceryStoreResponse.statusCode == 200) {
               final Map<String, dynamic> groceryStoreData = jsonDecode(groceryStoreResponse.body);
 
-              final groceryStoreName = groceryStoreData['store_name']; // Update the key to 'store_name'
+              final groceryStoreName = groceryStoreData['store_name'];
               final groceryStoreImage = groceryStoreData['image'];
 
-              // Combine data
               combinedData.add({
                 'order_date': orderDate,
                 'delivery_date': deliveryDate,
@@ -55,18 +55,16 @@ class CurrentOrdersPage extends StatelessWidget {
           }
         }
 
-        // Print the combined data for debugging
         print(combinedData);
 
-        // Return the combined data
         return combinedData;
       } else {
         print('Failed to load orders: ${response.statusCode}');
-        return []; // Return an empty list if there's an error
+        return [];
       }
     } catch (e) {
       print('Error: $e');
-      return []; // Return an empty list if there's an error
+      return [];
     }
   }
 
@@ -98,21 +96,21 @@ class CurrentOrdersPage extends StatelessWidget {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(child: Text('No current orders available.'));
             } else {
-              // Display the fetched data
+
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final orderData = snapshot.data![index];
 
                   return Card(
-                    elevation: 4, // Add a little border shadow
+                    elevation: 4,
                     margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: CircleAvatar(
-                        // Use the grocery store image here
+
                         backgroundImage: AssetImage(orderData['image']),
-                        radius: 30, // Increase the radius to make the CircleAvatar bigger
+                        radius: 30,
                       ),
                       title: Text(
                         '${orderData['store_name']}',
@@ -125,7 +123,7 @@ class CurrentOrdersPage extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: 15), // Add space between title and subtitles
+                          SizedBox(height: 15),
                           Text(
                             'Delivery Date: ${orderData['delivery_date']}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -134,13 +132,13 @@ class CurrentOrdersPage extends StatelessWidget {
                             'Order Date: ${orderData['order_date']}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
-                          SizedBox(height: 10), // Add space between subtitles and order status
+                          SizedBox(height: 10),
 
                           Text(
                             'Total Bill: Rs.${orderData['total_bill']}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
-                          SizedBox(height: 20), // Add space between subtitles and order status
+                          SizedBox(height: 20),
                           Row(
                             children: [
                               if (orderData['order_status'].toLowerCase() == 'on its way')
@@ -153,7 +151,7 @@ class CurrentOrdersPage extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 8.0),
                                   child: Icon(Icons.recycling, color: Colors.red),
                                 ),
-                              SizedBox(width: 8), // Add space between icon and text
+                              SizedBox(width: 8),
                               Expanded(
                                 child: Center(
                                   child: Container(
@@ -169,14 +167,8 @@ class CurrentOrdersPage extends StatelessWidget {
                               ),
                             ],
                           ),
-
-
-
-
-                          // Add more details or actions for each order as needed
                         ],
                       ),
-                      // Add more details or actions for each order as needed
                     ),
                   );
                 },

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'package:provider/provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
-import '../../Login/login.dart';
 import 'orderhistory.dart';
-import 'currentorders.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 
@@ -37,14 +34,13 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-// ... (imports and other code)
-
 class _HomeState extends State<Home> {
   List<searchProductInventory> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
-  // Hardcoded vendorId as 1
+
   int vendorId = 1;
+  int numberOfCurrentOrders = 15;
 
 
   @override
@@ -113,7 +109,7 @@ class _HomeState extends State<Home> {
                                 child: Row(
                                   children: [
                                     Icon(
-                                      Icons.star,  // Added star icon for relevance
+                                      Icons.star,
                                       color: Colors.white,
                                       size: 30,
                                     ),
@@ -132,7 +128,7 @@ class _HomeState extends State<Home> {
                                   MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '15',
+                                      '$numberOfCurrentOrders',
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 30),
                                     ),
@@ -159,67 +155,11 @@ class _HomeState extends State<Home> {
                       ),
                     ),
 
-                    SizedBox(height: 70),  // Added more gap between the "15 Orders" tile and the next one
+
 
                     GestureDetector(
                       onTap: () {
-                        // Navigate to the page for current orders
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CurrentOrdersPage(vendorId),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 0),
-                        height: 120,
-                        width: 380,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF6FB457),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(35.0),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.local_shipping,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .curr_orders,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                    // Moved the arrow icon here
-                                    Icon(Icons.arrow_forward_ios,
-                                        color: Colors.white),
-                                  ],
-                                ),
-                              ),
-                              // Add other content for the Current Orders tile as needed
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to the page for order history
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -229,7 +169,7 @@ class _HomeState extends State<Home> {
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(vertical: 20),
-                        height: 120,
+                        height: 90,
                         width: 380,
                         decoration: BoxDecoration(
                           color: Color(0xFF6FB457),
@@ -267,7 +207,6 @@ class _HomeState extends State<Home> {
                                   ],
                                 ),
                               ),
-                              // Add other content for order history tile as needed
                             ],
                           ),
                         ),
@@ -298,4 +237,5 @@ class _HomeState extends State<Home> {
       print('Failed to load products');
     }
   }
+
 }

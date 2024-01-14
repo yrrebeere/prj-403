@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:vendor/Screens/Login/login.dart';
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/main.dart';
 import 'storelist.dart';
 import '../../SelectLanguage/languageprovider.dart';
-import '../../SelectLanguage/language.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../../Registration/registrationprovider.dart';
 
 
 class VendorIdManager {
