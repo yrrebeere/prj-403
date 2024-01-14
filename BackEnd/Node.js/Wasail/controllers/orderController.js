@@ -124,17 +124,7 @@ const searchOrderByGID = async (req, res) => {
             },
         });
 
-        const orderIds = orders.map((order) => order.order_id);
-
-        const orderDetails = await Detail.findAll({
-            where: {
-                detail_id: orderIds,
-            },
-        });
-
-        console.log('Order Details:', orderDetails);
-
-        res.status(200).json(orderDetails);
+        res.status(200).send(orders);
     } catch (error) {
         console.error('Error searching orders by vendor and store:', error);
         res.status(500).json({ error: 'Internal Server Error' });
