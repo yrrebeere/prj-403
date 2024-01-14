@@ -5,7 +5,7 @@ import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:vendor/Screens/NavigationBar/Menu/storeDetails.dart';
+import 'Details.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,54 +74,53 @@ class _StorelistState extends State<Storelist> {
     }
   }
 
-  void _showStoreDetailsDialog(Store store) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  store.storeName,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Image.asset(
-                  store.image,
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Address: ${store.storeAddress}',
-                  style: TextStyle(fontSize: 16.0),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close the dialog
-                  },
-                  child: Text('Close'),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
+  // void _showStoreDetailsDialog(Store store) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Dialog(
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(20.0),
+  //         ),
+  //         child: Container(
+  //           padding: EdgeInsets.all(16.0),
+  //           child: Column(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               Text(
+  //                 store.storeName,
+  //                 style: TextStyle(
+  //                   fontSize: 20.0,
+  //                   fontWeight: FontWeight.bold,
+  //                 ),
+  //               ),
+  //               SizedBox(height: 10),
+  //               Image.asset(
+  //                 store.image,
+  //                 width: 150,
+  //                 height: 150,
+  //                 fit: BoxFit.cover,
+  //               ),
+  //               SizedBox(height: 10),
+  //               Text(
+  //                 'Address: ${store.storeAddress}',
+  //                 style: TextStyle(fontSize: 16.0),
+  //                 textAlign: TextAlign.center,
+  //               ),
+  //               SizedBox(height: 20),
+  //               ElevatedButton(
+  //                 onPressed: () {
+  //                   Navigator.pop(context); // Close the dialog
+  //                 },
+  //                 child: Text('Close'),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -192,7 +191,13 @@ class _StorelistState extends State<Storelist> {
   Widget buildStoreCard(Store store) {
     return GestureDetector(
       onTap: () {
-        _showStoreDetailsDialog(store);
+        // _showStoreDetailsDialog(store);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Details(store: store),
+          ),
+        );
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
