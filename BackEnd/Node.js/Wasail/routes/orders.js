@@ -17,6 +17,7 @@ router.delete('/:order_id', orderController.deleteOrder)
 router.get('/search/:vendor_vendor_id', orderController.searchOrderByVID)
 router.get('/orderhistory/:vendor_vendor_id', orderController.orderHistory)
 router.get('/searchgroceryorder/:vendor_vendor_id/:grocery_store_store_id', orderController.searchOrderByGID)
+router.get('/groceryorderhistory/:vendor_vendor_id/:grocery_store_store_id', orderController.orderHistoryByGID)
 
 
 module.exports = router;
