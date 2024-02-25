@@ -1,6 +1,6 @@
-# internationalisation
+# store
 
-A new Flutter project to learn internationalisation.
+Grocery Store App
 
 ## Getting Started
 
