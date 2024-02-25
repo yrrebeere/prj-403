@@ -10,6 +10,7 @@ const registrationController = require('../controllers/registrationController')
 
 //user_table
 router.post('/addregistration', registrationController.addRegistration)
+router.post('/addstoreregistration', registrationController.addStoreRegistration)
 
 
 
