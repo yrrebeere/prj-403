@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
-// import 'package:vendor/Screens/Registration/registrationprovider.dart';
-// import '../PhoneNumber/phonenumberprovider.dart';
+import 'package:store/Screens/PhoneNumber/phonenumber.dart';
+import 'package:store/Screens/Registration/registrationprovider.dart';
+import '../PhoneNumber/phonenumberprovider.dart';
 import 'package:provider/provider.dart';
 import 'languageprovider.dart';
 
@@ -16,12 +16,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<LanguageProvider>(
           create: (context) => LanguageProvider(),
         ),
-        // ChangeNotifierProvider<UserIdProvider>(
-        //     create: (_) => UserIdProvider()
-        // ),
-        // ChangeNotifierProvider<PhoneNumberProvider>(
-        //   create: (context) => PhoneNumberProvider(),
-        // ),// ChangeNotifierProvider<LoginChangeNotifier>(
+        ChangeNotifierProvider<UserIdProvider>(
+            create: (_) => UserIdProvider()
+        ),
+        ChangeNotifierProvider<PhoneNumberProvider>(
+          create: (context) => PhoneNumberProvider(),
+        ),// ChangeNotifierProvider
+        // ChangeNotifierProvider<LoginChangeNotifier>(
         //   create: (context) => LoginChangeNotifier(),
         // ),
       ],
@@ -211,17 +212,17 @@ class _LanguageState extends State<Language> {
                       left: screenWidth * 0.35,
                       top: screenHeight * 0.76,
                       child: GestureDetector(
-                        // onTap: () {
-                        //   if (selectedLocale != null &&
-                        //       selectedLocale.languageCode.isNotEmpty) {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => PhoneNumber(),
-                        //       ),
-                        //     );
-                        //   }
-                        // },
+                        onTap: () {
+                          if (selectedLocale != null &&
+                              selectedLocale.languageCode.isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PhoneNumber(),
+                              ),
+                            );
+                          }
+                        },
                         child: Container(
                           width: screenWidth * 0.3,
                           // Adjust the width as needed
