@@ -5,7 +5,8 @@ const Category = db.product_category
 const addProductCategory = async (req, res) => {
 
     let data = {
-        category_name: req.body.category_name
+        category_name: req.body.category_name,
+        image: req.body.image
     }
 
     const category = await Category.create(data)

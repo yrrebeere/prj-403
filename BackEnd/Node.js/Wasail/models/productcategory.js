@@ -12,6 +12,9 @@ module.exports = (sequelize, Datatypes)=>{
             isAlpha: true,
             notNull: true,
         },
+        image:{
+            type: Datatypes.STRING,
+        },
     },{
         underscored:true
     })

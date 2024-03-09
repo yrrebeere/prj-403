@@ -47,10 +47,14 @@ INSERT INTO products (product_name,image,created_at, updated_at) VALUES
 ('aquafina-water','Assets/Images/Products/aquafina-water.png','2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.products;
 
-INSERT INTO product_categories (category_name, created_at, updated_at) VALUES
-('drinks','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('meat','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('dairy','2023-12-17T12:34:56', '2023-12-19T12:34:56');
+INSERT INTO product_categories (category_name,image,created_at, updated_at) VALUES
+('drinks','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('meat','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('fish','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('condiments','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('detergents','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('spices','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('dairy','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.product_categories;
 
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
