@@ -60,6 +60,7 @@
   "order_history" : "آرڈرز کی تاریخ",
   "delete": "حذف کریں",
   "update": "اپ ڈیٹ",
-  "curr_orders": "موجودہ آرڈرز"
-
+  "curr_orders": "موجودہ آرڈرز",
+  "store_name": "اسٹور کا نام",
+  "store_address": "اسٹور کا پتہ"
 }

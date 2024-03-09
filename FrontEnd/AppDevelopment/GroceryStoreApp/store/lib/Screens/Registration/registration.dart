@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
-// import '../Login/login.dart';
+import '../Login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -23,8 +23,10 @@ class _RegistrationState extends State<Registration> {
   final TextEditingController confirmPasswordController =
   TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController deliveryAreasController = TextEditingController();
+  // final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
+  final TextEditingController storeNameController = TextEditingController();
+  final TextEditingController storeAddressController = TextEditingController();
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
@@ -59,7 +61,9 @@ class _RegistrationState extends State<Registration> {
       String username,
       String language,
       String userType,
-      String deliveryLocations) async {
+      String storeName,
+      String storeAddress
+      ) async {
     final response = await http.post(
       Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
       body: jsonEncode({
@@ -83,19 +87,19 @@ class _RegistrationState extends State<Registration> {
       // Set the user ID
       // userIdProvider.setUserId(json['user_id']);
 
-      await createVendor(name, deliveryLocations, json['user_id']);
+      await createStore(storeName, storeAddress, json['user_id']);
     } else {
       throw Exception('Failed to add user');
     }
   }
 
-  Future<void> createVendor(
-      String vendorName, String deliveryLocations, int userId) async {
+  Future<void> createStore(
+      String storeName, String storeAddress, int userId) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/vendor/addvendor'),
+      Uri.parse('http://10.0.2.2:3000/api/grocery_store/addStore'),
       body: jsonEncode({
-        'vendor_name': vendorName,
-        'delivery_locations': deliveryLocations,
+        'store_name': storeName,
+        'store_address': storeAddress,
         'user_table_user_id': userId,
       }),
       headers: {'Content-Type': 'application/json'},
@@ -473,7 +477,7 @@ class _RegistrationState extends State<Registration> {
                         left: 0,
                         top: screenHeight * 0.67,
                         child: Text(
-                          AppLocalizations.of(context)!.delivery_areas,
+                          AppLocalizations.of(context)!.store_name,
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -484,33 +488,74 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.71,
+                        top: screenHeight * 0.69,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
                           decoration: BoxDecoration(
                             color: Colors.white,
                           ),
-                          child: DropdownButton<String>(
-                            value: selectedArea,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedArea = newValue!;
-                              });
+                          child: TextField(
+                            controller: storeNameController,
+                            obscureText: false,
+                            onChanged: (value) {
+                              validateName(value);
                             },
-                            items: <String>['Dha', 'State Life', 'Gulberg']
-                                .map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.store_name,
+                              hintStyle: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              errorText: nameController.text.isNotEmpty &&
+                                  !isNameValid(nameController.text)
+                                  ? 'Name can only contain alphabets'
+                                  : null,
+                            ),
                           ),
                         ),
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.8,
+                        top: screenHeight * 0.78,
+                        child: Text(
+                          AppLocalizations.of(context)!.store_address,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: screenHeight * 0.80,
+                        child: Container(
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.05,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: TextField(
+                            controller: storeAddressController,
+                            obscureText: false,
+                            onChanged: (value) {
+                              validateName(value);
+                            },
+                            decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.store_address,
+                              hintStyle: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 0,
+                        top: screenHeight * 0.87,
                         child: Container(
                           width: screenWidth * 0.9,
                           child: Align(
@@ -564,9 +609,9 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.89,
+                        top: screenHeight * 0.93,
                         left: screenWidth * 0.30,
-                        bottom: screenHeight * 0.05,
+                        bottom: screenHeight * 0.01,
                         child: GestureDetector(
                           onTap: () async {
                             await handleRegistration();
@@ -601,7 +646,7 @@ class _RegistrationState extends State<Registration> {
                                   : 0.5,
                               child: Container(
                                 width: screenWidth * 0.3,
-                                padding: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(14.0),
                                 decoration: BoxDecoration(
                                   color: Color(0xFF6FB457),
                                   borderRadius: BorderRadius.circular(8.0),
@@ -659,8 +704,9 @@ class _RegistrationState extends State<Registration> {
           passwordController.text,
           userNameController.text,
           "English",
-          "Vendor",
-          selectedArea,
+          "Grocery Store",
+          storeNameController.text,
+          storeAddressController.text
         );
         // Navigate to the login screen
         // Navigator.push(

@@ -60,5 +60,7 @@
   "order_history" : "Order History",
   "delete": "Delete Item",
   "update": "Update",
-  "curr_orders": "Current Orders"
+  "curr_orders": "Current Orders",
+  "store_name": "Store Name",
+  "store_address": "Store Address"
 }
