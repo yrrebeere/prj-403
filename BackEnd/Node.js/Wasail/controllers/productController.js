@@ -98,6 +98,72 @@ const searchProductInInventory = async (req, res) => {
     }
 };
 
+const searchProductInStore = async (req, res) => {
+    try {
+        const product_name = req.params.product_name;
+
+        if (!product_name) {
+            return res.status(400).json({ error: 'Product name is required.' });
+        }
+
+        // Step 1: Search Products by Name
+        const products = await Product.findAll({
+            where: {
+                product_name: {
+                    [Op.like]: `%${product_name}%`,
+                },
+            },
+        });
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({ error: 'No products found for the given name.' });
+        }
+
+        // Step 2: Extract Product IDs
+        const productIds = products.map((product) => product.product_id);
+
+        // Step 3: Search Product Inventory by Product IDs
+        const productInventories = await db.product_inventory.findAll({
+            where: {
+                product_product_id: {
+                    [Op.in]: productIds,
+                },
+            },
+        });
+
+        if (!productInventories || productInventories.length === 0) {
+            return res.status(404).json({ error: 'No product inventory found for the given products.' });
+        }
+
+        // Step 4: Extract Vendor IDs
+        const vendorIds = productInventories.map((inventory) => inventory.vendor_vendor_id);
+
+        // Step 5: Search Vendors by Vendor IDs
+        const vendors = await db.vendor.findAll({
+            where: {
+                vendor_id: {
+                    [Op.in]: vendorIds,
+                },
+            },
+        });
+
+        if (!vendors || vendors.length === 0) {
+            return res.status(404).json({ error: 'No vendors found for the given products.' });
+        }
+
+        res.status(200).json({
+            products,
+            productInventories,
+            vendors,
+        });
+    } catch (error) {
+        console.error('Error searching product details:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+
 
 module.exports = {
     addProduct,
@@ -106,5 +172,6 @@ module.exports = {
     updateProduct,
     deleteProduct,
     searchProduct,
-    searchProductInInventory
+    searchProductInInventory,
+    searchProductInStore
 }
