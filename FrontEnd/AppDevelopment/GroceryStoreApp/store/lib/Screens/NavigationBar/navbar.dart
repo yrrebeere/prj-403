@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:vendor/Screens/NavigationBar/Menu/menu.dart';
-// import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
+import 'package:store/Screens/NavigationBar/Menu/menu.dart';
+import 'package:store/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
-// import 'Inventory/inventory.dart';
+import 'Inventory/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:store/Screens/NavigationBar/navbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,9 +25,9 @@ class _NavBarState extends State<NavBar> {
 
   final screens = [
     Home(),
-    // Order(),
-    // Inventory(),
-    // Menu(),
+    Order(),
+    Inventory(),
+    Menu(),
   ];
 
   @override
