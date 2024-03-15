@@ -12,7 +12,7 @@ const addStore = async (req, res) => {
     }
 
     const store = await Store.create(data)
-    res.status(200).send(store)
+    res.status(201).send(store)
 }
 
 const getAllStores = async (req, res) => {

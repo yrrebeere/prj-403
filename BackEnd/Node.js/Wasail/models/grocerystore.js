@@ -13,6 +13,7 @@ module.exports = (sequelize, Datatypes)=>{
         },
         image:{
             type: Datatypes.STRING,
+            notNull: false,
         },
         store_address:{
             type: Datatypes.STRING,

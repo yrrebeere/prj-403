@@ -80,12 +80,11 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                           ),
-
                           IconButton(
                             icon: Icon(Icons.search),
                             onPressed: () async {
                               String productName = searchController.text;
-                              print('Searching for product: $productName'); // Add this debug print
+                              print('Searching for product: $productName');
                               await _searchProductInInventory(productName);
                             },
                           ),

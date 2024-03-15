@@ -30,7 +30,6 @@ class _RegistrationState extends State<Registration> {
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
-  String selectedArea = 'Dha';
   String? passwordError;
   bool showPassword = false;
   String usernameError = '';
@@ -81,12 +80,6 @@ class _RegistrationState extends State<Registration> {
       print("User added");
       final dynamic json = jsonDecode(response.body);
 
-      // Get the UserIdProvider instance
-      // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
-
-      // Set the user ID
-      // userIdProvider.setUserId(json['user_id']);
-
       await createStore(storeName, storeAddress, json['user_id']);
     } else {
       throw Exception('Failed to add user');
@@ -96,7 +89,7 @@ class _RegistrationState extends State<Registration> {
   Future<void> createStore(
       String storeName, String storeAddress, int userId) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/grocery_store/addStore'),
+      Uri.parse('http://10.0.2.2:3000/api/grocery_store/addstore'),
       body: jsonEncode({
         'store_name': storeName,
         'store_address': storeAddress,
@@ -106,9 +99,9 @@ class _RegistrationState extends State<Registration> {
     );
 
     if (response.statusCode == 201) {
-      print("Vendor added");
+      print("Store added");
     } else {
-      throw Exception('Failed to add user');
+      throw Exception('Failed to add store');
     }
   }
 
@@ -540,9 +533,9 @@ class _RegistrationState extends State<Registration> {
                           child: TextField(
                             controller: storeAddressController,
                             obscureText: false,
-                            onChanged: (value) {
-                              validateName(value);
-                            },
+                            // onChanged: (value) {
+                            //   validateName(value);
+                            // },
                             decoration: InputDecoration(
                               hintText: AppLocalizations.of(context)!.store_address,
                               hintStyle: TextStyle(
@@ -615,6 +608,7 @@ class _RegistrationState extends State<Registration> {
                         child: GestureDetector(
                           onTap: () async {
                             await handleRegistration();
+                            print('Button clicked'); // Print this line for debugging
                           },
                           child: IgnorePointer(
                             ignoring: !agreeToTerms ||
@@ -686,10 +680,9 @@ class _RegistrationState extends State<Registration> {
       });
     } else {
       setState(() {
-        usernameError = ''; // Clear any previous error messages
+        usernameError = '';
       });
 
-      // Check if the username is available only if all fields are filled
       String availabilityMessage =
       await checkUsernameAvailability(userNameController.text);
 
@@ -709,14 +702,14 @@ class _RegistrationState extends State<Registration> {
           storeAddressController.text
         );
         // Navigate to the login screen
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => Login(
-        //         phoneNumber: widget.phoneNumberController!, // Corrected usage
-        //         // Include the userId if you have it),
-        //       ),
-        //     ));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Login(
+                phoneNumber: widget.phoneNumberController!,
+                // Include the userId if you have it),
+              ),
+            ));
       } else {
         setState(() {
           if (!_isPasswordValid(passwordController.text)) {
