@@ -283,12 +283,12 @@ class _MyAppState extends State<Login> {
                                         FocusScope.of(context).unfocus();
                                         if (_formKey.currentState!.validate()) {
                                           String password = passwordController.text;
-                                          // Navigator.push(
-                                          //   builderContext,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => NavBar(),
-                                          //   ),
-                                          // );
+                                          Navigator.push(
+                                            builderContext,
+                                            MaterialPageRoute(
+                                              builder: (context) => NavBar(),
+                                            ),
+                                          );
                                         }
                                       },
                                       child: Container(

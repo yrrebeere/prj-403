@@ -10,6 +10,9 @@ import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
+
+
+
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
 
