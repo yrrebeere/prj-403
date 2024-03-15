@@ -21,6 +21,7 @@ class _MyAppState extends State<Login> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool showPassword = false;
 
   @override
   void initState() {
@@ -205,42 +206,52 @@ class _MyAppState extends State<Login> {
                                           height: screenHeight * 0.06,
                                           child: Directionality(
                                             textDirection: TextDirection.ltr,
-                                            child: TextFormField(
+                                            child:
+                                            TextFormField(
                                               controller: passwordController,
-                                              obscureText: true,
+                                              obscureText: !showPassword, // Use the showPassword variable to toggle visibility
                                               decoration: InputDecoration(
                                                 focusedBorder: UnderlineInputBorder(
-                                                  borderSide:
-                                                  BorderSide(color: Colors.teal),
+                                                  borderSide: BorderSide(color: Colors.teal),
                                                 ),
                                                 enabledBorder: UnderlineInputBorder(
-                                                  borderSide:
-                                                  BorderSide(color: Colors.teal),
+                                                  borderSide: BorderSide(color: Colors.teal),
                                                 ),
                                                 filled: true,
-                                                prefixIcon: Icon(Icons.lock,
-                                                    color: Colors.teal, size: 25),
-                                                hintText: AppLocalizations.of(context)!
-                                                    .enter_password,
+                                                prefixIcon: Icon(
+                                                  Icons.lock,
+                                                  color: Colors.teal,
+                                                ),
+                                                suffixIcon: IconButton(
+                                                  icon: Icon(
+                                                    showPassword ? Icons.visibility : Icons.visibility_off,
+                                                    color: Colors.teal,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      showPassword = !showPassword; // Toggle showPassword
+                                                    });
+                                                  },
+                                                ),
+                                                hintText: AppLocalizations.of(context)!.enter_password,
                                                 suffixStyle: TextStyle(
                                                   fontSize: screenWidth * 0.040,
                                                 ),
-                                                hintStyle:
-                                                TextStyle(color: Colors.teal),
+                                                hintStyle: TextStyle(color: Colors.teal),
                                               ),
                                               validator: (value) {
                                                 if (value == null || value.isEmpty) {
                                                   return 'Password is required';
                                                 } else if (value.length < 8) {
                                                   return 'Password should be at least 8 digits long';
-                                                } else if (!RegExp(
-                                                    r'[!@#$%^&*(),.?":{}|<>]')
-                                                    .hasMatch(value)) {
+                                                } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
                                                   return 'Password should contain at least one special character';
                                                 }
                                                 return null;
                                               },
                                             ),
+
+
                                           )),
                                     ),
                                   ),
@@ -274,7 +285,17 @@ class _MyAppState extends State<Login> {
                                   //     ),
                                   //   ),
                                   // ),
-
+                                  IconButton(
+                                    icon: Icon(
+                                      showPassword ? Icons.visibility : Icons.visibility_off,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        showPassword = !showPassword;
+                                      });
+                                    },
+                                  ),
                                   Positioned(
                                     left: screenWidth * 0.4,
                                     top: screenHeight * 0.798,
