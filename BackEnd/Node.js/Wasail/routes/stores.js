@@ -14,5 +14,6 @@ router.get('/:store_id', grocerystoreController.getOneStore)
 router.put('/:store_id', grocerystoreController.updateStore)
 router.delete('/:store_id', grocerystoreController.deleteStore)
 router.get('/searchstore/:vendor_vendor_id', grocerystoreController.searchStoreByVID)
+router.get('/viewvendorlist/:grocery_store_store_id', grocerystoreController.viewVendorList)
 
 module.exports = router;

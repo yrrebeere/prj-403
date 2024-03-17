@@ -73,11 +73,38 @@ const searchStoreByVID = async (req, res) => {
     }
 };
 
+const viewVendorList = async (req, res) => {
+    try {
+        const store_id = req.params.grocery_store_store_id;
+
+        if (!store_id) {
+            return res.status(400).json({ error: 'Store ID is required.' });
+        }
+
+        const associatedVendors = await db.list.findAll({
+            where: { grocery_store_store_id: store_id },
+        });
+
+        const vendorIds = associatedVendors.map((vendor) => vendor.vendor_vendor_id);
+
+        const vendors = await db.vendor.findAll({
+            where: { vendor_id: vendorIds },
+        });
+
+        res.status(200).json(vendors);
+    } catch (error) {
+        console.error('Error viewing vendor list:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     addStore,
     getAllStores,
     getOneStore,
     updateStore,
     deleteStore,
-    searchStoreByVID
+    searchStoreByVID,
+    viewVendorList
 }
