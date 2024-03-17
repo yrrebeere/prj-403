@@ -133,14 +133,14 @@ class SearchResultsPage extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text(
                     vendor.vendorName,
-                    style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20.0, color: Color(0xFF6FB457)),
                   ),
                 ),
                 GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount:2,
                     crossAxisSpacing: 8.0,
                     mainAxisSpacing: 8.0,
                     childAspectRatio: 1.0, // Adjusted tile size
@@ -256,7 +256,6 @@ class _HomeState extends State<Home> {
         Uri.parse('http://10.0.2.2:3000/api/product/searchproductinstore/${searchController.text}'),
       );
 
-      print('Irtaza');
 
       if (response.statusCode == 200) {
 
@@ -269,7 +268,6 @@ class _HomeState extends State<Home> {
         List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
         List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
 
-        // Navigate to the search results page
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
@@ -281,6 +279,35 @@ class _HomeState extends State<Home> {
       print('Error: $e');
     }
   }
+
+  void onCategoryTileClicked(String categoryName) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/product_category/searchcategoryinstore/$categoryName'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        final List<dynamic> products = responseBody['products'];
+        final List<dynamic> productInventories = responseBody['productInventories'];
+        final List<dynamic> vendors = responseBody['vendors'];
+
+        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
+        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
+        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
+        );
+      } else {
+        print('Failed to search products');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +337,7 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Categories',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, ),
               ),
             ),
             Expanded(
@@ -318,26 +345,27 @@ class _HomeState extends State<Home> {
                 crossAxisCount: 3,
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
-                children: categories
-                    .map(
-                      (category) => Card(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          category.imageUrl,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                        SizedBox(height: 8.0),
-                        Text(category.name),
-                      ],
+                children: categories.map((category) {
+                  return GestureDetector(
+                    onTap: () => onCategoryTileClicked(category.name),
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            category.imageUrl,
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(height: 8.0),
+                          Text(category.name),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-                    .toList(),
+                  );
+                }).toList(),
               ),
             ),
           ],
@@ -345,4 +373,5 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
 }
