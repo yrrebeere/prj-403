@@ -58,7 +58,7 @@ INSERT INTO product_categories (category_name,image,created_at, updated_at) VALU
 SELECT * FROM wasail.product_categories;
 
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
-('100','30', '25', 1, 2,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
+('100','30', '25', 1, 1,'023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('50','50', '35', 1, 3,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('875','170', '155', 1, 4,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('155','100', '90', 1, 5,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
@@ -74,3 +74,9 @@ INSERT INTO lists (created_at, updated_at,grocery_store_store_id, vendor_vendor_
 ('2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 1),
 ('2023-12-17T12:34:56', '2023-12-19T12:34:56', 3, 1);
 SELECT * FROM wasail.lists;
+
+INSERT INTO product_category_links (created_at, updated_at,product_product_id, product_category_product_category_id) VALUES
+('2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 1),
+('2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 1),
+('2023-12-17T12:34:56', '2023-12-19T12:34:56', 3, 1);
+SELECT * FROM wasail.product_category_links;
