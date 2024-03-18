@@ -31,9 +31,9 @@ class OrderDetails {
 }
 
 class Details extends StatefulWidget {
-  final Store store;
+  final Vendor vendor;
 
-  Details({required this.store});
+  Details({required this.vendor});
 
   @override
   _DetailsState createState() => _DetailsState();
@@ -104,14 +104,14 @@ class _DetailsState extends State<Details> {
           children: [
             Center(
               child: Text(
-                ' ${widget.store.storeName}',
+                ' ${widget.vendor.vendorName}',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
             SizedBox(height: 12),
             Center(
               child: Text(
-                'Store Address: ${widget.store.storeAddress}',
+                'Store Address: ${widget.vendor.deliveryLocations}',
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
             ),
