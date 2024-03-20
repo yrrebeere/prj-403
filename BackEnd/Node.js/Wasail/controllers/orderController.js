@@ -190,6 +190,30 @@ const storeOrderHistory = async (req, res) => {
     }
 };
 
+const storeCurrentOrders = async (req, res) => {
+    try {
+        const store_id = req.params.grocery_store_store_id;
+
+        if (!store_id) {
+            return res.status(400).json({ error: 'Store ID is required.' });
+        }
+
+        const orders = await Order.findAll({
+            where: {
+                grocery_store_store_id: store_id,
+                order_status: {
+                    [Op.in]: ['In Process', 'On Its Way'],
+                },
+            },
+        });
+
+        res.status(200).send(orders);
+    } catch (error) {
+        console.error('Error searching products by store:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     addOrder,
     getAllOrders,
@@ -200,5 +224,6 @@ module.exports = {
     orderHistory,
     searchOrderByGID,
     orderHistoryByGID,
-    storeOrderHistory
+    storeOrderHistory,
+    storeCurrentOrders
 }
