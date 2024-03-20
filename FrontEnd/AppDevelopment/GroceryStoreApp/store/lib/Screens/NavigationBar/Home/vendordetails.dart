@@ -94,6 +94,8 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFF6FB457), // Set app bar color to green
+        centerTitle: true, // Center-align the title
         title: Text('Vendor Details'),
       ),
       body: FutureBuilder<Vendor>(
@@ -106,36 +108,43 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
           } else {
             final Vendor vendor = snapshot.data!;
             return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'Vendor Name: ${vendor.vendorName}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  child: Image.asset(
+                    vendor.vendorImage,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Delivery Locations: ${vendor.deliveryLocations}',
-                    style: TextStyle(fontSize: 18),
+                    '${vendor.vendorName}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
                   ),
                 ),
-                Image.asset(
-                  vendor.vendorImage,
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.cover,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '${vendor.deliveryLocations}',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
                 Expanded(
                   child: ListView.builder(
                     itemCount: vendor.inventories.length,
                     itemBuilder: (context, index) {
                       final inventory = vendor.inventories[index];
-                      return ListTile(
-                        title: Text('Price: ${inventory.price}'),
-                        subtitle: Text('Available Amount: ${inventory.availableAmount}'),
+                      return Card(
+                        elevation: 4, // Add shadow to the card
+                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: ListTile(
+                          title: Text('Rs. ${inventory.price}'),
+                          subtitle: Text('Available Amount: ${inventory.availableAmount}'),
+                        ),
                       );
                     },
                   ),
