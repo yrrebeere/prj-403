@@ -3,8 +3,8 @@ INSERT INTO user_tables (phone_number, name, password, username, language, user_
 (03214377009, 'Fizza Adeel', 'password@123', 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.user_tables;
 
-INSERT INTO vendors (vendor_name, delivery_locations, created_at, updated_at, user_table_user_id) VALUES
-('Irtaza Ahmed', 'Gulberg', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
+INSERT INTO vendors (vendor_name, delivery_locations, image,created_at, updated_at, user_table_user_id) VALUES
+('Irtaza Ahmed', 'Gulberg', 'Assets/Images/Stores/esajees.png','2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
 SELECT * FROM wasail.vendors;
  
 INSERT INTO grocery_stores (store_name, image, store_address, created_at, updated_at, user_table_user_id) VALUES
