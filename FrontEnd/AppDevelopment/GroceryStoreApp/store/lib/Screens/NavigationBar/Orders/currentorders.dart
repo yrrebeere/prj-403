@@ -10,7 +10,7 @@ class CurrentOrdersPage extends StatelessWidget {
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/order/search/$vendorId'),
+        Uri.parse('http://10.0.2.2:3000/api/order/storeorderhistory/$vendorId'),
       );
 
 

@@ -116,45 +116,45 @@ class _DetailsState extends State<Details> {
               ),
             ),
             SizedBox(height: 24),
-            if (_orderDetailsList.isNotEmpty)
-              Expanded(
-                child: ListView.separated(
-                  itemCount: _orderDetailsList.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 12);
-                  },
-                  itemBuilder: (context, index) {
-                    var orderDetails = _orderDetailsList[index];
-                    return Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16),
-                        title: Text(
-                          'Item ID: ${orderDetails.detailId}',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
-                            Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
-                            Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
-                            Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            if (_orderDetailsList.isEmpty)
-              Text(
-                'No order details available',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
+            // if (_orderDetailsList.isNotEmpty)
+            //   Expanded(
+            //     child: ListView.separated(
+            //       itemCount: _orderDetailsList.length,
+            //       separatorBuilder: (BuildContext context, int index) {
+            //         return SizedBox(height: 12);
+            //       },
+            //       itemBuilder: (context, index) {
+            //         var orderDetails = _orderDetailsList[index];
+            //         return Card(
+            //           elevation: 5,
+            //           shape: RoundedRectangleBorder(
+            //             borderRadius: BorderRadius.circular(12),
+            //           ),
+            //           child: ListTile(
+            //             contentPadding: EdgeInsets.all(16),
+            //             title: Text(
+            //               'Item ID: ${orderDetails.detailId}',
+            //               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            //             ),
+            //             subtitle: Column(
+            //               crossAxisAlignment: CrossAxisAlignment.start,
+            //               children: [
+            //                 Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
+            //                 Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
+            //                 Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
+            //                 Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
+            //               ],
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // if (_orderDetailsList.isEmpty)
+            //   Text(
+            //     'No order details available',
+            //     style: TextStyle(fontSize: 18, color: Colors.grey),
+            //   ),
           ],
         ),
       ),

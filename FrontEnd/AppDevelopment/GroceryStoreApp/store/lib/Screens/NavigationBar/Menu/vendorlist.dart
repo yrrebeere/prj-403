@@ -195,6 +195,13 @@ class _VendorListState extends State<VendorList> {
                         fontSize: 19,
                       ),
                     ),
+                    Text(
+                      vendor.deliveryLocations,
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 19,
+                      ),
+                    ),
                   ],
                 ),
               ),
