@@ -1,158 +1,87 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'home.dart'; // Import the necessary classes for Vendor, Product, and ProductInventory
 
-class ProductInventory {
-  final int productInventoryId;
-  final int price;
-  final int availableAmount;
-  final int listedAmount;
-  final int vendorVendorId;
-  final int productProductId;
+class VendorDetailsPage extends StatelessWidget {
+  final Vendor vendor;
+  final List<Product> products;
+  final List<ProductInventory> productInventories;
 
-  ProductInventory({
-    required this.productInventoryId,
-    required this.price,
-    required this.availableAmount,
-    required this.listedAmount,
-    required this.vendorVendorId,
-    required this.productProductId,
-  });
-
-  factory ProductInventory.fromJson(Map<String, dynamic> json) {
-    return ProductInventory(
-      productInventoryId: json['product_inventory_id'],
-      price: json['price'],
-      availableAmount: json['available_amount'],
-      listedAmount: json['listed_amount'],
-      vendorVendorId: json['vendor_vendor_id'],
-      productProductId: json['product_product_id'],
-    );
-  }
-}
-
-class Vendor {
-  final int vendorId;
-  final String vendorName;
-  final String deliveryLocations;
-  final String vendorImage;
-  final List<ProductInventory> inventories;
-
-  Vendor({
-    required this.vendorId,
-    required this.vendorName,
-    required this.deliveryLocations,
-    required this.vendorImage,
-    required this.inventories,
-  });
-
-  factory Vendor.fromJson(Map<String, dynamic> json) {
-    List<ProductInventory> inventories = (json['inventories'] as List)
-        .map((inventoryJson) => ProductInventory.fromJson(inventoryJson))
-        .toList();
-
-    return Vendor(
-      vendorId: json['vendor']['vendor_id'],
-      vendorName: json['vendor']['vendor_name'],
-      deliveryLocations: json['vendor']['delivery_locations'],
-      vendorImage: json['vendor']['image'],
-      inventories: inventories,
-    );
-  }
-}
-
-class VendorDetailsPage extends StatefulWidget {
-  final int vendorId;
-
-  const VendorDetailsPage({Key? key, required this.vendorId}) : super(key: key);
-
-  @override
-  _VendorDetailsPageState createState() => _VendorDetailsPageState();
-}
-
-class _VendorDetailsPageState extends State<VendorDetailsPage> {
-  late Future<Vendor> _vendorDetailsFuture = _fetchVendorDetails();
-
-  Future<Vendor> _fetchVendorDetails() async {
-    try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/vendor/vendorprofile/${widget.vendorId}'),
-      );
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        return Vendor.fromJson(responseBody);
-      } else {
-        throw Exception('Failed to load vendor details');
-      }
-    } catch (e) {
-      print('Error: $e');
-      throw Exception('Failed to fetch vendor details: $e');
-    }
-  }
+  const VendorDetailsPage({
+    Key? key,
+    required this.vendor,
+    required this.products,
+    required this.productInventories,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Filter products and inventories for the selected vendor
+    final vendorProducts = products.where((product) =>
+        productInventories.any((inventory) =>
+        inventory.productProductId == product.productId &&
+            inventory.vendorVendorId == vendor.vendorId)).toList();
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6FB457), // Set app bar color to green
-        centerTitle: true, // Center-align the title
+        backgroundColor: Color(0xFF6FB457),
         title: Text('Vendor Details'),
       ),
-      body: FutureBuilder<Vendor>(
-        future: _vendorDetailsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final Vendor vendor = snapshot.data!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    vendor.vendorImage,
-                    width: 100,
-                    height: 100,
-                    fit: BoxFit.cover,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              vendor.vendorImage,
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              '${vendor.vendorName}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: vendorProducts.length,
+              itemBuilder: (context, index) {
+                final product = vendorProducts[index];
+                final productInventory = productInventories.firstWhere(
+                      (inventory) =>
+                  inventory.productProductId == product.productId &&
+                      inventory.vendorVendorId == vendor.vendorId,
+                  orElse: () => ProductInventory(
+                    productInventoryId: -1,
+                    price: 0,
+                    availableAmount: 0,
+                    listedAmount: 0,
+                    vendorVendorId: -1,
+                    productProductId: product.productId,
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${vendor.vendorName}',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
+                );
+
+                return Card(
+                  elevation: 4,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    leading: Image.asset(
+                      product.image,
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text('${product.productName} - Rs. ${productInventory.price}'),
+                    subtitle: Text('Available Amount: ${productInventory.availableAmount}'),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${vendor.deliveryLocations}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: vendor.inventories.length,
-                    itemBuilder: (context, index) {
-                      final inventory = vendor.inventories[index];
-                      return Card(
-                        elevation: 4, // Add shadow to the card
-                        margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                        child: ListTile(
-                          title: Text('Rs. ${inventory.price}'),
-                          subtitle: Text('Available Amount: ${inventory.availableAmount}'),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
-          }
-        },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

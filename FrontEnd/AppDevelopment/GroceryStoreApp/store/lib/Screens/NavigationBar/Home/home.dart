@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'vendordetails.dart';
 import 'dart:convert';
-
 import 'package:store/Screens/NavigationBar/Inventory/inventory.dart';
 
 class Category {
@@ -68,11 +67,13 @@ class Vendor{
   final int vendorId;
   final String vendorName;
   final String vendorImage;
+  final String vendorAddress;
 
   Vendor({
     required this.vendorId,
     required this.vendorName,
-    required this.vendorImage
+    required this.vendorImage,
+    required this.vendorAddress
   });
 
   factory Vendor.fromJson(Map<String, dynamic> json) {
@@ -80,6 +81,7 @@ class Vendor{
       vendorId: json['vendor_id'],
       vendorName: json['vendor_name'],
       vendorImage: json['image'],
+      vendorAddress: json['delivery_locations'],
     );
   }
 
@@ -140,7 +142,10 @@ class SearchResultsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VendorDetailsPage(vendorId: vendor.vendorId),
+                          builder: (context) => VendorDetailsPage(
+                            vendor: vendor,
+                            products: products,
+                            productInventories: productInventories,),
                         ),
                       );
                     },
