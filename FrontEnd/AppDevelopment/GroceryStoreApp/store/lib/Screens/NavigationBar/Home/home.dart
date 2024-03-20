@@ -66,16 +66,19 @@ class ProductInventory {
 class Vendor{
   final int vendorId;
   final String vendorName;
+  final String vendorImage;
 
   Vendor({
     required this.vendorId,
-    required this.vendorName
+    required this.vendorName,
+    required this.vendorImage
   });
 
   factory Vendor.fromJson(Map<String, dynamic> json) {
     return Vendor(
       vendorId: json['vendor_id'],
       vendorName: json['vendor_name'],
+      vendorImage: json['image'],
     );
   }
 
@@ -131,11 +134,21 @@ class SearchResultsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    vendor.vendorName,
-                    style: TextStyle(fontSize: 20.0, color: Color(0xFF6FB457)),
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 60, // Increase the radius for an even larger image
+                        backgroundImage: AssetImage(vendor.vendorImage),
+                      ),
+                      SizedBox(width: 12.0), // Adjust the spacing between text and image
+                      Text(
+                        vendor.vendorName,
+                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
                 ),
+
                 GridView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),

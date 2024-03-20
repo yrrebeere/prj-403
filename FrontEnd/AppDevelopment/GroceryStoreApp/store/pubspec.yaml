@@ -70,7 +70,7 @@ flutter:
   assets:
     - Assets/Images/
     - Assets/Images/Products/
-#    - Assets/Images/Stores/
+    - Assets/Images/Stores/
 #     - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
