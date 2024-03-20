@@ -80,8 +80,8 @@ class _NavBarState extends State<NavBar> {
                         icon: Icon(Icons.local_shipping, color: Colors.grey),
                         label:AppLocalizations.of(context)!.orders),
                     NavigationDestination(
-                        icon: Icon(Icons.list_alt_sharp, color: Colors.grey),
-                        label: AppLocalizations.of(context)!.inventory),
+                        icon: Icon(Icons.contact_page, color: Colors.grey),
+                        label: AppLocalizations.of(context)!.contacts),
                     NavigationDestination(
                         icon: Icon(Icons.menu, color: Colors.grey), label: AppLocalizations.of(context)!.menu),
                   ],
