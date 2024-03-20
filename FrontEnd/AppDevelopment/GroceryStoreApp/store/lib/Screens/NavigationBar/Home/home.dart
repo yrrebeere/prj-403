@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'vendordetails.dart';
 import 'dart:convert';
 
 import 'package:store/Screens/NavigationBar/Inventory/inventory.dart';
@@ -134,20 +135,31 @@ class SearchResultsPage extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 60, // Increase the radius for an even larger image
-                        backgroundImage: AssetImage(vendor.vendorImage),
-                      ),
-                      SizedBox(width: 12.0), // Adjust the spacing between text and image
-                      Text(
-                        vendor.vendorName,
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VendorDetailsPage(vendorId: vendor.vendorId),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 60, // Increase the radius for an even larger image
+                          backgroundImage: AssetImage(vendor.vendorImage),
+                        ),
+                        SizedBox(width: 12.0), // Adjust the spacing between text and image
+                        Text(
+                          vendor.vendorName,
+                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
+
 
                 GridView.builder(
                   shrinkWrap: true,
