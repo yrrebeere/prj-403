@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'currentorders.dart';
+import 'orderhistory.dart';
 
 class searchProductInventory {
   final int productId;
@@ -84,6 +85,65 @@ class _OrderState extends State<Order> {
                                 Text(
                                   AppLocalizations.of(context)!
                                       .curr_orders,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18),
+                                ),
+                              ],
+                            ),
+                            // Moved the arrow icon here
+                            Icon(Icons.arrow_forward_ios,
+                                color: Colors.white),
+                          ],
+                        ),
+                      ),
+                      // Add other content for the Current Orders tile as needed
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              // Navigate to the page for current orders
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OrderHistory(vendorId),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 0),
+                height: 120,
+                width: 380,
+                decoration: BoxDecoration(
+                  color: Color(0xFF6FB457),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(35.0),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.local_shipping,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .order_history,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18),

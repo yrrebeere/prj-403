@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class CurrentOrdersPage extends StatelessWidget {
+class OrderHistory extends StatelessWidget {
   final int vendorId;
 
-  CurrentOrdersPage(this.vendorId);
+  OrderHistory(this.vendorId);
 
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/order/storecurrentorder/$vendorId'),
+        Uri.parse('http://10.0.2.2:3000/api/order/storeorderhistory/$vendorId'),
       );
 
 
@@ -75,7 +75,7 @@ class CurrentOrdersPage extends StatelessWidget {
         backgroundColor: Color(0xFF6FB457),
         title: Padding(
           padding: const EdgeInsets.only(left: 70),
-          child: Text('Current Orders'),
+          child: Text('Order History'),
         ),
         leading: IconButton(
           icon: Icon(Icons.chevron_left),
