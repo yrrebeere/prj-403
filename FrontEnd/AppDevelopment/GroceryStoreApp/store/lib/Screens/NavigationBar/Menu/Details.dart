@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'storelist.dart';
+import 'vendorlist.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

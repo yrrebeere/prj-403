@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:store/main.dart';
-import 'storelist.dart';
+import 'vendorlist.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
