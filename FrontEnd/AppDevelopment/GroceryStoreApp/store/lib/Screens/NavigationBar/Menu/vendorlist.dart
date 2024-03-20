@@ -112,7 +112,7 @@ class _VendorListState extends State<VendorList> {
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Text(
-                  AppLocalizations.of(context)!.store_list,
+                  AppLocalizations.of(context)!.vendor_list,
                   style: TextStyle(fontSize: 20),
                 ),
               ),

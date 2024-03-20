@@ -204,7 +204,7 @@ class _MenuState extends State<Menu> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    AppLocalizations.of(context)!.store_list,
+                                    AppLocalizations.of(context)!.vendor_list,
                                     style: TextStyle(fontSize: 20),
                                   ),
                                 ),
