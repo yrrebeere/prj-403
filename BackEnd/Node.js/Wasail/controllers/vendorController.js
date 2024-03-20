@@ -91,14 +91,24 @@ const vendorProfile = async (req, res) => {
         }
 
         // Step 2: Retrieve Product Inventories by vendor_id
-        const inventories = await db.product_inventory.findAll({
+        const associatedInventories = await db.product_inventory.findAll({
             where: {
                 vendor_vendor_id: vendor_id,
             },
         });
 
+        const productIds = associatedInventories.map((inventory) => inventory.product_product_id);
+
+        const products = await db.product.findAll({
+            where: {
+                product_id: productIds,
+            },
+        });
+
+
+
         // Step 3: Return Vendor Information and Product Inventories
-        res.status(200).json({ vendor, inventories });
+        res.status(200).json({ vendor, associatedInventories,products });
     } catch (error) {
         console.error('Error searching products by vendor:', error);
         res.status(500).json({ error: 'Internal Server Error' });
