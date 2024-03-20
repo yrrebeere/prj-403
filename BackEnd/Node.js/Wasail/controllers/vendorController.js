@@ -7,6 +7,7 @@ const addVendor = async (req, res) => {
     let data = {
         vendor_name: req.body.vendor_name,
         delivery_locations: req.body.delivery_locations,
+        image: req.body.image,
         user_table_user_id: req.body.user_table_user_id
     }
 
@@ -70,11 +71,47 @@ const getVendorIdByUserId = async (req, res) => {
     }
 };
 
+const vendorProfile = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_id;
+
+        if (!vendor_id) {
+            return res.status(400).json({ error: 'Vendor ID is required.' });
+        }
+
+        // Step 1: Retrieve Vendor Details by vendor_id
+        const vendor = await Vendor.findOne({
+            where: {
+                vendor_id: vendor_id,
+            },
+        });
+
+        if (!vendor) {
+            return res.status(404).json({ error: 'Vendor not found for the given vendor ID.' });
+        }
+
+        // Step 2: Retrieve Product Inventories by vendor_id
+        const inventories = await db.product_inventory.findAll({
+            where: {
+                vendor_vendor_id: vendor_id,
+            },
+        });
+
+        // Step 3: Return Vendor Information and Product Inventories
+        res.status(200).json({ vendor, inventories });
+    } catch (error) {
+        console.error('Error searching products by vendor:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     addVendor,
     getAllVendors,
     getOneVendor,
     updateVendor,
     deleteVendor,
-    getVendorIdByUserId
+    getVendorIdByUserId,
+    vendorProfile
 }

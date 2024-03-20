@@ -17,6 +17,10 @@ module.exports = (sequelize, Datatypes)=>{
             type: Datatypes.ENUM('Dha', 'Gulberg', 'State Life')
         },
 
+        image:{
+            type: Datatypes.STRING,
+        },
+
         user_table_user_id: {
             type: Datatypes.INTEGER,
             references: {

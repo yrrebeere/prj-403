@@ -15,5 +15,5 @@ router.get('/:vendor_id', vendorController.getOneVendor)
 router.put('/:vendor_id', vendorController.updateVendor)
 router.delete('/:vendor_id', vendorController.deleteVendor)
 router.get('/getvendor/:user_table_user_id', vendorController.getVendorIdByUserId)
-
+router.get('/vendorprofile/:vendor_id', vendorController.vendorProfile)
 module.exports = router;
