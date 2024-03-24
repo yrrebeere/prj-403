@@ -142,20 +142,17 @@ class SearchResultsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VendorDetailsPage(
-                            vendor: vendor,
-                            products: products,
-                            productInventories: productInventories,),
+                          builder: (context) => VendorDetailsPage(vendorId: vendor.vendorId),
                         ),
                       );
                     },
                     child: Row(
                       children: [
                         CircleAvatar(
-                          radius: 60, // Increase the radius for an even larger image
+                          radius: 60,
                           backgroundImage: AssetImage(vendor.vendorImage),
                         ),
-                        SizedBox(width: 12.0), // Adjust the spacing between text and image
+                        SizedBox(width: 12.0),
                         Text(
                           vendor.vendorName,
                           style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
@@ -213,14 +210,14 @@ class SearchResultsPage extends StatelessWidget {
                               children: [
                                 Text(
                                   product.productName,
-                                  style: TextStyle(fontSize: 16.0), // Adjusted font size
+                                  style: TextStyle(fontSize: 16.0),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 SizedBox(height: 4.0),
                                 Text(
                                   '\Rs. ${productInventory.price}',
-                                  style: TextStyle(fontSize: 14.0), // Adjusted font size
+                                  style: TextStyle(fontSize: 14.0),
                                 ),
                               ],
                             ),
