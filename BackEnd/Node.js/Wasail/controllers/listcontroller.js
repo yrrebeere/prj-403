@@ -24,6 +24,15 @@ const addVendorList = async (req, res) => {
     }
 };
 
+const deleteVendorList = async (req, res) => {
+
+    const vendor_vendor_id = req.params.vendor_vendor_id;
+    await List.destroy({ where: { vendor_vendor_id: vendor_vendor_id }} )
+    res.status(200).send('It is deleted !')
+
+}
+
 module.exports = {
-    addVendorList
+    addVendorList,
+    deleteVendorList
 };

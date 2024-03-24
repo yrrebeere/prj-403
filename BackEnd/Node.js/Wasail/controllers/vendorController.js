@@ -108,7 +108,7 @@ const vendorProfile = async (req, res) => {
 
 
         // Step 3: Return Vendor Information and Product Inventories
-        res.status(200).json({ vendor, productInventories,products });
+        res.status(200).json({ vendor,products });
     } catch (error) {
         console.error('Error searching products by vendor:', error);
         res.status(500).json({ error: 'Internal Server Error' });
