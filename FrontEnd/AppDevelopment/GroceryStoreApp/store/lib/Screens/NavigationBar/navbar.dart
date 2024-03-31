@@ -70,8 +70,8 @@ class _NavBarState extends State<NavBar> {
             bottomNavigationBar: CurvedNavigationBar(
               index: index,
               backgroundColor: Colors.white,
-              color: Colors.amber.shade300,
-              buttonBackgroundColor: Colors.amber,
+              color: Colors.orange.shade300,
+              buttonBackgroundColor: Colors.orange,
               animationDuration: Duration(milliseconds: 300),
               items: <Widget>[
                 Icon(Icons.home, size: 30),

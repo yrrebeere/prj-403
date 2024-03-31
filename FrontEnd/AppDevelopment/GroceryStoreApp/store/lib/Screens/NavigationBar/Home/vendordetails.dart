@@ -70,7 +70,16 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6FB457),
+        backgroundColor: Colors.transparent, // Make app bar transparent
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF6FB457), Colors.orangeAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         title: Text('Vendor Details'),
       ),
       body: FutureBuilder<Map<String, dynamic>>(
