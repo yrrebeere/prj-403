@@ -13,7 +13,8 @@ class VendorDetailsPage extends StatefulWidget {
 
 class _VendorDetailsPageState extends State<VendorDetailsPage> {
   late Future<Map<String, dynamic>> _vendorProfile;
-
+  bool _isVendorAdded = false; // Track if vendor is added to the list
+  int vendorId = 1;
   @override
   void initState() {
     super.initState();
@@ -21,7 +22,8 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
   }
 
   Future<Map<String, dynamic>> fetchVendorProfile(int vendorId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/vendor/vendorprofile/$vendorId'));
+    final response =
+    await http.get(Uri.parse('http://10.0.2.2:3000/api/vendor/vendorprofile/$vendorId'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -31,6 +33,38 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
       throw Exception('Failed to load vendor profile');
     }
   }
+
+  void _addVendorToList() async {
+    try {
+
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:3000/api/list/addvendorlist/3/1'),
+        // You can add any additional data needed for the request, such as headers or body
+      );
+
+      if (response.statusCode == 201) {
+        // Update _isVendorAdded and show a success message
+        setState(() {
+          _isVendorAdded = true;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Vendor added successfully')),
+        );
+      } else {
+        // Show an error message if the request fails
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('vendor already has been added.')),
+        );
+      }
+    } catch (error) {
+      // Handle any exceptions or errors that occur during the request
+      print('Error adding vendor: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error adding vendor. Please try again later.')),
+      );
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +104,10 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                           children: [
                             Text(
                               '${vendorProfile['vendor_name']}',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF6FB457)),
                             ),
                             SizedBox(height: 8),
                             Text(
@@ -81,40 +118,21 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                         ),
                       ),
                       SizedBox(width: 16),
-                      Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                // Add your onPressed logic here
-                              },
-                              icon: Icon(Icons.add, size: 25),
-                              color: Colors.white,
-                            ),
+                      GestureDetector(
+                        onTap: _addVendorToList,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: _isVendorAdded ? Colors.green : Color(0xFF6FB457),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          SizedBox(width: 8),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                // Add your onPressed logic here
-                              },
-                              icon: Icon(Icons.call, size: 25),
-                              color: Colors.white,
-                            ),
+                          child: Icon(
+                            _isVendorAdded ? Icons.check : Icons.add,
+                            size: 25,
+                            color: Colors.white,
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
@@ -124,7 +142,8 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                     itemCount: productInventories.length,
                     itemBuilder: (context, index) {
                       final productInventory = productInventories[index];
-                      final product = products.firstWhere((prod) => prod['product_id'] == productInventory['product_product_id']);
+                      final product = products.firstWhere(
+                              (prod) => prod['product_id'] == productInventory['product_product_id']);
                       return Container(
                         margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                         decoration: BoxDecoration(
