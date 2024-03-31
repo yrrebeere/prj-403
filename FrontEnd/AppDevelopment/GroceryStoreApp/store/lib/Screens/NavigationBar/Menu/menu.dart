@@ -119,7 +119,7 @@ class _MenuState extends State<Menu> {
                             Text(name, style: TextStyle(fontSize: 20)),
                             Text('0$number',
                                 style: TextStyle(
-                                    fontSize: 17, color: Colors.deepOrangeAccent)),
+                                    fontSize: 17, color: Color(0xFF6FB457))),
                             SizedBox(
                               height: 30,
                             ),

@@ -130,7 +130,7 @@ class _AnimatedButtonState extends State<AnimatedButton>
           child: Container(
             height: 130, // Increase button height
             decoration: BoxDecoration(
-              color: Colors.orangeAccent,
+              color: Color(0xFF6FB457),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(

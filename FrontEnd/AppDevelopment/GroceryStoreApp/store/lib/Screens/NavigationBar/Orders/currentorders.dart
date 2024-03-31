@@ -99,7 +99,7 @@ class CurrentOrdersPage extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                  color: Colors.deepOrangeAccent,
+                  color: Color(0xFF6FB457),
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: Center(
@@ -140,7 +140,7 @@ class CurrentOrdersPage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent,
+                                color: Color(0xFF6FB457),
                               ),
                             ),
                             subtitle: Column(
@@ -179,7 +179,7 @@ class CurrentOrdersPage extends StatelessWidget {
                                         child: Container(
                                           padding: EdgeInsets.all(8.0),
                                           decoration: BoxDecoration(
-                                            color: Colors.orangeAccent,
+                                            color: Color(0xFF6FB457),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: Text(

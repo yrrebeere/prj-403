@@ -135,11 +135,6 @@ class _RegistrationState extends State<Registration> {
                   decoration: BoxDecoration(color: Colors.white),
                   child: Stack(
                     children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: GiantCirclePainter(),
-                        ),
-                      ),
                       Positioned(
                         left: screenWidth * 0.023,
                         top: screenHeight * 0.04,
@@ -152,7 +147,7 @@ class _RegistrationState extends State<Registration> {
                             child: Row(
                               children: [
                                 Icon(Icons.chevron_left_outlined,
-                                    size: screenWidth * 0.106, color: Colors.white),
+                                    size: screenWidth * 0.106, color:Color(0xFF6FB457)),
                                 SizedBox(
                                   width: screenWidth * 0.012,
                                 ),
@@ -163,12 +158,12 @@ class _RegistrationState extends State<Registration> {
                       ),
 
                       Positioned(
-                        left: screenWidth * 0.22,
+                        left: screenWidth * 0.2,
                         top: screenHeight * 0.07,
                         child: Text(
                           AppLocalizations.of(context)!.enter_reg_details,
                           style: TextStyle(
-                            color: Colors.orangeAccent,
+                            color: Color(0xFF6FB457),
                             fontSize: screenWidth * 0.05,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -634,7 +629,7 @@ class _RegistrationState extends State<Registration> {
                                 width: screenWidth * 0.3,
                                 padding: const EdgeInsets.all(14.0),
                                 decoration: BoxDecoration(
-                                  color: Colors.orangeAccent,
+                                  color: Color(0xFF6FB457),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Center(
@@ -747,46 +742,5 @@ class _RegistrationState extends State<Registration> {
 
   bool isUsernameValid(String username) {
     return RegExp(r'^[a-zA-Z]').hasMatch(username);
-  }
-}
-
-class GiantCirclePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint darkPaint = Paint()
-      ..shader = LinearGradient(
-        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
-        stops: [0.0, 0.6, 1.0],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2),
-          radius: size.width * 0.8))
-      ..style = PaintingStyle.fill;
-
-    Paint lightPaint = Paint()
-      ..shader = LinearGradient(
-        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
-        stops: [0.0, 0.6, 1.0],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2),
-          radius: size.width * 0.4))
-      ..style = PaintingStyle.fill;
-
-    double circleRadius = size.width * 1; // Reduce size
-
-    canvas.drawCircle(
-        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
-    canvas.drawCircle(
-        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
-        circleRadius,
-        darkPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

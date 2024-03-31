@@ -105,13 +105,7 @@ class SearchResultsPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6FB457), Colors.orangeAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          color: Color(0xFF6FB457),
         ),
         title: Text('Search Results', textAlign: TextAlign.center),
         centerTitle: true,
@@ -170,7 +164,7 @@ class SearchResultsPage extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(8.0), // Adjust padding as needed
                               decoration: BoxDecoration(
-                                color: Colors.deepOrangeAccent, // Specify the color of the box
+                                color: Color(0xFF6FB457), // Specify the color of the box
                                 borderRadius: BorderRadius.circular(8.0), // Add border radius
                               ),
                               child: Text(
@@ -183,10 +177,10 @@ class SearchResultsPage extends StatelessWidget {
                               children: [
                                 Text(
                                   'See Vendor Details',
-                                  style: TextStyle(fontSize: 16.0, color: Colors.orangeAccent, fontWeight: FontWeight.bold, decoration: TextDecoration.underline), // Adjust text color if needed
+                                  style: TextStyle(fontSize: 16.0, color: Color(0xFF6FB457), fontWeight: FontWeight.bold, decoration: TextDecoration.underline), // Adjust text color if needed
                                 ),
                                 SizedBox(width: 8.0), // Add space between the "See Details" text and the icon
-                                Icon(Icons.double_arrow_outlined, size: 17.0, color: Colors.orangeAccent), // Arrow icon
+                                Icon(Icons.double_arrow_outlined, size: 17.0, color: Color(0xFF6FB457)), // Arrow icon
                               ],
                             ),
                           ],
@@ -387,7 +381,7 @@ class _HomeState extends State<Home> {
                 decoration: InputDecoration(
                   hintText: 'Search',
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.search) ,color: Colors.deepOrangeAccent,
+                    icon: Icon(Icons.search) ,color: Color(0xFF6FB457),
                     onPressed: _search,
                   ),
                 ),

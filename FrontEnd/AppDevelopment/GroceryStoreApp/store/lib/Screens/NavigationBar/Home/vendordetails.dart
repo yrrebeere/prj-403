@@ -72,13 +72,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6FB457), Colors.orangeAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
+          color: Color(0xFF6FB457),
         ),
         title: Text(
           'Vendor Details',
@@ -124,7 +118,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                             Container(
                               padding: EdgeInsets.all(8), // Padding around the text
                               decoration: BoxDecoration(
-                                color: Colors.orangeAccent, // Color of the container
+                                color: Color(0xFF6FB457), // Color of the container
                                 borderRadius: BorderRadius.circular(8), // Border radius of the container
                               ),
                               child: Text(
@@ -139,7 +133,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                             Container(
                               padding: EdgeInsets.all(8), // Padding around the text
                               decoration: BoxDecoration(
-                                color: Colors.orangeAccent, // Color of the container
+                                color: Color(0xFF6FB457), // Color of the container
                                 borderRadius: BorderRadius.circular(8), // Border radius of the container
                               ),
                               child: Text(
@@ -182,7 +176,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.deepOrangeAccent, // Color of the container
+                      color: Color(0xFF6FB457), // Color of the container
                       borderRadius: BorderRadius.circular(8), // Border radius of the container
                     ),
                     child: Text(

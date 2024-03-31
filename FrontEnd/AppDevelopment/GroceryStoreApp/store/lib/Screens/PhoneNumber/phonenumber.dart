@@ -48,7 +48,7 @@ class _MyAppState extends State<PhoneNumber> {
         return Builder(
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(mainContext)!.number_confirmation,   style: TextStyle( color: Colors.orangeAccent),),
+              title: Text(AppLocalizations.of(mainContext)!.number_confirmation,   style: TextStyle( color: Color(0xFF6FB457)),),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -62,13 +62,13 @@ class _MyAppState extends State<PhoneNumber> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text(AppLocalizations.of(mainContext)!.edit,   style: TextStyle( color: Colors.orangeAccent),),
+                  child: Text(AppLocalizations.of(mainContext)!.edit,   style: TextStyle( color: Color(0xFF6FB457)),),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text(AppLocalizations.of(mainContext)!.confirm,   style: TextStyle( color: Colors.orangeAccent),),
+                  child: Text(AppLocalizations.of(mainContext)!.confirm,   style: TextStyle( color: Color(0xFF6FB457)),),
                   onPressed: () {
                     Navigator.of(context).pop();
                     _handleConfirmation(phoneNumber);
@@ -140,11 +140,7 @@ class _MyAppState extends State<PhoneNumber> {
                   decoration: BoxDecoration(color: Colors.white),
                   child: Stack(
                     children: [
-                      Positioned.fill(
-                        child: CustomPaint(
-                          painter: GiantCirclePainter(),
-                        ),
-                      ),
+
                       Positioned(
                         left: 0,
                         top: screenHeight * 0.2,
@@ -159,48 +155,6 @@ class _MyAppState extends State<PhoneNumber> {
                                 topRight: Radius.circular(10),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: screenWidth * 0.12,
-                        top: screenHeight * 0.02,
-                        child: IconButton(
-                          onPressed: () {
-                            // Add your help functionality here
-                          },
-                          icon: Icon(
-                            Icons.settings_outlined,
-                            color: Color(0xFF6FB457),
-                            size: 28,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: screenWidth * 0.03,
-                        top: screenHeight * 0.02,
-                        child: IconButton(
-                          onPressed: () {
-                            // Add your help functionality here
-                          },
-                          icon: Icon(
-                            Icons.settings_power_outlined,
-                            color: Color(0xFF6FB457),
-                            size: 28,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: screenWidth * 0.42,
-                        top: screenHeight * 0.23,
-                        child: IconButton(
-                          onPressed: () {
-                            // Add your help functionality here
-                          },
-                          icon: Icon(
-                            Icons.add_ic_call_outlined,
-                            color: Colors.orangeAccent,
-                            size: 30,
                           ),
                         ),
                       ),
@@ -261,7 +215,7 @@ class _MyAppState extends State<PhoneNumber> {
                         child: Text(
                           AppLocalizations.of(context)!.enter_number,
                           style: TextStyle(
-                            color: Colors.orangeAccent,
+                            color: Color(0xFF6FB457),
                             fontSize: screenWidth * 0.06,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -423,7 +377,7 @@ class _MyAppState extends State<PhoneNumber> {
                             width: screenWidth * 0.3,
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color:Colors.orangeAccent,
+                              color:Color(0xFF6FB457),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Center(
@@ -443,46 +397,5 @@ class _MyAppState extends State<PhoneNumber> {
           );
         }
     );
-  }
-}
-
-class GiantCirclePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint darkPaint = Paint()
-      ..shader = LinearGradient(
-        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
-        stops: [0.0, 0.6, 1.0],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2),
-          radius: size.width * 0.8))
-      ..style = PaintingStyle.fill;
-
-    Paint lightPaint = Paint()
-      ..shader = LinearGradient(
-        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
-        stops: [0.0, 0.6, 1.0],
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-      ).createShader(Rect.fromCircle(
-          center: Offset(size.width / 2, size.height / 2),
-          radius: size.width * 0.4))
-      ..style = PaintingStyle.fill;
-
-    double circleRadius = size.width * 1; // Reduce size
-
-    canvas.drawCircle(
-        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
-    canvas.drawCircle(
-        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
-        circleRadius,
-        darkPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

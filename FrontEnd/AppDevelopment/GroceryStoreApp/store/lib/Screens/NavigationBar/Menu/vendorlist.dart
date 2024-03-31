@@ -118,7 +118,7 @@ class _VendorListState extends State<VendorList> {
                 child: Container(
                   padding: EdgeInsets.all(8.0), // Add padding to the container
                   decoration: BoxDecoration(
-                    color: Colors.deepOrangeAccent, // Background color of the container
+                    color: Color(0xFF6FB457), // Background color of the container
                     borderRadius: BorderRadius.circular(8), // Border radius of the container
                   ),
                   child: Center(
@@ -222,7 +222,7 @@ class _VendorListState extends State<VendorList> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: IconButton(
-                icon: Icon(Icons.delete), color: Colors.deepOrangeAccent,
+                icon: Icon(Icons.delete), color: Color(0xFF6FB457),
                 onPressed: () {
                   _deleteVendor(vendor);
                 },
