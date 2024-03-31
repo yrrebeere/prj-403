@@ -134,7 +134,6 @@ class _VendorListState extends State<VendorList> {
   Widget buildStoreCard(Vendor vendor) {
     return GestureDetector(
       onTap: () {
-        // _showStoreDetailsDialog(store);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -207,13 +206,35 @@ class _VendorListState extends State<VendorList> {
             ),
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
-              child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+              child: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  _deleteVendor(vendor);
+                },
+              ),
             ),
           ],
         ),
       ),
     );
   }
+
+  void _deleteVendor(Vendor vendor) async {
+    try {
+
+      final response = await http.delete(
+        Uri.parse('http://10.0.2.2:3000/api/list/1'),
+      );
+
+      // Update the local list after successful deletion from the database
+      setState(() {
+        _vendorList.remove(vendor);
+      });
+    } catch (e) {
+      print('Error deleting vendor: $e');
+    }
+  }
+
 }
 
 
