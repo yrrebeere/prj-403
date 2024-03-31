@@ -414,7 +414,7 @@ class _HomeState extends State<Home> {
                   Container(
                     padding: EdgeInsets.all(8.0), // Adjust padding as needed
                     decoration: BoxDecoration(
-                      color: Colors.deepOrangeAccent, // Specify the color of the box
+                      color: Color(0xFF6FB457), // Specify the color of the box
                       borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
                     ),
                     child: Center(

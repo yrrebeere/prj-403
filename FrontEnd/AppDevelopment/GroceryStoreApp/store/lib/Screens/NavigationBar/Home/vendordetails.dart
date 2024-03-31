@@ -38,7 +38,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
     try {
 
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/api/list/addvendorlist/3/1'),
+        Uri.parse('http://10.0.2.2:3000/api/list/addvendorlist/1/1'),
         // You can add any additional data needed for the request, such as headers or body
       );
 
