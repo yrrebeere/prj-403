@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:store/Screens/NavigationBar/Menu/menu.dart';
 import 'package:store/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
@@ -10,11 +11,8 @@ import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
-
-
-
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  const NavBar({Key? key});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -37,59 +35,59 @@ class _NavBarState extends State<NavBar> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-          print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            locale: languageProvider.selectedLocale,
-            builder: (context, child) {
-              return Directionality(
-                textDirection: TextDirection.ltr,
-                child: child!,
-              );
-            },
-            home: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Color(0xFF6FB457),
-                title: Padding(
-                  padding: const EdgeInsets.only(left: 145),
-                  child: Text(AppLocalizations.of(context)!.app_name),
-                ),
-                elevation: 0,
-              ),
-              body: screens[index],
-              bottomNavigationBar: NavigationBarTheme(
-                data: NavigationBarThemeData(
-                  indicatorColor: Colors.blue.shade100,
-                  labelTextStyle: MaterialStateProperty.all(
-                    TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey),
+      builder: (context, languageProvider, child) {
+        print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: languageProvider.selectedLocale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+          home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent, // Make app bar transparent
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF6FB457), Colors.orangeAccent],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
-                child: NavigationBar(
-                  selectedIndex: index,
-                  onDestinationSelected: (index) =>
-                      setState(() => this.index = index),
-                  destinations: [
-                    NavigationDestination(
-                        icon: Icon(Icons.home, color: Colors.grey), label: AppLocalizations.of(context)!.home),
-                    NavigationDestination(
-                        icon: Icon(Icons.local_shipping, color: Colors.grey),
-                        label:AppLocalizations.of(context)!.orders),
-                    NavigationDestination(
-                        icon: Icon(Icons.contact_page, color: Colors.grey),
-                        label: AppLocalizations.of(context)!.contacts),
-                    NavigationDestination(
-                        icon: Icon(Icons.menu, color: Colors.grey), label: AppLocalizations.of(context)!.menu),
-                  ],
-                ),
               ),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 145),
+                child: Text(AppLocalizations.of(context)!.app_name),
+              ),
+              elevation: 0,
             ),
-          );
-        });
+            body: screens[index],
+            bottomNavigationBar: CurvedNavigationBar(
+              index: index,
+              backgroundColor: Colors.white,
+              color: Colors.amber.shade300,
+              buttonBackgroundColor: Colors.amber,
+              animationDuration: Duration(milliseconds: 300),
+              items: <Widget>[
+                Icon(Icons.home, size: 30),
+                Icon(Icons.local_shipping, size: 30),
+                Icon(Icons.contact_page, size: 30),
+                Icon(Icons.menu, size: 30),
+              ],
+              onTap: (newIndex) {
+                setState(() {
+                  index = newIndex;
+                });
+              },
+            ),
+          ),
+        );
+      },
+    );
   }
 }
