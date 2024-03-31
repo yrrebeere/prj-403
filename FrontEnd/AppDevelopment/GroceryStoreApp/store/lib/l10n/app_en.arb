@@ -3,7 +3,7 @@
   "select_lang": "Select Language",
   "continue_button": "Continue",
   "enter_number": "  Enter Phone Number",
-  "welcome_msg" : "Welcome to Wasail",
+  "welcome_msg" : "Welcome",
   "next_button" : "Next",
   "login" : "Login",
   "phone_number" : "Phone Number",
@@ -62,5 +62,6 @@
   "update": "Update",
   "curr_orders": "Current Orders",
   "store_name": "Store Name",
-  "store_address": "Store Address"
+  "store_address": "Store Address",
+  "app_type": "Vendor App"
 }

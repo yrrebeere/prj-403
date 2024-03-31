@@ -82,8 +82,6 @@ class _MyAppState extends State<PhoneNumber> {
     );
   }
 
-
-
   void _handleConfirmation(String phoneNumber) async {
     bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
 
@@ -388,5 +386,46 @@ class _MyAppState extends State<PhoneNumber> {
           );
         }
     );
+  }
+}
+
+class GiantCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint darkPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.8))
+      ..style = PaintingStyle.fill;
+
+    Paint lightPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.4))
+      ..style = PaintingStyle.fill;
+
+    double circleRadius = size.width * 1; // Reduce size
+
+    canvas.drawCircle(
+        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
+    canvas.drawCircle(
+        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
+        circleRadius,
+        darkPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

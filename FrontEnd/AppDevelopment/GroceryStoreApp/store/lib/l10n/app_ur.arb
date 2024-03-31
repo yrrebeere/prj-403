@@ -1,9 +1,9 @@
 {
-  "app_name": "وسائل ",
+  "app_name": "وسائل   ",
   "select_lang":"زبان منتخب کریں",
   "continue_button": "جاری رہے",
   "enter_number": "      فون نمبر درج کریں   ",
-  "welcome_msg": "وصیل میں خوش آمدید",
+  "welcome_msg": "خوش آمدید",
   "next_button" : "اگلے مرحلے پر",
   "login" : "لاگ ان",
   "phone_number" : "فون نمبر",
@@ -62,5 +62,7 @@
   "update": "اپ ڈیٹ",
   "curr_orders": "موجودہ آرڈرز",
   "store_name": "اسٹور کا نام",
-  "store_address": "اسٹور کا پتہ"
+  "store_address": "اسٹور کا پتہ",
+  "app_type": "وینڈر ایپ"
+
 }
