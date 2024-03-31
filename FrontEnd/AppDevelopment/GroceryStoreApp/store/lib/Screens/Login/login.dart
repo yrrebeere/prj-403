@@ -46,6 +46,8 @@ class _MyAppState extends State<Login> {
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
+
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: languageProvider.selectedLocale,
@@ -56,10 +58,7 @@ class _MyAppState extends State<Login> {
               );
             },
             home: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-              ),
+
               body: SafeArea(
                 child: Builder(
                   builder: (BuildContext builderContext) {
@@ -78,12 +77,79 @@ class _MyAppState extends State<Login> {
                               decoration: BoxDecoration(color: Colors.white),
                               child: Stack(
                                 children: [
+                                  Positioned.fill(
+                                    child: CustomPaint(
+                                      painter: GiantCirclePainter(),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: screenWidth * 0.023,
+                                    top: screenHeight * 0.04,
+                                    child: Directionality(
+                                      textDirection: TextDirection.ltr,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Icon(Icons.chevron_left_outlined,
+                                                size: screenWidth * 0.106, color: Colors.white),
+                                            SizedBox(
+                                              width: screenWidth * 0.012,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: screenWidth * 0.38,
+                                    top: screenHeight * 0.1,
+                                    child: Text(
+                                      AppLocalizations.of(context)!.app_name,
+                                      style: TextStyle(
+                                        color: Color(0xFF6FB457),
+                                        fontSize: 32,
+                                        fontFamily: 'Inter',
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: screenWidth * 0.12,
+                                    top: screenHeight * 0.02,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add your help functionality here
+                                      },
+                                      icon: Icon(
+                                        Icons.settings_outlined,
+                                        color: Color(0xFF6FB457),
+                                        size: 28,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: screenWidth * 0.03,
+                                    top: screenHeight * 0.02,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add your help functionality here
+                                      },
+                                      icon: Icon(
+                                        Icons.add_business,
+                                        color: Color(0xFF6FB457),
+                                        size: 28,
+                                      ),
+                                    ),
+                                  ),
                                   Positioned(
                                     left: 0,
                                     top: screenHeight * 0.2,
                                     child: Container(
                                       width: screenWidth * 1.0,
-                                      height: screenHeight * 0.718,
+                                      height: screenHeight * 0.58,
                                       decoration: ShapeDecoration(
                                         color: Colors.white,
                                         shape: RoundedRectangleBorder(
@@ -96,13 +162,13 @@ class _MyAppState extends State<Login> {
                                     ),
                                   ),
                                   Positioned(
-                                    left: screenWidth * 0.07,
-                                    top: screenHeight * 0.33,
+                                    left: screenWidth * 0.13,
+                                    top: screenHeight * 0.39,
                                     child: Text(
                                       AppLocalizations.of(context)!.phone_number,
                                       style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: screenWidth * 0.04,
+                                        color: Colors.deepOrangeAccent,
+                                        fontSize: screenWidth * 0.05,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w400,
                                         height: 0,
@@ -110,29 +176,13 @@ class _MyAppState extends State<Login> {
                                     ),
                                   ),
                                   Positioned(
-                                    left: screenWidth * 0.36,
-                                    top: screenHeight * 0.01,
-                                    child: Center(
-                                      child: Text(
-                                        AppLocalizations.of(context)!.app_name,
-                                        style: TextStyle(
-                                          color: Color(0xFF6FB457),
-                                          fontSize: 32,
-                                          fontFamily: 'Inter',
-                                          fontWeight: FontWeight.bold,
-                                          height: 0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    left: screenWidth * 0.07,
-                                    top: screenHeight * 0.2,
+                                    left: screenWidth * 0.43,
+                                    top: screenHeight * 0.22,
                                     child: Text(
                                       AppLocalizations.of(context)!.login,
                                       style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: screenWidth * 0.06,
+                                        color: Colors.orangeAccent,
+                                        fontSize: screenWidth * 0.07,
                                         fontFamily: 'Inter',
                                         fontWeight: FontWeight.w400,
                                         height: 0,
@@ -140,44 +190,34 @@ class _MyAppState extends State<Login> {
                                     ),
                                   ),
                                   Positioned(
-                                    left: screenWidth * 0.023,
-                                    top: screenHeight * 0.001,
-                                    child: Directionality(
-                                      textDirection: TextDirection.ltr,
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.chevron_left_outlined,
-                                                size: screenWidth * 0.106,
-                                                color: Colors.black),
-                                            SizedBox(
-                                              width: screenWidth * 0.012,
-                                            ),
-                                          ],
-                                        ),
+                                    right: screenWidth * 0.42,
+                                    top: screenHeight * 0.26,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add your help functionality here
+                                      },
+                                      icon: Icon(
+                                        Icons.login,
+                                        color: Colors.orangeAccent,
+                                        size: 30,
                                       ),
                                     ),
                                   ),
                                   Positioned(
                                     left: screenWidth * 0.10,
-                                    top: screenHeight * 0.39,
+                                    top: screenHeight * 0.42,
                                     child: Container(
                                       width: screenWidth * 0.800,
                                       height: screenHeight * 0.06,
                                       padding: EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[100],
-                                      ),
+
                                       child: Directionality(
                                         textDirection: TextDirection.ltr,
                                         child: Row(
                                           children: [
                                             Icon(
                                               Icons.phone,
-                                              color: Colors.teal,
+                                              color: Colors.deepOrangeAccent,
                                             ),
                                             Padding(
                                                 padding: const EdgeInsets.all(8.0),
@@ -189,7 +229,7 @@ class _MyAppState extends State<Login> {
                                                       fontSize: screenWidth * 0.040,
                                                       fontFamily: 'Inter',
                                                       fontWeight: FontWeight.w400,
-                                                      color: Colors.teal,
+                                                      color: Colors.deepOrangeAccent,
                                                     ),
                                                   ),
                                                 )),
@@ -200,7 +240,7 @@ class _MyAppState extends State<Login> {
                                   ),
                                   Center(
                                     child: Container(
-                                      margin: EdgeInsets.only(top: screenHeight * 0.10),
+                                      margin: EdgeInsets.only(top: screenHeight * 0.08),
                                       child: SizedBox(
                                           width: screenWidth * 0.800,
                                           height: screenHeight * 0.06,
@@ -212,20 +252,20 @@ class _MyAppState extends State<Login> {
                                               obscureText: !showPassword, // Use the showPassword variable to toggle visibility
                                               decoration: InputDecoration(
                                                 focusedBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.teal),
+                                                  borderSide: BorderSide(color: Colors.deepOrangeAccent),
                                                 ),
                                                 enabledBorder: UnderlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.teal),
+                                                  borderSide: BorderSide(color: Colors.deepOrangeAccent),
                                                 ),
                                                 filled: true,
                                                 prefixIcon: Icon(
                                                   Icons.lock,
-                                                  color: Colors.teal,
+                                                  color: Colors.deepOrangeAccent,
                                                 ),
                                                 suffixIcon: IconButton(
                                                   icon: Icon(
                                                     showPassword ? Icons.visibility : Icons.visibility_off,
-                                                    color: Colors.teal,
+                                                    color: Colors.deepOrangeAccent,
                                                   ),
                                                   onPressed: () {
                                                     setState(() {
@@ -237,7 +277,7 @@ class _MyAppState extends State<Login> {
                                                 suffixStyle: TextStyle(
                                                   fontSize: screenWidth * 0.040,
                                                 ),
-                                                hintStyle: TextStyle(color: Colors.teal),
+                                                hintStyle: TextStyle(color: Colors.deepOrangeAccent),
                                               ),
                                               validator: (value) {
                                                 if (value == null || value.isEmpty) {
@@ -285,20 +325,9 @@ class _MyAppState extends State<Login> {
                                   //     ),
                                   //   ),
                                   // ),
-                                  IconButton(
-                                    icon: Icon(
-                                      showPassword ? Icons.visibility : Icons.visibility_off,
-                                      color: Colors.grey,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        showPassword = !showPassword;
-                                      });
-                                    },
-                                  ),
                                   Positioned(
                                     left: screenWidth * 0.4,
-                                    top: screenHeight * 0.798,
+                                    top: screenHeight * 0.68,
                                     child: GestureDetector(
                                       onTap: () {
                                         FocusScope.of(context).unfocus();
@@ -322,7 +351,7 @@ class _MyAppState extends State<Login> {
                                         child: Container(
                                           padding: const EdgeInsets.all(16.0),
                                           decoration: BoxDecoration(
-                                            color: Color(0xFF6FB457),
+                                            color: Colors.orangeAccent,
                                             borderRadius: BorderRadius.circular(8.0),
                                           ),
                                           child: Center(
@@ -332,6 +361,48 @@ class _MyAppState extends State<Login> {
                                             ),
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    left: screenWidth * 0.45,
+                                    bottom: screenHeight * 0.08,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add functionality for email icon
+                                      },
+                                      icon: Icon(
+                                        Icons.email_outlined,
+                                        color: Colors.lightBlueAccent,
+                                        size: 25,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: screenWidth * 0.33,
+                                    bottom: screenHeight * 0.08,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add functionality for Instagram icon
+                                      },
+                                      icon: Icon(
+                                        Icons.wifi_calling_3_outlined,
+                                        color: Colors.redAccent,
+                                        size: 25,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    right: screenWidth * 0.54,
+                                    bottom: screenHeight * 0.08,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        // Add functionality for Instagram icon
+                                      },
+                                      icon: Icon(
+                                        Icons.rate_review_outlined,
+                                        color: Colors.indigo,
+                                        size: 25,
                                       ),
                                     ),
                                   ),
@@ -346,5 +417,46 @@ class _MyAppState extends State<Login> {
             ),
           );
         });
+  }
+}
+
+class GiantCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint darkPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.8))
+      ..style = PaintingStyle.fill;
+
+    Paint lightPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.4))
+      ..style = PaintingStyle.fill;
+
+    double circleRadius = size.width * 1; // Reduce size
+
+    canvas.drawCircle(
+        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
+    canvas.drawCircle(
+        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
+        circleRadius,
+        darkPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

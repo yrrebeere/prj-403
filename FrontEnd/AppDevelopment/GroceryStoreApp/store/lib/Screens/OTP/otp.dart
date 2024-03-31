@@ -60,11 +60,9 @@ class _MyAppState extends State<OTP> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
         body: SafeArea(
           child: Builder(
             builder: (BuildContext builderContext) {
@@ -75,53 +73,76 @@ class _MyAppState extends State<OTP> {
                 decoration: BoxDecoration(color: Colors.white),
                 child: Stack(
                   children: [
+                    Positioned.fill(
+                      child: CustomPaint(
+                        painter: GiantCirclePainter(),
+                      ),
+                    ),
                     Positioned(
                       left: screenWidth * 0.38,
-                      top: screenHeight * 0.01,
-                      child: Center(
-                        child: Text(
-                          AppLocalizations.of(context)!.app_name,
-                          style: TextStyle(
-                            color: Color(0xFF6FB457),
-                            fontSize: 32,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                            height: 0,
-                          ),
+                      top: screenHeight * 0.1,
+                      child: Text(
+                        AppLocalizations.of(context)!.app_name,
+                        style: TextStyle(
+                          color: Color(0xFF6FB457),
+                          fontSize: 32,
+                          fontFamily: 'Inter',
+                          height: 0,
                         ),
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.07,
+                      left: screenWidth * 0.33,
                       top: screenHeight * 0.2,
                       child: Text(
                         AppLocalizations.of(context)!.enter_otp,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.orangeAccent,
                           fontSize: screenWidth * 0.06,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      right: screenWidth * 0.4,
+                      top: screenHeight * 0.22,
+                      child: IconButton(
+                        onPressed: () {
+                          // Add your help functionality here
+                        },
+                        icon: Icon(
+                          Icons.password_rounded,
+                          color: Colors.orangeAccent,
+                          size: 28,
                         ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.023,
-                      top: screenHeight * 0.001,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Row(
-                          children: [
-                            Icon(Icons.chevron_left_outlined, size: screenWidth * 0.106, color: Colors.black),
-                            SizedBox(width: screenWidth * 0.012),
-                          ],
+                      top: screenHeight * 0.04,
+                      child: Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Row(
+                            children: [
+                              Icon(Icons.chevron_left_outlined,
+                                  size: screenWidth * 0.106, color: Colors.white),
+                              SizedBox(
+                                width: screenWidth * 0.012,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       left: screenWidth * 0.08,
-                      top: screenHeight * 0.26,
+                      top: screenHeight * 0.34,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -130,7 +151,7 @@ class _MyAppState extends State<OTP> {
 
                               style: TextStyle(
                                 color: Colors.black.withOpacity(0.85),
-                                fontSize: screenHeight * 0.02,
+                                fontSize: screenHeight * 0.025,
                                 fontFamily: 'Inter',
                                 fontWeight: FontWeight.w400,
                               ),
@@ -150,7 +171,7 @@ class _MyAppState extends State<OTP> {
                     ),
                     Positioned(
                       left: screenWidth * 0.09,
-                      top: screenHeight * 0.3,
+                      top: screenHeight * 0.4,
                       child: Row(
                         children: List.generate(4, (index) {
                           return Padding(
@@ -186,7 +207,7 @@ class _MyAppState extends State<OTP> {
                     ),
                     Positioned(
                       left: screenWidth * 0.09,
-                      top: screenHeight * 0.4,
+                      top: screenHeight * 0.5,
                       child: Text.rich(
                         TextSpan(
                           children: [
@@ -219,7 +240,7 @@ class _MyAppState extends State<OTP> {
                     ),
                     Positioned(
                       left: screenWidth * 0.40,
-                      top: screenHeight * 0.4,
+                      top: screenHeight * 0.5,
                       child: TweenAnimationBuilder(
                         tween: Tween(begin: 30.0, end: 0.0),
                         duration: const Duration(seconds: 30),
@@ -261,7 +282,7 @@ class _MyAppState extends State<OTP> {
                           ),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),                            decoration: BoxDecoration(
-                            color: Color(0xFF6FB457),
+                            color: Colors.orangeAccent,
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                             child: Center(
@@ -282,5 +303,46 @@ class _MyAppState extends State<OTP> {
         ),
       ),
     );
+  }
+}
+
+class GiantCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint darkPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.8))
+      ..style = PaintingStyle.fill;
+
+    Paint lightPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.4))
+      ..style = PaintingStyle.fill;
+
+    double circleRadius = size.width * 1; // Reduce size
+
+    canvas.drawCircle(
+        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
+    canvas.drawCircle(
+        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
+        circleRadius,
+        darkPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

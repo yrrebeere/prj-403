@@ -113,6 +113,8 @@ class _RegistrationState extends State<Registration> {
     return Consumer<LanguageProvider>(
       builder: (context, languageProvider, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
+
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: languageProvider.selectedLocale,
@@ -123,10 +125,6 @@ class _RegistrationState extends State<Registration> {
             );
           },
           home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -137,46 +135,40 @@ class _RegistrationState extends State<Registration> {
                   decoration: BoxDecoration(color: Colors.white),
                   child: Stack(
                     children: [
-                      Positioned(
-                        right: screenWidth * 0.8,
-                        top: screenHeight * 0.001,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Row(
-                            children: [
-                              Icon(Icons.chevron_left_outlined,
-                                  size: screenWidth * 0.106,
-                                  color: Colors.black),
-                              SizedBox(
-                                width: screenWidth * 0.012,
-                              ),
-                            ],
-                          ),
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: GiantCirclePainter(),
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.34,
-                        top: screenHeight * 0.00,
-                        child: Text(
-                          AppLocalizations.of(context)!.app_name,
-                          style: TextStyle(
-                            color: Color(0xFF6FB457),
-                            fontSize: 32,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
-                            height: 0,
+                        left: screenWidth * 0.023,
+                        top: screenHeight * 0.04,
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.chevron_left_outlined,
+                                    size: screenWidth * 0.106, color: Colors.white),
+                                SizedBox(
+                                  width: screenWidth * 0.012,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
+
                       Positioned(
-                        left: screenWidth * 0.15,
+                        left: screenWidth * 0.22,
                         top: screenHeight * 0.07,
                         child: Text(
                           AppLocalizations.of(context)!.enter_reg_details,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.orangeAccent,
                             fontSize: screenWidth * 0.05,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -185,10 +177,10 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: screenWidth * 0.0,
-                        top: screenHeight * 0.12,
+                        top: screenHeight * 0.16,
                         child: Container(
-                          width: screenWidth * 0.9,
-                          height: screenHeight * 0.1,
+                          width: screenWidth * 0.8,
+                          height: screenHeight * 0.08,
                           decoration: BoxDecoration(
                             color: Colors.white,
                           ),
@@ -200,8 +192,8 @@ class _RegistrationState extends State<Registration> {
                                 child: Text(
                                   AppLocalizations.of(context)!.phone_number,
                                   style: TextStyle(
-                                    fontSize: screenWidth * 0.035,
-                                    fontWeight: FontWeight.w600,
+                                    fontSize: screenWidth * 0.036,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
@@ -234,7 +226,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.23,
+                        top: screenHeight * 0.25,
                         child: Text(
                           AppLocalizations.of(context)!.password,
                           style: TextStyle(
@@ -247,7 +239,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.25,
+                        top: screenHeight * 0.27,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -341,7 +333,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.45,
+                        top: screenHeight * 0.44,
                         child: Text(
                           AppLocalizations.of(context)!.full_name,
                           style: TextStyle(
@@ -354,7 +346,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.47,
+                        top: screenHeight * 0.46,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -383,7 +375,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.56,
+                        top: screenHeight * 0.54,
                         child: Text(
                           AppLocalizations.of(context)!.username,
                           style: TextStyle(
@@ -396,7 +388,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.58,
+                        top: screenHeight * 0.56,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -468,7 +460,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.67,
+                        top: screenHeight * 0.645,
                         child: Text(
                           AppLocalizations.of(context)!.store_name,
                           style: TextStyle(
@@ -481,7 +473,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.69,
+                        top: screenHeight * 0.672,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -510,7 +502,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.78,
+                        top: screenHeight * 0.74,
                         child: Text(
                           AppLocalizations.of(context)!.store_address,
                           style: TextStyle(
@@ -523,7 +515,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.80,
+                        top: screenHeight * 0.77,
                         child: Container(
                           width: screenWidth * 0.9,
                           height: screenHeight * 0.05,
@@ -548,7 +540,7 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.87,
+                        top: screenHeight * 0.85,
                         child: Container(
                           width: screenWidth * 0.9,
                           child: Align(
@@ -602,7 +594,7 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.93,
+                        top: screenHeight * 0.9,
                         left: screenWidth * 0.30,
                         bottom: screenHeight * 0.01,
                         child: GestureDetector(
@@ -642,7 +634,7 @@ class _RegistrationState extends State<Registration> {
                                 width: screenWidth * 0.3,
                                 padding: const EdgeInsets.all(14.0),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
+                                  color: Colors.orangeAccent,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Center(
@@ -755,5 +747,46 @@ class _RegistrationState extends State<Registration> {
 
   bool isUsernameValid(String username) {
     return RegExp(r'^[a-zA-Z]').hasMatch(username);
+  }
+}
+
+class GiantCirclePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint darkPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFF6FB457), Color(0xFF7B1FA2), Colors.orangeAccent],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.8))
+      ..style = PaintingStyle.fill;
+
+    Paint lightPaint = Paint()
+      ..shader = LinearGradient(
+        colors: [Color(0xFFD05CE3), Color(0xFFF8BBD0), Colors.orange],
+        stops: [0.0, 0.6, 1.0],
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+      ).createShader(Rect.fromCircle(
+          center: Offset(size.width / 2, size.height / 2),
+          radius: size.width * 0.4))
+      ..style = PaintingStyle.fill;
+
+    double circleRadius = size.width * 1; // Reduce size
+
+    canvas.drawCircle(
+        Offset(-circleRadius / 2, -circleRadius / 2), circleRadius, darkPaint);
+    canvas.drawCircle(
+        Offset(size.width + circleRadius / 2, size.height + circleRadius / 2),
+        circleRadius,
+        darkPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }

@@ -115,6 +115,20 @@ class _LanguageState extends State<Language> {
                           ),
                         ),
                       ),
+                      Positioned(
+                        right: screenWidth * 0.41,
+                        top: screenHeight * 0.43,
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your help functionality here
+                          },
+                          icon: Icon(
+                            Icons.language,
+                            color: Colors.orangeAccent,
+                            size: 28,
+                          ),
+                        ),
+                      ),
                       // Positioned(
                       //   left: 0,
                       //   top: screenHeight * 0.1,
@@ -161,7 +175,7 @@ class _LanguageState extends State<Language> {
                           child: Text(
                             AppLocalizations.of(context)!.welcome_msg,
                             style: TextStyle(
-                              color:Colors.orangeAccent,
+                              color:Colors.deepOrangeAccent,
                               fontSize: screenWidth * 0.06,
                               fontWeight: FontWeight.w400,
                             ),
@@ -169,12 +183,12 @@ class _LanguageState extends State<Language> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.45,
+                        left: screenWidth * 0.46,
                         top: screenHeight * 0.29,
                         child: Icon(
-                          Icons.store,
+                          Icons.add_business,
                           size: 60,
-                          color: Colors.orangeAccent,
+                          color: Colors.deepOrangeAccent,
                         ),
                       ),
                       Positioned(
@@ -191,12 +205,12 @@ class _LanguageState extends State<Language> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.35,
-                        top: screenHeight * 0.42,
+                        left: screenWidth * 0.34,
+                        top: screenHeight * 0.4,
                         child: Text(
                           AppLocalizations.of(context)!.select_lang,
                           style: TextStyle(
-                            color:Color(0xFF6FB457),
+                            color:Colors.orangeAccent,
                             fontSize: screenWidth * 0.05,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -206,7 +220,7 @@ class _LanguageState extends State<Language> {
                       ),
                       Positioned(
                         left: screenWidth * 0.07,
-                        top: screenHeight * 0.48,
+                        top: screenHeight * 0.5,
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -259,7 +273,7 @@ class _LanguageState extends State<Language> {
                       ),
                       Positioned(
                         left: screenWidth * 0.07,
-                        top: screenHeight * 0.58,
+                        top: screenHeight * 0.6,
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -350,8 +364,8 @@ class _LanguageState extends State<Language> {
                             // Add functionality for email icon
                           },
                           icon: Icon(
-                            Icons.email,
-                            color: Colors.blueGrey,
+                            Icons.email_outlined,
+                            color: Colors.lightBlueAccent,
                             size: 25,
                           ),
                         ),
@@ -364,7 +378,7 @@ class _LanguageState extends State<Language> {
                             // Add functionality for Instagram icon
                           },
                           icon: Icon(
-                            Icons.call,
+                            Icons.wifi_calling_3_outlined,
                             color: Colors.redAccent,
                             size: 25,
                           ),
@@ -378,8 +392,8 @@ class _LanguageState extends State<Language> {
                             // Add functionality for Instagram icon
                           },
                           icon: Icon(
-                            Icons.comment_bank_outlined,
-                            color: Colors.blue,
+                            Icons.rate_review_outlined,
+                            color: Colors.indigo,
                             size: 25,
                           ),
                         ),

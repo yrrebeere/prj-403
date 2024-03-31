@@ -48,7 +48,7 @@ class _MyAppState extends State<PhoneNumber> {
         return Builder(
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(mainContext)!.number_confirmation),
+              title: Text(AppLocalizations.of(mainContext)!.number_confirmation,   style: TextStyle( color: Colors.orangeAccent),),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -62,13 +62,13 @@ class _MyAppState extends State<PhoneNumber> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text(AppLocalizations.of(mainContext)!.edit),
+                  child: Text(AppLocalizations.of(mainContext)!.edit,   style: TextStyle( color: Colors.orangeAccent),),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text(AppLocalizations.of(mainContext)!.confirm),
+                  child: Text(AppLocalizations.of(mainContext)!.confirm,   style: TextStyle( color: Colors.orangeAccent),),
                   onPressed: () {
                     Navigator.of(context).pop();
                     _handleConfirmation(phoneNumber);
@@ -120,6 +120,7 @@ class _MyAppState extends State<PhoneNumber> {
           print("Selected Locale: ${languageProvider.selectedLocale}");
 
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: languageProvider.selectedLocale,
@@ -131,10 +132,6 @@ class _MyAppState extends State<PhoneNumber> {
             },
 
             home: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.white,
-                elevation: 0,
-              ),
               body: SafeArea(
                 child: Container(
                   width: screenWidth * 1,
@@ -143,12 +140,59 @@ class _MyAppState extends State<PhoneNumber> {
                   decoration: BoxDecoration(color: Colors.white),
                   child: Stack(
                     children: [
+                      Positioned.fill(
+                        child: CustomPaint(
+                          painter: GiantCirclePainter(),
+                        ),
+                      ),
+                      Positioned(
+                        right: screenWidth * 0.12,
+                        top: screenHeight * 0.02,
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your help functionality here
+                          },
+                          icon: Icon(
+                            Icons.settings_outlined,
+                            color: Color(0xFF6FB457),
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: screenWidth * 0.03,
+                        top: screenHeight * 0.02,
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your help functionality here
+                          },
+                          icon: Icon(
+                            Icons.settings_power_outlined,
+                            color: Color(0xFF6FB457),
+                            size: 28,
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        right: screenWidth * 0.42,
+                        top: screenHeight * 0.23,
+                        child: IconButton(
+                          onPressed: () {
+                            // Add your help functionality here
+                          },
+                          icon: Icon(
+                            Icons.add_ic_call_outlined,
+                            color: Colors.orangeAccent,
+                            size: 30,
+                          ),
+                        ),
+                      ),
                       Positioned(
                         left: 0,
-                        top: screenHeight * 0.2,
+                        top: screenHeight * 0.4,
                         child: Container(
                           width: screenWidth,
-                          height: screenHeight * 0.718,
+                          height: screenHeight * 0.2,
                           decoration: ShapeDecoration(
                             color: Colors.white,
                             shape: RoundedRectangleBorder(
@@ -162,7 +206,7 @@ class _MyAppState extends State<PhoneNumber> {
                       ),
                       Positioned(
                         left: screenWidth * 0.023,
-                        top: screenHeight * 0.001,
+                        top: screenHeight * 0.04,
                         child: Directionality(
                           textDirection: TextDirection.ltr,
                           child: GestureDetector(
@@ -172,7 +216,7 @@ class _MyAppState extends State<PhoneNumber> {
                             child: Row(
                               children: [
                                 Icon(Icons.chevron_left_outlined,
-                                    size: screenWidth * 0.106, color: Colors.black),
+                                    size: screenWidth * 0.106, color: Colors.white),
                                 SizedBox(
                                   width: screenWidth * 0.012,
                                 ),
@@ -182,26 +226,25 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.39,
-                        top: screenHeight * 0.01,
+                        left: screenWidth * 0.38,
+                        top: screenHeight * 0.1,
                         child: Text(
                           AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
                             color: Color(0xFF6FB457),
                             fontSize: 32,
                             fontFamily: 'Inter',
-                            fontWeight: FontWeight.bold,
                             height: 0,
                           ),
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.2,
+                        left: screenWidth * 0.22,
                         top: screenHeight * 0.2,
                         child: Text(
                           AppLocalizations.of(context)!.enter_number,
                           style: TextStyle(
-                            color: Colors.black,
+                            color: Colors.orangeAccent,
                             fontSize: screenWidth * 0.06,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.w400,
@@ -210,18 +253,18 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.43,
-                        top: screenHeight * 0.28,
+                        left: screenWidth * 0.32,
+                        top: screenHeight * 0.3,
                         child: Image.asset(
                           'Assets/Images/mobile_icon.png',
-                          width: screenWidth * 0.2,
-                          height: screenWidth * 0.2,
+                          width: screenWidth * 0.4,
+                          height: screenWidth * 0.4,
                         ),
                       ),
                       SizedBox(height: 15),
                       Positioned(
                         left: screenWidth * 0.11,
-                        top: screenHeight * 0.4,
+                        top: screenHeight * 0.5,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -230,10 +273,7 @@ class _MyAppState extends State<PhoneNumber> {
                               height: screenHeight * 0.07,
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: Border.all(
-                                  color: Colors.grey,
-                                  width: 0,
-                                ),
+
                               ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -337,7 +377,7 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.35,
+                        left: screenWidth * 0.37,
                         top: screenHeight * 0.76,
                         child: GestureDetector(
                           onTap: () async {
@@ -366,7 +406,7 @@ class _MyAppState extends State<PhoneNumber> {
                             width: screenWidth * 0.3,
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
+                              color:Colors.orangeAccent,
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Center(
