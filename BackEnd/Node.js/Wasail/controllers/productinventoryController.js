@@ -69,6 +69,45 @@ const searchProductByVID = async (req, res) => {
     }
 };
 
+const selectProduct = async (req, res) => {
+    try {
+        const product_inventory_id = req.params.product_inventory_id;
+
+        if (!product_inventory_id) {
+            return res.status(400).json({ error: 'Product Inventory ID is required.' });
+        }
+
+        // Step 1: Retrieve Product Inventory Details by product_inventory_id
+        const productInventory = await Inventory.findOne({
+            where: {
+                product_inventory_id: product_inventory_id,
+            },
+        });
+
+        if (!productInventory) {
+            return res.status(404).json({ error: 'Product Inventory not found for the given ID.' });
+        }
+
+        // Step 2: Retrieve Product Details by product_id from Product Inventory
+        const product = await db.product.findOne({
+            where: {
+                product_id: productInventory.product_product_id,
+            },
+        });
+
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found for the given Product Inventory ID.' });
+        }
+
+        res.status(200).json({
+            productInventory,
+            product,
+        });
+    } catch (error) {
+        console.error('Error selecting product:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
 
 
 module.exports = {
@@ -77,5 +116,6 @@ module.exports = {
     getOneProductInventory,
     updateProductInventory,
     deleteProductInventory,
-    searchProductByVID
+    searchProductByVID,
+    selectProduct
 }
