@@ -395,18 +395,37 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.all(8.0), // Adjust padding as needed
-                decoration: BoxDecoration(
-                  color: Colors.deepOrangeAccent, // Specify the color of the box
-                  borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
-                ),
-                child: Center(
-                  child: Text(
-                    'Categories',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top:8,bottom: 8), // Adjust padding as needed
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Specify the color of the box
+                      borderRadius: BorderRadius.circular(20), // Optional: Adjust container's border radius
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20), // Circular border radius for the image
+                      child: Image.asset(
+                        'Assets/Images/Ads.gif', // Path to your GIF file in the assets folder
+                      ),
+                    ),
                   ),
-                ),
+
+                  Container(
+                    padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrangeAccent, // Specify the color of the box
+                      borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
+                    ),
+                    child: Center(
+                      child:
+                      Text(
+                        'Categories',
+                        style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
             ),
