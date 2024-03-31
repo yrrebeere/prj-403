@@ -28,6 +28,15 @@ module.exports = (sequelize, Datatypes)=>{
             },
             allowNull: false
         },
+
+        product_inventory_product_inventory_id: {
+            type: Datatypes.INTEGER,
+            references: {
+                model: 'product_inventories',
+                key: 'product_inventory_id'
+            },
+            allowNull: false
+        },
     },{
         underscored:true
     })

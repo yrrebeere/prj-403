@@ -8,7 +8,8 @@ const addOrderDetail = async (req, res) => {
         quantity: req.body.quantity,
         unit_price: req.body.unit_price,
         total_price: req.body.total_price,
-        order_order_id: req.body.order_order_id
+        order_order_id: req.body.order_order_id,
+        product_inventory_product_inventory_id: req.body.product_inventory_product_inventory_id
     }
 
     const detail = await Detail.create(data)

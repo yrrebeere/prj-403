@@ -66,6 +66,10 @@ db.order.belongsTo(db.vendor);
 db.order.hasMany(db.order_detail);
 db.order_detail.belongsTo(db.order);
 
+//product_inventory-order_details
+db.product_inventory.hasMany(db.order_detail);
+db.order_detail.belongsTo(db.product_inventory);
+
 //grocery_store-vendor
 db.grocery_store.belongsToMany(db.vendor, {through: 'lists'})
 db.vendor.belongsToMany(db.grocery_store, {through: 'lists'})
