@@ -54,7 +54,7 @@ class _NavBarState extends State<NavBar> {
               flexibleSpace: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF6FB457), Colors.orangeAccent],
+                    colors: [Color(0xFF6FB457), Color(0xFF6FB457)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -65,19 +65,32 @@ class _NavBarState extends State<NavBar> {
                 child: Text(AppLocalizations.of(context)!.app_name),
               ),
               elevation: 0,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.shopping_cart_outlined),
+                  onPressed: () {
+                    // Handle cart icon tap
+                  },
+                ),
+              ],
             ),
             body: screens[index],
             bottomNavigationBar: CurvedNavigationBar(
               index: index,
               backgroundColor: Colors.white,
+<<<<<<< Updated upstream
               color: Colors.orange.shade300,
               buttonBackgroundColor: Colors.orange,
+=======
+              color: Colors.orangeAccent,
+              buttonBackgroundColor: Colors.deepOrangeAccent,
+>>>>>>> Stashed changes
               animationDuration: Duration(milliseconds: 300),
               items: <Widget>[
-                Icon(Icons.home, size: 30),
-                Icon(Icons.local_shipping, size: 30),
-                Icon(Icons.contact_page, size: 30),
-                Icon(Icons.menu, size: 30),
+                Icon(Icons.home, size: 30, color: Colors.white,),
+                Icon(Icons.local_shipping, size: 30, color: Colors.white,),
+                Icon(Icons.contact_page, size: 30, color: Colors.white,),
+                Icon(Icons.menu, size: 30, color: Colors.white,),
               ],
               onTap: (newIndex) {
                 setState(() {

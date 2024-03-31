@@ -119,11 +119,19 @@ class _VendorListState extends State<VendorList> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  AppLocalizations.of(context)!.vendor_list,
-                  style: TextStyle(fontSize: 20),
+                child: Container(
+                  padding: EdgeInsets.all(8.0), // Add padding to the container
+                  decoration: BoxDecoration(
+                    color: Colors.deepOrangeAccent, // Background color of the container
+                    borderRadius: BorderRadius.circular(8), // Border radius of the container
+                  ),
+                  child: Text(
+                    AppLocalizations.of(context)!.vendor_list,
+                    style: TextStyle(fontSize: 20, color: Colors.white), // Text color set to white
+                  ),
                 ),
               ),
+
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -216,7 +224,7 @@ class _VendorListState extends State<VendorList> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: IconButton(
-                icon: Icon(Icons.delete),
+                icon: Icon(Icons.delete), color: Colors.deepOrangeAccent,
                 onPressed: () {
                   _deleteVendor(vendor);
                 },

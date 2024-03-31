@@ -156,18 +156,45 @@ class SearchResultsPage extends StatelessWidget {
                       );
                     },
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
                           radius: 60,
                           backgroundImage: AssetImage(vendor.vendorImage),
                         ),
-                        SizedBox(width: 12.0),
-                        Text(
-                          vendor.vendorName,
-                          style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold, color: Color(0xFF6FB457)),
+                        SizedBox(width: 12.0), // Add space between the image and the text
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 30.0), // Adjust height to align the text with the center of the avatar
+                            Container(
+                              padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                              decoration: BoxDecoration(
+                                color: Colors.deepOrangeAccent, // Specify the color of the box
+                                borderRadius: BorderRadius.circular(8.0), // Add border radius
+                              ),
+                              child: Text(
+                                vendor.vendorName,
+                                style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                              ),
+                            ),
+                            SizedBox(height: 8.0), // Add space between the name and the "See Details" text
+                            Row(
+                              children: [
+                                Text(
+                                  'See Vendor Details',
+                                  style: TextStyle(fontSize: 16.0, color: Colors.orangeAccent, fontWeight: FontWeight.bold, decoration: TextDecoration.underline), // Adjust text color if needed
+                                ),
+                                SizedBox(width: 8.0), // Add space between the "See Details" text and the icon
+                                Icon(Icons.double_arrow_outlined, size: 17.0, color: Colors.orangeAccent), // Arrow icon
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
+
+
                   ),
                 ),
 
@@ -359,11 +386,8 @@ class _HomeState extends State<Home> {
                 controller: searchController,
                 decoration: InputDecoration(
                   hintText: 'Search',
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                  ),
                   suffixIcon: IconButton(
-                    icon: Icon(Icons.search),
+                    icon: Icon(Icons.search) ,color: Colors.deepOrangeAccent,
                     onPressed: _search,
                   ),
                 ),
@@ -371,10 +395,18 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Categories',
-                style: TextStyle(fontSize: 20, ),
+              child: Container(
+                padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                decoration: BoxDecoration(
+                  color: Colors.deepOrangeAccent, // Specify the color of the box
+                  borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
+                ),
+                child: Text(
+                  'Categories',
+                  style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                ),
               ),
+
             ),
             Expanded(
               child: GridView.count(

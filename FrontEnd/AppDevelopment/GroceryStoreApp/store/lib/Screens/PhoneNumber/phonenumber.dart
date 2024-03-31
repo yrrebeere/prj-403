@@ -146,6 +146,23 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
+                        left: 0,
+                        top: screenHeight * 0.2,
+                        child: Container(
+                          width: screenWidth * 1.0,
+                          height: screenHeight * 0.58,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
                         right: screenWidth * 0.12,
                         top: screenHeight * 0.02,
                         child: IconButton(

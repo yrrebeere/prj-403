@@ -53,7 +53,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
       } else {
         // Show an error message if the request fails
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('vendor already has been added.')),
+          SnackBar(content: Text('Vendor already exists in list. Thankyou.')),
         );
       }
     } catch (error) {
@@ -70,6 +70,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+<<<<<<< Updated upstream
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -81,7 +82,21 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
           ),
         ),
         title: Text('Vendor Details'),
+=======
+        backgroundColor: Color(0xFF6FB457),
+        title: Text(
+          'Vendor Details',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
+        centerTitle: true, // This line will align the title to the center
+>>>>>>> Stashed changes
       ),
+
       body: FutureBuilder<Map<String, dynamic>>(
         future: _vendorProfile,
         builder: (context, snapshot) {
@@ -109,41 +124,79 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                       SizedBox(width: 16),
                       Expanded(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the start (left) horizontally
                           children: [
-                            Text(
-                              '${vendorProfile['vendor_name']}',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF6FB457)),
+                            Container(
+                              padding: EdgeInsets.all(8), // Padding around the text
+                              decoration: BoxDecoration(
+                                color: Colors.orangeAccent, // Color of the container
+                                borderRadius: BorderRadius.circular(8), // Border radius of the container
+                              ),
+                              child: Text(
+                                '${vendorProfile['vendor_name']}',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.white, // Text color set to white
+                                ),
+                              ),
                             ),
                             SizedBox(height: 8),
-                            Text(
-                              '${vendorProfile['delivery_locations']}',
-                              style: TextStyle(fontSize: 16),
+                            Container(
+                              padding: EdgeInsets.all(8), // Padding around the text
+                              decoration: BoxDecoration(
+                                color: Colors.orangeAccent, // Color of the container
+                                borderRadius: BorderRadius.circular(8), // Border radius of the container
+                              ),
+                              child: Text(
+                                '${vendorProfile['delivery_locations']}',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white, // Text color set to white
+                                ),
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(width: 16),
-                      GestureDetector(
-                        onTap: _addVendorToList,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: _isVendorAdded ? Colors.green : Color(0xFF6FB457),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Icon(
-                            _isVendorAdded ? Icons.check : Icons.add,
-                            size: 25,
-                            color: Colors.white,
+
+                      SizedBox(width: 10),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: GestureDetector(
+                          onTap: _addVendorToList,
+                          child: Container(
+                            width: 35,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              color: _isVendorAdded ? Colors.green : Color(0xFF6FB457),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: Icon(
+                              _isVendorAdded ? Icons.check : Icons.add,
+                              size: 25,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.deepOrangeAccent, // Color of the container
+                      borderRadius: BorderRadius.circular(8), // Border radius of the container
+                    ),
+                    child: Text(
+                      'Inventory',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white, // Text color set to white
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
