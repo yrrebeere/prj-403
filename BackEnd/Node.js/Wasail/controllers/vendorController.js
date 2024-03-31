@@ -79,7 +79,6 @@ const vendorProfile = async (req, res) => {
             return res.status(400).json({ error: 'Vendor ID is required.' });
         }
 
-        // Step 1: Retrieve Vendor Details by vendor_id
         const vendor = await Vendor.findOne({
             where: {
                 vendor_id: vendor_id,
@@ -90,7 +89,6 @@ const vendorProfile = async (req, res) => {
             return res.status(404).json({ error: 'Vendor not found for the given vendor ID.' });
         }
 
-        // Step 2: Retrieve Product Inventories by vendor_id
         const productInventories = await db.product_inventory.findAll({
             where: {
                 vendor_vendor_id: vendor_id,
@@ -105,9 +103,6 @@ const vendorProfile = async (req, res) => {
             },
         });
 
-
-
-        // Step 3: Return Vendor Information and Product Inventories
         res.status(200).json({ vendor, productInventories,products });
     } catch (error) {
         console.error('Error searching products by vendor:', error);
