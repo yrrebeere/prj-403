@@ -20,6 +20,8 @@ router.get('/searchgroceryorder/:vendor_vendor_id/:grocery_store_store_id', orde
 router.get('/groceryorderhistory/:vendor_vendor_id/:grocery_store_store_id', orderController.orderHistoryByGID)
 router.get('/storeorderhistory/:grocery_store_store_id', orderController.storeOrderHistory)
 router.get('/storecurrentorder/:grocery_store_store_id', orderController.storeCurrentOrders)
+router.post('/orderplacement', orderController.orderPlacement)
+
 
 
 module.exports = router;

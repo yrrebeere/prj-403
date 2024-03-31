@@ -214,6 +214,42 @@ const storeCurrentOrders = async (req, res) => {
     }
 };
 
+const orderPlacement = async (req, res) => {
+    try {
+        const data = {
+            order_date: req.body.order_date,
+            delivery_date: req.body.delivery_date,
+            total_bill: req.body.total_bill,
+            order_status: req.body.order_status,
+            grocery_store_store_id: req.body.grocery_store_store_id,
+            vendor_vendor_id: req.body.vendor_vendor_id
+        };
+
+        const order = await Order.create(data);
+
+        if (order) {
+            const detailInfo = {
+                quantity: req.body.quantity,
+                unit_price: req.body.unit_price,
+                total_price: req.body.total_price,
+                order_order_id: req.body.order_order_id,
+                product_inventory_product_inventory_id: req.body.product_inventory_product_inventory_id
+            };
+
+
+            const detail = await Detail.create(detailInfo);
+
+
+            res.status(200).json({ order, detail });
+        } else {
+            res.status(400).json({ error: 'Failed to create order.' });
+        }
+    } catch (error) {
+        console.error('Error creating order and order details:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     addOrder,
     getAllOrders,
@@ -225,5 +261,6 @@ module.exports = {
     searchOrderByGID,
     orderHistoryByGID,
     storeOrderHistory,
-    storeCurrentOrders
+    storeCurrentOrders,
+    orderPlacement
 }
