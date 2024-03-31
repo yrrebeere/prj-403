@@ -69,6 +69,8 @@ class _MenuState extends State<Menu> {
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
+
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProvider.selectedLocale,
@@ -117,7 +119,7 @@ class _MenuState extends State<Menu> {
                             Text(name, style: TextStyle(fontSize: 20)),
                             Text('0$number',
                                 style: TextStyle(
-                                    fontSize: 17, color: Colors.grey)),
+                                    fontSize: 17, color: Colors.deepOrangeAccent)),
                             SizedBox(
                               height: 30,
                             ),
@@ -161,7 +163,7 @@ class _MenuState extends State<Menu> {
                                   Expanded(
                                     child: Text(
                                       AppLocalizations.of(context)!.view_profile,
-                                      style: TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: 20,),
                                     ),
                                   ),
                                   Padding(
@@ -416,7 +418,7 @@ class _MenuState extends State<Menu> {
                                   AppLocalizations.of(context)!.logout,
                                   style: TextStyle(
                                     fontSize: 20,
-                                    color: Colors.red,
+                                    color: Colors.deepOrangeAccent,
                                     decoration: TextDecoration.underline,
                                   ),
                                 ),

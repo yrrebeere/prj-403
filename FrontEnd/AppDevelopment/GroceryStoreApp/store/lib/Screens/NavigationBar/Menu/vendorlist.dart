@@ -87,11 +87,7 @@ class _VendorListState extends State<VendorList> {
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6FB457), Colors.orangeAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: Color(0xFF6FB457)
           ),
         ),
         title: Padding(
@@ -125,9 +121,11 @@ class _VendorListState extends State<VendorList> {
                     color: Colors.deepOrangeAccent, // Background color of the container
                     borderRadius: BorderRadius.circular(8), // Border radius of the container
                   ),
-                  child: Text(
-                    AppLocalizations.of(context)!.vendor_list,
-                    style: TextStyle(fontSize: 20, color: Colors.white), // Text color set to white
+                  child: Center(
+                    child: Text(
+                      AppLocalizations.of(context)!.vendor_list,
+                      style: TextStyle(fontSize: 20, color: Colors.white), // Text color set to white
+                    ),
                   ),
                 ),
               ),

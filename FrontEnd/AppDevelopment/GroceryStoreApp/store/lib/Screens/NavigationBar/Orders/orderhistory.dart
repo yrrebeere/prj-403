@@ -75,11 +75,7 @@ class OrderHistory extends StatelessWidget {
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6FB457), Colors.orangeAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: Color(0xFF6FB457)
           ),
         ),
         title: Padding(

@@ -70,7 +70,6 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-<<<<<<< Updated upstream
         backgroundColor: Colors.transparent, // Make app bar transparent
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -81,9 +80,6 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
             ),
           ),
         ),
-        title: Text('Vendor Details'),
-=======
-        backgroundColor: Color(0xFF6FB457),
         title: Text(
           'Vendor Details',
           textAlign: TextAlign.center,
@@ -94,7 +90,6 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
           ),
         ),
         centerTitle: true, // This line will align the title to the center
->>>>>>> Stashed changes
       ),
 
       body: FutureBuilder<Map<String, dynamic>>(

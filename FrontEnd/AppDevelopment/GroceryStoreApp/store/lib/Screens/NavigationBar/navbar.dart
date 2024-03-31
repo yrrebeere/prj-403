@@ -78,13 +78,8 @@ class _NavBarState extends State<NavBar> {
             bottomNavigationBar: CurvedNavigationBar(
               index: index,
               backgroundColor: Colors.white,
-<<<<<<< Updated upstream
-              color: Colors.orange.shade300,
-              buttonBackgroundColor: Colors.orange,
-=======
               color: Colors.orangeAccent,
               buttonBackgroundColor: Colors.deepOrangeAccent,
->>>>>>> Stashed changes
               animationDuration: Duration(milliseconds: 300),
               items: <Widget>[
                 Icon(Icons.home, size: 30, color: Colors.white,),

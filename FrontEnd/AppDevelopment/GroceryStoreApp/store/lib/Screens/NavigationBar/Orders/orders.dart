@@ -31,9 +31,6 @@ class Order extends StatefulWidget {
 }
 
 class _OrderState extends State<Order> {
-  List<SearchProductInventory> searchResults = [];
-  TextEditingController searchController = TextEditingController();
-
   // Hardcoded vendorId as 1
   int vendorId = 1;
 
@@ -43,10 +40,10 @@ class _OrderState extends State<Order> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          SizedBox(height: 150),
           AnimatedButton(
             label: AppLocalizations.of(context)!.curr_orders,
             icon: Icons.local_shipping,
-            color: Color(0xFF6FB457),
             onPressed: () {
               // Navigate to the page for current orders
               Navigator.push(
@@ -61,7 +58,6 @@ class _OrderState extends State<Order> {
           AnimatedButton(
             label: AppLocalizations.of(context)!.order_history,
             icon: Icons.history,
-            color: Colors.blue,
             onPressed: () {
               // Navigate to the page for order history
               Navigator.push(
@@ -81,13 +77,11 @@ class _OrderState extends State<Order> {
 class AnimatedButton extends StatefulWidget {
   final String label;
   final IconData icon;
-  final Color color;
   final Function onPressed;
 
   const AnimatedButton({
     required this.label,
     required this.icon,
-    required this.color,
     required this.onPressed,
   });
 
@@ -132,17 +126,18 @@ class _AnimatedButtonState extends State<AnimatedButton>
           _controller.reverse();
         },
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Container(
-            height: 120,
+            height: 130, // Increase button height
             decoration: BoxDecoration(
-              color: widget.color,
+              color: Colors.orangeAccent,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: widget.color.withOpacity(0.3),
-                  blurRadius: 10,
-                  offset: Offset(0, 5),
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 3),
                 ),
               ],
             ),

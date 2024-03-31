@@ -401,9 +401,11 @@ class _HomeState extends State<Home> {
                   color: Colors.deepOrangeAccent, // Specify the color of the box
                   borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
                 ),
-                child: Text(
-                  'Categories',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                child: Center(
+                  child: Text(
+                    'Categories',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                  ),
                 ),
               ),
 

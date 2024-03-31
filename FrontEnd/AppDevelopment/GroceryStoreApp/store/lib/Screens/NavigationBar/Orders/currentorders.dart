@@ -72,14 +72,10 @@ class CurrentOrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Make app bar transparent
+        backgroundColor: Colors.transparent,
         flexibleSpace: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xFF6FB457), Colors.orangeAccent],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: Color(0xFF6FB457),
           ),
         ),
         title: Padding(
@@ -95,97 +91,121 @@ class CurrentOrdersPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _fetchAndDisplayCombinedData(vendorId),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No current orders available.'));
-            } else {
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Colors.deepOrangeAccent,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Center(
+                  child: Text(
+                    'Order List',
+                    style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+            FutureBuilder<List<Map<String, dynamic>>>(
+              future: _fetchAndDisplayCombinedData(vendorId),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No current orders available.'));
+                } else {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final orderData = snapshot.data![index];
 
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  final orderData = snapshot.data![index];
-
-                  return Card(
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
-                      leading: CircleAvatar(
-
-                        backgroundImage: AssetImage(orderData['image']),
-                        radius: 30,
-                      ),
-                      title: Text(
-                        '${orderData['store_name']}',
-                        style: TextStyle(
-                          fontSize: 20, // Increase the font size for the title
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black, // Set text color to black
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 15),
-                          Text(
-                            'Delivery Date: ${orderData['delivery_date']}',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          Text(
-                            'Order Date: ${orderData['order_date']}',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          SizedBox(height: 10),
-
-                          Text(
-                            'Total Bill: Rs.${orderData['total_bill']}',
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                          ),
-                          SizedBox(height: 20),
-                          Row(
-                            children: [
-                              if (orderData['order_status'].toLowerCase() == 'on its way')
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(Icons.pin_drop, color: Colors.blueAccent),
-                                ),
-                              if (orderData['order_status'].toLowerCase() == 'in process')
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 8.0),
-                                  child: Icon(Icons.recycling, color: Colors.red),
-                                ),
-                              SizedBox(width: 8),
-                              Expanded(
-                                child: Center(
-                                  child: Container(
-                                    padding: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                    ),
-                                    child: Text(
-                                      'Order Status: \n${orderData['order_status']}',
-                                      style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ),
+                        return Card(
+                          elevation: 4,
+                          margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(16),
+                            leading: CircleAvatar(
+                              backgroundImage: AssetImage(orderData['image']),
+                              radius: 40,
+                            ),
+                            title: Text(
+                              '${orderData['store_name']}',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepOrangeAccent,
                               ),
-                            ],
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 15),
+                                Text(
+                                  'Delivery Date: ${orderData['delivery_date']}',
+                                  style: TextStyle(fontSize: 16, color: Colors.black),
+                                ),
+                                Text(
+                                  'Order Date: ${orderData['order_date']}',
+                                  style: TextStyle(fontSize: 16, color: Colors.black),
+                                ),
+                                SizedBox(height: 12),
+                                Text(
+                                  'Total Bill: Rs.${orderData['total_bill']}',
+                                  style: TextStyle(fontSize: 19, color: Colors.black),
+                                ),
+                                SizedBox(height: 20),
+                                Row(
+                                  children: [
+                                    if (orderData['order_status'].toLowerCase() == 'on its way')
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Icon(Icons.pin_drop, color: Colors.blueAccent),
+                                      ),
+                                    if (orderData['order_status'].toLowerCase() == 'in process')
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 8.0),
+                                        child: Icon(Icons.recycling, color: Colors.red),
+                                      ),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Center(
+                                        child: Container(
+                                          padding: EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                            color: Colors.orangeAccent,
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                          child: Text(
+                                            '${orderData['order_status']}',
+                                            style: TextStyle(fontSize: 20, color: Colors.white,),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   );
-                },
-              );
-            }
-          },
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
+
   }
 }
