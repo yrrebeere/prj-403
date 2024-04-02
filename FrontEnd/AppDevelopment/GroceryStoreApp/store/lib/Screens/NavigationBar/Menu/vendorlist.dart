@@ -222,7 +222,7 @@ class _VendorListState extends State<VendorList> {
             Padding(
               padding: const EdgeInsets.only(right: 15.0),
               child: IconButton(
-                icon: Icon(Icons.delete), color: Color(0xFF6FB457),
+                icon: Icon(Icons.delete), color: Colors.red,
                 onPressed: () {
                   _deleteVendor(vendor);
                 },

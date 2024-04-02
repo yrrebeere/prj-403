@@ -63,18 +63,17 @@ class ProductInventory {
   }
 }
 
-class Vendor{
+class Vendor {
   final int vendorId;
   final String vendorName;
   final String vendorImage;
   final String vendorAddress;
 
-  Vendor({
-    required this.vendorId,
-    required this.vendorName,
-    required this.vendorImage,
-    required this.vendorAddress
-  });
+  Vendor(
+      {required this.vendorId,
+      required this.vendorName,
+      required this.vendorImage,
+      required this.vendorAddress});
 
   factory Vendor.fromJson(Map<String, dynamic> json) {
     return Vendor(
@@ -84,7 +83,6 @@ class Vendor{
       vendorAddress: json['delivery_locations'],
     );
   }
-
 }
 
 class SearchResultsPage extends StatelessWidget {
@@ -116,7 +114,7 @@ class SearchResultsPage extends StatelessWidget {
           final vendor = vendors[vendorIndex];
           final vendorProducts = products.where((product) {
             final productInventory = productInventories.firstWhere(
-                  (inventory) => inventory.productProductId == product.productId,
+              (inventory) => inventory.productProductId == product.productId,
               orElse: () => ProductInventory(
                 productInventoryId: -1,
                 price: 0,
@@ -145,7 +143,8 @@ class SearchResultsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VendorDetailsPage(vendorId: vendor.vendorId),
+                          builder: (context) =>
+                              VendorDetailsPage(vendorId: vendor.vendorId),
                         ),
                       );
                     },
@@ -156,107 +155,57 @@ class SearchResultsPage extends StatelessWidget {
                           radius: 60,
                           backgroundImage: AssetImage(vendor.vendorImage),
                         ),
-                        SizedBox(width: 12.0), // Add space between the image and the text
+                        SizedBox(width: 12.0),
+                        // Add space between the image and the text
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 30.0), // Adjust height to align the text with the center of the avatar
+                            SizedBox(height: 30.0),
+                            // Adjust height to align the text with the center of the avatar
                             Container(
-                              padding: EdgeInsets.all(8.0), // Adjust padding as needed
+                              padding: EdgeInsets.all(8.0),
+                              // Adjust padding as needed
                               decoration: BoxDecoration(
-                                color: Color(0xFF6FB457), // Specify the color of the box
-                                borderRadius: BorderRadius.circular(8.0), // Add border radius
+                                color: Color(0xFF6FB457),
+                                // Specify the color of the box
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // Add border radius
                               ),
                               child: Text(
                                 vendor.vendorName,
-                                style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors
+                                        .white), // Adjust text color if needed
                               ),
                             ),
-                            SizedBox(height: 8.0), // Add space between the name and the "See Details" text
+                            SizedBox(height: 8.0),
+                            // Add space between the name and the "See Details" text
                             Row(
                               children: [
                                 Text(
                                   'See Vendor Details',
-                                  style: TextStyle(fontSize: 16.0, color: Color(0xFF6FB457), fontWeight: FontWeight.bold, decoration: TextDecoration.underline), // Adjust text color if needed
+                                  style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Color(0xFF6FB457),
+                                      fontWeight: FontWeight.bold,
+                                      decoration: TextDecoration
+                                          .underline), // Adjust text color if needed
                                 ),
-                                SizedBox(width: 8.0), // Add space between the "See Details" text and the icon
-                                Icon(Icons.double_arrow_outlined, size: 17.0, color: Color(0xFF6FB457)), // Arrow icon
+                                SizedBox(width: 8.0),
+                                // Add space between the "See Details" text and the icon
+                                Icon(Icons.double_arrow_outlined,
+                                    size: 17.0, color: Color(0xFF6FB457)),
+                                // Arrow icon
                               ],
                             ),
                           ],
                         ),
                       ],
                     ),
-
-
                   ),
                 ),
-
-
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount:2,
-                    crossAxisSpacing: 8.0,
-                    mainAxisSpacing: 8.0,
-                    childAspectRatio: 1.0, // Adjusted tile size
-                  ),
-                  itemCount: vendorProducts.length,
-                  itemBuilder: (context, productIndex) {
-                    final product = vendorProducts[productIndex];
-                    final productInventory = productInventories.firstWhere(
-                          (inventory) => inventory.productProductId == product.productId,
-                      orElse: () => ProductInventory(
-                        productInventoryId: -1,
-                        price: 0,
-                        availableAmount: 0,
-                        listedAmount: 0,
-                        vendorVendorId: -1,
-                        productProductId: product.productId,
-                      ),
-                    );
-
-                    return Card(
-                      elevation: 2,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(6.0)),
-                              child: Image.asset(
-                                product.image,
-                                fit: BoxFit.cover,
-                                height: 100, // Reduced image size
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.productName,
-                                  style: TextStyle(fontSize: 16.0),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(height: 4.0),
-                                Text(
-                                  '\Rs. ${productInventory.price}',
-                                  style: TextStyle(fontSize: 14.0),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                // Recommendation block will go here
               ],
             ),
           );
@@ -266,8 +215,6 @@ class SearchResultsPage extends StatelessWidget {
   }
 }
 
-
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -276,6 +223,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ScrollController _scrollController = ScrollController();
   List<Category> categories = [];
   TextEditingController searchController = TextEditingController();
 
@@ -288,16 +236,19 @@ class _HomeState extends State<Home> {
   Future<void> _fetchCategories() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product_category/allproductcategories'),
+        Uri.parse(
+            'http://10.0.2.2:3000/api/product_category/allproductcategories'),
       );
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
         setState(() {
-          categories = data.map<Category>((item) => Category(
-            name: item['category_name'],
-            imageUrl: item['image'],
-          )).toList();
+          categories = data
+              .map<Category>((item) => Category(
+                    name: item['category_name'],
+                    imageUrl: item['image'],
+                  ))
+              .toList();
         });
       } else {
         print('Failed to load categories');
@@ -307,130 +258,151 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<void> _search() async {
-    try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product/searchproductinstore/${searchController.text}'),
-      );
-
-
-      if (response.statusCode == 200) {
-
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        final List<dynamic> products = responseBody['products'];
-        final List<dynamic> productInventories = responseBody['productInventories'];
-        final List<dynamic> vendors = responseBody['vendors'];
-
-        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
-        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
-        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
-        );
-      } else {
-        print('Failed to search products');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
-  void onCategoryTileClicked(String categoryName) async {
-    try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product_category/searchcategoryinstore/$categoryName'),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        final List<dynamic> products = responseBody['products'];
-        final List<dynamic> productInventories = responseBody['productInventories'];
-        final List<dynamic> vendors = responseBody['vendors'];
-
-        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
-        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
-        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
-        );
-      } else {
-        print('Failed to search products');
-      }
-    } catch (e) {
-      print('Error: $e');
-    }
-  }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.search) ,color: Color(0xFF6FB457),
-                    onPressed: _search,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        // Implement search functionality
+                      },
+                    ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top:8,bottom: 8), // Adjust padding as needed
-                    decoration: BoxDecoration(
-                      color: Colors.white, // Specify the color of the box
-                      borderRadius: BorderRadius.circular(20), // Optional: Adjust container's border radius
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20), // Circular border radius for the image
-                      child: Image.asset(
-                        'Assets/Images/Ads.gif', // Path to your GIF file in the assets folder
-                      ),
-                    ),
+              Container(
+                height: 130,
+                // Adjusted height for the ad GIF container
+                width: double.infinity,
+                padding: EdgeInsets.only(top: 8, bottom: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'Assets/Images/Ads.gif',
+                    fit: BoxFit.cover,
                   ),
-
-                  Container(
-                    padding: EdgeInsets.all(8.0), // Adjust padding as needed
-                    decoration: BoxDecoration(
-                      color: Color(0xFF6FB457), // Specify the color of the box
-                      borderRadius: BorderRadius.circular(8.0), // Optional: Adjust border radius
-                    ),
-                    child: Center(
-                      child:
-                      Text(
-                        'Categories',
-                        style: TextStyle(fontSize: 20.0, color: Colors.white), // Adjust text color if needed
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-
-            ),
-            Expanded(
-              child: GridView.count(
+              SizedBox(height: 16.0),
+              Container(
+                height: 48,
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Color(0xFF6FB457),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          size: 15,
+                        ),
+                        color: Colors.white,
+                        onPressed: () {
+                          // Scroll the list to the left
+                          _scrollController.animateTo(
+                            _scrollController.offset -
+                                MediaQuery.of(context).size.width,
+                            curve: Curves.linear,
+                            duration: Duration(milliseconds: 500),
+                          );
+                        },
+                      ),
+                      Text(
+                        'Recommendations',
+                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          size: 15,
+                        ),
+                        color: Colors.white,
+                        onPressed: () {
+                          // Scroll the list to the right
+                          _scrollController.animateTo(
+                            _scrollController.offset +
+                                MediaQuery.of(context).size.width,
+                            curve: Curves.linear,
+                            duration: Duration(milliseconds: 500),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.0),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                controller: _scrollController,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _buildRecommendedProduct('Dalda Cooking Oil \n5Kg',
+                        'Rs. 2725', 'Assets/Images/Products/dalda-oil.jpeg'),
+                    _buildRecommendedProduct(
+                        'Sunrise Wheat Flour \n10Kg',
+                        'Rs. 1800',
+                        'Assets/Images/Products/sunrise-flour.jpeg'),
+                    _buildRecommendedProduct('Olpers Milk \n6 Pack', 'Rs. 2800',
+                        'Assets/Images/Products/olpers-milk.jpg'),
+                    _buildRecommendedProduct('Knorr Ketchup', 'Rs. 240',
+                        'Assets/Images/Products/knorr-ketchup.png'),
+                    _buildRecommendedProduct('Nestle Milk \n6 Pack', 'Rs. 2450',
+                        'Assets/Images/Products/nestle-milk.jpg'),
+                    _buildRecommendedProduct('Dasani Water', 'Rs. 170',
+                        'Assets/Images/Products/dasani-water.png'),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.0),
+              Container(
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: Color(0xFF6FB457),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Categories',
+                      style: TextStyle(fontSize: 20.0, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8.0),
+              GridView.count(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
                 children: categories.map((category) {
                   return GestureDetector(
-                    onTap: () => onCategoryTileClicked(category.name),
+                    onTap: () {
+                      // Handle tap on category
+                    },
                     child: Card(
                       color: Colors.white,
                       child: Column(
@@ -450,11 +422,38 @@ class _HomeState extends State<Home> {
                   );
                 }).toList(),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
+  Widget _buildRecommendedProduct(
+      String productName, String productPrice, String imagePath) {
+    return Container(
+      margin: EdgeInsets.only(right: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset(
+            imagePath,
+            width: 90,
+            height: 90,
+            fit: BoxFit.cover,
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            productName,
+            style: TextStyle(fontSize: 16.0),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            productPrice,
+            style: TextStyle(fontSize: 15.0),
+          ),
+        ],
+      ),
+    );
+  }
 }
