@@ -117,6 +117,7 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 }
+
 class SearchResultsPage extends StatelessWidget {
   final List<Product> products;
   final List<ProductInventory> productInventories;
@@ -146,7 +147,7 @@ class SearchResultsPage extends StatelessWidget {
           final vendor = vendors[vendorIndex];
           final vendorProducts = products.where((product) {
             final productInventory = productInventories.firstWhere(
-              (inventory) => inventory.productProductId == product.productId,
+                  (inventory) => inventory.productProductId == product.productId,
               orElse: () => ProductInventory(
                 productInventoryId: -1,
                 price: 0,
@@ -192,22 +193,17 @@ class SearchResultsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 30.0),
-
                             Container(
                               padding: EdgeInsets.all(8.0),
-                              // Adjust padding as needed
                               decoration: BoxDecoration(
                                 color: Color(0xFF6FB457),
-                                // Specify the color of the box
-                                borderRadius: BorderRadius.circular(
-                                    8.0),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Text(
                                 vendor.vendorName,
                                 style: TextStyle(
                                     fontSize: 20.0,
-                                    color: Colors
-                                        .white),
+                                    color: Colors.white),
                               ),
                             ),
                             SizedBox(height: 8.0),
@@ -220,10 +216,9 @@ class SearchResultsPage extends StatelessWidget {
                                       color: Color(0xFF6FB457),
                                       fontWeight: FontWeight.bold,
                                       decoration: TextDecoration
-                                          .underline), // Adjust text color if needed
+                                          .underline),
                                 ),
                                 SizedBox(width: 8.0),
-                                // Add space between the "See Details" text and the icon
                                 Icon(Icons.double_arrow_outlined,
                                     size: 17.0, color: Color(0xFF6FB457)),
                                 // Arrow icon
@@ -235,7 +230,34 @@ class SearchResultsPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Recommendation block will go here
+                // GridView for products
+                GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  physics: NeverScrollableScrollPhysics(),
+                  children: vendorProducts.map((product) {
+                    final productInventory = productInventories.firstWhere(
+                          (inventory) =>
+                      inventory.productProductId == product.productId,
+                      orElse: () => ProductInventory(
+                        productInventoryId: -1,
+                        price: 0,
+                        availableAmount: 0,
+                        listedAmount: 0,
+                        vendorVendorId: -1,
+                        productProductId: product.productId,
+                      ),
+                    );
+
+                    return ProductTile(
+                      product: product,
+                      productInventory: productInventory,
+                    );
+                  }).toList(),
+                ),
               ],
             ),
           );
@@ -244,6 +266,71 @@ class SearchResultsPage extends StatelessWidget {
     );
   }
 }
+
+class ProductTile extends StatelessWidget {
+  final Product product;
+  final ProductInventory productInventory;
+
+  const ProductTile({
+    Key? key,
+    required this.product,
+    required this.productInventory,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // Navigate to product details page or any other action
+      },
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 100,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+                child: Image.asset(
+                  product.image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.productName,
+                    style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
+                    maxLines: 2, // Limit the number of lines for the product name
+                    overflow: TextOverflow.ellipsis, // Handle text overflow
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Price: \Rs. ${productInventory.price}',
+                    style: TextStyle(fontSize: 12.0),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -320,10 +407,14 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _search(BuildContext context) async {
+    print('Search query: ${searchController.text}'); // Add this line
     try {
       final response = await http.get(
         Uri.parse('http://10.0.2.2:3000/api/product/searchproductinstore/${searchController.text}'),
       );
+
+      print('Response status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -359,24 +450,22 @@ class _HomeState extends State<Home> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search',
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {
-                          _search(context);
-                        },
-                      ),
+                TextField(
+                  controller: searchController, // Bind controller to TextField
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        _search(context);
+                      },
                     ),
                   ),
                 ),
                 Container(
                   height: 130,
                   width: double.infinity,
-                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                  padding: EdgeInsets.only(top: 20, bottom: 8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -491,6 +580,7 @@ class _HomeState extends State<Home> {
                   children: categories.map((category) {
                     return GestureDetector(
                       onTap: () {
+                        print('Category tapped');
                         onCategoryTileClicked(category.name);
                       },
                       child: Card(
