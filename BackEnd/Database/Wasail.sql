@@ -48,7 +48,7 @@ INSERT INTO products (product_name,image,created_at, updated_at) VALUES
 SELECT * FROM wasail.products;
 
 INSERT INTO product_categories (category_name,image,created_at, updated_at) VALUES
-('drinks','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('drink','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
 ('meat','Assets/Images/Products/meat.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
 ('fish','Assets/Images/Products/fish.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
 ('condiments','Assets/Images/Products/condiments.webp','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
