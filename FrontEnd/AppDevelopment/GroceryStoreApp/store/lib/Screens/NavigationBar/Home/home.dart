@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'vendordetails.dart';
 import 'dart:convert';
 import 'package:store/Screens/NavigationBar/Inventory/inventory.dart';
@@ -85,6 +86,37 @@ class Vendor {
   }
 }
 
+
+class CartItem {
+  final Product product;
+  final ProductInventory productInventory;
+
+  CartItem({
+    required this.product,
+    required this.productInventory,
+  });
+}
+
+class CartProvider extends ChangeNotifier {
+  List<CartItem> _cartItems = [];
+
+  List<CartItem> get cartItems => _cartItems;
+
+  void addToCart(Product product, ProductInventory productInventory) {
+    _cartItems.add(CartItem(product: product, productInventory: productInventory));
+    notifyListeners();
+  }
+
+  void removeFromCart(CartItem cartItem) {
+    _cartItems.remove(cartItem);
+    notifyListeners();
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+}
 class SearchResultsPage extends StatelessWidget {
   final List<Product> products;
   final List<ProductInventory> productInventories;
@@ -101,7 +133,7 @@ class SearchResultsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent, // Make app bar transparent
+        backgroundColor: Colors.transparent,
         flexibleSpace: Container(
           color: Color(0xFF6FB457),
         ),
@@ -156,12 +188,11 @@ class SearchResultsPage extends StatelessWidget {
                           backgroundImage: AssetImage(vendor.vendorImage),
                         ),
                         SizedBox(width: 12.0),
-                        // Add space between the image and the text
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 30.0),
-                            // Adjust height to align the text with the center of the avatar
+
                             Container(
                               padding: EdgeInsets.all(8.0),
                               // Adjust padding as needed
@@ -169,18 +200,17 @@ class SearchResultsPage extends StatelessWidget {
                                 color: Color(0xFF6FB457),
                                 // Specify the color of the box
                                 borderRadius: BorderRadius.circular(
-                                    8.0), // Add border radius
+                                    8.0),
                               ),
                               child: Text(
                                 vendor.vendorName,
                                 style: TextStyle(
                                     fontSize: 20.0,
                                     color: Colors
-                                        .white), // Adjust text color if needed
+                                        .white),
                               ),
                             ),
                             SizedBox(height: 8.0),
-                            // Add space between the name and the "See Details" text
                             Row(
                               children: [
                                 Text(
@@ -227,9 +257,12 @@ class _HomeState extends State<Home> {
   List<Category> categories = [];
   TextEditingController searchController = TextEditingController();
 
+  CartProvider cartProvider = CartProvider();
+
   @override
   void initState() {
     super.initState();
+    cartProvider = CartProvider();
     _fetchCategories();
   }
 
@@ -258,171 +291,229 @@ class _HomeState extends State<Home> {
     }
   }
 
+  void onCategoryTileClicked(String categoryName) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/product_category/searchcategoryinstore/$categoryName'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        final List<dynamic> products = responseBody['products'];
+        final List<dynamic> productInventories = responseBody['productInventories'];
+        final List<dynamic> vendors = responseBody['vendors'];
+
+        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
+        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
+        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
+        );
+      } else {
+        print('Failed to search products');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+  Future<void> _search(BuildContext context) async {
+    try {
+      final response = await http.get(
+        Uri.parse('http://10.0.2.2:3000/api/product/searchproductinstore/${searchController.text}'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        final List<dynamic> products = responseBody['products'];
+        final List<dynamic> productInventories = responseBody['productInventories'];
+        final List<dynamic> vendors = responseBody['vendors'];
+
+        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
+        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
+        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
+        );
+      } else {
+        print('Failed to search products');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.search),
-                      onPressed: () {
-                        // Implement search functionality
-                      },
+    return ChangeNotifierProvider(
+      create: (context) => cartProvider,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search',
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {
+                          _search(context);
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                height: 130,
-                // Adjusted height for the ad GIF container
-                width: double.infinity,
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.asset(
-                    'Assets/Images/Ads.gif',
-                    fit: BoxFit.cover,
+                Container(
+                  height: 130,
+                  width: double.infinity,
+                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      'Assets/Images/Ads.gif',
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 16.0),
-              Container(
-                height: 48,
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFF6FB457),
-                  borderRadius: BorderRadius.circular(8.0),
+                SizedBox(height: 3.0),
+                Container(
+                  height: 48,
+                  padding: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6FB457),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            size: 15,
+                          ),
+                          color: Colors.white,
+                          onPressed: () {
+                            // Scroll the list to the left
+                            _scrollController.animateTo(
+                              _scrollController.offset -
+                                  MediaQuery.of(context).size.width,
+                              curve: Curves.linear,
+                              duration: Duration(milliseconds: 500),
+                            );
+                          },
+                        ),
+                        Text(
+                          'Recommendations',
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 15,
+                          ),
+                          color: Colors.white,
+                          onPressed: () {
+                            _scrollController.animateTo(
+                              _scrollController.offset +
+                                  MediaQuery.of(context).size.width,
+                              curve: Curves.linear,
+                              duration: Duration(milliseconds: 500),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Center(
+                SizedBox(height: 8.0),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  controller: _scrollController,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          size: 15,
-                        ),
-                        color: Colors.white,
-                        onPressed: () {
-                          // Scroll the list to the left
-                          _scrollController.animateTo(
-                            _scrollController.offset -
-                                MediaQuery.of(context).size.width,
-                            curve: Curves.linear,
-                            duration: Duration(milliseconds: 500),
-                          );
-                        },
-                      ),
+                      _buildRecommendedProduct('Dalda Cooking Oil \n5Kg',
+                          'Rs. 2725', 'Assets/Images/Products/dalda-oil.jpeg'),
+                      _buildRecommendedProduct(
+                          'Sunrise Wheat Flour \n10Kg',
+                          'Rs. 1800',
+                          'Assets/Images/Products/sunrise-flour.jpeg'),
+                      _buildRecommendedProduct('Olpers Milk \n6 Pack', 'Rs. 2800',
+                          'Assets/Images/Products/olpers-milk.jpg'),
+                      _buildRecommendedProduct('Knorr Ketchup', 'Rs. 240',
+                          'Assets/Images/Products/knorr-ketchup.png'),
+                      _buildRecommendedProduct('Nestle Milk \n6 Pack', 'Rs. 2450',
+                          'Assets/Images/Products/nestle-milk.jpg'),
+                      _buildRecommendedProduct('Dasani Water', 'Rs. 170',
+                          'Assets/Images/Products/dasani-water.png'),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Container(
+                  padding: EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF6FB457),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
-                        'Recommendations',
+                        'Categories',
                         style: TextStyle(fontSize: 20.0, color: Colors.white),
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.arrow_forward_ios,
-                          size: 15,
-                        ),
-                        color: Colors.white,
-                        onPressed: () {
-                          // Scroll the list to the right
-                          _scrollController.animateTo(
-                            _scrollController.offset +
-                                MediaQuery.of(context).size.width,
-                            curve: Curves.linear,
-                            duration: Duration(milliseconds: 500),
-                          );
-                        },
                       ),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: 8.0),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                controller: _scrollController,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildRecommendedProduct('Dalda Cooking Oil \n5Kg',
-                        'Rs. 2725', 'Assets/Images/Products/dalda-oil.jpeg'),
-                    _buildRecommendedProduct(
-                        'Sunrise Wheat Flour \n10Kg',
-                        'Rs. 1800',
-                        'Assets/Images/Products/sunrise-flour.jpeg'),
-                    _buildRecommendedProduct('Olpers Milk \n6 Pack', 'Rs. 2800',
-                        'Assets/Images/Products/olpers-milk.jpg'),
-                    _buildRecommendedProduct('Knorr Ketchup', 'Rs. 240',
-                        'Assets/Images/Products/knorr-ketchup.png'),
-                    _buildRecommendedProduct('Nestle Milk \n6 Pack', 'Rs. 2450',
-                        'Assets/Images/Products/nestle-milk.jpg'),
-                    _buildRecommendedProduct('Dasani Water', 'Rs. 170',
-                        'Assets/Images/Products/dasani-water.png'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 16.0),
-              Container(
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFF6FB457),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Categories',
-                      style: TextStyle(fontSize: 20.0, color: Colors.white),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 8.0),
-              GridView.count(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                crossAxisCount: 3,
-                crossAxisSpacing: 8.0,
-                mainAxisSpacing: 8.0,
-                children: categories.map((category) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Handle tap on category
-                    },
-                    child: Card(
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            category.imageUrl,
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(height: 8.0),
-                          Text(category.name),
-                        ],
+                SizedBox(height: 8.0),
+                GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  children: categories.map((category) {
+                    return GestureDetector(
+                      onTap: () {
+                        onCategoryTileClicked(category.name);
+                      },
+                      child: Card(
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              category.imageUrl,
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(category.name),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -448,9 +539,14 @@ class _HomeState extends State<Home> {
             style: TextStyle(fontSize: 16.0),
           ),
           SizedBox(height: 8.0),
-          Text(
-            productPrice,
-            style: TextStyle(fontSize: 15.0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                productPrice,
+                style: TextStyle(fontSize: 15.0),
+              ),
+            ]
           ),
         ],
       ),
