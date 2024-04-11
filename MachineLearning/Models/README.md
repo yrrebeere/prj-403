@@ -2,15 +2,15 @@
 
 ## Pharmacy Dataset
 
-| File | Model                    | Version |
-|------|--------------------------|---------|
-| M1.1 | Random Forest            | `D4.csv`|
-| M1.2 | Random Forest            | `D5.csv`|
-| M2.1 | Facebook Prophet         | `D5.csv`|
-| M2.2 | Facebook Prophet         | `D4.csv`|
-| M3.1 | XGBoost                  | `D5.csv`|
-| M4.1 | Long Short-Term Memory   | `D5.csv`|
-| M4.2 | Gated Recurrent Units    | `D5.csv`|
+| File | Model                    | Library         |Version  |
+|------|--------------------------|-----------------|---------|
+| M1.1 | Random Forest            | Scikit-Learn    | `D4.csv`|
+| M1.2 | Random Forest            | Scikit-Learn    | `D5.csv`|
+| M2.1 | Prophet                  | Prophet         | `D5.csv`|
+| M2.2 | Prophet                  | Prophet         | `D4.csv`|
+| M3.1 | XGBoost                  | XGBoost         | `D5.csv`|
+| M4.1 | Long Short-Term Memory   | TensorFlow      | `D5.csv`|
+| M4.2 | Gated Recurrent Units    | TensorFlow      | `D5.csv`|
 
 ## Store Sales Dataset
 
