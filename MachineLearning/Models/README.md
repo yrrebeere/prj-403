@@ -39,5 +39,6 @@
 | M9.1      | LightGBM       | LightGBM      | 1024       |
 | M9.2      | LightGBM       | Darts         |            |
 | M9.3      | LightGBM       | Darts         |            |
+| M9.4      | LightGBM       | Darts         |            |
 | M10.1     | N-BEATS        | NeuralForecast|            |
 | M10.2     | N-BEATS        | Darts         |            |
