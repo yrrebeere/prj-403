@@ -3,6 +3,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:store/Screens/NavigationBar/Menu/menu.dart';
 import 'package:store/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
+import 'Home/cartscreen.dart';
+import 'Home/productdetail.dart';
 import 'Inventory/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:store/Screens/NavigationBar/navbar.dart';
@@ -12,7 +14,9 @@ import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({Key? key});
+  final int? quantity;
+
+  const NavBar({Key? key, this.quantity}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -67,9 +71,12 @@ class _NavBarState extends State<NavBar> {
               elevation: 0,
               actions: [
                 IconButton(
-                  icon: Icon(Icons.shopping_cart_outlined),
+                  icon: Icon(Icons.shopping_cart),
                   onPressed: () {
-                    // Handle cart icon tap
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CartScreen()),
+                    );
                   },
                 ),
               ],

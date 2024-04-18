@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'vendordetails.dart';
+import 'productdetail.dart';
+import 'cartscreen.dart';
 import 'dart:convert';
 import 'package:store/Screens/NavigationBar/Inventory/inventory.dart';
 
@@ -88,27 +90,46 @@ class Vendor {
 
 
 class CartItem {
-  final Product product;
-  final ProductInventory productInventory;
+  Product product;
+  ProductInventory productInventory;
+  int _quantity;
 
   CartItem({
     required this.product,
     required this.productInventory,
-  });
+    required int quantity,
+  }) : _quantity = quantity;
+
+  int get quantity => _quantity;
+  set quantity(int value) {
+    _quantity = value;
+  }
 }
+
 
 class CartProvider extends ChangeNotifier {
   List<CartItem> _cartItems = [];
 
   List<CartItem> get cartItems => _cartItems;
 
-  void addToCart(Product product, ProductInventory productInventory) {
-    _cartItems.add(CartItem(product: product, productInventory: productInventory));
+  void addToCart(Product product, ProductInventory productInventory, int quantity) {
+    _cartItems.add(CartItem(product: product, productInventory: productInventory, quantity: quantity,));
     notifyListeners();
   }
 
   void removeFromCart(CartItem cartItem) {
     _cartItems.remove(cartItem);
+    notifyListeners();
+  }
+
+  void decreaseQuantity(CartItem cartItem) {
+    int index = cartItems.indexOf(cartItem);
+    cartItems[index].quantity--;
+    notifyListeners();
+  }
+
+  void increaseQuantity(CartItem cartItem) {
+    cartItem.quantity++;
     notifyListeners();
   }
 
@@ -196,14 +217,12 @@ class SearchResultsPage extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(8.0),
                               decoration: BoxDecoration(
-                                color: Color(0xFF6FB457),
                                 borderRadius: BorderRadius.circular(8.0),
+                                color: Color(0xFF6FB457),
                               ),
                               child: Text(
                                 vendor.vendorName,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    color: Colors.white),
+                                style: TextStyle(fontSize: 20.0, color: Colors.white),
                               ),
                             ),
                             SizedBox(height: 8.0),
@@ -281,7 +300,15 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigate to product details page or any other action
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailsPage(
+              product: product,
+              productInventory: productInventory,
+            ),
+          ),
+        );
       },
       child: Card(
         elevation: 3,
@@ -312,12 +339,12 @@ class ProductTile extends StatelessWidget {
                   Text(
                     product.productName,
                     style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold),
-                    maxLines: 2, // Limit the number of lines for the product name
-                    overflow: TextOverflow.ellipsis, // Handle text overflow
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    'Price: \Rs. ${productInventory.price}',
+                    'Price: Rs. ${productInventory.price}',
                     style: TextStyle(fontSize: 12.0),
                   ),
                 ],
@@ -329,8 +356,6 @@ class ProductTile extends StatelessWidget {
     );
   }
 }
-
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -344,7 +369,7 @@ class _HomeState extends State<Home> {
   List<Category> categories = [];
   TextEditingController searchController = TextEditingController();
 
-  CartProvider cartProvider = CartProvider();
+  late CartProvider cartProvider;
 
   @override
   void initState() {
@@ -451,7 +476,7 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
-                  controller: searchController, // Bind controller to TextField
+                  controller: searchController, 
                   decoration: InputDecoration(
                     hintText: 'Search',
                     suffixIcon: IconButton(
@@ -497,7 +522,6 @@ class _HomeState extends State<Home> {
                           ),
                           color: Colors.white,
                           onPressed: () {
-                            // Scroll the list to the left
                             _scrollController.animateTo(
                               _scrollController.offset -
                                   MediaQuery.of(context).size.width,

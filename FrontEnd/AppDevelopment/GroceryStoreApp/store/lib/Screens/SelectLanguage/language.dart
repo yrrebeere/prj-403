@@ -5,6 +5,8 @@ import 'package:store/Screens/Registration/registrationprovider.dart';
 import '../PhoneNumber/phonenumberprovider.dart';
 import 'package:provider/provider.dart';
 import 'languageprovider.dart';
+import 'package:store/Screens/NavigationBar/Home/home.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<PhoneNumberProvider>(
           create: (context) => PhoneNumberProvider(),
+        ),
+        ChangeNotifierProvider<CartProvider>(
+          create: (context) => CartProvider(),
         ),
       ],
       child: MaterialApp(

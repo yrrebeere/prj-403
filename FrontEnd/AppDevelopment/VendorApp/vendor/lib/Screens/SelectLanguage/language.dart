@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         // ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         home: Language(),
@@ -54,7 +55,7 @@ class _LanguageState extends State<Language> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: selectedLocale ?? Locale('en'), // Fallback to 'en' if selectedLocale is null
