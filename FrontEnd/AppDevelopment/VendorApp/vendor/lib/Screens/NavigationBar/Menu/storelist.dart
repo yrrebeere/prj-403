@@ -203,7 +203,7 @@ class _StorelistState extends State<Storelist> {
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        height: 160,
+        height: 110,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -223,8 +223,8 @@ class _StorelistState extends State<Storelist> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 100,
-                  width: 100,
+                  height: 80,
+                  width: 80,
                   margin: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -232,8 +232,8 @@ class _StorelistState extends State<Storelist> {
                   ),
                   child: Image.asset(
                     store.image,
-                    width: 50,
-                    height: 50,
+                    width: 30,
+                    height: 30,
                     fit: BoxFit.cover,
                   ),
                 ),
