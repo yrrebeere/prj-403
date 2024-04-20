@@ -5,6 +5,7 @@ const mysql = require('mysql2');
 // var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +22,7 @@ var adminsRouter = require('./routes/admins');
 
 // var app = express();
 const app = express()
+app.use(cors())
 const port = 4000
 
 app.use(logger('dev'));
