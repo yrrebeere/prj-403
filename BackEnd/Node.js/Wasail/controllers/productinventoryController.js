@@ -77,7 +77,6 @@ const selectProduct = async (req, res) => {
             return res.status(400).json({ error: 'Product Inventory ID is required.' });
         }
 
-        // Step 1: Retrieve Product Inventory Details by product_inventory_id
         const productInventory = await Inventory.findOne({
             where: {
                 product_inventory_id: product_inventory_id,
@@ -88,7 +87,6 @@ const selectProduct = async (req, res) => {
             return res.status(404).json({ error: 'Product Inventory not found for the given ID.' });
         }
 
-        // Step 2: Retrieve Product Details by product_id from Product Inventory
         const product = await db.product.findOne({
             where: {
                 product_id: productInventory.product_product_id,

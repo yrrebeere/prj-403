@@ -16,6 +16,7 @@ db.product_category = require('./productcategory');
 db.product = require('./product');
 db.product_inventory = require('./productinventory');
 db.list = require('./list');
+db.admin = require('./admin');
 console.log(config);
 
 
@@ -55,6 +56,10 @@ db.vendor.belongsTo(db.user_table);
 //user_table-grocery_store
 db.user_table.hasOne(db.grocery_store);
 db.grocery_store.belongsTo(db.user_table);
+
+//user_table-admin
+db.user_table.hasOne(db.admin);
+db.admin.belongsTo(db.user_table);
 
 //grocery_store/vendor-order
 db.grocery_store.hasMany(db.order);
