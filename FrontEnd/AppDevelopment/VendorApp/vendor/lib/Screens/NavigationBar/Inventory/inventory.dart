@@ -147,11 +147,12 @@ class _SearchBarPageState extends State<SearchBarPage> {
                         await _showProductDetailsDialog(product);
                       },
                       child: Container(
+                        height: 105,
                         margin:
                             EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.grey.withOpacity(0.5),
@@ -161,17 +162,19 @@ class _SearchBarPageState extends State<SearchBarPage> {
                             ),
                           ],
                         ),
-                        child: ListTile(
-                          title: Text(product.name),
-                          leading: Image.asset(
-                            imageUrl,
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context, Object error,
-                                StackTrace? stackTrace) {
-                              return Icon(Icons.error);
-                            },
+                        child: Center(
+                          child: ListTile(
+                            title: Text(product.name),
+                            leading: Image.asset(
+                              imageUrl,
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                              errorBuilder: (BuildContext context, Object error,
+                                  StackTrace? stackTrace) {
+                                return Icon(Icons.error);
+                              },
+                            ),
                           ),
                         ),
                       ),
