@@ -37,6 +37,7 @@ class _NavBarState extends State<NavBar> {
         builder: (context, languageProvider, child) {
           print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProvider.selectedLocale,

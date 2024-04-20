@@ -48,6 +48,7 @@ class _HomeState extends State<Home> {
         print("Selected Locale: ${languageProvider.selectedLocale}");
 
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: languageProvider.selectedLocale,

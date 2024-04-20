@@ -60,6 +60,7 @@ class _MyAppState extends State<OTP> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

@@ -11,7 +11,6 @@ import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:vendor/Screens/OTP/otp.dart';
 import 'package:provider/provider.dart';
 
-
 void main() => runApp(MyVendorApp());
 
 class MyVendorApp extends StatelessWidget {

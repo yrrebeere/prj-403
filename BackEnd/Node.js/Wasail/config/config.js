@@ -17,6 +17,14 @@ const config = {
         }
     },
     test : {},
-    prod : {}
+    prod : {
+        db : {
+            username,
+            password,
+            database,
+            host
+        }
+    }
 }
+
 module.exports = config[node_env];

@@ -59,7 +59,6 @@ class _LanguageState extends State<Language> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: selectedLocale ?? Locale('en'), // Fallback to 'en' if selectedLocale is null
-
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,

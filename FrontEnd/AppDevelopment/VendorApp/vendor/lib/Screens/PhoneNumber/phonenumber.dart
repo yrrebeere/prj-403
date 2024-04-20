@@ -122,6 +122,7 @@ class _MyAppState extends State<PhoneNumber> {
           print("Selected Locale: ${languageProvider.selectedLocale}");
 
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: languageProvider.selectedLocale,
