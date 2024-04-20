@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:vendor/Screens/NavigationBar/Menu/menu.dart';
 import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
@@ -11,7 +12,9 @@ import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key});
+  final int? quantity;
+
+  const NavBar({Key? key, this.quantity}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -34,59 +37,55 @@ class _NavBarState extends State<NavBar> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-          print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: languageProvider.selectedLocale,
-        builder: (context, child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: child!,
-          );
-        },
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Color(0xFF6FB457),
-            title: Padding(
-              padding: const EdgeInsets.only(left: 145),
-              child: Text(AppLocalizations.of(context)!.app_name),
-            ),
-            elevation: 0,
-          ),
-          body: screens[index],
-          bottomNavigationBar: NavigationBarTheme(
-            data: NavigationBarThemeData(
-              indicatorColor: Colors.blue.shade100,
-              labelTextStyle: MaterialStateProperty.all(
-                TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey),
+      builder: (context, languageProvider, child) {
+        print("Nav Bar Selected Locale: ${languageProvider.selectedLocale}");
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: languageProvider.selectedLocale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+          home: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Color(0xFFFFA500), // Make app bar transparent
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+
+                ),
               ),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 145),
+                child: Text(AppLocalizations.of(context)!.app_name),
+              ),
+              elevation: 0,
             ),
-            child: NavigationBar(
-              selectedIndex: index,
-              onDestinationSelected: (index) =>
-                  setState(() => this.index = index),
-              destinations: [
-                NavigationDestination(
-                    icon: Icon(Icons.home, color: Colors.grey), label: AppLocalizations.of(context)!.home),
-                NavigationDestination(
-                    icon: Icon(Icons.local_shipping, color: Colors.grey),
-                    label:AppLocalizations.of(context)!.orders),
-                NavigationDestination(
-                    icon: Icon(Icons.list_alt_sharp, color: Colors.grey),
-                    label: AppLocalizations.of(context)!.inventory),
-                NavigationDestination(
-                    icon: Icon(Icons.menu, color: Colors.grey), label: AppLocalizations.of(context)!.menu),
+            body: screens[index],
+            bottomNavigationBar: CurvedNavigationBar(
+              index: index,
+              backgroundColor: Colors.white,
+              color: Color(0xFFFFA500),
+              buttonBackgroundColor: Color(0xFFFFA500),
+              animationDuration: Duration(milliseconds: 300),
+              items: <Widget>[
+                Icon(Icons.home, size: 30, color: Colors.white,),
+                Icon(Icons.local_shipping, size: 30, color: Colors.white,),
+                Icon(Icons.contact_page, size: 30, color: Colors.white,),
+                Icon(Icons.menu, size: 30, color: Colors.white,),
               ],
+              onTap: (newIndex) {
+                setState(() {
+                  index = newIndex;
+                });
+              },
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

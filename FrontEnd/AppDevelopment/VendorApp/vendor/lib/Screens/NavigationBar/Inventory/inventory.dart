@@ -529,8 +529,7 @@ class _InventoryState extends State<Inventory> {
                                 _openItemDetails(item);
                               },
                               child: Container(
-                                height: 160,
-                                width: 370,
+                                width: 370, // Maintain fixed width
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -547,86 +546,70 @@ class _InventoryState extends State<Inventory> {
                                   padding: const EdgeInsets.all(15.0),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center, // Align children to the center vertically
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            height: 100,
+                                            width: 100,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(50),
+                                            ),
+                                            child: Image.asset(
+                                              productItem.imageUrl,
+                                              width: 50,
+                                              height: 50,
+                                              fit: BoxFit.cover,
+                                              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                return Icon(Icons.error);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(width: 10), // Add spacing between image and text
+                                      Expanded( // Use Expanded to allow the text to take available space
                                         child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Container(
-                                              height: 100,
-                                              width: 100,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius: BorderRadius.circular(50),
-                                                // border: Border.all(color: Colors.black, width: 1.0),
-                                              ),
-                                              child: Image.asset(
-                                                productItem.imageUrl,
-                                                width: 50,
-                                                height: 50,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                  return Icon(Icons.error);
-                                                },
-                                              ),
+                                            Text(
+                                              "${productItem.name}",
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                                              maxLines: 2, // Limit to 2 lines
+                                              overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
+                                            ),
+                                            Text(
+                                              "${AppLocalizations.of(context)!.listed_amount}: ${item.listedAmount}",
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
+                                            ),
+                                            Text(
+                                              "${AppLocalizations.of(context)!.available_amount}: ${item.availableAmount}",
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
+                                            ),
+                                            Text(
+                                              "${AppLocalizations.of(context)!.price}: ${item.price}",
+                                              textDirection: TextDirection.ltr,
+                                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color:Color(0xFF6FB457)),
                                             ),
                                           ],
                                         ),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(25.0),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              // Expanded(
-                                              //   child: Text(
-                                              //     "Product No. ${item.productInventoryId}",
-                                              //     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                                              //   ),
-                                              // ),
-                                              Expanded(
-                                                child: Text(
-                                                  "${productItem.name}",
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  "${AppLocalizations.of(context)!.listed_amount}: ${item.listedAmount}",
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  "${AppLocalizations.of(context)!.available_amount}: ${item.availableAmount}",
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Text(
-                                                  "${AppLocalizations.of(context)!.price}: ${item.price}",
-                                                  textDirection: TextDirection.ltr,
-
-                                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                      ),
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(bottom: 10.0),
-                                            child: Icon(Icons.arrow_forward_ios, color: Colors.black),
-                                          ),
-                                        ],
+                                      // Wrap the content of the arrow in Align widget to center it vertically
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Icon(Icons.arrow_forward_ios, color: Colors.black),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                             ),
+
+
+
                             SizedBox(height: 20),
                           ],
                         );
