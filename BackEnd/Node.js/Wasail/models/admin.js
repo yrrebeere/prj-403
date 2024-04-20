@@ -12,7 +12,12 @@ module.exports = (sequelize, Datatypes)=>{
             isAlpha: true,
             notNull: true,
         },
-
+        email:{
+            type: Datatypes.STRING,
+            isAlpha: true,
+            notNull: true,
+            isEmail: true,
+        },
         user_table_user_id: {
             type: Datatypes.INTEGER,
             references: {
