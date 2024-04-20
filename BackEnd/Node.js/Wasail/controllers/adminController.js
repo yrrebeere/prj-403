@@ -5,7 +5,7 @@ const Admin = db.admin
 const addAdmin = async (req, res) => {
 
     let data = {
-        role: req.body.role,
+        admin_role: req.body.admin_role,
         user_table_user_id: req.body.user_table_user_id
     }
 

@@ -7,7 +7,7 @@ module.exports = (sequelize, Datatypes)=>{
             primaryKey: true,
             autoIncrement: true
         },
-        role:{
+        admin_role:{
             type: Datatypes.STRING,
             isAlpha: true,
             notNull: true,

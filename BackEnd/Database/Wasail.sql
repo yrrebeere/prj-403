@@ -1,10 +1,11 @@
+-- create database wasail;
 use wasail;
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES
 (03214377009, 'Fizza Adeel', 'password@123', 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.user_tables;
 
 INSERT INTO vendors (vendor_name, delivery_locations, image,created_at, updated_at, user_table_user_id) VALUES
-('Esa Jees', 'Gulberg', 'Assets/Images/Stores/esajees.png','2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
+('P&G', 'Gulberg', 'Assets/Images/Stores/esajees.png','2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
 SELECT * FROM wasail.vendors;
  
 INSERT INTO grocery_stores (store_name, image, store_address, created_at, updated_at, user_table_user_id) VALUES
@@ -26,12 +27,6 @@ INSERT INTO orders (order_date, delivery_date, total_bill, order_status, created
 ('2023-10-16','2023-12-21','460', 'In Process', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 3, 1),
 ('2024-01-03','2024-01-07','1400', 'Delivered', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 3, 1);
 SELECT * FROM wasail.orders;
-
-INSERT INTO order_details (quantity, unit_price, total_price, created_at, updated_at, order_order_id) VALUES
-('5','80','400', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1),
-('10','450','4500', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1),
-('25','25','625', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1);
-SELECT * FROM wasail.order_details;
 
 INSERT INTO products (product_name,image,created_at, updated_at) VALUES
 ('lays','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
@@ -58,7 +53,7 @@ INSERT INTO product_categories (category_name,image,created_at, updated_at) VALU
 SELECT * FROM wasail.product_categories;
 
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
-('100','30', '25', 1, 1,'023-12-19T12:34:56','2023-12-19T12:34:56'),
+('100','30', '25', 1, 1,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('50','50', '35', 1, 3,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('875','170', '155', 1, 4,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('155','100', '90', 1, 5,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
@@ -68,6 +63,12 @@ INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_v
 ('650','12', '12', 1, 9,'2023-12-19T12:34:56','2023-12-19T12:34:56'),
 ('365','35', '33', 1, 10,'2023-12-19T12:34:56','2023-12-19T12:34:56');
 SELECT * FROM wasail.product_inventories;
+
+INSERT INTO order_details (quantity, unit_price, total_price, created_at, updated_at, order_order_id,product_inventory_product_inventory_id) VALUES
+('5','80','400', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1,1),
+('10','450','4500', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1,1),
+('25','25','625', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1,1);
+SELECT * FROM wasail.order_details;
 
 INSERT INTO lists (created_at, updated_at,grocery_store_store_id, vendor_vendor_id) VALUES
 ('2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 1),
@@ -80,3 +81,8 @@ INSERT INTO product_category_links (created_at, updated_at,product_product_id, p
 ('2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 1),
 ('2023-12-17T12:34:56', '2023-12-19T12:34:56', 3, 1);
 SELECT * FROM wasail.product_category_links;
+
+INSERT INTO admins (admin_role,user_table_user_id,created_at, updated_at) VALUES
+('ABC',1,'2023-12-17T12:34:56', '2023-12-19T12:34:56');
+SELECT * FROM wasail.admins;
+
