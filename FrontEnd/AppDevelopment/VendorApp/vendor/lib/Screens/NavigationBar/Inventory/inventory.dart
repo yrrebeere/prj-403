@@ -7,6 +7,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
+import 'itemdetails.dart';
+
 void main() => runApp(InventoryApp());
 
 class InventoryItem {
@@ -58,7 +60,8 @@ class productInventory {
   }
 }
 
-class SearchBarPage extends StatefulWidget {
+class SearchBarPage extends StatefulWidget
+{
   final List<productInventory> productInventories;
 
   SearchBarPage({required this.productInventories});
@@ -93,7 +96,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
           key: _scaffoldKey, // Assign the key to the scaffold
           appBar: AppBar(
             title: Text(AppLocalizations.of(context)!.search_page),
-            backgroundColor: Color(0xFF6FB457),
+            backgroundColor: Color(0xFFFF9100),
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.chevron_left),
@@ -610,9 +613,6 @@ class _InventoryState extends State<Inventory> {
                                 ),
                               ),
                             ),
-
-
-
                             SizedBox(height: 20),
                           ],
                         );
@@ -657,279 +657,4 @@ class _InventoryState extends State<Inventory> {
 
 }
 
-class ItemDetailsPage extends StatefulWidget {
-  final productInventory item;
 
-  final VoidCallback onDelete;
-
-  const ItemDetailsPage({
-    required this.item,
-    required this.onDelete
-  });
-
-  @override
-  _ItemDetailsPageState createState() => _ItemDetailsPageState();
-}
-
-class _ItemDetailsPageState extends State<ItemDetailsPage> {
-  late TextEditingController listedAmountController;
-  late TextEditingController availableAmountController;
-  late TextEditingController priceController;
-  late String productName; // Add this line
-  late String imageUrl; // Add this line
-
-
-  @override
-  void initState() {
-    super.initState();
-    productName="";
-    imageUrl="";
-    listedAmountController =
-        TextEditingController(text: widget.item.listedAmount.toString());
-    availableAmountController =
-        TextEditingController(text: widget.item.availableAmount.toString());
-    priceController = TextEditingController(text: widget.item.price.toString());
-
-    _fetchAndDisplayProductDetails(widget.item.productProductId);
-  }
-
-  Future<void> _fetchAndDisplayProductDetails(int productId) async {
-    try {
-      final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
-      );
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> productData = jsonDecode(response.body);
-
-        setState(() {
-          productName = productData['product_name'];
-          imageUrl = productData['image'];
-        });
-      } else {
-        print('Failed to load product details');
-      }
-    } catch (error) {
-      print('Error fetching product details: $error');
-    }
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              Container(
-                height: 650,
-                width: 370,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 16),
-                      Text(
-                        productName,
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                      ),
-                      SizedBox(height: 16),
-                      imageUrl != null
-                          ? Image.asset(
-                        imageUrl, // Assuming imageUrl is the asset path
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.cover,
-                      )
-                          : Container(),
-                      SizedBox(height: 16),
-                      TextFormField(
-                        controller: listedAmountController,
-                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.listed_amount),
-                      ),
-                      TextFormField(
-                        controller: availableAmountController,
-                        decoration:
-                            InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
-                      ),
-                      TextFormField(
-                        controller: priceController,
-                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
-                      ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () async {
-                          String listedAmount =
-                              listedAmountController.text.trim();
-                          String availableAmount =
-                              availableAmountController.text.trim();
-                          String price = priceController.text.trim();
-
-                          await _updateProductDetails(
-                            listedAmount,
-                            availableAmount,
-                            price,
-                            widget.item.productInventoryId,
-                          );
-
-                          Navigator.pop(context);
-                        },
-                        child: Text(AppLocalizations.of(context)!.update),
-                      ),
-                      SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: () async {
-                          widget.onDelete();
-                          Navigator.pop(context);
-                          await _deleteProductInventoryConfirmation();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                        ),
-                        child: Text(AppLocalizations.of(context)!.delete),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _deleteProductInventoryConfirmation() async {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Delete Product Inventory'),
-          content:
-              Text('Are you sure you want to delete this product inventory?'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                await _deleteProductInventory(widget.item.productInventoryId);
-                Navigator.of(context).pop();
-              },
-              child: Text('Delete'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _deleteProductInventory(int productInventoryId) async {
-    try {
-      final response = await http.delete(
-        Uri.parse(
-            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
-      );
-      if (response.statusCode == 200) {
-        widget
-            .onDelete(); // Trigger the callback to update the UI in the parent widget
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Successfully deleted!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to delete. Please try again.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (error) {
-      print('Error deleting: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An unexpected error occurred. Please try again.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-
-  Future<void> _updateProductDetails(
-    String listedAmount,
-    String availableAmount,
-    String price,
-    int productInventoryId,
-  ) async {
-    try {
-      final response = await http.put(
-        Uri.parse(
-            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
-        body: jsonEncode({
-          'price': price,
-          'available_amount': availableAmount,
-          'listed_amount': listedAmount,
-        }),
-        headers: {'Content-Type': 'application/json'},
-      );
-      if (response.statusCode == 200) {
-        // await _fetchAllProductInventories();
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Successfully updated!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Failed to update. Please try again.'),
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (error) {
-      print('Error updating: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An unexpected error occurred. Please try again.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-    }
-  }
-}
