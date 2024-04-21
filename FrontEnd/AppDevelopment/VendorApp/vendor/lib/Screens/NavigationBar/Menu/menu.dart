@@ -69,6 +69,7 @@ class _MenuState extends State<Menu> {
     return Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
       return MaterialApp(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         locale: languageProvider.selectedLocale,

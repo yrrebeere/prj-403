@@ -140,7 +140,7 @@ class _StorelistState extends State<Storelist> {
           },
           home: Scaffold(
             appBar: AppBar(
-              backgroundColor: Color(0xFF6FB457),
+              backgroundColor: Color(0xFFFF9100),
               title: Padding(
                 padding: const EdgeInsets.only(left: 90),
                 child: Text(AppLocalizations.of(context)!.app_name),

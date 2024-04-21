@@ -632,7 +632,7 @@ class _InventoryState extends State<Inventory> {
             MaterialPageRoute(builder: (context) => SearchBarPage(productInventories: productInventories,)),
           );
         },
-        backgroundColor: Color(0xFF6FB457),
+        backgroundColor:  Color(0xFFFF9100),
         child: Icon(Icons.add),
       ),
     );

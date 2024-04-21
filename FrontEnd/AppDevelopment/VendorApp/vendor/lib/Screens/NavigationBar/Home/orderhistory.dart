@@ -83,7 +83,7 @@ class OrderHistoryPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF6FB457),
+          backgroundColor: Color(0xFFFF9100),
           title: Padding(
             padding: const EdgeInsets.only(left: 70),
             child: Text('Order History'),

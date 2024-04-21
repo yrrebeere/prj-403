@@ -73,8 +73,11 @@ class _DetailsState extends State<Details> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6FB457),
-        title: Text(AppLocalizations.of(context)!.app_name),
+        backgroundColor: Color(0xFFFF9100),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 90),
+          child: Text(AppLocalizations.of(context)!.app_name),
+        ),
         elevation: 0,
         leading: IconButton(
           icon: GestureDetector(

@@ -52,7 +52,7 @@ class _NavBarState extends State<NavBar> {
           },
           home: Scaffold(
             appBar: AppBar(
-              backgroundColor: Color(0xFFFFA500), // Make app bar transparent
+              backgroundColor: Color(0xFFFF9100), // Make app bar transparent
               flexibleSpace: Container(
                 decoration: BoxDecoration(
 
@@ -68,8 +68,8 @@ class _NavBarState extends State<NavBar> {
             bottomNavigationBar: CurvedNavigationBar(
               index: index,
               backgroundColor: Colors.white,
-              color: Color(0xFFFFA500),
-              buttonBackgroundColor: Color(0xFFFFA500),
+              color:  Color(0xFFFF9100),
+              buttonBackgroundColor:  Color(0xFFFF9100),
               animationDuration: Duration(milliseconds: 300),
               items: <Widget>[
                 Icon(Icons.home, size: 30, color: Colors.white,),
