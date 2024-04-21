@@ -618,8 +618,6 @@ class _InventoryState extends State<Inventory> {
                         );
                       },
                     ),
-
-
                   ],
                 ),
               ),

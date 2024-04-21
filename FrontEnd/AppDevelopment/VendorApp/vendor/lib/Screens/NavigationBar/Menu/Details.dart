@@ -9,7 +9,7 @@ class OrderDetails {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
-  final int orderOrderId; // Assuming this represents the order ID associated with the order details
+  final int orderOrderId;
 
   OrderDetails({
     required this.detailId,
@@ -74,10 +74,7 @@ class _DetailsState extends State<Details> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF6FB457),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 90),
-          child: Text(AppLocalizations.of(context)!.app_name),
-        ),
+        title: Text(AppLocalizations.of(context)!.app_name),
         elevation: 0,
         leading: IconButton(
           icon: GestureDetector(
@@ -98,65 +95,93 @@ class _DetailsState extends State<Details> {
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Text(
-                ' ${widget.store.storeName}',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Image.asset(
+                widget.store.image,
+                width: 90,
+                height: 90,
+                fit: BoxFit.cover,
               ),
-            ),
-            SizedBox(height: 12),
-            Center(
-              child: Text(
-                'Store Address: ${widget.store.storeAddress}',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            ),
-            SizedBox(height: 24),
-            if (_orderDetailsList.isNotEmpty)
-              Expanded(
-                child: ListView.separated(
-                  itemCount: _orderDetailsList.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(height: 12);
-                  },
-                  itemBuilder: (context, index) {
-                    var orderDetails = _orderDetailsList[index];
-                    return Card(
-                      elevation: 5,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        widget.store.storeName,
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                       ),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16),
-                        title: Text(
-                          'Item ID: ${orderDetails.detailId}',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
-                            Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
-                            Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
-                            Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
-                          ],
+                      SizedBox(width: 60),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          // Add your action here
+                        },
+                        icon: Icon(Icons.phone),
+                        label: Text('Connect'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF6FB457),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ],
+                  ),
+                ],
               ),
-            if (_orderDetailsList.isEmpty)
-              Text(
+            ],
+          ),
+          Text(
+            'Store Address: ${widget.store.storeAddress}',
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          SizedBox(height: 20),
+          Expanded(
+            child: _orderDetailsList.isNotEmpty
+                ? ListView.separated(
+              itemCount: _orderDetailsList.length,
+              separatorBuilder: (BuildContext context, int index) {
+                return SizedBox(height: 12);
+              },
+              itemBuilder: (context, index) {
+                var orderDetails = _orderDetailsList[index];
+                return Card(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(16),
+                    title: Text(
+                      'Item ID: ${orderDetails.detailId}',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
+                        Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
+                        Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
+                        Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )
+                : Center(
+              child: Text(
                 'No order details available',
                 style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }
