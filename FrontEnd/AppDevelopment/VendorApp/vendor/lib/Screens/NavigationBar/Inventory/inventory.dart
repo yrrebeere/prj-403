@@ -60,8 +60,7 @@ class productInventory {
   }
 }
 
-class SearchBarPage extends StatefulWidget
-{
+class SearchBarPage extends StatefulWidget {
   final List<productInventory> productInventories;
 
   SearchBarPage({required this.productInventories});
@@ -147,7 +146,12 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
                     return GestureDetector(
                       onTap: () async {
-                        await _showProductDetailsDialog(product);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductDetailsPage(product: product),
+                          ),
+                        );
                       },
                       child: Container(
                         height: 105,
@@ -206,103 +210,100 @@ class _SearchBarPageState extends State<SearchBarPage> {
       print('Failed to load products');
     }
   }
+  //
+  // Future<InventoryItem?> _showProductDetailsDialog(InventoryItem product,) async {
+  //   TextEditingController listedAmountController = TextEditingController();
+  //   TextEditingController availableAmountController = TextEditingController();
+  //   TextEditingController priceController = TextEditingController();
+  //
+  //   int vendorId = 1;
+  //
+  //   await Future.delayed(Duration(milliseconds: 100));
+  //
+  //   return showDialog<InventoryItem>(
+  //     context: context,
+  //     builder: (context) {
+  //       return AlertDialog(
+  //         contentPadding: EdgeInsets.zero, // Set contentPadding to zero
+  //         content: Builder(
+  //           builder: (BuildContext context) {
+  //             return SingleChildScrollView(
+  //               child: Container(
+  //                 padding: EdgeInsets.all(16.0),
+  //                 child: Column(
+  //                   mainAxisSize: MainAxisSize.min,
+  //                   children: [
+  //                     Text(
+  //                       product.name,
+  //                       style: TextStyle(
+  //                         fontSize: 20,
+  //                         fontWeight: FontWeight.bold,
+  //                       ),
+  //                     ),
+  //                     SizedBox(height: 16),
+  //                     Container(
+  //                       height: 250,
+  //                       width: 250,
+  //                       decoration: BoxDecoration(
+  //                         border: Border.all(color: Colors.black, width: 1.0),
+  //                       ),
+  //                       child: Image.asset(
+  //                         product.imageUrl,
+  //                         width: 50,
+  //                         height: 50,
+  //                         fit: BoxFit.cover,
+  //                       ),
+  //                     ),
+  //                     SizedBox(height: 16),
+  //                     TextFormField(
+  //                       controller: listedAmountController,
+  //                       decoration: InputDecoration(
+  //                         labelText:
+  //                             AppLocalizations.of(context)!.listed_amount,
+  //                       ),
+  //                     ),
+  //                     TextFormField(
+  //                       controller: availableAmountController,
+  //                       decoration:
+  //                           InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
+  //                     ),
+  //                     TextFormField(
+  //                       controller: priceController,
+  //                       decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
+  //                     ),
+  //                     SizedBox(height: 16),
+  //                     ElevatedButton(
+  //                       onPressed: () async {
+  //                         String listedAmount = listedAmountController.text;
+  //                         String availableAmount =
+  //                             availableAmountController.text;
+  //                         String price = priceController.text;
+  //
+  //
+  //                         await _addToInventory(
+  //                           listedAmount,
+  //                           availableAmount,
+  //                           price,
+  //                           vendorId,
+  //                           product.productId,
+  //                         );
+  //
+  //                         Navigator.pop(context, product);
+  //                       },
+  //                       child: Text(AppLocalizations.of(context)!.add),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             );
+  //           },
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
-  Future<InventoryItem?> _showProductDetailsDialog(
-    InventoryItem product,
-  ) async {
-    TextEditingController listedAmountController = TextEditingController();
-    TextEditingController availableAmountController = TextEditingController();
-    TextEditingController priceController = TextEditingController();
-
-    int vendorId = 1;
-
-    await Future.delayed(Duration(milliseconds: 100));
-
-    return showDialog<InventoryItem>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.zero, // Set contentPadding to zero
-          content: Builder(
-            builder: (BuildContext context) {
-              return SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        product.name,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      Container(
-                        height: 250,
-                        width: 250,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 1.0),
-                        ),
-                        child: Image.asset(
-                          product.imageUrl,
-                          width: 50,
-                          height: 50,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                      TextFormField(
-                        controller: listedAmountController,
-                        decoration: InputDecoration(
-                          labelText:
-                              AppLocalizations.of(context)!.listed_amount,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: availableAmountController,
-                        decoration:
-                            InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
-                      ),
-                      TextFormField(
-                        controller: priceController,
-                        decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
-                      ),
-                      SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () async {
-                          String listedAmount = listedAmountController.text;
-                          String availableAmount =
-                              availableAmountController.text;
-                          String price = priceController.text;
-
-
-                          await _addToInventory(
-                            listedAmount,
-                            availableAmount,
-                            price,
-                            vendorId,
-                            product.productId,
-                          );
-
-                          Navigator.pop(context, product);
-                        },
-                        child: Text(AppLocalizations.of(context)!.add),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _addToInventory(String listedAmount, String availableAmount,
-      String price, int vendorId, int productProductId) async {
+  Future<void> _addToInventory(String listedAmount, String availableAmount, String price, int vendorId, int productProductId) async {
     bool isDuplicate = widget.productInventories.any((product) => product.productProductId == productProductId);
 
     Future<void> _showDuplicateProductAlert(int duplicateProductId) async {
@@ -656,5 +657,183 @@ class _InventoryState extends State<Inventory> {
 
 
 }
+
+class ProductDetailsPage extends StatelessWidget {
+  final InventoryItem product;
+
+  ProductDetailsPage({required this.product});
+
+  @override
+  Widget build(BuildContext context) {
+    TextEditingController listedAmountController = TextEditingController();
+    TextEditingController availableAmountController = TextEditingController();
+    TextEditingController priceController = TextEditingController();
+
+    return Scaffold(
+      appBar:  AppBar(
+        backgroundColor: Color(0xFFFF9100),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 90),
+          child: Text(AppLocalizations.of(context)!.app_name),
+        ),
+        elevation: 0,
+        leading: IconButton(
+          icon: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_back_ios),
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 655, // Increased height of the background card
+              width: 370,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 16),
+                    product.imageUrl != null
+                        ? Image.asset(
+                      product.imageUrl,
+                      height: 300,
+                      width: 300,
+                      fit: BoxFit.cover,
+                    )
+                        : Container(),
+                    SizedBox(height: 12),
+                    Text(
+                      product.name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildHeadingWithIcon(
+                          context,
+                          "Available Qty",
+                          Icons.edit,
+                        ),
+                        _buildHeadingWithIcon(
+                          context,
+                          "Listed Qty",
+                          Icons.edit,
+                        ),
+                        _buildHeadingWithIcon(
+                          context,
+                          "Unit Cost",
+                          Icons.edit,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildSmallShadowBoxTextField(
+                          context,
+                          listedAmountController,
+                          " ", // Static label
+                        ),
+                        _buildSmallShadowBoxTextField(
+                          context,
+                          availableAmountController,
+                          " ", // Static label
+                        ),
+                        _buildSmallShadowBoxTextField(
+                          context,
+                          priceController,
+                          "", // Static label
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+
+                      },
+                      child: Text(AppLocalizations.of(context)!.add),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeadingWithIcon(
+      BuildContext context, String heading, IconData icon) {
+    return Row(
+      children: [
+        Text(heading),
+        Icon(icon),
+      ],
+    );
+  }
+
+  Widget _buildSmallShadowBoxTextField(
+      BuildContext context,
+      TextEditingController controller,
+      String labelText,
+      ) {
+    return Container(
+      width: 90,
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.symmetric(horizontal: 6.0, vertical: 8.0),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
 
 

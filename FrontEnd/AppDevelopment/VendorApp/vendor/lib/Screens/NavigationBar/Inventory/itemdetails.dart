@@ -347,3 +347,5 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     }
   }
 }
+
+
