@@ -1,6 +1,6 @@
 import './App.css';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
-import ListAdminComponent from "./components/AdminManagement/ListAdminComponent";
+import ListAdminComponent from "./components/Admin/ListAdminComponent";
 
 function App() {
   return (
@@ -15,3 +15,5 @@ function App() {
 }
 
 export default App;
+
+

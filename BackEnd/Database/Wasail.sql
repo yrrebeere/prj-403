@@ -83,8 +83,9 @@ INSERT INTO product_category_links (created_at, updated_at,product_product_id, p
 SELECT * FROM wasail.product_category_links;
 
 INSERT INTO admins (admin_role,email,user_table_user_id,created_at, updated_at) VALUES
-('Product Admin', 'abc@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('Store Admin', 'xyz@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('Vendor Admin', 'fizza@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56');
+('Administrator', 'fatima@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Moderator', 'fizza@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Editor', 'irtaza@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Viewer', 'malaika@gmail.com', 1, '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.admins;
 
