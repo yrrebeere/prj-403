@@ -7,8 +7,6 @@ const productController = require('../controllers/productController')
 //   res.send('respond with a resource');
 // });
 
-
-//vendor
 router.post('/addproduct',productController.addProduct)
 router.get('/allproducts',productController.getAllProducts)
 router.get('/:product_id', productController.getOneProduct)

@@ -1,6 +1,7 @@
 require('dotenv').config();
 
-const username = process.env.USERNAME;
+// const username = process.env.USERNAME;
+const username = 'admin';
 const password = process.env.PASSWORD;
 const database = process.env.DATABASE;
 // const host = process.env.HOST;

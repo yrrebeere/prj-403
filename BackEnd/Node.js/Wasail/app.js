@@ -59,7 +59,7 @@ const pool = mysql.createPool({
   connectionLimit : 10,
   host : 'db-mysql-nyc3-39234-do-user-15490202-0.c.db.ondigitalocean.com',
   user : 'admin',
-  password : 'AVNS_mxM7im2Y4B6CZozyRK4',
+  password : 'AVNS_IjfxfxsgiZ5GzaEZ3A_',
   database : 'wasail',
 })
 

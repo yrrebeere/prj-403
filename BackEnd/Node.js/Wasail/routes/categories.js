@@ -8,7 +8,6 @@ const productcategoryController = require('../controllers/productcategoryControl
 // });
 
 
-//vendor
 router.post('/addproductcategory',productcategoryController.addProductCategory)
 router.get('/allproductcategories',productcategoryController.getAllProductCategories)
 router.get('/:product_category_id', productcategoryController.getOneProductCategory)

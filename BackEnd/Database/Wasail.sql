@@ -1,4 +1,3 @@
--- create database wasail;
 use wasail;
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES
 (03214377009, 'Fizza Adeel', 'password@123', 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
@@ -29,27 +28,27 @@ INSERT INTO orders (order_date, delivery_date, total_bill, order_status, created
 SELECT * FROM wasail.orders;
 
 INSERT INTO products (product_name,image,created_at, updated_at) VALUES
-('lays','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('cocacola','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('dasani-water','Assets/Images/Products/dasani-water.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('pepsi','Assets/Images/Products/pepsi.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('pepsi','Assets/Images/Products/pepsi.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('olpers-milk','Assets/Images/Products/olpers-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('nestle-milk','Assets/Images/Products/nestle-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('shan-noodles','Assets/Images/Products/shan-noodles.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('knorr-noodles','Assets/Images/Products/knorr-noodles.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('knorr-ketchup','Assets/Images/Products/knorr-ketchup.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('aquafina-water','Assets/Images/Products/aquafina-water.png','2023-12-17T12:34:56', '2023-12-19T12:34:56');
+('Lays','Assets/Images/Products/lays-salted.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Coca Cola','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Dasani Water','Assets/Images/Products/dasani-water.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Pepsi','Assets/Images/Products/pepsi.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Pepsi','Assets/Images/Products/pepsi.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Olpers Milk','Assets/Images/Products/olpers-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Nestle Milk','Assets/Images/Products/nestle-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Shan Noodles','Assets/Images/Products/shan-noodles.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Knorr Noodles','Assets/Images/Products/knorr-noodles.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Knorr Ketchup','Assets/Images/Products/knorr-ketchup.png','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Aquafina Water','Assets/Images/Products/aquafina-water.png','2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.products;
 
 INSERT INTO product_categories (category_name,image,created_at, updated_at) VALUES
-('drink','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('meat','Assets/Images/Products/meat.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('fish','Assets/Images/Products/fish.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('condiments','Assets/Images/Products/condiments.webp','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('detergents','Assets/Images/Products/detergent.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('spices','Assets/Images/Products/spices.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
-('dairy','Assets/Images/Products/olpers-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56');
+('Drink','Assets/Images/Products/cocacola.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Meat','Assets/Images/Products/meat.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Fish','Assets/Images/Products/fish.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Condiments','Assets/Images/Products/condiments.webp','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Detergents','Assets/Images/Products/detergent.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Spices','Assets/Images/Products/spices.jpeg','2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+('Dairy','Assets/Images/Products/olpers-milk.jpg','2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.product_categories;
 
 INSERT INTO product_inventories (price, available_amount, listed_amount,vendor_vendor_id, product_product_id ,created_at, updated_at) VALUES
