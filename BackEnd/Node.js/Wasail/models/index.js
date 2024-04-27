@@ -17,12 +17,13 @@ db.product = require('./product');
 db.product_inventory = require('./productinventory');
 db.list = require('./list');
 db.admin = require('./admin');
-console.log(config);
 
+console.log(config);
 
 const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password,{
   dialect : 'mysql',
-  host : config.db.host
+  host : config.db.host,
+  port : 25060,
 });
 
 fs
@@ -88,8 +89,6 @@ db.product.hasMany(db.product_inventory);
 db.product_inventory.belongsTo(db.product);
 db.vendor.hasMany(db.product_inventory);
 db.product_inventory.belongsTo(db.vendor);
-
-
 
 sequelize
     .authenticate()

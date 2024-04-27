@@ -24,8 +24,8 @@ var adminsRouter = require('./routes/admins');
 const app = express()
 app.use(cors())
 
-// const port = 4000
-const port = 25060
+const port = 4000
+// const port = 25060
 
 app.use(logger('dev'));
 app.use(express.json());
