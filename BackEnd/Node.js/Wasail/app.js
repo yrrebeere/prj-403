@@ -23,7 +23,9 @@ var adminsRouter = require('./routes/admins');
 // var app = express();
 const app = express()
 app.use(cors())
-const port = 4000
+
+// const port = 4000
+const port = 25060
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -45,11 +47,19 @@ app.use('/api/registration',registrationsRouter)
 app.use('/api/list',listsRouter)
 app.use('/api/admin',adminsRouter)
 
+// const pool = mysql.createPool({
+//   connectionLimit : 10,
+//   host : 'localhost',
+//   user : 'root',
+//   password : '12345678',
+//   database : 'wasail',
+// })
+
 const pool = mysql.createPool({
   connectionLimit : 10,
-  host : 'localhost',
-  user : 'root',
-  password : '12345678',
+  host : 'db-mysql-nyc3-39234-do-user-15490202-0.c.db.ondigitalocean.com',
+  user : 'admin',
+  password : 'AVNS_mxM7im2Y4B6CZozyRK4',
   database : 'wasail',
 })
 
