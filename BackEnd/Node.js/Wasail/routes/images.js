@@ -8,6 +8,6 @@ const imageController = require('../controllers/imageController')
 //   res.send('respond with a resource');
 // });
 
-router.get('/images/:filename', imageController.getImage);
+router.get('/products/:filename', imageController.getProductImage);
 
 module.exports = router;

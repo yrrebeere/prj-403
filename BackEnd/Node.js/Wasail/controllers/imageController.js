@@ -7,7 +7,7 @@ const Image = db.image
 const upload = multer({ dest: 'uploads/products' });
 
 
-const getImage = (req, res) => {
+const getProductImage = (req, res) => {
     const filename = req.params.filename;
     const imagePath = path.join(__dirname, '../uploads/products', filename);
 
@@ -23,5 +23,5 @@ const getImage = (req, res) => {
 };
 
 module.exports = {
-    getImage
+    getProductImage
 };
