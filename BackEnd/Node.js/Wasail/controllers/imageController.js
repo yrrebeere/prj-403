@@ -22,6 +22,22 @@ const getProductImage = (req, res) => {
     });
 };
 
+const getCategoryImage = (req, res) => {
+    const filename = req.params.filename;
+    const imagePath = path.join(__dirname, '../uploads/categories', filename);
+
+    fs.readFile(imagePath, (err, data) => {
+        if (err) {
+            return res.status(404).json({ error: 'Image not found.' });
+        }
+
+        // Serve the image file back to the client
+        res.setHeader('Content-Type', 'image/png'); // Adjust content type based on your image type
+        res.send(data);
+    });
+};
+
 module.exports = {
-    getProductImage
+    getProductImage,
+    getCategoryImage
 };
