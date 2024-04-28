@@ -232,7 +232,7 @@ class _HomeState extends State<Home> {
     try {
       print('Searching for product: $productName'); // Add this debug print
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product/searchproductininventory/$vendorId/$productName'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductininventory/$vendorId/$productName'),
       );
 
       if (response.statusCode == 200) {

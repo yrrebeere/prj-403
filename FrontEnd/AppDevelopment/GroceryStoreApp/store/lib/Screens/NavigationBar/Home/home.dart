@@ -382,7 +382,7 @@ class _HomeState extends State<Home> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://10.0.2.2:3000/api/product_category/allproductcategories'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/allproductcategories'),
       );
 
       if (response.statusCode == 200) {
@@ -406,7 +406,7 @@ class _HomeState extends State<Home> {
   void onCategoryTileClicked(String categoryName) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product_category/searchcategoryinstore/$categoryName'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/searchcategoryinstore/$categoryName'),
       );
 
       if (response.statusCode == 200) {
@@ -435,7 +435,7 @@ class _HomeState extends State<Home> {
     print('Search query: ${searchController.text}'); // Add this line
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product/searchproductinstore/${searchController.text}'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductinstore/${searchController.text}'),
       );
 
       print('Response status code: ${response.statusCode}');

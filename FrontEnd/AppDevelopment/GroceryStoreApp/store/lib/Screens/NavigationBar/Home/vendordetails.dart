@@ -23,7 +23,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
 
   Future<Map<String, dynamic>> fetchVendorProfile(int vendorId) async {
     final response =
-    await http.get(Uri.parse('http://10.0.2.2:3000/api/vendor/vendorprofile/$vendorId'));
+    await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/vendorprofile/$vendorId'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -38,7 +38,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
     try {
 
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:3000/api/list/addvendorlist/1/1'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/list/addvendorlist/1/1'),
         // You can add any additional data needed for the request, such as headers or body
       );
 

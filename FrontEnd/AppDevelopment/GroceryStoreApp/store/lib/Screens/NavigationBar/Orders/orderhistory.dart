@@ -10,7 +10,7 @@ class OrderHistory extends StatelessWidget {
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/order/storeorderhistory/$vendorId'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/storeorderhistory/$vendorId'),
       );
 
 
@@ -29,7 +29,7 @@ class OrderHistory extends StatelessWidget {
             print('Fetching grocery store data for ID: $groceryStoreId');
 
             final groceryStoreResponse = await http.get(
-              Uri.parse('http://10.0.2.2:3000/api/grocery_store/$groceryStoreId'),
+              Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$groceryStoreId'),
             );
 
             if (groceryStoreResponse.statusCode == 200) {

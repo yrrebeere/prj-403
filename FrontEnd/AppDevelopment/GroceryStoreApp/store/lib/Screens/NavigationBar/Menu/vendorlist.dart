@@ -60,7 +60,7 @@ class _VendorListState extends State<VendorList> {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://10.0.2.2:3000/api/grocery_store/viewvendorlist/$vendorId'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/viewvendorlist/$vendorId'),
       );
 
       if (response.statusCode == 200) {
@@ -238,7 +238,7 @@ class _VendorListState extends State<VendorList> {
     try {
 
       final response = await http.delete(
-        Uri.parse('http://10.0.2.2:3000/api/list/1'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/list/1'),
       );
 
       // Update the local list after successful deletion from the database

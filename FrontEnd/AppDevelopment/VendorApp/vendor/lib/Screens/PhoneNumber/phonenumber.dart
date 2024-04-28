@@ -22,7 +22,7 @@ class _MyAppState extends State<PhoneNumber> {
   String phoneNumberError = '';
 
   Future<bool> checkPhoneNumberExists(String phoneNumber) async {
-    final String url = "http://10.0.2.2:3000/api/user_table/numberExists/$phoneNumber";
+    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber";
 
     try {
       final http.Response response = await http.get(

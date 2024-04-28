@@ -51,7 +51,7 @@ class _DetailsState extends State<Details> {
   Future<void> _fetchOrderDetails() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/order_detail/allorderdetails/'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order_detail/allorderdetails/'),
       );
 
       if (response.statusCode == 200) {

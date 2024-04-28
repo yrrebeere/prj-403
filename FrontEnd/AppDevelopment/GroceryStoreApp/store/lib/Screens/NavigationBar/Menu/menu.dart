@@ -44,7 +44,7 @@ class _MenuState extends State<Menu> {
     String userId = '1'; // Replace with the actual user ID
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
-      final response = await http.get(Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'));
+      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);

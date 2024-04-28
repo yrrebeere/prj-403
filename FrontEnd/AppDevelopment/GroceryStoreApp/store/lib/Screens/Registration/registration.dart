@@ -37,7 +37,7 @@ class _RegistrationState extends State<Registration> {
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
-        "http://10.0.2.2:3000/api/user_table/usernameexists/$username";
+        "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username";
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
@@ -64,7 +64,7 @@ class _RegistrationState extends State<Registration> {
       String storeAddress
       ) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/adduser'),
       body: jsonEncode({
         'phone_number': phoneNumber,
         'name': name,
@@ -89,7 +89,7 @@ class _RegistrationState extends State<Registration> {
   Future<void> createStore(
       String storeName, String storeAddress, int userId) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/grocery_store/addstore'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/addstore'),
       body: jsonEncode({
         'store_name': storeName,
         'store_address': storeAddress,

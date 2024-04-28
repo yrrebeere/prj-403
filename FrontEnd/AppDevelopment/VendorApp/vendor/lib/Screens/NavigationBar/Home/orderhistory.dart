@@ -11,7 +11,7 @@ class OrderHistoryPage extends StatelessWidget {
       int vendorId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/order/orderhistory/$vendorId'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/orderhistory/$vendorId'),
       );
 
       if (response.statusCode == 200) {
@@ -31,7 +31,7 @@ class OrderHistoryPage extends StatelessWidget {
 
             final groceryStoreResponse = await http.get(
               Uri.parse(
-                  'http://10.0.2.2:3000/api/grocery_store/$groceryStoreId'),
+                  'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$groceryStoreId'),
             );
 
             if (groceryStoreResponse.statusCode == 200) {

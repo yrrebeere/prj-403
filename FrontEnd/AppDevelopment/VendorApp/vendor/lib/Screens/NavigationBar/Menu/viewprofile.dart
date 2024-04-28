@@ -32,7 +32,7 @@ class _ViewProfileState extends State<ViewProfile> {
   Future<void> fetchUserProfile(String userId) async {
     try {
       final response = await http
-          .get(Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'));
+          .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -54,7 +54,7 @@ class _ViewProfileState extends State<ViewProfile> {
   Future<void> updateUserName(String newName) async {
     try {
       final response = await http.put(
-        Uri.parse('http://10.0.2.2:3000/api/user_table/${widget.userId}'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/${widget.userId}'),
         body: {'name': newName},
       );
 

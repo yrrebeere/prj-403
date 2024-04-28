@@ -44,7 +44,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   Future<void> _fetchAndDisplayProductDetails(int productId) async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/$productId'),
       );
 
       if (response.statusCode == 200) {
@@ -274,7 +274,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     try {
       final response = await http.delete(
         Uri.parse(
-            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
       );
       if (response.statusCode == 200) {
         widget.onDelete();
@@ -313,7 +313,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     try {
       final response = await http.put(
         Uri.parse(
-            'http://10.0.2.2:3000/api/product_inventory/$productInventoryId'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
         body: jsonEncode({
           'price': price,
           'available_amount': availableAmount,

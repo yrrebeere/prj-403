@@ -58,7 +58,7 @@ class _StorelistState extends State<Storelist> {
 
   Future<void> _fetchGroceryStoresList() async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/grocery_store/searchstore/$vendorId'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/searchstore/$vendorId'),
     );
 
     print(response.body);

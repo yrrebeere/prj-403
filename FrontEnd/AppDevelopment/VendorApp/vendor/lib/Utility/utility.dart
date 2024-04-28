@@ -5,7 +5,7 @@
 // Future<void> createUser(String phoneNumber,String name,String password, String username,String language, String userType, String deliveryLocations) async {
 //
 //   final response = await http.post(
-//     Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
+//     Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/adduser'),
 //     body: jsonEncode({
 //       'phone_number': phoneNumber,
 //       'name': name,
@@ -31,7 +31,7 @@
 // Future<void> createVendor(String vendorName, String deliveryLocations, int userId) async {
 //
 //   final response = await http.post(
-//     Uri.parse('http://10.0.2.2:3000/api/vendor/addvendor'),
+//     Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/addvendor'),
 //     body: jsonEncode({
 //       'vendor_name': vendorName,
 //       'delivery_locations': deliveryLocations,
@@ -52,7 +52,7 @@
 // Future<void> createProductInventory(int price, int availableAmount, int listedAmount, int vendorId, int productId) async {
 //
 //   final response = await http.post(
-//     Uri.parse('http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+//     Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/addproductinventory'),
 //     body: jsonEncode({
 //       'price': price,
 //       'available_amount': availableAmount,

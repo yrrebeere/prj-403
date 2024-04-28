@@ -198,7 +198,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   Future<void> _fetchAndDisplayProducts(String query) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/product/searchproduct/$query'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproduct/$query'),
     );
 
     if (response.statusCode == 200) {
@@ -344,7 +344,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
     } else {
       final response = await http.post(
         Uri.parse(
-            'http://10.0.2.2:3000/api/product_inventory/addproductinventory'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/addproductinventory'),
         body: jsonEncode({
           'listed_amount': listedAmount,
           'available_amount': availableAmount,
@@ -396,7 +396,7 @@ class _InventoryState extends State<Inventory> {
 
   Future<void> _fetchAndDisplayCombinedData(String vendorId) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/product_inventory/search/$vendorId'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/search/$vendorId'),
     );
 
     if (response.statusCode == 200) {
@@ -409,7 +409,7 @@ class _InventoryState extends State<Inventory> {
 
         final productId = productInventoryItem.productProductId;
         final productInventoryResponse = await http.get(
-          Uri.parse('http://10.0.2.2:3000/api/product/$productId'),
+          Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/$productId'),
         );
 
         if (productInventoryResponse.statusCode == 200) {
@@ -462,7 +462,7 @@ class _InventoryState extends State<Inventory> {
 
   Future<void> _fetchAndDisplayProductInventories(String vendorId) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/product_inventory/search/$vendorId'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/search/$vendorId'),
     );
 
     if (response.statusCode == 200) {
@@ -476,7 +476,6 @@ class _InventoryState extends State<Inventory> {
       print('Failed to load products');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

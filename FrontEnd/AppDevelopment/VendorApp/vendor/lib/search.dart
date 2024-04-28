@@ -81,7 +81,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   Future<void> _fetchAndDisplayProducts(String query) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/product/searchproduct/$query'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproduct/$query'),
     );
 
     if (response.statusCode == 200) {

@@ -35,7 +35,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   Future<void> _fetchUsers() async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2:3000/api/user_table/allusers'));
+        .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/allusers'));
     print('Response Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');
 
@@ -88,7 +88,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   Future<void> _fetchUser(int userId) async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'));
+        .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
 
     if (response.statusCode == 200) {
       final dynamic json = jsonDecode(response.body);
@@ -203,7 +203,7 @@ class _UsersScreenState extends State<UsersScreen> {
   Future<void> _createUser(String name, String username, String phoneNumber,
       String language, String userType) async {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:3000/api/user_table/adduser'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/adduser'),
       body: jsonEncode({
         'name': name,
         'username': username,
@@ -342,7 +342,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   Future<UserTables> _fetchUserDetails(int userId) async {
     final response = await http.get(
-      Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'),
     );
 
     if (response.statusCode == 200) {
@@ -364,7 +364,7 @@ class _UsersScreenState extends State<UsersScreen> {
   ) async {
     try {
       final response = await http.put(
-        Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'),
         body: jsonEncode({
           'name': name,
           'username': username,
@@ -469,7 +469,7 @@ class _UsersScreenState extends State<UsersScreen> {
 
   Future<void> _deleteUser(int userId) async {
     final response = await http.delete(
-      Uri.parse('http://10.0.2.2:3000/api/user_table/$userId'),
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'),
     );
 
     if (response.statusCode == 200) {
