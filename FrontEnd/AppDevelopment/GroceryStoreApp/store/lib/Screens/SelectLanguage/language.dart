@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'languageprovider.dart';
 import 'package:store/Screens/NavigationBar/Home/home.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {

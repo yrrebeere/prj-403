@@ -564,8 +564,8 @@ class _InventoryState extends State<Inventory> {
                                               color: Colors.white,
                                               borderRadius: BorderRadius.circular(50),
                                             ),
-                                            child: Image.asset(
-                                              productItem.imageUrl,
+                                            child: Image.network(
+                                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+productItem.imageUrl,
                                               width: 50,
                                               height: 50,
                                               fit: BoxFit.cover,
