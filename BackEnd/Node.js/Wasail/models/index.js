@@ -17,6 +17,7 @@ db.product = require('./product');
 db.product_inventory = require('./productinventory');
 db.list = require('./list');
 db.admin = require('./admin');
+db.image = require('./image');
 
 console.log(config);
 

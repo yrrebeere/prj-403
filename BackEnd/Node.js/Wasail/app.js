@@ -19,6 +19,7 @@ var inventoriesRouter = require('./routes/inventories');
 var registrationsRouter = require('./routes/registrations');
 var listsRouter = require('./routes/lists');
 var adminsRouter = require('./routes/admins');
+var imagesRouter = require('./routes/images');
 
 // var app = express();
 const app = express()
@@ -46,6 +47,7 @@ app.use('/api/product_inventory',inventoriesRouter)
 app.use('/api/registration',registrationsRouter)
 app.use('/api/list',listsRouter)
 app.use('/api/admin',adminsRouter)
+app.use('/api/image',imagesRouter)
 
 // const pool = mysql.createPool({
 //   connectionLimit : 10,
