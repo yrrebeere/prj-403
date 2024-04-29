@@ -11,5 +11,6 @@ const imageController = require('../controllers/imageController')
 router.get('/products/:filename', imageController.getProductImage);
 router.get('/categories/:filename', imageController.getCategoryImage);
 router.get('/stores/:filename', imageController.getStoreImage);
+router.get('/vendors/:filename', imageController.getVendorImage);
 
 module.exports = router;
