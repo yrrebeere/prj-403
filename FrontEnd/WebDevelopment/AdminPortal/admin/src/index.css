@@ -11,3 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.admin-navigation .btn {
+  margin-right: 10px; /* Add some margin between buttons */
+}
+
