@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ListAdminComponent from "./components/Admin/ListAdminComponent";
 import ListContentManagementComponent from "./components/ContentManagement/ListContentManagementComponent";
 import Vendors from "./components/Admin/vendors";
-import AddCategory from "./components/ContentManagement/AddCategory"; // Import AddCategory component
+import AddCategory from "./components/ContentManagement/AddCategory";
+import AddProduct from "./components/ContentManagement/AddProduct";
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route path="/vendors" element={<Vendors />} />
                     <Route path="/contentManagement" element={<ListContentManagementComponent />} />
                     <Route path="/addCategory" element={<AddCategory />} /> {/* Add route for AddCategory component */}
+                    <Route path="/addProduct" element={<AddProduct />} /> {/* Add route for AddProduct component */}
                 </Routes>
             </Router>
         </div>
