@@ -46,7 +46,7 @@ const AddCategory = ({ addCategory }) => {
                 />
                 <br />
                 <button className="btn btn-primary" onClick={handleSave}>Save</button>
-                <Link to="/contentManagement" className="btn btn-primary" style={{ marginLeft: '10px', textDecoration: 'none', fontSize: '16px', padding: '7px 16px' }}>Back</Link>
+                <Link to="/contentManagement" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
             </div>
         </div>
     );
