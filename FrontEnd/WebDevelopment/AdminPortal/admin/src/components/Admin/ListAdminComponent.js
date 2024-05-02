@@ -28,7 +28,7 @@ const ListAdminComponent = () => {
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
                     <div className="navbar-nav" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                        <Link to="/ListAdminComponent" className={`nav-item nav-link ${isAdminActive() ? 'active' : ''}`}>Users</Link>
+                        <Link to="/" className={`nav-item nav-link ${isAdminActive() ? 'active' : ''}`}>Users</Link>
                         <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
