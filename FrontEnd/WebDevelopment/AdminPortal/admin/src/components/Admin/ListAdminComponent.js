@@ -2,11 +2,12 @@ import React from 'react';
 import AdminService from '../../services/AdminService'; // Assuming this fetches admin data
 import styles from '../../styles/ComponentStyles.css'; // Assuming this defines button styles
 import { Link, useLocation } from 'react-router-dom';
-import Vendors from './vendors'; // Assuming this is the component for the vendors page
 
-const ListAdminComponent = ({}) => {
+const ListAdminComponent = () => {
     const [admins, setAdmins] = React.useState([]); // State for admin data
     const location = useLocation(); // Get current location
+
+    const isAdminActive = () => location.pathname === '/ListAdminComponent'; // Check if current path is '/users'
 
     React.useEffect(() => {
         const refreshAdmins = async () => {
@@ -22,24 +23,24 @@ const ListAdminComponent = ({}) => {
         refreshAdmins();
     }, []); // Empty dependency array to run effect only once
 
-    // Function to conditionally add the "active" class for styling
-    const isActive = () => location.pathname === '/users'; // Check if current path is '/users'
-
     return (
         <div className={styles.body}>
-            <br />
-            <h1 style={{ marginLeft: '5px' }}>Admin Portal</h1>
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <div className="container-fluid">
+                    <div className="navbar-nav" style={{ display: 'flex', justifyContent: 'space-around' }}>
+                        <Link to="/ListAdminComponent" className={`nav-item nav-link ${isAdminActive() ? 'active' : ''}`}>Users</Link>
+                        <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
+                        <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
+                        <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
+                        <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
+                        <Link to="/contentManagement" className="nav-item nav-link">Content</Link>
+                    </div>
+                </div>
+            </nav>
 
-            <div className="admin-navigation" align="left" style={{ marginLeft: '20px', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}> {/* Center buttons using flexbox */}
-                <Link to="/users" className={`btn btn-primary ${isActive() ? 'active' : ''}`}>Users</Link>  {/* Highlight based on pathname */}
-                <Link to="/vendors" className="btn btn-primary" style={{marginLeft: '10px'}}>Vendors</Link> {/* Link to the Vendors component */}
-                <Link to="/groceries" className="btn btn-primary" style={{marginLeft: '10px'}}>Groceries</Link>
-                <Link to="/analytics" className="btn btn-primary" style={{marginLeft: '10px'}}>Analytics</Link>
-                <Link to="/ml" className="btn btn-primary" style={{marginLeft: '10px'}}>Machine Learning</Link>
-                <Link to="/contentManagement " className="btn btn-primary" style={{marginLeft: '10px'}}>Content Management</Link>
-            </div>
+            <h2 style={{ marginLeft: '5px' }}>Users</h2>
 
-            <table className="table table-striped" style={{ margin: '0 auto' }}> {/* Center the table using margin: 0 auto */}
+            <table className="table table-striped" style={{ margin: '0 auto' }}>
                 <thead>
                 <tr>
                     <th>Email</th>
@@ -53,9 +54,9 @@ const ListAdminComponent = ({}) => {
                         <td>{admin.email}</td>
                         <td>{admin.admin_role}</td>
                         <td align="center">
-                            <Link to={`/`} className="btn btn-primary" style={{marginLeft: '5px'}}>Edit</Link> &nbsp;
-                            <Link to={`/`} className="btn btn-danger" style={{marginLeft: '5px'}}>Delete</Link> &nbsp;
-                            <Link to={`/`} className="btn btn-primary" style={{marginLeft: '5px'}}>View</Link> &nbsp;
+                            <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link> &nbsp;
+                            <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
+                            <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
                         </td>
                     </tr>
                 ))}
