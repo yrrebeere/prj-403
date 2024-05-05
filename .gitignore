@@ -22,3 +22,4 @@ Data/Kaggle/StoreSales/train_darts.csv
 /MachineLearning/Models/plots
 MachineLearning/Models/submission.csv
 Data/Kaggle/StoreSales/darts_multivariate.csv
+/MachineLearning/Models/XGBoost/Monthly
