@@ -27,6 +27,26 @@ const ListContentManagementComponent = () => {
 
     const isActive = (path) => location.pathname === path;
 
+    const deleteCategory = async (categoryId) => {
+        try {
+            await ContentManagementService.deleteProductCategory(categoryId);
+            const updatedCategories = categories.filter(category => category.product_category_id !== categoryId);
+            setCategories(updatedCategories);
+        } catch (error) {
+            console.error("Error deleting category:", error);
+        }
+    };
+
+    const deleteProduct = async (productId) => {
+        try {
+            await ContentManagementService.deleteProduct(productId);
+            const updatedProducts = products.filter(product => product.product_id !== productId);
+            setProducts(updatedProducts);
+        } catch (error) {
+            console.error("Error deleting product:", error);
+        }
+    };
+
     return (
         <div className={styles.body}>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -64,12 +84,13 @@ const ListContentManagementComponent = () => {
                                     <td>{category.category_name}</td>
                                     <td align="center">
                                         <Link to={`/edit-category/${category.product_category_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
-                                        <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
+                                        <button onClick={() => deleteCategory(category.product_category_id)} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</button>
+                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link>
                                     </td>
                                 </tr>
                             ))}
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -94,12 +115,13 @@ const ListContentManagementComponent = () => {
                                     <td>{product.product_name}</td>
                                     <td align="center">
                                         <Link to={`/edit-product/${product.product_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
-                                        <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
+                                        <button onClick={() => deleteProduct(product.product_id)} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</button>
+                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link>
                                     </td>
                                 </tr>
                             ))}
                             </tbody>
+
                         </table>
                     </div>
                 </div>

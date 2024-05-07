@@ -34,6 +34,10 @@ class ContentManagementService {
     updateProduct(productId, productInfo) {
         return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/${productId}`, productInfo);
     }
+
+    deleteProduct(productId) {
+        return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/${productId}`);
+    }
 }
 
 export default new ContentManagementService();
