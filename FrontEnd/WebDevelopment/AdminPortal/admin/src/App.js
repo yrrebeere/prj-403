@@ -5,6 +5,7 @@ import ListContentManagementComponent from "./components/ContentManagement/ListC
 import ListVendorComponent from "./components/Vendor/ListVendorComponent";
 import AddCategory from "./components/ContentManagement/AddCategory";
 import AddProduct from "./components/ContentManagement/AddProduct";
+import AddVendor from "./components/Vendor/AddVendor";
 import UpdateCategoryComponent from "./components/ContentManagement/UpdateCategoryComponent";
 import UpdateProductComponent from "./components/ContentManagement/UpdateProductComponent";
 
@@ -21,6 +22,7 @@ function App() {
                     <Route path="/update-product" element={<UpdateProductComponent />} />
                     <Route path="/add-category" element={<AddCategory />} />
                     <Route path="/add-product" element={<AddProduct />} />
+                    <Route path="/add-vendor" element={<AddVendor />} />
                 </Routes>
             </Router>
         </div>

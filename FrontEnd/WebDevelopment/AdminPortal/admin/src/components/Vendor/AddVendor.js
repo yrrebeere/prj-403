@@ -2,23 +2,22 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
 
-const AddCategory = ({ addCategory }) => {
-    const [categoryName, setCategoryName] = useState('');
-    const [image, setImage] = useState(null); // New state for image
+const AddVendor = ({ addVendor }) => {
+    const [vendorName, setVendorName] = useState('');
+    const [deliveryLocation, setDeliveryLocation] = useState('');
+    const [image, setImage] = useState(null);
     const location = useLocation();
 
-    // Function to check if the current path is '/contentManagement'
     const isActive = () => location.pathname === '/content-management';
 
     const handleSave = () => {
-        if (categoryName.trim() !== '' && image !== null) { // Check if both category name and image are provided
-            console.log("Category Name:", categoryName);
-            console.log("Image File:", image);
-            addCategory(categoryName, image); // Pass category name and image to your addCategory function
-            setCategoryName('');
+        if (vendorName.trim() !== '' && deliveryLocation.trim() !== '' && image !== null) {
+            addVendor({ name: vendorName, deliveryLocation: deliveryLocation, image: image });
+            setVendorName('');
+            setDeliveryLocation('');
             setImage(null);
         } else {
-            alert('Please enter both category name and upload an image.');
+            alert('Please enter both vendor name, delivery location, and upload an image.');
         }
     };
 
@@ -39,20 +38,27 @@ const AddCategory = ({ addCategory }) => {
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
-                            Management</Link>
+                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content Management</Link>
                     </div>
                 </div>
             </nav>
 
             <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
-                <h2>Create Category</h2>
+                <h2>Add Vendor</h2>
 
                 <input
                     type="text"
-                    value={categoryName}
-                    onChange={(e) => setCategoryName(e.target.value)}
-                    placeholder="Enter category name"
+                    value={vendorName}
+                    onChange={(e) => setVendorName(e.target.value)}
+                    placeholder="Enter vendor name"
+                    style={{ marginBottom: '10px' }}
+                />
+                <br />
+                <input
+                    type="text"
+                    value={deliveryLocation}
+                    onChange={(e) => setDeliveryLocation(e.target.value)}
+                    placeholder="Enter delivery location"
                     style={{ marginBottom: '10px' }}
                 />
                 <br />
@@ -68,10 +74,10 @@ const AddCategory = ({ addCategory }) => {
                 </label>
                 <br />
                 <button className="btn btn-primary" onClick={handleSave}>Save</button>
-                <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
+                <Link to="/vendors" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
             </div>
         </div>
     );
 };
 
-export default AddCategory;
+export default AddVendor;
