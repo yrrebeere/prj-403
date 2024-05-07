@@ -1,26 +1,26 @@
 import React from 'react';
-import AdminService from '../../services/AdminService'; // Assuming this fetches admin data
+import VendorService from '../../services/VendorService'; // Assuming this fetches vendor data
 import styles from '../../styles/ComponentStyles.css'; // Assuming this defines button styles
 import { Link, useLocation } from 'react-router-dom';
 
-const ListAdminComponent = () => {
-    const [admins, setAdmins] = React.useState([]); // State for admin data
+const ListVendorComponent = () => {
+    const [vendors, setVendors] = React.useState([]); // State for vendor data
     const location = useLocation(); // Get current location
 
-    const isAdminActive = () => location.pathname === '/ListAdminComponent'; // Check if current path is '/users'
+    const isVendorActive = () => location.pathname === '/vendors'; // Check if current path is '/vendors'
 
     React.useEffect(() => {
-        const refreshAdmins = async () => {
-            console.log("Get All Admins");
+        const refreshVendors = async () => {
+            console.log("Get All Vendors");
             try {
-                const response = await AdminService.getAllAdmins();
-                setAdmins(response.data);
+                const response = await VendorService.getAllVendors();
+                setVendors(response.data);
             } catch (error) {
-                console.error("Error fetching admins:", error);
+                console.error("Error fetching vendors:", error);
             }
         };
 
-        refreshAdmins();
+        refreshVendors();
     }, []); // Empty dependency array to run effect only once
 
     return (
@@ -28,8 +28,8 @@ const ListAdminComponent = () => {
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
                     <div className="navbar-nav" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                        <Link to="/" className={`nav-item nav-link ${isAdminActive() ? 'active' : ''}`}>Users</Link>
-                        <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
+                        <Link to="/" className="nav-item nav-link">Users</Link>
+                        <Link to="/vendors" className={`nav-item nav-link ${isVendorActive() ? 'active' : ''}`}>Vendors</Link>
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
@@ -38,21 +38,23 @@ const ListAdminComponent = () => {
                 </div>
             </nav>
 
-            <h2 style={{ marginLeft: '5px' }}>Users</h2>
+            <h2 style={{ marginLeft: '5px' }}>Vendors</h2>
 
             <table className="table table-striped" style={{ margin: '0 auto' }}>
                 <thead>
                 <tr>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>Icon</th>
+                    <th>Vendor Name</th>
+                    <th>Location</th>
                     <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                {admins.map(admin => (
-                    <tr key={admin.admin_id}>
-                        <td>{admin.email}</td>
-                        <td>{admin.admin_role}</td>
+                {vendors.map(vendor => (
+                    <tr key={vendor.vendor_id}>
+                        <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${vendor.image}`} alt="Vendor Icon" style={{ width: '50px', height: '50px' }} /></td>
+                        <td>{vendor.vendor_name}</td>
+                        <td>{vendor.delivery_locations}</td>
                         <td align="center">
                             <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link> &nbsp;
                             <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
@@ -66,4 +68,4 @@ const ListAdminComponent = () => {
     );
 };
 
-export default ListAdminComponent;
+export default ListVendorComponent;

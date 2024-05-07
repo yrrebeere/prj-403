@@ -7,15 +7,12 @@ const AddProduct = ({ addProduct }) => {
     const [image, setImage] = useState(null);
     const location = useLocation();
 
-    // Function to check if the current path is '/listProducts'
     const isActive = () => location.pathname === '/listProducts';
 
     const handleSave = () => {
         if (productName.trim() !== '' && image !== null) {
-            // Perform upload image and product creation logic here
             console.log("Product Name:", productName);
             console.log("Image File:", image);
-            // Reset form fields
             setProductName('');
             setImage(null);
         } else {
@@ -40,7 +37,7 @@ const AddProduct = ({ addProduct }) => {
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/contentManagement" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
+                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
                             Management</Link>
                     </div>
                 </div>
@@ -69,7 +66,7 @@ const AddProduct = ({ addProduct }) => {
                 </label>
                 <br />
                 <button className="btn btn-primary" onClick={handleSave} style={{ marginBottom: '20px' }}>Save</button>
-                <Link to="/contentManagement" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
+                <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
             </div>
         </div>
     );

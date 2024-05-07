@@ -7,7 +7,7 @@ const AddCategory = ({ addCategory }) => {
     const location = useLocation();
 
     // Function to check if the current path is '/contentManagement'
-    const isActive = () => location.pathname === '/contentManagement';
+    const isActive = () => location.pathname === '/content-management';
 
     const handleSave = () => {
         if (categoryName.trim() !== '') {
@@ -28,7 +28,7 @@ const AddCategory = ({ addCategory }) => {
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/contentManagement" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
+                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
                             Management</Link>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ const AddCategory = ({ addCategory }) => {
                 />
                 <br />
                 <button className="btn btn-primary" onClick={handleSave}>Save</button>
-                <Link to="/contentManagement" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
+                <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
             </div>
         </div>
     );

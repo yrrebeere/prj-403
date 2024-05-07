@@ -37,7 +37,7 @@ const ListContentManagementComponent = () => {
                         <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/contentManagement" className={`nav-item nav-link ${isActive('/contentManagement') ? 'active' : ''}`}>Content Management</Link>
+                        <Link to="/content-management" className={`nav-item nav-link ${isActive('/content-management') ? 'active' : ''}`}>Content Management</Link>
                     </div>
                 </div>
             </nav>
@@ -46,22 +46,24 @@ const ListContentManagementComponent = () => {
             {!showProducts ? (
                 <div>
                     <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                        <Link to="/addCategory" className="btn btn-primary">Add Category</Link>
+                        <Link to="/add-category" className="btn btn-primary">Add Category</Link>
                     </div>
                     <div className="table-container" style={{ textAlign: 'center' }}>
                         <table className="table table-striped">
                             <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Category Name</th>
                                 <th>Options</th>
                             </tr>
                             </thead>
                             <tbody>
                             {categories.map(category => (
-                                <tr key={category.category_id}>
+                                <tr key={category.product_category_id}>
+                                    <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${category.image}`} alt={category.category_name} style={{ width: '50px', height: '50px' }} /></td>
                                     <td>{category.category_name}</td>
                                     <td align="center">
-                                        <Link to={`/editCategory/${category.category_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
+                                        <Link to={`/edit-category/${category.product_category_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
                                         <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
                                         <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
                                     </td>
@@ -74,7 +76,7 @@ const ListContentManagementComponent = () => {
             ) : (
                 <div>
                     <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                        <Link to="/addProduct" className="btn btn-primary">Add Product</Link>
+                        <Link to="/add-product" className="btn btn-primary">Add Product</Link>
                     </div>
                     <div className="table-container" style={{ textAlign: 'center' }}>
                         <table className="table table-striped">
@@ -91,7 +93,7 @@ const ListContentManagementComponent = () => {
                                     <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${product.image}`} alt={product.product_name} style={{ width: '50px', height: '50px' }} /></td>
                                     <td>{product.product_name}</td>
                                     <td align="center">
-                                        <Link to={`/editProduct/${product.product_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
+                                        <Link to={`/edit-product/${product.product_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
                                         <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
                                         <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
                                     </td>

@@ -10,8 +10,12 @@ class ContentManagementService {
         return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/allproductcategories');
     }
 
-    updateProductCategory(categoryId, categoryInfo) {
-        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/${categoryId}`, categoryInfo);
+    getProductCategoryById(categoryId) {
+        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/${categoryId}`);
+    }
+
+    updateProductCategory(categoryId, updatedName) {
+        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/${categoryId}`, { category_name: updatedName });
     }
 
     deleteProductCategory(categoryId) {
