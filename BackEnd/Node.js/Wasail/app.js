@@ -23,7 +23,10 @@ var imagesRouter = require('./routes/images');
 
 // var app = express();
 const app = express()
-app.use(cors())
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 const port = 4000
 // const port = 25060
