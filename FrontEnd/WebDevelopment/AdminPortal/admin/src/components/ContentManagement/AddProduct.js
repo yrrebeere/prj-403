@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
+import { Layout, Menu } from 'antd';
+import {
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
+    BarChartOutlined,
+    CloudOutlined,
+    AppstoreOutlined,
+} from '@ant-design/icons';
+
+const { Sider } = Layout;
 
 const AddProduct = ({ addProduct }) => {
     const [productName, setProductName] = useState('');
@@ -27,48 +38,63 @@ const AddProduct = ({ addProduct }) => {
         }
     };
 
+    const sidebarItems = [
+        { icon: <UserOutlined />, label: 'Users', url: '/users' },
+        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
+        { icon: <UploadOutlined />, label: 'Groceries', url: '/groceries' },
+        { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
+        { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
+        { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
+    ];
+
     return (
-        <div className={styles.body}>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <div className="navbar-nav" style={{ display: 'flex', justifyContent: 'space-around' }}>
-                        <Link to="/users" className="nav-item nav-link">Users</Link>
-                        <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
-                        <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
-                        <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
-                        <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content
-                            Management</Link>
+        <Layout>
+            <Sider
+                width={210}
+                style={{
+                    background: '#001529', // Dark blue background color
+                    overflow: 'auto',
+                    height: '100vh',
+                }}
+            >
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['6']}>
+                    {sidebarItems.map((item, index) => (
+                        <Menu.Item key={index + 1} icon={item.icon}>
+                            <Link to={item.url}>{item.label}</Link>
+                        </Menu.Item>
+                    ))}
+                </Menu>
+            </Sider>
+            <Layout>
+                <div className={styles.body}>
+                    <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '60%', textAlign: 'center', margin: 'auto' }}>
+                        <h2>Add Product</h2>
+
+                        <input
+                            type="text"
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
+                            placeholder="Enter product name"
+                            style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
+                        />
+                        <br />
+                        <label htmlFor="imageUpload" style={{ border: '1px solid #ccc', padding: '6px 12px', cursor: 'pointer', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '20px', display: 'block', width: '100%' }}>
+                            Upload Image
+                            <input
+                                id="imageUpload"
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageChange}
+                                style={{ display: 'none' }}
+                            />
+                        </label>
+                        <br />
+                        <button className="btn btn-primary" onClick={handleSave} style={{ marginBottom: '20px' }}>Save</button>
+                        <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
                     </div>
                 </div>
-            </nav>
-
-            <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '60%', textAlign: 'center', margin: 'auto' }}>
-                <h2>Add Product</h2>
-
-                <input
-                    type="text"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                    placeholder="Enter product name"
-                    style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
-                />
-                <br />
-                <label htmlFor="imageUpload" style={{ border: '1px solid #ccc', padding: '6px 12px', cursor: 'pointer', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '20px', display: 'block', width: '100%' }}>
-                    Upload Image
-                    <input
-                        id="imageUpload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: 'none' }}
-                    />
-                </label>
-                <br />
-                <button className="btn btn-primary" onClick={handleSave} style={{ marginBottom: '20px' }}>Save</button>
-                <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
-            </div>
-        </div>
+            </Layout>
+        </Layout>
     );
 };
 
