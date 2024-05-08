@@ -14,23 +14,22 @@ import ContentManagementService from "../../services/ContentManagementService";
 
 const { Sider } = Layout;
 
-const AddCategory = () => {
-    const [categoryName, setCategoryName] = useState('');
-    const [image, setImage] = useState(''); // New state for image
+const AddProductComponent = () => {
+    const [productName, setProductName] = useState('');
+    const [image, setImage] = useState('');
     const location = useLocation();
 
-    // Function to check if the current path is '/content-management'
-    const isActive = () => location.pathname === '/content-management';
+    const isActive = () => location.pathname === '/listProducts';
 
     const handleSave = () => {
-        if (categoryName.trim() !== '' && image.trim() !== '') { // Check if both category name and image are provided
-            console.log("Category Name:", categoryName);
+        if (productName.trim() !== '' && image.trim() !== '') {
+            console.log("Product Name:", productName);
             console.log("Image File:", image);
-            ContentManagementService.addCategory(categoryName, image); // Pass category name and image to your addCategory function
-            setCategoryName('');
+            ContentManagementService.addProduct(productName, image); // Pass category name and image to your addCategory function
+            setProductName('');
             setImage('');
         } else {
-            alert('Please enter both category name and upload an image.');
+            alert('Please enter both product name and upload an image.');
         }
     };
 
@@ -42,9 +41,9 @@ const AddCategory = () => {
     };
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'Users', url: '/' },
+        { icon: <UserOutlined />, label: 'Users', url: '/users' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Stores', url: 'stores' },
+        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
@@ -70,15 +69,15 @@ const AddCategory = () => {
             </Sider>
             <Layout>
                 <div className={styles.body}>
-                    <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
-                        <h2>Add Category</h2>
+                    <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '60%', textAlign: 'center', margin: 'auto' }}>
+                        <h2>Add Product</h2>
 
                         <input
                             type="text"
-                            value={categoryName}
-                            onChange={(e) => setCategoryName(e.target.value)}
-                            placeholder="Enter category name"
-                            style={{ marginBottom: '10px' }}
+                            value={productName}
+                            onChange={(e) => setProductName(e.target.value)}
+                            placeholder="Enter product name"
+                            style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
                         />
                         <br />
                         <input
@@ -86,10 +85,10 @@ const AddCategory = () => {
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
                             placeholder="Enter Image"
-                            style={{ marginBottom: '10px' }}
+                            style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
                         />
                         <br />
-                        <button className="btn btn-primary" onClick={handleSave}>Save</button>
+                        <button className="btn btn-primary" onClick={handleSave} style={{ marginBottom: '20px' }}>Save</button>
                         <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
                     </div>
                 </div>
@@ -98,4 +97,4 @@ const AddCategory = () => {
     );
 };
 
-export default AddCategory;
+export default AddProductComponent;

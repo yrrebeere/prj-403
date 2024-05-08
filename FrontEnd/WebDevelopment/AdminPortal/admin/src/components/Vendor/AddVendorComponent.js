@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
 import VendorService from "../../services/VendorService";
 
-const AddVendor = () => {
+const AddVendorComponent = () => {
     const [vendorName, setVendorName] = useState('');
     const [deliveryLocation, setDeliveryLocation] = useState('');
     const [image, setImage] = useState('');
@@ -78,4 +78,4 @@ const AddVendor = () => {
     );
 };
 
-export default AddVendor;
+export default AddVendorComponent;
