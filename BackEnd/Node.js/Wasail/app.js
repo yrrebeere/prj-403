@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 const port = 4000
 // const port = 25060
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
