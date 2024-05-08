@@ -3,7 +3,7 @@ import ContentManagementService from '../../services/ContentManagementService';
 import styles from '../../styles/ComponentStyles.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const UpdateCategoryComponent = () => {
+const EditCategoryComponent = () => {
     const { product_category_id } = useParams();
     const [categoryName, setCategoryName] = useState('');
     const navigate = useNavigate();
@@ -55,11 +55,11 @@ const UpdateCategoryComponent = () => {
                 </table>
                 <br />
                 <div align="left" style={{ margin: '20px' }}>
-                    <button className="btn btn-primary" type="submit">Update Category</button>
+                    <button className="btn btn-primary" type="submit">Save</button>
                 </div>
             </form>
         </div>
     );
 };
 
-export default UpdateCategoryComponent;
+export default EditCategoryComponent;

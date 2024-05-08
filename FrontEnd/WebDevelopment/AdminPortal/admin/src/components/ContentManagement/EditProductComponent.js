@@ -3,7 +3,7 @@ import ContentManagementService from '../../services/ContentManagementService';
 import styles from '../../styles/ComponentStyles.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const UpdateProductComponent = () => {
+const EditProductComponent = () => {
     const { product_id } = useParams();
     const [productName, setProductName] = useState('');
     const [image, setImage] = useState('');
@@ -48,19 +48,15 @@ const UpdateProductComponent = () => {
                         <td>Product Name</td>
                         <td><input type="text" value={productName} onChange={(e) => setProductName(e.target.value)} /></td>
                     </tr>
-                    <tr>
-                        <td>Image</td>
-                        <td><input type="text" value={image} onChange={(e) => setImage(e.target.value)} /></td>
-                    </tr>
                     </tbody>
                 </table>
                 <br />
                 <div align="left" style={{ margin: '20px' }}>
-                    <button className="btn btn-primary" type="submit">Update Product</button>
+                    <button className="btn btn-primary" type="submit">Save</button>
                 </div>
             </form>
         </div>
     );
 };
 
-export default UpdateProductComponent;
+export default EditProductComponent;

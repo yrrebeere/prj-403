@@ -6,7 +6,7 @@ class AdminService {
         return axios.post('https://sea-lion-app-wbl8m.ondigitalocean.app/api/admin/addadmin', info);
     }
 
-    updateAdmin(admin_id, info){
+    editAdmin(admin_id, info){
         return axios.put('https://sea-lion-app-wbl8m.ondigitalocean.app/api/admin/' + admin_id, info);
     }
 

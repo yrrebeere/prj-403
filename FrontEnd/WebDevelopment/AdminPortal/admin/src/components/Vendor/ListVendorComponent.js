@@ -30,7 +30,7 @@ const ListVendorComponent = () => {
                     <div className="navbar-nav" style={{ display: 'flex', justifyContent: 'space-around' }}>
                         <Link to="/" className="nav-item nav-link">Users</Link>
                         <Link to="/vendors" className={`nav-item nav-link ${isVendorActive() ? 'active' : ''}`}>Vendors</Link>
-                        <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
+                        <Link to="/stores" className="nav-item nav-link">Stores</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
                         <Link to="/content-management" className="nav-item nav-link">Content Management</Link>
@@ -56,7 +56,7 @@ const ListVendorComponent = () => {
                 <tbody>
                 {vendors.map(vendor => (
                     <tr key={vendor.vendor_id}>
-                        <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/${vendor.image}`} alt="Vendor Icon" style={{ width: '50px', height: '50px' }} /></td>
+                        <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${vendor.image}`} alt="Vendor Icon" style={{ width: '50px', height: '50px' }} /></td>
                         <td>{vendor.vendor_name}</td>
                         <td>{vendor.delivery_locations}</td>
                         <td align="center">

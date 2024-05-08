@@ -10,22 +10,24 @@ import {
     CloudOutlined,
     AppstoreOutlined,
 } from '@ant-design/icons';
+import ContentManagementService from "../../services/ContentManagementService";
 
 const { Sider } = Layout;
 
-const AddProduct = ({ addProduct }) => {
+const AddProduct = () => {
     const [productName, setProductName] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const location = useLocation();
 
     const isActive = () => location.pathname === '/listProducts';
 
     const handleSave = () => {
-        if (productName.trim() !== '' && image !== null) {
+        if (productName.trim() !== '' && image.trim() !== '') {
             console.log("Product Name:", productName);
             console.log("Image File:", image);
+            ContentManagementService.addProduct(productName, image); // Pass category name and image to your addCategory function
             setProductName('');
-            setImage(null);
+            setImage('');
         } else {
             alert('Please enter both product name and upload an image.');
         }
@@ -41,7 +43,7 @@ const AddProduct = ({ addProduct }) => {
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'Users', url: '/users' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Groceries', url: '/groceries' },
+        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
@@ -78,16 +80,13 @@ const AddProduct = ({ addProduct }) => {
                             style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
                         />
                         <br />
-                        <label htmlFor="imageUpload" style={{ border: '1px solid #ccc', padding: '6px 12px', cursor: 'pointer', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '20px', display: 'block', width: '100%' }}>
-                            Upload Image
-                            <input
-                                id="imageUpload"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                style={{ display: 'none' }}
-                            />
-                        </label>
+                        <input
+                            type="text"
+                            value={image}
+                            onChange={(e) => setImage(e.target.value)}
+                            placeholder="Enter Image"
+                            style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
+                        />
                         <br />
                         <button className="btn btn-primary" onClick={handleSave} style={{ marginBottom: '20px' }}>Save</button>
                         <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>

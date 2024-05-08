@@ -6,7 +6,7 @@ class VendorService {
         return axios.post('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/addvendor', info);
     }
 
-    updateVendor(vendor_id, info){
+    editVendor(vendor_id, info){
         return axios.put('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/' + vendor_id, info);
     }
 

@@ -10,24 +10,25 @@ import {
     CloudOutlined,
     AppstoreOutlined,
 } from '@ant-design/icons';
+import ContentManagementService from "../../services/ContentManagementService";
 
 const { Sider } = Layout;
 
-const AddCategory = ({ addCategory }) => {
+const AddCategory = () => {
     const [categoryName, setCategoryName] = useState('');
-    const [image, setImage] = useState(null); // New state for image
+    const [image, setImage] = useState(''); // New state for image
     const location = useLocation();
 
     // Function to check if the current path is '/content-management'
     const isActive = () => location.pathname === '/content-management';
 
     const handleSave = () => {
-        if (categoryName.trim() !== '' && image !== null) { // Check if both category name and image are provided
+        if (categoryName.trim() !== '' && image.trim() !== '') { // Check if both category name and image are provided
             console.log("Category Name:", categoryName);
             console.log("Image File:", image);
-            addCategory(categoryName, image); // Pass category name and image to your addCategory function
+            ContentManagementService.addCategory(categoryName, image); // Pass category name and image to your addCategory function
             setCategoryName('');
-            setImage(null);
+            setImage('');
         } else {
             alert('Please enter both category name and upload an image.');
         }
@@ -43,7 +44,7 @@ const AddCategory = ({ addCategory }) => {
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'Users', url: '/' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Groceries', url: '/groceries' },
+        { icon: <UploadOutlined />, label: 'Stores', url: 'stores' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
@@ -70,7 +71,7 @@ const AddCategory = ({ addCategory }) => {
             <Layout>
                 <div className={styles.body}>
                     <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
-                        <h2>Create Category</h2>
+                        <h2>Add Category</h2>
 
                         <input
                             type="text"
@@ -80,16 +81,13 @@ const AddCategory = ({ addCategory }) => {
                             style={{ marginBottom: '10px' }}
                         />
                         <br />
-                        <label htmlFor="imageUpload" style={{ border: '1px solid #ccc', padding: '6px 12px', cursor: 'pointer', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '20px', display: 'block', width: '100%' }}>
-                            Upload Image
-                            <input
-                                id="imageUpload"
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageChange}
-                                style={{ display: 'none' }}
-                            />
-                        </label>
+                        <input
+                            type="text"
+                            value={image}
+                            onChange={(e) => setImage(e.target.value)}
+                            placeholder="Enter Image"
+                            style={{ marginBottom: '10px' }}
+                        />
                         <br />
                         <button className="btn btn-primary" onClick={handleSave}>Save</button>
                         <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>

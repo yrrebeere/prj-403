@@ -36,7 +36,7 @@ const ListAdminComponent = () => {
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'Users', url: '/' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Groceries', url: '/groceries' },
+        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },

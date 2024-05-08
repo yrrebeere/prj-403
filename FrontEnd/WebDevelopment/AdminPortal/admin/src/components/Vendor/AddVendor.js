@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
+import VendorService from "../../services/VendorService";
 
-const AddVendor = ({ addVendor }) => {
+const AddVendor = () => {
     const [vendorName, setVendorName] = useState('');
     const [deliveryLocation, setDeliveryLocation] = useState('');
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const location = useLocation();
 
     const isActive = () => location.pathname === '/content-management';
 
     const handleSave = () => {
-        if (vendorName.trim() !== '' && deliveryLocation.trim() !== '' && image !== null) {
-            addVendor({ name: vendorName, deliveryLocation: deliveryLocation, image: image });
+        if (vendorName.trim() !== '' && deliveryLocation.trim() !== '' && image.trim() !== '') {
+            VendorService.addVendor({ name: vendorName, deliveryLocation: deliveryLocation, image: image });
             setVendorName('');
             setDeliveryLocation('');
             setImage(null);
@@ -62,16 +63,13 @@ const AddVendor = ({ addVendor }) => {
                     style={{ marginBottom: '10px' }}
                 />
                 <br />
-                <label htmlFor="imageUpload" style={{ border: '1px solid #ccc', padding: '6px 12px', cursor: 'pointer', backgroundColor: '#f0f0f0', borderRadius: '4px', marginBottom: '20px', display: 'block', width: '100%' }}>
-                    Upload Image
-                    <input
-                        id="imageUpload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        style={{ display: 'none' }}
-                    />
-                </label>
+                <input
+                    type="text"
+                    value={image}
+                    onChange={(e) => setImage(e.target.value)}
+                    placeholder="Enter Image"
+                    style={{ marginBottom: '10px' }}
+                />
                 <br />
                 <button className="btn btn-primary" onClick={handleSave}>Save</button>
                 <Link to="/vendors" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
