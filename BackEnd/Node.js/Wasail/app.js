@@ -25,8 +25,13 @@ var imagesRouter = require('./routes/images');
 const app = express()
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET');
-  next();
+  res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 }); 
 
 const port = 4000
