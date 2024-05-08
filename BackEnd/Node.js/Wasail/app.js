@@ -25,6 +25,7 @@ var imagesRouter = require('./routes/images');
 const app = express()
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET');
   next();
 }); 
 
