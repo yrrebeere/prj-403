@@ -10,13 +10,13 @@ const UpdateCategoryComponent = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [product_category_id]);
 
     const fetchData = async () => {
         try {
             const response = await ContentManagementService.getProductCategoryById(product_category_id);
             const { category_name } = response.data;
-            setCategoryName(category_name);
+            setCategoryName(String(category_name)); // Ensure category_name is converted to string
         } catch (error) {
             console.error('Error fetching category details:', error);
         }
@@ -26,7 +26,7 @@ const UpdateCategoryComponent = () => {
         e.preventDefault();
         try {
             await ContentManagementService.updateProductCategory(product_category_id, {
-                category_name: categoryName
+                category_name: String(categoryName) // Ensure categoryName is passed as a string
             });
             console.log('Category updated successfully');
             navigate('/content-management');
@@ -43,7 +43,13 @@ const UpdateCategoryComponent = () => {
                     <tbody>
                     <tr>
                         <td>Category Name</td>
-                        <td><input type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)} /></td>
+                        <td>
+                            <input
+                                type="text"
+                                value={categoryName}
+                                onChange={(e) => setCategoryName(e.target.value)}
+                            />
+                        </td>
                     </tr>
                     </tbody>
                 </table>

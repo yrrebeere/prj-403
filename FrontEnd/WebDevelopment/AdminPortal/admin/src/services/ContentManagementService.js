@@ -15,7 +15,7 @@ class ContentManagementService {
     }
 
     updateProductCategory(categoryId, updatedName) {
-        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/${categoryId}`, { category_name: updatedName });
+        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/` + categoryId , updatedName);
     }
 
     deleteProductCategory(categoryId) {
