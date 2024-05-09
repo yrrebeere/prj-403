@@ -116,8 +116,8 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                     children: [
                       SizedBox(height: 16),
                       imageUrl != null
-                          ? Image.asset(
-                        imageUrl,
+                          ? Image.network(
+                        "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+imageUrl,
                         height: 300,
                         width: 300,
                         fit: BoxFit.cover,

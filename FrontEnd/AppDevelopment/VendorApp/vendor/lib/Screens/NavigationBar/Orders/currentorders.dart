@@ -109,7 +109,7 @@ class CurrentOrdersPage extends StatelessWidget {
                       contentPadding: EdgeInsets.all(16),
                       leading: CircleAvatar(
 
-                        backgroundImage: AssetImage(orderData['image']),
+                        backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+orderData['image']),
                         radius: 30,
                       ),
                       title: Text(

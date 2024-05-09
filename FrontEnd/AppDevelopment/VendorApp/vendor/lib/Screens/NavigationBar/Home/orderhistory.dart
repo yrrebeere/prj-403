@@ -137,7 +137,7 @@ class OrderHistoryPage extends StatelessWidget {
                               children: [
                                 CircleAvatar(
                                   radius: 50,
-                                  backgroundImage: AssetImage(data['image']),
+                                  backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+data['image']),
                                 ),
                                 SizedBox(height: 25),
                                 Text(

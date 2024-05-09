@@ -103,8 +103,8 @@ class _DetailsState extends State<Details> {
         children: [
           Row(
             children: [
-              Image.asset(
-                widget.store.image,
+              Image.network(
+                "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.store.image,
                 width: 90,
                 height: 90,
                 fit: BoxFit.cover,

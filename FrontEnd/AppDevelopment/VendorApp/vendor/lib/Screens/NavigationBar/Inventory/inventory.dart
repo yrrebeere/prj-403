@@ -149,7 +149,10 @@ class _SearchBarPageState extends State<SearchBarPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ProductDetailsPage(product: product),
+                            builder: (context) => ProductDetailsPage(
+                              product: product,
+                              addToInventoryCallback: _addToInventory,
+                            ),
                           ),
                         );
                       },
@@ -172,8 +175,8 @@ class _SearchBarPageState extends State<SearchBarPage> {
                         child: Center(
                           child: ListTile(
                             title: Text(product.name),
-                            leading: Image.asset(
-                              imageUrl,
+                            leading: Image.network(
+                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + imageUrl,
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,
@@ -210,98 +213,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
       print('Failed to load products');
     }
   }
-  //
-  // Future<InventoryItem?> _showProductDetailsDialog(InventoryItem product,) async {
-  //   TextEditingController listedAmountController = TextEditingController();
-  //   TextEditingController availableAmountController = TextEditingController();
-  //   TextEditingController priceController = TextEditingController();
-  //
-  //   int vendorId = 1;
-  //
-  //   await Future.delayed(Duration(milliseconds: 100));
-  //
-  //   return showDialog<InventoryItem>(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         contentPadding: EdgeInsets.zero, // Set contentPadding to zero
-  //         content: Builder(
-  //           builder: (BuildContext context) {
-  //             return SingleChildScrollView(
-  //               child: Container(
-  //                 padding: EdgeInsets.all(16.0),
-  //                 child: Column(
-  //                   mainAxisSize: MainAxisSize.min,
-  //                   children: [
-  //                     Text(
-  //                       product.name,
-  //                       style: TextStyle(
-  //                         fontSize: 20,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                     ),
-  //                     SizedBox(height: 16),
-  //                     Container(
-  //                       height: 250,
-  //                       width: 250,
-  //                       decoration: BoxDecoration(
-  //                         border: Border.all(color: Colors.black, width: 1.0),
-  //                       ),
-  //                       child: Image.asset(
-  //                         product.imageUrl,
-  //                         width: 50,
-  //                         height: 50,
-  //                         fit: BoxFit.cover,
-  //                       ),
-  //                     ),
-  //                     SizedBox(height: 16),
-  //                     TextFormField(
-  //                       controller: listedAmountController,
-  //                       decoration: InputDecoration(
-  //                         labelText:
-  //                             AppLocalizations.of(context)!.listed_amount,
-  //                       ),
-  //                     ),
-  //                     TextFormField(
-  //                       controller: availableAmountController,
-  //                       decoration:
-  //                           InputDecoration(labelText: AppLocalizations.of(context)!.available_amount),
-  //                     ),
-  //                     TextFormField(
-  //                       controller: priceController,
-  //                       decoration: InputDecoration(labelText: AppLocalizations.of(context)!.price),
-  //                     ),
-  //                     SizedBox(height: 16),
-  //                     ElevatedButton(
-  //                       onPressed: () async {
-  //                         String listedAmount = listedAmountController.text;
-  //                         String availableAmount =
-  //                             availableAmountController.text;
-  //                         String price = priceController.text;
-  //
-  //
-  //                         await _addToInventory(
-  //                           listedAmount,
-  //                           availableAmount,
-  //                           price,
-  //                           vendorId,
-  //                           product.productId,
-  //                         );
-  //
-  //                         Navigator.pop(context, product);
-  //                       },
-  //                       child: Text(AppLocalizations.of(context)!.add),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               ),
-  //             );
-  //           },
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
 
   Future<void> _addToInventory(String listedAmount, String availableAmount, String price, int vendorId, int productProductId) async {
     bool isDuplicate = widget.productInventories.any((product) => product.productProductId == productProductId);
@@ -449,9 +360,6 @@ class _InventoryState extends State<Inventory> {
       print('Failed to load products');
     }
   }
-
-
-
 
   @override
   void initState() {
@@ -658,9 +566,14 @@ class _InventoryState extends State<Inventory> {
 }
 
 class ProductDetailsPage extends StatelessWidget {
-  final InventoryItem product;
 
-  ProductDetailsPage({required this.product});
+  final InventoryItem product;
+  final Function(String, String, String, int, int) addToInventoryCallback;
+
+  ProductDetailsPage({
+    required this.product,
+    required this.addToInventoryCallback,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -715,8 +628,8 @@ class ProductDetailsPage extends StatelessWidget {
                   children: [
                     SizedBox(height: 16),
                     product.imageUrl != null
-                        ? Image.asset(
-                      product.imageUrl,
+                        ? Image.network(
+                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + product.imageUrl,
                       height: 300,
                       width: 300,
                       fit: BoxFit.cover,
@@ -775,7 +688,12 @@ class ProductDetailsPage extends StatelessWidget {
                     SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
+                        String listedAmount = listedAmountController.text;
+                        String availableAmount = availableAmountController.text;
+                        String price = priceController.text;
+                        int vendorId = 1; // Example vendorId
 
+                        addToInventoryCallback(listedAmount, availableAmount, price, vendorId, product.productId);
                       },
                       child: Text(AppLocalizations.of(context)!.add),
                     ),

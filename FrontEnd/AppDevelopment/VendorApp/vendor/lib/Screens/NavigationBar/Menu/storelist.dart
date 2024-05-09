@@ -75,54 +75,6 @@ class _StorelistState extends State<Storelist> {
     }
   }
 
-  // void _showStoreDetailsDialog(Store store) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return Dialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(20.0),
-  //         ),
-  //         child: Container(
-  //           padding: EdgeInsets.all(16.0),
-  //           child: Column(
-  //             mainAxisSize: MainAxisSize.min,
-  //             children: [
-  //               Text(
-  //                 store.storeName,
-  //                 style: TextStyle(
-  //                   fontSize: 20.0,
-  //                   fontWeight: FontWeight.bold,
-  //                 ),
-  //               ),
-  //               SizedBox(height: 10),
-  //               Image.asset(
-  //                 store.image,
-  //                 width: 150,
-  //                 height: 150,
-  //                 fit: BoxFit.cover,
-  //               ),
-  //               SizedBox(height: 10),
-  //               Text(
-  //                 'Address: ${store.storeAddress}',
-  //                 style: TextStyle(fontSize: 16.0),
-  //                 textAlign: TextAlign.center,
-  //               ),
-  //               SizedBox(height: 20),
-  //               ElevatedButton(
-  //                 onPressed: () {
-  //                   Navigator.pop(context); // Close the dialog
-  //                 },
-  //                 child: Text('Close'),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageProvider>(
@@ -230,8 +182,8 @@ class _StorelistState extends State<Storelist> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Image.asset(
-                    store.image,
+                  child: Image.network(
+                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+store.image,
                     width: 30,
                     height: 30,
                     fit: BoxFit.cover,

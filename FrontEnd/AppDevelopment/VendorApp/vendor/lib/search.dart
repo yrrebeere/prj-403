@@ -61,9 +61,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
                 final product = suggestions[index];
                 return ListTile(
                   title: Text(product.productName),
-                  // subtitle: Text(
-                  //   'Available Qty: ${product.availableQty}, Listed Qty: ${product.listedQty}, Unit Cost: ${product.unitCost}',
-                  // ),
                   trailing: ElevatedButton(
                     onPressed: () async {
                       await _showProductDetailsDialog(product);
