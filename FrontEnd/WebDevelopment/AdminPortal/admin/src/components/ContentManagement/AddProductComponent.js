@@ -76,7 +76,7 @@ const AddProductComponent = () => {
                             type="text"
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
-                            placeholder="Enter product name"
+                            placeholder="Enter Product Name"
                             style={{ marginBottom: '20px', width: '100%', padding: '10px' }}
                         />
                         <br />

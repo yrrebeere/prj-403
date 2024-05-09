@@ -87,7 +87,7 @@ const ListContentManagementComponent = () => {
             </Sider>
             <Layout>
                 <div className={styles.body}>
-                    <h2>{showProducts ? "List Products" : "List Categories"}</h2>
+                    <h2>{showProducts ? "Products" : "Categories"}</h2>
                     {!showProducts ? (
                         <div>
                             <div style={{ textAlign: 'center', marginBottom: '20px' }}>

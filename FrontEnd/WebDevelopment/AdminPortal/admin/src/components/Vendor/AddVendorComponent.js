@@ -36,7 +36,7 @@ const AddVendorComponent = () => {
                     <div className="navbar-nav" style={{display: 'flex', justifyContent: 'space-around'}}>
                         <Link to="/users" className="nav-item nav-link">Users</Link>
                         <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
-                        <Link to="/groceries" className="nav-item nav-link">Groceries</Link>
+                        <Link to="/stores" className="nav-item nav-link">Stores</Link>
                         <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
                         <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
                         <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content Management</Link>
@@ -59,7 +59,7 @@ const AddVendorComponent = () => {
                     type="text"
                     value={deliveryLocation}
                     onChange={(e) => setDeliveryLocation(e.target.value)}
-                    placeholder="Enter delivery location"
+                    placeholder="Enter Store Address"
                     style={{ marginBottom: '10px' }}
                 />
                 <br />

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
-import { Layout, Menu } from 'antd';
+import { Layout, Menu } from 'antd'; // Import Layout and Menu from Ant Design
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -10,27 +10,31 @@ import {
     CloudOutlined,
     AppstoreOutlined,
 } from '@ant-design/icons';
-import ContentManagementService from "../../services/ContentManagementService";
+import StoreService from "../../services/StoreService";
 
-const { Sider } = Layout;
+const { Sider } = Layout; // Destructure Sider from Layout
 
-const AddCategoryComponent = () => {
-    const [categoryName, setCategoryName] = useState('');
-    const [image, setImage] = useState(''); // New state for image
-    const location = useLocation();
+const AddStoreComponent = () => {
+    const [storeName, setStoreName] = useState('');
+    const [storeAddress, setStoreAddress] = useState('');
+    const [image, setImage] = useState('');
+    const locationPath = useLocation().pathname;
 
-    // Function to check if the current path is '/content-management'
-    const isActive = () => location.pathname === '/content-management';
+    const isActive = () => locationPath === '/content-management';
 
-    const handleSave = () => {
-        if (categoryName.trim() !== '' && image.trim() !== '') { // Check if both category name and image are provided
-            console.log("Category Name:", categoryName);
-            console.log("Image File:", image);
-            ContentManagementService.addCategory(categoryName, image); // Pass category name and image to your addCategory function
-            setCategoryName('');
-            setImage('');
+    const handleSave = async () => {
+        if (storeName.trim() !== '' && storeAddress.trim() !== '' && image.trim() !== '') {
+            try {
+                await StoreService.addStore({ store_name: storeName, store_address: storeAddress, image: image });
+                setStoreName('');
+                setStoreAddress('');
+                setImage('');
+                console.log('Store added successfully');
+            } catch (error) {
+                console.error('Error adding store:', error);
+            }
         } else {
-            alert('Please enter both category name and upload an image.');
+            alert('Please enter both store name, store address, and upload an image.');
         }
     };
 
@@ -44,7 +48,7 @@ const AddCategoryComponent = () => {
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'Users', url: '/' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Stores', url: 'stores' },
+        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' }, // Fixed the url for Stores
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
@@ -60,9 +64,9 @@ const AddCategoryComponent = () => {
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['6']}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
                     {sidebarItems.map((item, index) => (
-                        <Menu.Item key={index + 1} icon={item.icon}>
+                        <Menu.Item key={index+1} icon={item.icon}>
                             <Link to={item.url}>{item.label}</Link>
                         </Menu.Item>
                     ))}
@@ -71,13 +75,21 @@ const AddCategoryComponent = () => {
             <Layout>
                 <div className={styles.body}>
                     <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
-                        <h2>Add Category</h2>
+                        <h2>Add Store</h2>
 
                         <input
                             type="text"
-                            value={categoryName}
-                            onChange={(e) => setCategoryName(e.target.value)}
-                            placeholder="Enter Category Name"
+                            value={storeName}
+                            onChange={(e) => setStoreName(e.target.value)}
+                            placeholder="Enter Store Name"
+                            style={{ marginBottom: '10px' }}
+                        />
+                        <br />
+                        <input
+                            type="text"
+                            value={storeAddress}
+                            onChange={(e) => setStoreAddress(e.target.value)}
+                            placeholder="Enter Store Address"
                             style={{ marginBottom: '10px' }}
                         />
                         <br />
@@ -85,12 +97,12 @@ const AddCategoryComponent = () => {
                             type="text"
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
-                            placeholder="Enter Image"
+                            placeholder="Enter Image URL"
                             style={{ marginBottom: '10px' }}
                         />
-                        <br />
+                        <br/>
                         <button className="btn btn-primary" onClick={handleSave}>Save</button>
-                        <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
+                        <Link to="/stores" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
                     </div>
                 </div>
             </Layout>
@@ -98,4 +110,4 @@ const AddCategoryComponent = () => {
     );
 };
 
-export default AddCategoryComponent;
+export default AddStoreComponent;
