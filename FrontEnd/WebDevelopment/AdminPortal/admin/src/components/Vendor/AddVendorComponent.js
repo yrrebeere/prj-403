@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from "../../styles/ComponentStyles.css";
 import VendorService from "../../services/VendorService";
+import { Layout, Menu } from 'antd'; // Import Layout and Menu from Ant Design
+import {
+    UserOutlined,
+    VideoCameraOutlined,
+    UploadOutlined,
+    BarChartOutlined,
+    CloudOutlined,
+    AppstoreOutlined,
+} from '@ant-design/icons';
+
+const { Sider } = Layout; // Destructure Sider from Layout
 
 const AddVendorComponent = () => {
     const [vendorName, setVendorName] = useState('');
@@ -29,21 +40,35 @@ const AddVendorComponent = () => {
         }
     };
 
-    return (
-        <div className={styles.body}>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <div className="container-fluid">
-                    <div className="navbar-nav" style={{display: 'flex', justifyContent: 'space-around'}}>
-                        <Link to="/users" className="nav-item nav-link">Users</Link>
-                        <Link to="/vendors" className="nav-item nav-link">Vendors</Link>
-                        <Link to="/stores" className="nav-item nav-link">Stores</Link>
-                        <Link to="/analytics" className="nav-item nav-link">Analytics</Link>
-                        <Link to="/ml" className="nav-item nav-link">Machine Learning</Link>
-                        <Link to="/content-management" className={`nav-item nav-link ${isActive() ? 'active' : ''}`}>Content Management</Link>
-                    </div>
-                </div>
-            </nav>
+    const sidebarItems = [
+        { icon: <UserOutlined />, label: 'Users', url: '/' },
+        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
+        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' }, // Fixed the url for Stores
+        { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
+        { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
+        { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
+    ];
 
+    return (
+        <Layout>
+            <Sider
+                width={210}
+                style={{
+                    background: '#001529', // Dark blue background color
+                    overflow: 'auto',
+                    height: '100vh',
+                }}
+            >
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+                    {sidebarItems.map((item, index) => (
+                        <Menu.Item key={index+1} icon={item.icon}>
+                            <Link to={item.url}>{item.label}</Link>
+                        </Menu.Item>
+                    ))}
+                </Menu>
+            </Sider>
+            <Layout>
+        <div className={styles.body}>
             <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
                 <h2>Add Vendor</h2>
 
@@ -51,7 +76,7 @@ const AddVendorComponent = () => {
                     type="text"
                     value={vendorName}
                     onChange={(e) => setVendorName(e.target.value)}
-                    placeholder="Enter vendor name"
+                    placeholder="Enter Vendor Name"
                     style={{ marginBottom: '10px' }}
                 />
                 <br />
@@ -59,7 +84,7 @@ const AddVendorComponent = () => {
                     type="text"
                     value={deliveryLocation}
                     onChange={(e) => setDeliveryLocation(e.target.value)}
-                    placeholder="Enter Store Address"
+                    placeholder="Enter Delivery Location"
                     style={{ marginBottom: '10px' }}
                 />
                 <br />
@@ -75,6 +100,8 @@ const AddVendorComponent = () => {
                 <Link to="/vendors" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
             </div>
         </div>
+            </Layout>
+        </Layout>
     );
 };
 

@@ -59,7 +59,7 @@ const ListVendorComponent = () => {
                     <h2>Vendors</h2>
                     <div>
                         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                            <Link to="/add-store" className="btn btn-primary">Add Vendor</Link>
+                            <Link to="/add-vendor" className="btn btn-primary">Add Vendor</Link>
                         </div>
                         <div className="table-container" style={{ textAlign: 'center' }}>
                             <table className="table table-striped">
