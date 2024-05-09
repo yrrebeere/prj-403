@@ -93,8 +93,8 @@ class CartItemTile extends StatelessWidget {
             ),
           ],
         ),
-        leading: Image.asset(
-          cartItem.product.image,
+        leading: Image.network(
+          "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+cartItem.product.image,
           width: 60,
           height: 60,
           fit: BoxFit.cover,

@@ -74,7 +74,6 @@ flutter:
   assets:
     - Assets/Images/
     - Assets/Images/Products/
-    - Assets/Images/Stores/
     - Assets/images/Ads.gif
 #     - images/a_dot_ham.jpeg
 

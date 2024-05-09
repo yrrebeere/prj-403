@@ -108,7 +108,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                       if (vendorProfile['image'] != null)
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage: AssetImage(vendorProfile['image']),
+                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendorProfile['image']),
                         ),
                       SizedBox(width: 16),
                       Expanded(
@@ -203,8 +203,8 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                         ),
                         child: ListTile(
                           contentPadding: EdgeInsets.all(16.0),
-                          leading: Image.asset(
-                            product['image'],
+                          leading: Image.network(
+                            "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+product['image'],
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,

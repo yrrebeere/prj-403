@@ -185,8 +185,8 @@ class _VendorListState extends State<VendorList> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
                   ),
-                  child: Image.asset(
-                    vendor.image,
+                  child: Image.network(
+                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.image,
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,

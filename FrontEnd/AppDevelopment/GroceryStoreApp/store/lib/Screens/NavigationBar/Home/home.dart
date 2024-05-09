@@ -207,7 +207,7 @@ class SearchResultsPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage: AssetImage(vendor.vendorImage),
+                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.vendorImage),
                         ),
                         SizedBox(width: 12.0),
                         Column(
@@ -325,8 +325,8 @@ class ProductTile extends StatelessWidget {
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
                 ),
-                child: Image.asset(
-                  product.image,
+                child: Image.network(
+                  "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+product.image,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -612,8 +612,8 @@ class _HomeState extends State<Home> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              category.imageUrl,
+                            Image.network(
+                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+category.imageUrl,
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,

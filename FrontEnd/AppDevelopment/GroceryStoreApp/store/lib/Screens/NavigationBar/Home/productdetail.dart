@@ -39,8 +39,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
-                  child: Image.asset(
-                    widget.product.image,
+                  child: Image.network(
+                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.product.image,
                     width: 400,
                     height: 400,
                     fit: BoxFit.cover,
