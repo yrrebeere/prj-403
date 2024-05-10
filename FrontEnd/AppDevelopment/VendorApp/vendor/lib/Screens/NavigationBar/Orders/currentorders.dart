@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class CurrentOrdersPage extends StatelessWidget {
   final int vendorId;
@@ -96,11 +97,14 @@ class CurrentOrdersPage extends StatelessWidget {
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(child: Text('No current orders available.'));
             } else {
-
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final orderData = snapshot.data![index];
+
+                  // Format date strings
+                  final orderDateFormatted = DateFormat('dd/MM/yyyy').format(DateTime.parse(orderData['order_date']));
+                  final deliveryDateFormatted = DateFormat('dd/MM/yyyy').format(DateTime.parse(orderData['delivery_date']));
 
                   return Card(
                     elevation: 4,
@@ -125,11 +129,11 @@ class CurrentOrdersPage extends StatelessWidget {
                         children: [
                           SizedBox(height: 15),
                           Text(
-                            'Delivery Date: ${orderData['delivery_date']}',
+                            'Delivery Date: $deliveryDateFormatted',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           Text(
-                            'Order Date: ${orderData['order_date']}',
+                            'Order Date: $orderDateFormatted',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           SizedBox(height: 10),

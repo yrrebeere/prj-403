@@ -142,8 +142,6 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
                     final imageUrl = product.imageUrl;
 
-                    print(imageUrl);
-
                     return GestureDetector(
                       onTap: () async {
                         Navigator.push(
@@ -561,7 +559,6 @@ class _InventoryState extends State<Inventory> {
       ),
     );
   }
-
 
 }
 

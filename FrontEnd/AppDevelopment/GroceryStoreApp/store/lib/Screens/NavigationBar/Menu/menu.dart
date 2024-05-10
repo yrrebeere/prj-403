@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:store/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:store/Screens/SelectLanguage/language.dart';
 import 'package:store/main.dart';
 import 'vendorlist.dart';
 import '../../SelectLanguage/languageprovider.dart';
@@ -405,15 +406,15 @@ class _MenuState extends State<Menu> {
                             ),
                             Expanded(
                               child: GestureDetector(
-                                // onTap: () {
-                                //   VendorIdManager.logout();
-                                //
-                                //   Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => MyVendorApp()),
-                                //   );
-                                // },
+                                onTap: () {
+                                  VendorIdManager.logout();
+
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Language()),
+                                  );
+                                },
                                 child: Text(
                                   AppLocalizations.of(context)!.logout,
                                   style: TextStyle(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class OrderHistoryPage extends StatelessWidget {
   final int vendorId;
@@ -119,6 +120,9 @@ class OrderHistoryPage extends StatelessWidget {
                         // Check if the order is delivered
                         bool isDelivered = data['order_status'] == 'Delivered';
 
+                        final orderDateFormatted = DateFormat('dd/MM/yyyy').format(DateTime.parse(data['order_date']));
+                        final deliveryDateFormatted = DateFormat('dd/MM/yyyy').format(DateTime.parse(data['delivery_date']));
+
                         return Card(
                           elevation: 10,
                           margin: EdgeInsets.fromLTRB(
@@ -148,7 +152,7 @@ class OrderHistoryPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Order Date: ${data['order_date']}',
+                                  'Order Date: $orderDateFormatted',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -156,7 +160,7 @@ class OrderHistoryPage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Delivery Date: ${data['delivery_date']}',
+                                  'Delivery Date: $deliveryDateFormatted',
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
