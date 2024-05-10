@@ -77,13 +77,13 @@ class _MyAppState extends State<OTP> {
                 child: Stack(
                   children: [
                     Positioned(
-                      left: screenWidth * 0.38,
+                      left: screenWidth * 0.34,
                       top: screenHeight * 0.01,
                       child: Center(
                         child: Text(
                           AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
-                            color: Color(0xFF6FB457),
+                            color: Color(0xFFFF9100),
                             fontSize: 32,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
@@ -262,7 +262,7 @@ class _MyAppState extends State<OTP> {
                           ),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),                            decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
+                              color: Color(0xFFFF9100),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Center(

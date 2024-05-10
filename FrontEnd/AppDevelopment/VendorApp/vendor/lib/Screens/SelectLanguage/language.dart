@@ -96,12 +96,12 @@ class _LanguageState extends State<Language> {
                       ),
                     ),
                     Positioned(
-                      left: screenWidth * 0.38,
+                      left: screenWidth * 0.36,
                       top: screenHeight * 0.01,
                       child: Text(
                         AppLocalizations.of(context)!.app_name,
                         style: TextStyle(
-                          color: Color(0xFF6FB457),
+                          color: Color(0xFFFF9100),
                           fontSize: 32,
                           fontFamily: 'Inter',
                           fontWeight: FontWeight.bold,
@@ -139,7 +139,7 @@ class _LanguageState extends State<Language> {
                           height: screenHeight * 0.091,
                           decoration: BoxDecoration(
                             color: selectedLanguage == 'English'
-                                ? Color(0xFF6FB457)
+                                ? Color(0xFFFF9100)
                                 : Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -181,7 +181,7 @@ class _LanguageState extends State<Language> {
                           height: screenHeight * 0.091,
                           decoration: BoxDecoration(
                             color: selectedLanguage == 'Urdu'
-                                ? Color(0xFF6FB457)
+                                ? Color(0xFFFF9100)
                                 : Colors.white,
                             boxShadow: [
                               BoxShadow(
@@ -227,7 +227,7 @@ class _LanguageState extends State<Language> {
                           // Adjust the width as needed
                           padding: const EdgeInsets.all(16.0),
                           decoration: BoxDecoration(
-                            color: Color(0xFF6FB457),
+                            color: Color(0xFFFF9100),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           child: Center(

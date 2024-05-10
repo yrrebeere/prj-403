@@ -111,13 +111,13 @@ class _MyAppState extends State<Login> {
                             ),
                           ),
                           Positioned(
-                            left: screenWidth * 0.36,
+                            left: screenWidth * 0.34,
                             top: screenHeight * 0.01,
                             child: Center(
                               child: Text(
                                 AppLocalizations.of(context)!.app_name,
                                 style: TextStyle(
-                                  color: Color(0xFF6FB457),
+                                  color: Color(0xFFFF9100),
                                   fontSize: 32,
                                   fontFamily: 'Inter',
                                   fontWeight: FontWeight.bold,
@@ -246,36 +246,6 @@ class _MyAppState extends State<Login> {
                                   )),
                             ),
                           ),
-                          // Positioned(
-                          //   left: screenWidth * 0.10,
-                          //   top: screenHeight * 0.6,
-                          //   child: GestureDetector(
-                          //     onTap: () {
-                          //       Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(builder: (context) => ResetPasswordPage()),
-                          //       );
-                          //     },
-                          //     child: Row(
-                          //       children: [
-                          //         DecoratedBox(
-                          //           decoration: BoxDecoration(
-                          //             border: Border(
-                          //               bottom: BorderSide(
-                          //                 color: Colors.red,
-                          //                 width: 1.0,
-                          //               ),
-                          //             ),
-                          //           ),
-                          //           child: Text(
-                          //             'Reset Password',
-                          //             style: TextStyle(fontSize: 15, color: Colors.red),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
 
                           Positioned(
                             left: screenWidth * 0.4,
@@ -303,7 +273,7 @@ class _MyAppState extends State<Login> {
                                 child: Container(
                                   padding: const EdgeInsets.all(16.0),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF6FB457),
+                                    color: Color(0xFFFF9100),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: Center(

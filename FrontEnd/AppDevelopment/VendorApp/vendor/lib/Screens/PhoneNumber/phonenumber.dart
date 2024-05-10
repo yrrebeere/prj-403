@@ -185,12 +185,12 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.39,
+                        left: screenWidth * 0.36,
                         top: screenHeight * 0.01,
                         child: Text(
                           AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
-                            color: Color(0xFF6FB457),
+                            color: Color(0xFFFF9100),
                             fontSize: 32,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
@@ -213,7 +213,7 @@ class _MyAppState extends State<PhoneNumber> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.43,
+                        left: screenWidth * 0.40,
                         top: screenHeight * 0.28,
                         child: Image.asset(
                           'Assets/Images/mobile_icon.png',
@@ -369,7 +369,7 @@ class _MyAppState extends State<PhoneNumber> {
                             width: screenWidth * 0.3,
                             padding: const EdgeInsets.all(16.0),
                             decoration: BoxDecoration(
-                              color: Color(0xFF6FB457),
+                              color: Color(0xFFFF9100),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                             child: Center(

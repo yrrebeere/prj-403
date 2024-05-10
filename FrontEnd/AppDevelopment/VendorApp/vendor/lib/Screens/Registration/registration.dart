@@ -160,12 +160,12 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       Positioned(
-                        left: screenWidth * 0.34,
+                        left: screenWidth * 0.33,
                         top: screenHeight * 0.00,
                         child: Text(
                           AppLocalizations.of(context)!.app_name,
                           style: TextStyle(
-                            color: Color(0xFF6FB457),
+                            color: Color(0xFFFF9100),
                             fontSize: 32,
                             fontFamily: 'Inter',
                             fontWeight: FontWeight.bold,
@@ -536,7 +536,7 @@ class _RegistrationState extends State<Registration> {
                                         text: AppLocalizations.of(context)!
                                             .terms_and_conditions,
                                         style: TextStyle(
-                                          color: Color(0xFF6FB457),
+                                          color: Color(0xFFFF9100),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -551,7 +551,7 @@ class _RegistrationState extends State<Registration> {
                                         text: AppLocalizations.of(context)!
                                             .privacy_and_policy,
                                         style: TextStyle(
-                                          color: Color(0xFF6FB457),
+                                          color: Color(0xFFFF9100),
                                           fontSize: 12,
                                         ),
                                       ),
@@ -603,7 +603,7 @@ class _RegistrationState extends State<Registration> {
                                 width: screenWidth * 0.3,
                                 padding: const EdgeInsets.all(16.0),
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
+                                  color: Color(0xFFFF9100),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Center(
