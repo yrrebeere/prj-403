@@ -17,6 +17,7 @@ router.delete('/:user_id', usertableController.deleteUser)
 router.get('/numberexists/:phone_number', usertableController.numberExists)
 router.get('/usernameexists/:username', usertableController.usernameExists)
 router.get('/userauthentication/:phone_number', usertableController.userAuthentication)
+router.put('/updatepassword/:user_id', usertableController.updateUserPassword)
 
 
 module.exports = router;

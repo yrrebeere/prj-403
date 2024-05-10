@@ -134,6 +134,25 @@ const userAuthentication = async (req, res) => {
     }
 };
 
+const updateUserPassword = async (req, res) => {
+    try {
+        const user_id = req.params.user_id;
+        const { password } = req.body;
+
+        if (!user_id || !password) {
+            return res.status(400).json({ error: 'User ID and password are required.' });
+        }
+
+        const updatedUser = await User.update({ password }, { where: { user_id } });
+
+        res.status(200).json({ message: 'Password updated successfully.' });
+    } catch (error) {
+        console.error('Error updating user password:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     addUser,
     getAllUsers,
@@ -142,5 +161,6 @@ module.exports = {
     deleteUser,
     numberExists,
     usernameExists,
-    userAuthentication
+    userAuthentication,
+    updateUserPassword
 }
