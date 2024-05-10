@@ -110,6 +110,71 @@ const vendorProfile = async (req, res) => {
     }
 };
 
+const searchVendorInStore = async (req, res) => {
+    try {
+        const vendor_name = req.params.vendor_name;
+
+        if (!vendor_name) {
+            return res.status(400).json({ error: 'Vendor name is required.' });
+        }
+
+        // Step 1: Search Vendors by Name
+        const vendors = await Vendor.findAll({
+            where: {
+                vendor_name: {
+                    [Op.like]: `%${vendor_name}%`,
+                },
+            },
+        });
+
+        if (!vendors || vendors.length === 0) {
+            return res.status(404).json({ error: 'No vendors found for the given name.' });
+        }
+
+        // Step 2: Extract Vendor IDs
+        const vendorIds = vendors.map((vendor) => vendor.vendor_id);
+
+        // Step 3: Search Product Inventories by Vendor IDs
+        const productInventories = await db.product_inventory.findAll({
+            where: {
+                vendor_vendor_id: {
+                    [Op.in]: vendorIds,
+                },
+            },
+        });
+
+        if (!productInventories || productInventories.length === 0) {
+            return res.status(404).json({ error: 'No product inventory found for the given vendors.' });
+        }
+
+        // Step 4: Extract Product IDs
+        const productIds = productInventories.map((inventory) => inventory.product_product_id);
+
+        // Step 5: Search Products by Product IDs
+        const products = await db.product.findAll({
+            where: {
+                product_id: {
+                    [Op.in]: productIds,
+                },
+            },
+        });
+
+        if (!products || products.length === 0) {
+            return res.status(404).json({ error: 'No products found for the given vendors.' });
+        }
+
+        res.status(200).json({
+            vendors,
+            productInventories,
+            products,
+        });
+    } catch (error) {
+        console.error('Error searching vendor details:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 module.exports = {
     addVendor,
@@ -118,5 +183,6 @@ module.exports = {
     updateVendor,
     deleteVendor,
     getVendorIdByUserId,
-    vendorProfile
+    vendorProfile,
+    searchVendorInStore
 }
