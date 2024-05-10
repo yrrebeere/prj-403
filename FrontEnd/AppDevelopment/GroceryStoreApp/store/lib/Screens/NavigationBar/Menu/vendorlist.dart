@@ -158,7 +158,7 @@ class _VendorListState extends State<VendorList> {
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        height: 160,
+        height: 120,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -178,8 +178,8 @@ class _VendorListState extends State<VendorList> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 100,
-                  width: 100,
+                  height: 90,
+                  width: 90,
                   margin: EdgeInsets.all(15),
                   decoration: BoxDecoration(
                     color: Colors.white,

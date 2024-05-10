@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
+
 
 class CurrentOrdersPage extends StatelessWidget {
   final int vendorId;
@@ -94,22 +96,114 @@ class CurrentOrdersPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFF6FB457),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Center(
-                  child: Text(
-                    'Order List',
-                    style: TextStyle(fontSize: 20.0, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Container(
+            //     padding: EdgeInsets.all(8.0),
+            //     decoration: BoxDecoration(
+            //       color: Color(0xFF6FB457),
+            //       borderRadius: BorderRadius.circular(8.0),
+            //     ),
+            //     child: Center(
+            //       child: Text(
+            //         'Order List',
+            //         style: TextStyle(fontSize: 20.0, color: Colors.white),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // FutureBuilder<List<Map<String, dynamic>>>(
+            //   future: _fetchAndDisplayCombinedData(vendorId),
+            //   builder: (context, snapshot) {
+            //     if (snapshot.connectionState == ConnectionState.waiting) {
+            //       return Center(child: CircularProgressIndicator());
+            //     } else if (snapshot.hasError) {
+            //       return Center(child: Text('Error: ${snapshot.error}'));
+            //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //       return Center(child: Text('No current orders available.'));
+            //     } else {
+            //       return Expanded(
+            //         child: ListView.builder(
+            //           itemCount: snapshot.data!.length,
+            //           itemBuilder: (context, index) {
+            //             final orderData = snapshot.data![index];
+            //
+            //             return Card(
+            //               elevation: 4,
+            //               margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+            //               child: ListTile(
+            //                 contentPadding: EdgeInsets.all(16),
+            //                 leading: CircleAvatar(
+            //                   backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+orderData['image']),
+            //                   radius: 40,
+            //                 ),
+            //                 title: Text(
+            //                   '${orderData['store_name']}',
+            //                   style: TextStyle(
+            //                     fontSize: 20,
+            //                     fontWeight: FontWeight.bold,
+            //                     color: Color(0xFF6FB457),
+            //                   ),
+            //                 ),
+            //                 subtitle: Column(
+            //                   crossAxisAlignment: CrossAxisAlignment.start,
+            //                   children: [
+            //                     SizedBox(height: 15),
+            //                     Text(
+            //                       'Delivery Date: ${orderData['delivery_date']}',
+            //                       style: TextStyle(fontSize: 16, color: Colors.black),
+            //                     ),
+            //                     Text(
+            //                       'Order Date: ${orderData['order_date']}',
+            //                       style: TextStyle(fontSize: 16, color: Colors.black),
+            //                     ),
+            //                     SizedBox(height: 12),
+            //                     Text(
+            //                       'Total Bill: Rs.${orderData['total_bill']}',
+            //                       style: TextStyle(fontSize: 19, color: Colors.black),
+            //                     ),
+            //                     SizedBox(height: 20),
+            //                     Row(
+            //                       children: [
+            //                         if (orderData['order_status'].toLowerCase() == 'on its way')
+            //                           Padding(
+            //                             padding: const EdgeInsets.only(right: 8.0),
+            //                             child: Icon(Icons.pin_drop, color: Colors.blueAccent),
+            //                           ),
+            //                         if (orderData['order_status'].toLowerCase() == 'in process')
+            //                           Padding(
+            //                             padding: const EdgeInsets.only(right: 8.0),
+            //                             child: Icon(Icons.recycling, color: Colors.red),
+            //                           ),
+            //                         SizedBox(width: 8),
+            //                         Expanded(
+            //                           child: Center(
+            //                             child: Container(
+            //                               padding: EdgeInsets.all(8.0),
+            //                               decoration: BoxDecoration(
+            //                                 color: Color(0xFF6FB457),
+            //                                 borderRadius: BorderRadius.circular(8),
+            //                               ),
+            //                               child: Text(
+            //                                 '${orderData['order_status']}',
+            //                                 style: TextStyle(fontSize: 20, color: Colors.white,),
+            //                                 textAlign: TextAlign.center,
+            //                               ),
+            //                             ),
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ],
+            //                 ),
+            //               ),
+            //             );
+            //           },
+            //         ),
+            //       );
+            //     }
+            //   },
+            // ),
             FutureBuilder<List<Map<String, dynamic>>>(
               future: _fetchAndDisplayCombinedData(vendorId),
               builder: (context, snapshot) {
@@ -125,6 +219,14 @@ class CurrentOrdersPage extends StatelessWidget {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         final orderData = snapshot.data![index];
+
+                        // Parse delivery_date and order_date
+                        DateTime deliveryDate = DateTime.parse(orderData['delivery_date']);
+                        DateTime orderDate = DateTime.parse(orderData['order_date']);
+
+                        // Format dates using DateFormat
+                        String formattedDeliveryDate = DateFormat('dd-MM-yyyy').format(deliveryDate);
+                        String formattedOrderDate = DateFormat('dd-MM-yyyy').format(orderDate);
 
                         return Card(
                           elevation: 4,
@@ -148,11 +250,11 @@ class CurrentOrdersPage extends StatelessWidget {
                               children: [
                                 SizedBox(height: 15),
                                 Text(
-                                  'Delivery Date: ${orderData['delivery_date']}',
+                                  'Delivery Date: $formattedDeliveryDate', // Display formatted delivery_date
                                   style: TextStyle(fontSize: 16, color: Colors.black),
                                 ),
                                 Text(
-                                  'Order Date: ${orderData['order_date']}',
+                                  'Order Date: $formattedOrderDate', // Display formatted order_date
                                   style: TextStyle(fontSize: 16, color: Colors.black),
                                 ),
                                 SizedBox(height: 12),
@@ -184,7 +286,7 @@ class CurrentOrdersPage extends StatelessWidget {
                                           ),
                                           child: Text(
                                             '${orderData['order_status']}',
-                                            style: TextStyle(fontSize: 20, color: Colors.white,),
+                                            style: TextStyle(fontSize: 20, color: Colors.white),
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
@@ -202,6 +304,7 @@ class CurrentOrdersPage extends StatelessWidget {
                 }
               },
             ),
+
           ],
         ),
       ),

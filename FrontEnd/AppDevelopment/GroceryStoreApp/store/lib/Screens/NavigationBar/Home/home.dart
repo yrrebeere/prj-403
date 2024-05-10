@@ -431,21 +431,57 @@ class _HomeState extends State<Home> {
     }
   }
 
+  // Future<void> _search(BuildContext context) async {
+  //   print('Search query: ${searchController.text}'); // Add this line
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductinstore/${searchController.text}'),
+  //     );
+  //
+  //     print('Response status code: ${response.statusCode}');
+  //     print('Response body: ${response.body}');
+  //
+  //     if (response.statusCode == 200) {
+  //       final Map<String, dynamic> responseBody = jsonDecode(response.body);
+  //       final List<dynamic> products = responseBody['products'];
+  //       final List<dynamic> productInventories = responseBody['productInventories'];
+  //       final List<dynamic> vendors = responseBody['vendors'];
+  //
+  //       List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
+  //       List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
+  //       List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
+  //
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
+  //       );
+  //     } else {
+  //       print('Failed to search products');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //   }
+  // }
+
   Future<void> _search(BuildContext context) async {
-    print('Search query: ${searchController.text}'); // Add this line
+    final searchText = searchController.text.trim();
+    if (searchText.isEmpty) {
+      return; // Do nothing if the search text is empty
+    }
+
+    print('Search query: $searchText');
+
     try {
-      final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductinstore/${searchController.text}'),
+      // First, attempt to search by product name
+      final productResponse = await http.get(
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductinstore/$searchText'),
       );
 
-      print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> responseBody = jsonDecode(response.body);
-        final List<dynamic> products = responseBody['products'];
-        final List<dynamic> productInventories = responseBody['productInventories'];
-        final List<dynamic> vendors = responseBody['vendors'];
+      if (productResponse.statusCode == 200) {
+        final Map<String, dynamic> productResponseBody = jsonDecode(productResponse.body);
+        final List<dynamic> products = productResponseBody['products'];
+        final List<dynamic> productInventories = productResponseBody['productInventories'];
+        final List<dynamic> vendors = productResponseBody['vendors'];
 
         List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
         List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
@@ -455,9 +491,33 @@ class _HomeState extends State<Home> {
           context,
           MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
         );
-      } else {
-        print('Failed to search products');
+        return; // Exit function after processing product search
       }
+
+      // If not found in products, attempt to search by category name
+      final categoryResponse = await http.get(
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/searchcategoryinstore/$searchText'),
+      );
+
+      if (categoryResponse.statusCode == 200) {
+        final Map<String, dynamic> categoryResponseBody = jsonDecode(categoryResponse.body);
+        final List<dynamic> products = categoryResponseBody['products'];
+        final List<dynamic> productInventories = categoryResponseBody['productInventories'];
+        final List<dynamic> vendors = categoryResponseBody['vendors'];
+
+        List<Product> searchProducts = products.map<Product>((item) => Product.fromJson(item)).toList();
+        List<ProductInventory> searchProductInventories = productInventories.map<ProductInventory>((item) => ProductInventory.fromJson(item)).toList();
+        List<Vendor> searchVendors = vendors.map<Vendor>((item) => Vendor.fromJson(item)).toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SearchResultsPage(products: searchProducts, productInventories: searchProductInventories, vendors: searchVendors)),
+        );
+        return; // Exit function after processing category search
+      }
+
+      // If neither product nor category found, handle failure
+      print('Failed to search products or categories');
     } catch (e) {
       print('Error: $e');
     }

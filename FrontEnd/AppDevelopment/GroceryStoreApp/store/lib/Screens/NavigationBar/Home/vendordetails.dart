@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:store/Screens/NavigationBar/Home/productdetail.dart';
+
+import 'home.dart';
+
 class VendorDetailsPage extends StatefulWidget {
   final int vendorId;
 
@@ -189,41 +193,92 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
+                  child:ListView.builder(
                     itemCount: productInventories.length,
                     itemBuilder: (context, index) {
                       final productInventory = productInventories[index];
                       final product = products.firstWhere(
-                              (prod) => prod['product_id'] == productInventory['product_product_id']);
-                      return Container(
-                        margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: ListTile(
-                          contentPadding: EdgeInsets.all(16.0),
-                          leading: Image.network(
-                            "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+product['image'],
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
+                            (prod) => prod['product_id'] == productInventory['product_product_id'],
+                      );
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsPage(
+                                product: Product.fromJson(product), // Convert to Product object
+                                productInventory: ProductInventory.fromJson(productInventory), // Convert to ProductInventory object
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                          title: Text(
-                            '${product['product_name']}',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Price: Rs. ${productInventory['price']}'),
-                              Text('Available Amount: ${productInventory['available_amount']}'),
-                            ],
+                          child: ListTile(
+                            contentPadding: EdgeInsets.all(16.0),
+                            leading: Image.network(
+                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + product['image'],
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                            title: Text(
+                              '${product['product_name']}',
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('Price: Rs. ${productInventory['price']}'),
+                                Text('Available Amount: ${productInventory['available_amount']}'),
+                              ],
+                            ),
                           ),
                         ),
                       );
                     },
                   ),
+
+                  // ListView.builder(
+                  //   itemCount: productInventories.length,
+                  //   itemBuilder: (context, index) {
+                  //     final productInventory = productInventories[index];
+                  //     final product = products.firstWhere(
+                  //             (prod) => prod['product_id'] == productInventory['product_product_id']);
+                  //     return Container(
+                  //       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                  //       decoration: BoxDecoration(
+                  //         border: Border.all(color: Colors.grey),
+                  //         borderRadius: BorderRadius.circular(8.0),
+                  //       ),
+                  //       child: ListTile(
+                  //         contentPadding: EdgeInsets.all(16.0),
+                  //         leading: Image.network(
+                  //           "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+product['image'],
+                  //           width: 80,
+                  //           height: 80,
+                  //           fit: BoxFit.cover,
+                  //         ),
+                  //         title: Text(
+                  //           '${product['product_name']}',
+                  //           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  //         ),
+                  //         subtitle: Column(
+                  //           crossAxisAlignment: CrossAxisAlignment.start,
+                  //           children: [
+                  //             Text('Price: Rs. ${productInventory['price']}'),
+                  //             Text('Available Amount: ${productInventory['available_amount']}'),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
                 ),
               ],
             );

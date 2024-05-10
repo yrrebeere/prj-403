@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class OrderHistory extends StatelessWidget {
   final int vendorId;
@@ -99,13 +100,20 @@ class OrderHistory extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return Center(child: Text('No current orders available.'));
+              return Center(child: Text('No order history available.'));
             } else {
-
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final orderData = snapshot.data![index];
+
+                  // Parse delivery_date and order_date
+                  DateTime deliveryDate = DateTime.parse(orderData['delivery_date']);
+                  DateTime orderDate = DateTime.parse(orderData['order_date']);
+
+                  // Format dates using DateFormat
+                  String formattedDeliveryDate = DateFormat('dd-MM-yyyy').format(deliveryDate);
+                  String formattedOrderDate = DateFormat('dd-MM-yyyy').format(orderDate);
 
                   return Card(
                     elevation: 4,
@@ -113,16 +121,15 @@ class OrderHistory extends StatelessWidget {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: CircleAvatar(
-
                         backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+orderData['image']),
                         radius: 30,
                       ),
                       title: Text(
                         '${orderData['store_name']}',
                         style: TextStyle(
-                          fontSize: 20, // Increase the font size for the title
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black, // Set text color to black
+                          color: Colors.black,
                         ),
                       ),
                       subtitle: Column(
@@ -130,15 +137,14 @@ class OrderHistory extends StatelessWidget {
                         children: [
                           SizedBox(height: 15),
                           Text(
-                            'Delivery Date: ${orderData['delivery_date']}',
+                            'Delivery Date: $formattedDeliveryDate',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           Text(
-                            'Order Date: ${orderData['order_date']}',
+                            'Order Date: $formattedOrderDate',
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           SizedBox(height: 10),
-
                           Text(
                             'Total Bill: Rs.${orderData['total_bill']}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -161,11 +167,14 @@ class OrderHistory extends StatelessWidget {
                                 child: Center(
                                   child: Container(
                                     padding: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                    ),
+                                    // decoration: BoxDecoration(
+                                    //   color: Color(0xFF6FB457),
+                                    //   borderRadius: BorderRadius.circular(8),
+                                    // ),
                                     child: Text(
                                       'Order Status: \n${orderData['order_status']}',
                                       style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ),
                                 ),
@@ -181,6 +190,97 @@ class OrderHistory extends StatelessWidget {
             }
           },
         ),
+
+        // FutureBuilder<List<Map<String, dynamic>>>(
+        //   future: _fetchAndDisplayCombinedData(vendorId),
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       return Center(child: CircularProgressIndicator());
+        //     } else if (snapshot.hasError) {
+        //       return Center(child: Text('Error: ${snapshot.error}'));
+        //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+        //       return Center(child: Text('No current orders available.'));
+        //     } else {
+        //
+        //       return ListView.builder(
+        //         itemCount: snapshot.data!.length,
+        //         itemBuilder: (context, index) {
+        //           final orderData = snapshot.data![index];
+        //
+        //           return Card(
+        //             elevation: 4,
+        //             margin: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        //             child: ListTile(
+        //               contentPadding: EdgeInsets.all(16),
+        //               leading: CircleAvatar(
+        //
+        //                 backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+orderData['image']),
+        //                 radius: 30,
+        //               ),
+        //               title: Text(
+        //                 '${orderData['store_name']}',
+        //                 style: TextStyle(
+        //                   fontSize: 20, // Increase the font size for the title
+        //                   fontWeight: FontWeight.bold,
+        //                   color: Colors.black, // Set text color to black
+        //                 ),
+        //               ),
+        //               subtitle: Column(
+        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //                 children: [
+        //                   SizedBox(height: 15),
+        //                   Text(
+        //                     'Delivery Date: ${orderData['delivery_date']}',
+        //                     style: TextStyle(fontSize: 16, color: Colors.black),
+        //                   ),
+        //                   Text(
+        //                     'Order Date: ${orderData['order_date']}',
+        //                     style: TextStyle(fontSize: 16, color: Colors.black),
+        //                   ),
+        //                   SizedBox(height: 10),
+        //
+        //                   Text(
+        //                     'Total Bill: Rs.${orderData['total_bill']}',
+        //                     style: TextStyle(fontSize: 16, color: Colors.black),
+        //                   ),
+        //                   SizedBox(height: 20),
+        //                   Row(
+        //                     children: [
+        //                       if (orderData['order_status'].toLowerCase() == 'on its way')
+        //                         Padding(
+        //                           padding: const EdgeInsets.only(right: 8.0),
+        //                           child: Icon(Icons.pin_drop, color: Colors.blueAccent),
+        //                         ),
+        //                       if (orderData['order_status'].toLowerCase() == 'in process')
+        //                         Padding(
+        //                           padding: const EdgeInsets.only(right: 8.0),
+        //                           child: Icon(Icons.recycling, color: Colors.red),
+        //                         ),
+        //                       SizedBox(width: 8),
+        //                       Expanded(
+        //                         child: Center(
+        //                           child: Container(
+        //                             padding: EdgeInsets.all(8.0),
+        //                             decoration: BoxDecoration(
+        //                             ),
+        //                             child: Text(
+        //                               'Order Status: \n${orderData['order_status']}',
+        //                               style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+        //                             ),
+        //                           ),
+        //                         ),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           );
+        //         },
+        //       );
+        //     }
+        //   },
+        // ),
       ),
     );
   }
