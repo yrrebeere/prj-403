@@ -10,6 +10,7 @@ const productcategoryController = require('../controllers/productcategoryControl
 
 router.post('/addproductcategory',productcategoryController.addProductCategory)
 router.get('/allproductcategories',productcategoryController.getAllProductCategories)
+router.get('/productcategorycount',productcategoryController.productCategoryCount)
 router.get('/:product_category_id', productcategoryController.getOneProductCategory)
 router.put('/:product_category_id', productcategoryController.updateProductCategory)
 router.delete('/:product_category_id', productcategoryController.deleteProductCategory)

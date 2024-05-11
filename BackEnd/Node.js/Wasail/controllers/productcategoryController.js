@@ -155,6 +155,18 @@ const searchCategoryInStore = async (req, res) => {
     }
 };
 
+const productCategoryCount = async (req, res) => {
+    try {
+        const totalProductCategories = await Category.count();
+
+        res.status(200).json({ totalProductCategories });
+    } catch (error) {
+        console.error('Error calculating total vendors:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 
 module.exports = {
@@ -164,5 +176,6 @@ module.exports = {
     updateProductCategory,
     deleteProductCategory,
     searchProductCategory,
-    searchCategoryInStore
+    searchCategoryInStore,
+    productCategoryCount
 }
