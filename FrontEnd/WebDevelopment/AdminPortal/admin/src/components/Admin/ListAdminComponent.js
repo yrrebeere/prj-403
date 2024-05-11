@@ -99,7 +99,7 @@ const ListAdminComponent = () => {
                     selectedKeys={isAdminActive() ? [] : [location.pathname]}
                 >
                     {sidebarItems.map((item, index) => (
-                        <Menu.Item key={index + 1} icon={item.icon}>
+                        <Menu.Item key={index + 1} icon={item.icon} style={{ marginBottom: '20px' }}> {/* Added marginBottom */}
                             <Link to={item.url}>{item.label}</Link>
                         </Menu.Item>
                     ))}

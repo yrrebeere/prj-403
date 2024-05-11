@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styles from "../../styles/ComponentStyles.css";
 import { Layout, Menu } from 'antd';
 import {
     UserOutlined,
@@ -16,19 +15,18 @@ const { Sider } = Layout;
 
 const AddCategoryComponent = () => {
     const [categoryName, setCategoryName] = useState('');
-    const [image, setImage] = useState(''); // New state for image
+    const [image, setImage] = useState(null); // Updated to null for image state
     const location = useLocation();
 
-    // Function to check if the current path is '/content-management'
-    const isActive = () => location.pathname === '/content-management';
+    const isActive = () => location.pathname === '/content-management'; // Function to check if the current path is '/content-management'
 
     const handleSave = () => {
-        if (categoryName.trim() !== '' && image.trim() !== '') { // Check if both category name and image are provided
+        if (categoryName.trim() !== '' && image !== null) { // Check if category name and image are provided
             console.log("Category Name:", categoryName);
             console.log("Image File:", image);
-            ContentManagementService.addCategory(categoryName, image); // Pass category name and image to your addCategory function
+            // ContentManagementService.addCategory(categoryName, image); // Call your addCategory function here
             setCategoryName('');
-            setImage('');
+            setImage(null); // Reset image state after saving
         } else {
             alert('Please enter both category name and upload an image.');
         }
@@ -37,62 +35,77 @@ const AddCategoryComponent = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
-            setImage(file);
+            setImage(URL.createObjectURL(file)); // Update image state with object URL
         }
     };
 
     const sidebarItems = [
-        { label: 'WASAIL'},
-        { icon: <UserOutlined />, label: 'Users', url: '/' },
-        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Stores', url: 'stores' },
+        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
+        { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
+        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
-        { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
     ];
 
     return (
         <Layout>
             <Sider
-                width={210}
+                width={220}
                 style={{
-                    background: '#001529', // Dark blue background color
+                    background: '#fff', // White background color
                     overflow: 'auto',
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['7']}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{
+                        paddingTop: '30px',
+                        paddingBottom: '25px',
+                        paddingLeft: '25px',
+                        color: 'green',
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                    }}>
+                        WASAIL
+                    </div>
+                </div>
+
+                <Menu
+                    theme="light" // Light theme for the menu
+                    mode="inline"
+                    defaultSelectedKeys={['2']}
+                    selectedKeys={isActive() ? [] : [location.pathname]}
+                >
                     {sidebarItems.map((item, index) => (
-                        <Menu.Item key={index + 1} icon={item.icon}>
+                        <Menu.Item key={index + 1} icon={item.icon} style={{ marginBottom: '20px' }}>
                             <Link to={item.url}>{item.label}</Link>
                         </Menu.Item>
                     ))}
                 </Menu>
             </Sider>
             <Layout>
-                <div className={styles.body}>
-                    <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
-                        <h2>Add Category</h2>
+                <div className="container" style={{ marginTop: '50px', border: '2px solid black', padding: '20px', width: '50%', textAlign: 'center', margin: 'auto' }}>
+                    <h2>Add Category</h2>
 
-                        <input
-                            type="text"
-                            value={categoryName}
-                            onChange={(e) => setCategoryName(e.target.value)}
-                            placeholder="Enter Category Name"
-                            style={{ marginBottom: '10px' }}
-                        />
-                        <br />
-                        <input
-                            type="text"
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
-                            placeholder="Enter Image"
-                            style={{ marginBottom: '10px' }}
-                        />
-                        <br />
-                        <button className="btn btn-primary" onClick={handleSave}>Save</button>
-                        <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
-                    </div>
+                    <input
+                        type="text"
+                        value={categoryName}
+                        onChange={(e) => setCategoryName(e.target.value)}
+                        placeholder="Enter Category Name"
+                        style={{ marginBottom: '10px' }}
+                    />
+                    <br />
+                    <input
+                        type="file" // Changed input type to file for image upload
+                        onChange={handleImageChange}
+                        style={{ marginBottom: '10px' }}
+                    />
+                    <br />
+                    {image && <img src={image} alt="Category Image" style={{ maxWidth: '100%', marginBottom: '10px' }} />} {/* Display image preview if image is selected */}
+                    <br />
+                    <button className="btn btn-primary" onClick={handleSave}>Save</button>
+                    <Link to="/content-management" className="btn btn-primary" style={{ marginLeft: '10px' }}>Back</Link>
                 </div>
             </Layout>
         </Layout>

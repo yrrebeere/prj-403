@@ -11,7 +11,7 @@ const ListVendorComponent = () => {
     const [vendors, setVendors] = useState([]); // State for vendor data
     const location = useLocation(); // Get current location
 
-    const isVendorActive = () => location.pathname === '/vendors'; // Check if current path is '/vendors'
+    const isActive = () => location.pathname === '/vendors'; // Check if current path is '/vendors'
 
     useEffect(() => {
         const refreshVendors = async () => {
@@ -28,28 +28,45 @@ const ListVendorComponent = () => {
     }, []); // Empty dependency array to run effect only once
 
     const sidebarItems = [
-        { label: 'WASAIL'},
-        { icon: <UserOutlined />, label: 'Users', url: '/' },
-        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
-        { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
+        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
+        { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
+        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
-        { icon: <CloudOutlined />, label: 'Machine Learning', url: '/ml' },
         { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
     ];
 
     return (
         <Layout>
             <Sider
-                width={210}
+                width={220}
                 style={{
-                    background: '#001529', // Dark blue background color
+                    background: '#fff', // White background color
                     overflow: 'auto',
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{
+                        paddingTop: '30px',
+                        paddingBottom: '25px',
+                        paddingLeft: '25px',
+                        color: 'green',
+                        fontSize: '18px',
+                        fontWeight: 'bold'
+                    }}>
+                        WASAIL
+                    </div>
+                </div>
+
+                <Menu
+                    theme="light" // Light theme for the menu
+                    mode="inline"
+                    defaultSelectedKeys={['2']}
+                    selectedKeys={isActive() ? [] : [location.pathname]}
+                >
                     {sidebarItems.map((item, index) => (
-                        <Menu.Item key={index + 1} icon={item.icon}>
+                        <Menu.Item key={index + 1} icon={item.icon} style={{ marginBottom: '20px' }}>
                             <Link to={item.url}>{item.label}</Link>
                         </Menu.Item>
                     ))}
