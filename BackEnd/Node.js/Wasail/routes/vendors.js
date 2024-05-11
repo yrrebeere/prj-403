@@ -11,6 +11,7 @@ const vendorController = require('../controllers/vendorController')
 //vendor
 router.post('/addvendor',vendorController.addVendor)
 router.get('/allvendors',vendorController.getAllVendors)
+router.get('/vendorcount',vendorController.vendorCount)
 router.get('/:vendor_id', vendorController.getOneVendor)
 router.put('/:vendor_id', vendorController.updateVendor)
 router.delete('/:vendor_id', vendorController.deleteVendor)
