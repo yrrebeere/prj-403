@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import '../PhoneNumber/phonenumberprovider.dart';
 import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   final String phoneNumber;
@@ -22,6 +24,63 @@ class _MyAppState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool showPassword = false;
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _attemptLogin(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      String password = passwordController.text;
+      String phoneNumber = widget.phoneNumber;
+
+      final url = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/passwordchecker/$phoneNumber/$password';
+
+      try {
+        final response = await http.get(Uri.parse(url));
+
+        if (response.statusCode == 200) {
+
+          print("Correct Password");
+
+          // Password is correct, navigate to the next page (e.g., NavBar)
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NavBar()),
+          );
+        } else {
+          // Password is incorrect, show error message
+          print("Incorrect Password");
+          _showErrorDialog(context, 'Incorrect password. Please try again.');
+        }
+      } catch (e) {
+        print('Error: $e');
+        // Handle error if the HTTP request fails
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('An error occurred. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -243,33 +302,62 @@ class _MyAppState extends State<Login> {
                                                 return null;
                                               },
                                             ),
-
-
-                                          )),
+                                          )
+                                      ),
                                     ),
                                   ),
+                                  // Positioned(
+                                  //   left: screenWidth * 0.4,
+                                  //   top: screenHeight * 0.68,
+                                  //   child: GestureDetector(
+                                  //     onTap: () {
+                                  //       FocusScope.of(context).unfocus();
+                                  //       if (_formKey.currentState!.validate()) {
+                                  //         String password = passwordController.text;
+                                  //         Navigator.push(
+                                  //           builderContext,
+                                  //           MaterialPageRoute(
+                                  //             builder: (context) => NavBar(),
+                                  //           ),
+                                  //         );
+                                  //       }
+                                  //     },
+                                  //     child: Container(
+                                  //       width: screenWidth * 0.2,
+                                  //       decoration: BoxDecoration(
+                                  //         color: const Color(0xFF007AFF),
+                                  //         borderRadius: BorderRadius.circular(
+                                  //             screenHeight * 0.03),
+                                  //       ),
+                                  //       child: Container(
+                                  //         padding: const EdgeInsets.all(16.0),
+                                  //         decoration: BoxDecoration(
+                                  //           color: Color(0xFF6FB457),
+                                  //           borderRadius: BorderRadius.circular(8.0),
+                                  //         ),
+                                  //         child: Center(
+                                  //           child: Text(
+                                  //             AppLocalizations.of(context)!.login,
+                                  //             style: TextStyle(color: Colors.white),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   Positioned(
                                     left: screenWidth * 0.4,
                                     top: screenHeight * 0.68,
                                     child: GestureDetector(
                                       onTap: () {
                                         FocusScope.of(context).unfocus();
-                                        if (_formKey.currentState!.validate()) {
-                                          String password = passwordController.text;
-                                          Navigator.push(
-                                            builderContext,
-                                            MaterialPageRoute(
-                                              builder: (context) => NavBar(),
-                                            ),
-                                          );
-                                        }
+                                        _attemptLogin(context); // Call the login attempt function
                                       },
                                       child: Container(
                                         width: screenWidth * 0.2,
                                         decoration: BoxDecoration(
                                           color: const Color(0xFF007AFF),
-                                          borderRadius: BorderRadius.circular(
-                                              screenHeight * 0.03),
+                                          borderRadius: BorderRadius.circular(screenHeight * 0.03),
                                         ),
                                         child: Container(
                                           padding: const EdgeInsets.all(16.0),
@@ -287,7 +375,6 @@ class _MyAppState extends State<Login> {
                                       ),
                                     ),
                                   ),
-
                                 ],
                               ),
                             )),
