@@ -9,6 +9,7 @@ const productController = require('../controllers/productController')
 
 router.post('/addproduct',productController.addProduct)
 router.get('/allproducts',productController.getAllProducts)
+router.get('/productcount',productController.productCount)
 router.get('/:product_id', productController.getOneProduct)
 router.put('/:prouct_id', productController.updateProduct)
 router.delete('/:product_id', productController.deleteProduct)

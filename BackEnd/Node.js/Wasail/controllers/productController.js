@@ -162,6 +162,17 @@ const searchProductInStore = async (req, res) => {
     }
 };
 
+const productCount = async (req, res) => {
+    try {
+        const totalProducts = await Product.count();
+
+        res.status(200).json({ totalProducts });
+    } catch (error) {
+        console.error('Error calculating total vendors:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 
 
@@ -173,5 +184,6 @@ module.exports = {
     deleteProduct,
     searchProduct,
     searchProductInInventory,
-    searchProductInStore
+    searchProductInStore,
+    productCount
 }
