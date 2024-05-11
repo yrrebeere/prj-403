@@ -1,5 +1,5 @@
 const db = require('../models')
-
+const { Sequelize } = require('sequelize');
 const Store = db.grocery_store
 
 const addStore = async (req, res) => {
@@ -98,6 +98,18 @@ const viewVendorList = async (req, res) => {
     }
 };
 
+const groceryStoreCount = async (req, res) => {
+    try {
+        const totalGroceryStores = await Store.count();
+
+        res.status(200).json({ totalGroceryStores });
+    } catch (error) {
+        console.error('Error calculating total grocery stores:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 module.exports = {
     addStore,
@@ -106,5 +118,6 @@ module.exports = {
     updateStore,
     deleteStore,
     searchStoreByVID,
-    viewVendorList
+    viewVendorList,
+    groceryStoreCount
 }
