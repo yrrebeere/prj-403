@@ -9,18 +9,18 @@ class CurrentOrdersPage extends StatelessWidget {
 
   CurrentOrdersPage(this.vendorId);
 
-  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
+  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int storeId) async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/storecurrentorder/$vendorId'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/storecurrentorder/$storeId'),
       );
-
-      print(response.body);
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         final List<dynamic> orders = responseData['orders'];
         final List<dynamic> orderDetails = responseData['orderDetails'];
+        final List<dynamic> productInventories = responseData['productInventories'];
+        final List<dynamic> products = responseData['products'];
 
         List<Map<String, dynamic>> combinedData = [];
 
@@ -31,12 +31,22 @@ class CurrentOrdersPage extends StatelessWidget {
           List<Map<String, dynamic>> detailsForOrder = [];
           for (final detail in orderDetails) {
             if (detail['order_order_id'] == orderId) {
-              detailsForOrder.add({
-                'product_inventory_id': detail['product_inventory_product_inventory_id'],
-                'unit_price': detail['unit_price'],
-                'quantity': detail['quantity'],
-                'order_id': detail['order_order_id']
-              });
+              // Find the product inventory details based on product_inventory_id
+              final productInventory = productInventories.firstWhere((inventory) => inventory['product_inventory_id'] == detail['product_inventory_product_inventory_id'], orElse: () => null);
+
+              if (productInventory != null) {
+                // Find the product details based on product_id
+                final product = products.firstWhere((product) => product['product_id'] == productInventory['product_product_id'], orElse: () => null);
+
+                if (product != null) {
+                  detailsForOrder.add({
+                    'product_name': product['product_name'],
+                    'unit_price': detail['unit_price'],
+                    'quantity': detail['quantity'],
+                    'order_id': detail['order_order_id']
+                  });
+                }
+              }
             }
           }
 
@@ -65,7 +75,7 @@ class CurrentOrdersPage extends StatelessWidget {
                 'grocery_store_store_id': groceryStoreId,
                 'store_name': groceryStoreName,
                 'image': groceryStoreImage,
-                'order_details': detailsForOrder, // Add order details to the combined data
+                'order_details': detailsForOrder,
               });
             } else {
               print('Failed to load additional grocery store information: ${groceryStoreResponse.statusCode}');
@@ -85,7 +95,6 @@ class CurrentOrdersPage extends StatelessWidget {
       return [];
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,6 +150,8 @@ class CurrentOrdersPage extends StatelessWidget {
                         List<Map<String, dynamic>> filteredOrderDetails = orderData['order_details']
                             .where((detail) => detail['order_id'] == orderData['order_id'])
                             .toList();
+
+                        print(orderData);
 
                         return Card(
                           elevation: 4,
@@ -198,7 +209,7 @@ class CurrentOrdersPage extends StatelessWidget {
                                     ),
                                     // Generate rows for filtered order details
                                     ...filteredOrderDetails.map<TableRow>((detail) {
-                                      final productId = detail['product_inventory_id'];
+                                      final productName = detail['product_name'];
                                       final unitPrice = detail['unit_price'];
                                       final quantity = detail['quantity'];
 
@@ -206,7 +217,7 @@ class CurrentOrdersPage extends StatelessWidget {
                                         children: [
                                           TableCell(child: Padding(
                                             padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                            child: Text(productId.toString()),
+                                            child: Text(productName.toString()),
                                           )),
                                           TableCell(child: Padding(
                                             padding: const EdgeInsets.symmetric(vertical: 4.0),
