@@ -18,6 +18,7 @@ router.get('/numberexists/:phone_number', usertableController.numberExists)
 router.get('/usernameexists/:username', usertableController.usernameExists)
 router.get('/userauthentication/:phone_number', usertableController.userAuthentication)
 router.put('/updatepassword/:user_id', usertableController.updateUserPassword)
+router.get('/passwordchecker/:phone_number/:password', usertableController.passwordChecker)
 
 
 module.exports = router;

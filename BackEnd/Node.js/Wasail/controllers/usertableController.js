@@ -152,6 +152,41 @@ const updateUserPassword = async (req, res) => {
     }
 };
 
+const passwordChecker = async (req, res) => {
+    try {
+        let phone_number = req.params.phone_number;
+        let password = req.params.password;
+        // const { phone_number, password } = req.body;
+
+        if (!phone_number || !password) {
+            return res.status(400).json({ error: 'Phone number and password are required.' });
+        }
+
+        const user = await User.findOne({
+            where: {
+                phone_number: phone_number,
+            },
+        });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' });
+        }
+
+        // Check if the provided password matches the password stored in the database
+        const isPasswordMatch = (user.password === password);
+
+        if (isPasswordMatch) {
+            res.status(200).json({ message: 'Password is correct.' });
+        } else {
+            res.status(401).json({ error: 'Incorrect password.' });
+        }
+    } catch (error) {
+        console.error('Error during password check:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 
 module.exports = {
     addUser,
@@ -162,5 +197,6 @@ module.exports = {
     numberExists,
     usernameExists,
     userAuthentication,
-    updateUserPassword
+    updateUserPassword,
+    passwordChecker
 }
