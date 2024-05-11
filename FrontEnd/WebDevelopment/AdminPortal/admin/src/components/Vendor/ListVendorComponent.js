@@ -28,6 +28,7 @@ const ListVendorComponent = () => {
     }, []); // Empty dependency array to run effect only once
 
     const sidebarItems = [
+        { label: 'WASAIL'},
         { icon: <UserOutlined />, label: 'Users', url: '/' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
         { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
@@ -46,7 +47,7 @@ const ListVendorComponent = () => {
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['3']}>
                     {sidebarItems.map((item, index) => (
                         <Menu.Item key={index + 1} icon={item.icon}>
                             <Link to={item.url}>{item.label}</Link>

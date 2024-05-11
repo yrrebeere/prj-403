@@ -108,3 +108,7 @@ h1 {
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
+tr.highlighted {
+    background-color: yellow; /* Background color for highlighted rows */
+}

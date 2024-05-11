@@ -41,6 +41,7 @@ const AddProductComponent = () => {
     };
 
     const sidebarItems = [
+        { label: 'WASAIL'},
         { icon: <UserOutlined />, label: 'Users', url: '/users' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
         { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
@@ -59,7 +60,7 @@ const AddProductComponent = () => {
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['6']}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['7']}>
                     {sidebarItems.map((item, index) => (
                         <Menu.Item key={index + 1} icon={item.icon}>
                             <Link to={item.url}>{item.label}</Link>

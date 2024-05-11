@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ContentManagementService from '../../services/ContentManagementService';
 import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import {Input, Layout, Menu} from 'antd';
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -13,6 +13,7 @@ import {
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
+const { Search } = Input;
 
 const ListContentManagementComponent = () => {
     const [categories, setCategories] = useState([]);
@@ -58,7 +59,9 @@ const ListContentManagementComponent = () => {
         }
     };
 
+
     const sidebarItems = [
+        { label: 'WASAIL'},
         { icon: <UserOutlined />, label: 'Users', url: '/' },
         { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
         { icon: <UploadOutlined />, label: 'Stores', url: '/stores' },
@@ -77,7 +80,7 @@ const ListContentManagementComponent = () => {
                     height: '100vh',
                 }}
             >
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['6']}>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['7']}>
                     {sidebarItems.map((item, index) => (
                         <Menu.Item key={index + 1} icon={item.icon}>
                             <Link to={item.url}>{item.label}</Link>
