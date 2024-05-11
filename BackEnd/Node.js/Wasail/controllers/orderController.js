@@ -245,7 +245,44 @@ const storeCurrentOrders = async (req, res) => {
             },
         });
 
-        res.status(200).send(orders);
+        // Step 2: Extract order IDs from the retrieved orders
+        const orderIds = orders.map((order) => order.order_id);
+
+
+        // Step 3: Find order details for the extracted order IDs
+        const orderDetails = await Detail.findAll({
+            where: {
+                order_order_id: {
+                    [Op.in]: orderIds,
+                },
+            },
+        });
+
+        const productInventoryIds = orderDetails.map((detail) => detail.product_inventory_product_inventory_id);
+
+        // Step 5: Find product inventory information for the extracted IDs
+        const productInventories = await db.product_inventory.findAll({
+            where: {
+                product_inventory_id: {
+                    [Op.in]: productInventoryIds,
+                },
+            },
+        });
+
+        const productIds = productInventories.map((inventory) => inventory.product_product_id);
+
+        // Step 7: Find product information for the extracted product IDs
+        const products = await db.product.findAll({
+            where: {
+                product_id: {
+                    [Op.in]: productIds,
+                },
+            },
+        });
+
+
+
+        res.status(200).json({ orders, orderDetails, productInventories, products });
     } catch (error) {
         console.error('Error searching products by store:', error);
         res.status(500).json({ error: 'Internal Server Error' });
