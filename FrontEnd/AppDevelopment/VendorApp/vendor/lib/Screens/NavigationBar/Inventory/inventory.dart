@@ -242,7 +242,10 @@ class _SearchBarPageState extends State<SearchBarPage> {
         MaterialPageRoute(
           builder: (context) => ItemDetailsPage(
               item: duplicateProduct,
-              onDelete: () {}),
+              onDelete: () {},
+              onDeleted: () {},
+              onUpdate: () {}
+          ),
         ),
       );
     }
@@ -553,6 +556,16 @@ class _InventoryState extends State<Inventory> {
           onDelete: () {
             setState(() {
               inventoryItems.remove(item);
+            });
+          },
+          onDeleted: () {
+            setState(() {
+              _fetchAndDisplayCombinedData("1");
+            });
+          },
+          onUpdate: () {
+            setState(() {
+              _fetchAndDisplayCombinedData("1");
             });
           },
         ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:provider/provider.dart';
 import 'inventory.dart';
@@ -9,10 +10,14 @@ import 'inventory.dart';
 class ItemDetailsPage extends StatefulWidget {
   final productInventory item;
   final VoidCallback onDelete;
+  final Function() onUpdate;
+  final Function() onDeleted;
 
   const ItemDetailsPage({
     required this.item,
     required this.onDelete,
+    required this.onUpdate,
+    required this.onDeleted,
   });
 
   @override
@@ -260,6 +265,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             ElevatedButton(
               onPressed: () async {
                 await _deleteProductInventory(widget.item.productInventoryId);
+                widget.onDeleted();
                 Navigator.of(context).pop();
               },
               child: Text('Delete'),
@@ -270,37 +276,89 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     );
   }
 
+  // Future<void> _deleteProductInventory(int productInventoryId) async {
+  //   try {
+  //     final response = await http.delete(
+  //       Uri.parse(
+  //           'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+  //     );
+  //     if (response.statusCode == 200) {
+  //       widget.onDelete();
+  //       Navigator.pop(context);
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Successfully deleted!'),
+  //           duration: Duration(seconds: 2),
+  //         ),
+  //       );
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text('Failed to delete. Please try again.'),
+  //           duration: Duration(seconds: 2),
+  //         ),
+  //       );
+  //     }
+  //   } catch (error) {
+  //     print('Error deleting: $error');
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('An unexpected error occurred. Please try again.'),
+  //         duration: Duration(seconds: 2),
+  //       ),
+  //     );
+  //   }
+  // }
+
   Future<void> _deleteProductInventory(int productInventoryId) async {
     try {
       final response = await http.delete(
         Uri.parse(
             'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
       );
+
+      if (!mounted) {
+        return; // Avoid further execution if the widget is unmounted
+      }
+
       if (response.statusCode == 200) {
-        widget.onDelete();
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Successfully deleted!'),
-            duration: Duration(seconds: 2),
-          ),
-        );
+        // Successful deletion
+        widget.onDelete(); // Trigger parent widget to update its state
+        Navigator.pop(context); // Dismiss the current page (ItemDetailsPage)
+
+        // Check if context is still valid before showing Snackbar
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Successfully deleted!'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
       } else {
+        // Handle deletion failure (e.g., server error)
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to delete. Please try again.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (error) {
+      // Handle unexpected errors (e.g., network issues)
+      print('Error deleting: $error');
+
+      // Check if context is still valid before showing Snackbar
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to delete. Please try again.'),
+            content: Text('An unexpected error occurred. Please try again.'),
             duration: Duration(seconds: 2),
           ),
         );
       }
-    } catch (error) {
-      print('Error deleting: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('An unexpected error occurred. Please try again.'),
-          duration: Duration(seconds: 2),
-        ),
-      );
     }
   }
 
@@ -328,6 +386,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             duration: Duration(seconds: 2),
           ),
         );
+        widget.onUpdate();
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
