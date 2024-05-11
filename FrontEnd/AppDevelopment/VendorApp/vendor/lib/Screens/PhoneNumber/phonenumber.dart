@@ -21,6 +21,58 @@ class _MyAppState extends State<PhoneNumber> {
   String selectedCountryCode = '+92';
   String phoneNumberError = '';
 
+  Future<bool> checkIfVendor(String userId) async {
+
+    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId";
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+
+      final dynamic json = jsonDecode(response.body);
+      String userType = json['user_type'];
+
+      print("User Type: " + userType);
+
+      if (userType == "Vendor") {
+        return true;
+      }
+
+      else {
+        return false;
+      }
+
+    } catch (e) {
+      print("Error checking if vendor: $e");
+      return false;
+    }
+
+  }
+
+  Future<String> getUserId(String phoneNumber) async {
+
+    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber";
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+
+      final dynamic json = jsonDecode(response.body);
+      String userId = json['userId'].toString();
+
+      print("UserId: " + userId);
+
+      return userId;
+
+    } catch (e) {
+      print("Error checking if user: $e");
+      return "";
+    }
+
+  }
+
   Future<bool> checkPhoneNumberExists(String phoneNumber) async {
     final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber";
 
@@ -82,20 +134,49 @@ class _MyAppState extends State<PhoneNumber> {
     );
   }
 
-
-
   void _handleConfirmation(String phoneNumber) async {
     bool phoneNumberExists = await checkPhoneNumberExists(phoneNumber);
+    String userId = await getUserId(phoneNumber);
 
     print("Phone Number Exists: $phoneNumberExists");
+
     if (phoneNumberExists) {
-      print("Navigating to Login");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Login(phoneNumber: phoneNumber),
-        ),
-      );
+      bool isVendor = await checkIfVendor(userId);
+
+      if (isVendor) {
+        print("Navigating to Login");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(phoneNumber: phoneNumber),
+          ),
+        );
+      }
+
+      else {
+        // Show dialog if user is not a vendor
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("This is the Vendor App"),
+              content: Text(
+                "This phone number is registered as a Grocery Store. "
+                    "Kindly use the Grocery Store App.",
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Text("Okay"),
+                ),
+              ],
+            );
+          },
+        );
+      }
+
     } else {
       print("Navigating to Registration");
       Navigator.push(

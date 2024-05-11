@@ -57,8 +57,6 @@ class _MyAppState extends State<Login> {
 
         if (response.statusCode == 200) {
 
-          print("Correct Password");
-
           // Password is correct, navigate to the next page (e.g., NavBar)
           Navigator.push(
             context,
@@ -66,7 +64,6 @@ class _MyAppState extends State<Login> {
           );
         } else {
           // Password is incorrect, show error message
-          print("Incorrect Password");
           _showErrorDialog(context, 'Incorrect password. Please try again.');
         }
       } catch (e) {
