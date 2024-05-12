@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
-import '../Inventory/itemdetails.dart';
 import 'orderhistory.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -269,7 +268,4 @@ class _HomeState extends State<Home> {
       );
     }
   }
-
-
-
 }

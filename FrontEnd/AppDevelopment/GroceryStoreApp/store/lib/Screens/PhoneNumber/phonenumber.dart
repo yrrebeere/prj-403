@@ -3,7 +3,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:store/Screens/OTP/otp.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
-import '../Registration/registration.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;

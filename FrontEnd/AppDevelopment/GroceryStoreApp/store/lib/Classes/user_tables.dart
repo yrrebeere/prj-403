@@ -1,5 +1,4 @@
 class UserTables {
-  // final int userId;
   final int phoneNumber;
   final String name;
   final String username;
@@ -7,7 +6,6 @@ class UserTables {
   final String userType;
 
   UserTables({
-    // required this.userId,
     required this.phoneNumber,
     required this.name,
     required this.username,
@@ -17,7 +15,6 @@ class UserTables {
 
   factory UserTables.fromJson(Map<String, dynamic> json) {
     return UserTables(
-      // userId: json['user_id'],
       phoneNumber: json['phone_number'],
       name: json['name'],
       username: json['username'],

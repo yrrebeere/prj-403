@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'dart:async';
 import '../Registration/registration.dart';
 
-
 class OTP extends StatefulWidget {
   final String phoneNumber;
   final String password;

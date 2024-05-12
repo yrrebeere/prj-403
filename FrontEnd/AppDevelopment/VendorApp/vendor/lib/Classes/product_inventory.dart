@@ -6,7 +6,6 @@ class ProductInventory {
   final int vendorId;
   final int productId;
 
-
   ProductInventory({
     required this.productInventoryId,
     required this.price,

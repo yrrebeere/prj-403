@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:store/Screens/NavigationBar/navbar.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 void main() => runApp(InventoryApp());

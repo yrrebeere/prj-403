@@ -69,35 +69,6 @@ class _LanguageState extends State<Language> {
                 decoration: BoxDecoration(color: Colors.white),
                 child: Stack(
                   children: [
-                    // Positioned(
-                    //   right: screenWidth * 0.25,
-                    //   top: screenHeight * 0.18,
-                    //   child: Container(
-                    //     padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 9.0),
-                    //     color: Colors.green,
-                    //     child: Text(
-                    //       AppLocalizations.of(context)!.app_type,
-                    //       style: TextStyle(
-                    //         color: Colors.white,
-                    //         fontSize: 16.0,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Positioned(
-                    //   left: screenWidth * 0.40,
-                    //   top: screenHeight * 0.3,
-                    //   child: Center(
-                    //     child: Text(
-                    //       AppLocalizations.of(context)!.welcome_msg,
-                    //       style: TextStyle(
-                    //         color: Colors.green,
-                    //         fontSize: screenWidth * 0.06,
-                    //         fontWeight: FontWeight.w400,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     Positioned(
                       left: screenWidth * 0.38,
                       top: screenHeight * 0.1,

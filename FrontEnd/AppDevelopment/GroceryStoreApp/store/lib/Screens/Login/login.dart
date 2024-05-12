@@ -306,45 +306,6 @@ class _MyAppState extends State<Login> {
                                       ),
                                     ),
                                   ),
-                                  // Positioned(
-                                  //   left: screenWidth * 0.4,
-                                  //   top: screenHeight * 0.68,
-                                  //   child: GestureDetector(
-                                  //     onTap: () {
-                                  //       FocusScope.of(context).unfocus();
-                                  //       if (_formKey.currentState!.validate()) {
-                                  //         String password = passwordController.text;
-                                  //         Navigator.push(
-                                  //           builderContext,
-                                  //           MaterialPageRoute(
-                                  //             builder: (context) => NavBar(),
-                                  //           ),
-                                  //         );
-                                  //       }
-                                  //     },
-                                  //     child: Container(
-                                  //       width: screenWidth * 0.2,
-                                  //       decoration: BoxDecoration(
-                                  //         color: const Color(0xFF007AFF),
-                                  //         borderRadius: BorderRadius.circular(
-                                  //             screenHeight * 0.03),
-                                  //       ),
-                                  //       child: Container(
-                                  //         padding: const EdgeInsets.all(16.0),
-                                  //         decoration: BoxDecoration(
-                                  //           color: Color(0xFF6FB457),
-                                  //           borderRadius: BorderRadius.circular(8.0),
-                                  //         ),
-                                  //         child: Center(
-                                  //           child: Text(
-                                  //             AppLocalizations.of(context)!.login,
-                                  //             style: TextStyle(color: Colors.white),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   Positioned(
                                     left: screenWidth * 0.4,
                                     top: screenHeight * 0.68,
@@ -377,7 +338,8 @@ class _MyAppState extends State<Login> {
                                   ),
                                 ],
                               ),
-                            )),
+                            )
+                        ),
                       ),
                     );
                   },

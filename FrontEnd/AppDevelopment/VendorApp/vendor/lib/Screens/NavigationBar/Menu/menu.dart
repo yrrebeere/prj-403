@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
 class VendorIdManager {
   static int? vendorId;
 
@@ -260,7 +259,8 @@ class _MenuState extends State<Menu> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                      AppLocalizations.of(context)!.about,                                    style: TextStyle(fontSize: 20),
+                                    AppLocalizations.of(context)!.about,
+                                    style: TextStyle(fontSize: 20),
                                   ),
                                 ),
                                 Padding(

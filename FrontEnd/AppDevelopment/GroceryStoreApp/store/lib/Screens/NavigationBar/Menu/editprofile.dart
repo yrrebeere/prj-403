@@ -4,7 +4,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:provider/provider.dart';
 
-
 class EditProfile extends StatefulWidget {
   @override
   _EditProfileState createState() => _EditProfileState();

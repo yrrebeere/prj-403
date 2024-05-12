@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
-
 class CurrentOrdersPage extends StatelessWidget {
   final int vendorId;
 

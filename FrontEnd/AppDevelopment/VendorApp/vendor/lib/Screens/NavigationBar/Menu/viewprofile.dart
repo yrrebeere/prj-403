@@ -50,6 +50,13 @@ class _ViewProfileState extends State<ViewProfile> {
 
   Future<void> updateField(String field, String value) async {
     try {
+      if (field == 'password') {
+        if (!_isPasswordValid(value)) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid password. Password must be at least 8 characters long and contain at least one special character')));
+          return;
+        }
+      }
+
       final response = await http.put(
         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/${widget.userId}'),
         body: {field: value},
@@ -84,6 +91,7 @@ class _ViewProfileState extends State<ViewProfile> {
     }
   }
 
+
   Future<bool> isUsernameAvailable(String username) async {
     final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username'));
     print(username+response.body);
@@ -98,6 +106,7 @@ class _ViewProfileState extends State<ViewProfile> {
 
   Future<void> showEditDialog(String field, String currentValue) async {
     String editedValue = currentValue;
+    bool isPasswordValid = false;
 
     await showDialog(
       context: context,
@@ -107,13 +116,24 @@ class _ViewProfileState extends State<ViewProfile> {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextField(
-                controller: TextEditingController(text: editedValue),
-                onChanged: (value) {
-                  editedValue = value;
-                },
-                decoration: InputDecoration(labelText: 'New $field'),
-              ),
+              if (field == 'password') // Handle password field
+                TextField(
+                  obscureText: true,
+                  onChanged: (value) {
+                    editedValue = value;
+                    // Check password validation
+                    isPasswordValid = _isPasswordValid(editedValue);
+                  },
+                  decoration: InputDecoration(labelText: 'New Password'),
+                )
+              else // For other fields
+                TextField(
+                  controller: TextEditingController(text: editedValue),
+                  onChanged: (value) {
+                    editedValue = value;
+                  },
+                  decoration: InputDecoration(labelText: 'New $field'),
+                ),
             ],
           ),
           actions: [
@@ -137,6 +157,11 @@ class _ViewProfileState extends State<ViewProfile> {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Phone number already exists')));
                     return;
                   }
+                } else if (field == 'password') {
+                  if (!isPasswordValid) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid password. Password must be at least 8 characters long and contain at least one special character')));
+                    return;
+                  }
                 }
 
                 updateField(field, editedValue);
@@ -149,6 +174,14 @@ class _ViewProfileState extends State<ViewProfile> {
       },
     );
   }
+
+  bool _isPasswordValid(String password) {
+    // Validate password: at least 8 characters long and contains at least one special character
+    if (password.length < 8) return false;
+    if (!password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) return false;
+    return true;
+  }
+
 
   // Helper function to capitalize the first letter of a string
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
@@ -214,6 +247,9 @@ class _ViewProfileState extends State<ViewProfile> {
               SizedBox(height: 20),
               _buildProfileInfo("Language", language, () {
                 showEditDialog('language', language);
+              }),
+              _buildProfileInfo("Password", "*********", () {
+                showEditDialog('password', ''); // Initialize with empty password
               }),
             ],
           ),

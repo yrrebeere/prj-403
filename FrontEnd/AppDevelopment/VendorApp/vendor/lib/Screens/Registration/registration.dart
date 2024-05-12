@@ -6,7 +6,6 @@ import '../Login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'registrationprovider.dart';
 
 class Registration extends StatefulWidget {
   String phoneNumberController;

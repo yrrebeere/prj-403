@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vendor/Screens/NavigationBar/navbar.dart';
-import '../../SelectLanguage/languageprovider.dart';
-import 'package:provider/provider.dart';
 import 'inventory.dart';
 
 class ItemDetailsPage extends StatefulWidget {
@@ -276,40 +273,6 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     );
   }
 
-  // Future<void> _deleteProductInventory(int productInventoryId) async {
-  //   try {
-  //     final response = await http.delete(
-  //       Uri.parse(
-  //           'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       widget.onDelete();
-  //       Navigator.pop(context);
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text('Successfully deleted!'),
-  //           duration: Duration(seconds: 2),
-  //         ),
-  //       );
-  //     } else {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(
-  //           content: Text('Failed to delete. Please try again.'),
-  //           duration: Duration(seconds: 2),
-  //         ),
-  //       );
-  //     }
-  //   } catch (error) {
-  //     print('Error deleting: $error');
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('An unexpected error occurred. Please try again.'),
-  //         duration: Duration(seconds: 2),
-  //       ),
-  //     );
-  //   }
-  // }
-
   Future<void> _deleteProductInventory(int productInventoryId) async {
     try {
       final response = await http.delete(
@@ -406,5 +369,3 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     }
   }
 }
-
-

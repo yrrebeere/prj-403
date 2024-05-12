@@ -5,7 +5,6 @@ import 'package:vendor/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Inventory/inventory.dart';
 import 'package:provider/provider.dart';
-import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';

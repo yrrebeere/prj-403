@@ -38,4 +38,3 @@ class MyVendorApp extends StatelessWidget {
     );
   }
 }
-

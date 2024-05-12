@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:vendor/Screens/Login/resetpassword.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,6 @@ import '../PhoneNumber/phonenumberprovider.dart';
 import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Login extends StatefulWidget {
   final String phoneNumber;
@@ -35,7 +33,7 @@ class _MyAppState extends State<Login> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: Text('OK'),
             ),
@@ -249,7 +247,8 @@ class _MyAppState extends State<Login> {
                                               color: Colors.teal,
                                             ),
                                           ),
-                                        )),
+                                        )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -302,46 +301,6 @@ class _MyAppState extends State<Login> {
                                   )),
                             ),
                           ),
-
-                          // Positioned(
-                          //   left: screenWidth * 0.4,
-                          //   top: screenHeight * 0.798,
-                          //   child: GestureDetector(
-                          //     onTap: () {
-                          //       FocusScope.of(context).unfocus();
-                          //       if (_formKey.currentState!.validate()) {
-                          //         String password = passwordController.text;
-                          //         Navigator.push(
-                          //           builderContext,
-                          //           MaterialPageRoute(
-                          //             builder: (context) => NavBar(),
-                          //           ),
-                          //         );
-                          //       }
-                          //     },
-                          //     child: Container(
-                          //       width: screenWidth * 0.2,
-                          //       decoration: BoxDecoration(
-                          //         color: const Color(0xFF007AFF),
-                          //         borderRadius: BorderRadius.circular(
-                          //             screenHeight * 0.03),
-                          //       ),
-                          //       child: Container(
-                          //         padding: const EdgeInsets.all(16.0),
-                          //         decoration: BoxDecoration(
-                          //           color: Color(0xFFFF9100),
-                          //           borderRadius: BorderRadius.circular(8.0),
-                          //         ),
-                          //         child: Center(
-                          //           child: Text(
-                          //             AppLocalizations.of(context)!.login,
-                          //             style: TextStyle(color: Colors.white),
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                           Positioned(
                             left: screenWidth * 0.4,
                             top: screenHeight * 0.68,

@@ -24,8 +24,6 @@ class searchProductInventory {
   }
 }
 
-
-
 class Order extends StatefulWidget {
   const Order({Key? key}) : super(key: key);
 
