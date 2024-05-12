@@ -157,7 +157,7 @@ class _ViewProfileState extends State<ViewProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF6FB457),
+        backgroundColor: Color(0xFFFF9100),
         title: Padding(
           padding: const EdgeInsets.only(left: 90),
           child: Text(
@@ -187,7 +187,7 @@ class _ViewProfileState extends State<ViewProfile> {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Color(0xFF6FB457),
+                    color: Color(0xFFFF9100),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -251,4 +251,3 @@ class _ViewProfileState extends State<ViewProfile> {
     );
   }
 }
-

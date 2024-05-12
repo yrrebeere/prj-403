@@ -103,7 +103,7 @@ class _MenuState extends State<Menu> {
                                 height: 100,
                                 width: 100,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
+                                  color: Color(0xFFFF9100),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Center(
@@ -146,7 +146,7 @@ class _MenuState extends State<Menu> {
                                       height: 50,
                                       width: 50,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFF6FB457),
+                                        color: Color(0xFFFF9100),
                                         borderRadius:
                                             BorderRadius.circular(100),
                                       ),

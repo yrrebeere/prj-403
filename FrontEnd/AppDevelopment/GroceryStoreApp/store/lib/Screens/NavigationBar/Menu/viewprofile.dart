@@ -1,5 +1,219 @@
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:http/http.dart' as http;
+// import 'dart:convert';
+//
+// class ViewProfile extends StatefulWidget {
+//   final String userId;
+//
+//   ViewProfile({required this.userId});
+//
+//   @override
+//   _ViewProfileState createState() => _ViewProfileState();
+// }
+//
+// class _ViewProfileState extends State<ViewProfile> {
+//   late String name;
+//   late String number;
+//   late String username;
+//   late String language;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     name = "";
+//     number = "";
+//     username = "";
+//     language = "";
+//     fetchUserProfile(widget.userId);
+//   }
+//
+//   Future<void> fetchUserProfile(String userId) async {
+//     try {
+//       final response = await http
+//           .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
+//
+//       if (response.statusCode == 200) {
+//         final data = json.decode(response.body);
+//         setState(() {
+//           name = data['name'];
+//           number = data['phone_number'].toString().trim();
+//           username = data['username'].toString().trim();
+//           language = data['language'].toString().trim();
+//         });
+//       } else {
+//         print(
+//             'Failed to fetch user information. Status code: ${response.statusCode}');
+//       }
+//     } catch (error) {
+//       print('Error during HTTP request: $error');
+//     }
+//   }
+//
+//   Future<void> updateUserName(String newName) async {
+//     try {
+//       final response = await http.put(
+//         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/${widget.userId}'),
+//         body: {'name': newName},
+//       );
+//
+//       if (response.statusCode == 200) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             content: Text('Name updated successfully'),
+//           ),
+//         );
+//       } else {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(
+//             content: Text('Failed to update name. Status code: ${response.statusCode}'),
+//           ),
+//         );
+//       }
+//     } catch (error) {
+//       print('Error during HTTP request: $error');
+//     }
+//   }
+//
+//   Future<void> showEditDialog() async {
+//     String editedName = name;
+//
+//     await showDialog(
+//       context: context,
+//       builder: (BuildContext context) {
+//         return AlertDialog(
+//           title: Text('Edit Name'),
+//           content: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Text('$name'),
+//               TextField(
+//                 onChanged: (value) {
+//                   editedName = value;
+//                 },
+//                 decoration: InputDecoration(labelText: 'New Name'),
+//               ),
+//             ],
+//           ),
+//           actions: [
+//             TextButton(
+//               onPressed: () {
+//                 Navigator.pop(context);
+//               },
+//               child: Text('Cancel'),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 updateUserName(editedName);
+//                 Navigator.pop(context);
+//                 setState(() {
+//                   name = editedName;
+//                 });
+//               },
+//               child: Text('Save'),
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         backgroundColor: Color(0xFF6FB457),
+//         title: Padding(
+//           padding: const EdgeInsets.only(left: 90),
+//           child: Text(
+//             AppLocalizations.of(context)!.app_name,
+//           ),
+//         ),
+//         elevation: 0,
+//         leading: IconButton(
+//           icon: GestureDetector(
+//             onTap: () {
+//               Navigator.pop(context);
+//             },
+//             child: Icon(Icons.arrow_back_ios),
+//           ),
+//           onPressed: () {
+//             Navigator.pop(context);
+//           },
+//         ),
+//       ),
+//       body: SingleChildScrollView(
+//         child: Center(
+//           child: Column(
+//             children: [
+//               Padding(
+//                 padding: const EdgeInsets.all(10.0),
+//                 child: Container(
+//                   height: 100,
+//                   width: 100,
+//                   decoration: BoxDecoration(
+//                     color: Color(0xFF6FB457),
+//                     shape: BoxShape.circle,
+//                   ),
+//                   child: Center(
+//                     child: Icon(
+//                       Icons.person,
+//                       color: Colors.white,
+//                       size: 50,
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(height: 20),
+//               _buildProfileInfo("Name", name),
+//               SizedBox(height: 20),
+//               _buildProfileInfo("Username", username),
+//               SizedBox(height: 20),
+//               _buildProfileInfo("Phone Number", number),
+//               SizedBox(height: 20),
+//               _buildProfileInfo("Language", language),
+//               SizedBox(height: 20),
+//               ElevatedButton(
+//                 onPressed: () {
+//                   showEditDialog();
+//                 },
+//                 child: Text(AppLocalizations.of(context)!.edit),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+//
+//   Widget _buildProfileInfo(String label, String value) {
+//     return Padding(
+//       padding: const EdgeInsets.symmetric(horizontal: 20),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             children: [
+//               Text(
+//                 "$label: ",
+//                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+//               ),
+//             ],
+//           ),
+//           SizedBox(height: 8),
+//           Text(
+//             value,
+//             style: TextStyle(fontSize: 18, color: label == "Name" ? null : Colors.grey),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -31,8 +245,7 @@ class _ViewProfileState extends State<ViewProfile> {
 
   Future<void> fetchUserProfile(String userId) async {
     try {
-      final response = await http
-          .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
+      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -43,31 +256,41 @@ class _ViewProfileState extends State<ViewProfile> {
           language = data['language'].toString().trim();
         });
       } else {
-        print(
-            'Failed to fetch user information. Status code: ${response.statusCode}');
+        print('Failed to fetch user information. Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Error during HTTP request: $error');
     }
   }
 
-  Future<void> updateUserName(String newName) async {
+  Future<void> updateField(String field, String value) async {
     try {
       final response = await http.put(
         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/${widget.userId}'),
-        body: {'name': newName},
+        body: {field: value},
       );
 
       if (response.statusCode == 200) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Name updated successfully'),
+            content: Text('${field} updated successfully'),
           ),
         );
+        setState(() {
+          if (field == 'name') {
+            name = value;
+          } else if (field == 'username') {
+            username = value;
+          } else if (field == 'phone_number') {
+            number = value;
+          } else if (field == 'language') {
+            language = value;
+          }
+        });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Failed to update name. Status code: ${response.statusCode}'),
+            content: Text('Failed to update ${field.toLowerCase()}. Status code: ${response.statusCode}'),
           ),
         );
       }
@@ -76,23 +299,35 @@ class _ViewProfileState extends State<ViewProfile> {
     }
   }
 
-  Future<void> showEditDialog() async {
-    String editedName = name;
+  Future<bool> isUsernameAvailable(String username) async {
+    final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username'));
+    print(username+response.body);
+    return response.statusCode == 200 && json.decode(response.body) == false;
+  }
+
+  Future<bool> isPhoneNumberAvailable(String phoneNumber) async {
+    final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber'));
+    print(json.decode(response.body)['exists']);
+    return response.statusCode == 200 && json.decode(response.body)['exists'] == false;
+  }
+
+  Future<void> showEditDialog(String field, String currentValue) async {
+    String editedValue = currentValue;
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Name'),
+          title: Text('Edit $field'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('$name'),
               TextField(
+                controller: TextEditingController(text: editedValue),
                 onChanged: (value) {
-                  editedName = value;
+                  editedValue = value;
                 },
-                decoration: InputDecoration(labelText: 'New Name'),
+                decoration: InputDecoration(labelText: 'New $field'),
               ),
             ],
           ),
@@ -104,12 +339,23 @@ class _ViewProfileState extends State<ViewProfile> {
               child: Text('Cancel'),
             ),
             ElevatedButton(
-              onPressed: () {
-                updateUserName(editedName);
+              onPressed: () async {
+                if (field == 'username') {
+                  final isUsernameValid = await isUsernameAvailable(editedValue);
+                  if (!isUsernameValid) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Username already exists')));
+                    return;
+                  }
+                } else if (field == 'phone_number') {
+                  final isPhoneNumberValid = await isPhoneNumberAvailable(editedValue);
+                  if (!isPhoneNumberValid) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Phone number already exists')));
+                    return;
+                  }
+                }
+
+                updateField(field, editedValue);
                 Navigator.pop(context);
-                setState(() {
-                  name = editedName;
-                });
               },
               child: Text('Save'),
             ),
@@ -118,6 +364,9 @@ class _ViewProfileState extends State<ViewProfile> {
       },
     );
   }
+
+  // Helper function to capitalize the first letter of a string
+  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   @override
   Widget build(BuildContext context) {
@@ -166,20 +415,21 @@ class _ViewProfileState extends State<ViewProfile> {
                 ),
               ),
               SizedBox(height: 20),
-              _buildProfileInfo("Name", name),
+              _buildProfileInfo("Name", name, () {
+                showEditDialog('name', name);
+              }),
               SizedBox(height: 20),
-              _buildProfileInfo("Username", username),
+              _buildProfileInfo("Username", username, () {
+                showEditDialog('username', username);
+              }),
               SizedBox(height: 20),
-              _buildProfileInfo("Phone Number", number),
+              _buildProfileInfo("Phone Number", number, () {
+                showEditDialog('phone_number', number);
+              }),
               SizedBox(height: 20),
-              _buildProfileInfo("Language", language),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  showEditDialog();
-                },
-                child: Text(AppLocalizations.of(context)!.edit),
-              ),
+              _buildProfileInfo("Language", language, () {
+                showEditDialog('language', language);
+              }),
             ],
           ),
         ),
@@ -187,7 +437,7 @@ class _ViewProfileState extends State<ViewProfile> {
     );
   }
 
-  Widget _buildProfileInfo(String label, String value) {
+  Widget _buildProfileInfo(String label, String value, VoidCallback onPressed) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
@@ -200,11 +450,15 @@ class _ViewProfileState extends State<ViewProfile> {
                 "$label: ",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
+              ElevatedButton(
+                onPressed: onPressed,
+                child: Text('Edit'),
+              ),
             ],
           ),
           SizedBox(height: 8),
           Text(
-            value,
+            value.isNotEmpty ? value : 'Not provided',
             style: TextStyle(fontSize: 18, color: label == "Name" ? null : Colors.grey),
           ),
         ],
