@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../Classes/product_inventory.dart';
 import 'package:vendor/Classes/product_inventory.dart';
 
 void main() => runApp(
@@ -24,7 +25,7 @@ class ProductInventoryScreen extends StatefulWidget {
 
 class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
   TextEditingController productInventoryIdController = TextEditingController();
-  List<ProductInventory> _productInventoryList = [];
+  List<productInventory> _productInventoryList = [];
 
   @override
   void initState() {
@@ -38,7 +39,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
       setState(() {
-        _productInventoryList = jsonList.map((item) => ProductInventory.fromJson(item)).toList();
+        _productInventoryList = jsonList.map((item) => productInventory.fromJson(item)).toList();
       });
     } else {
       print('Failed to load product inventory');
@@ -89,7 +90,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
     if (response.statusCode == 200) {
       final dynamic json = jsonDecode(response.body);
       setState(() {
-        _productInventoryList = [ProductInventory.fromJson(json)];
+        _productInventoryList = [productInventory.fromJson(json)];
       });
     } else {
       print('Failed to load product inventory by ID');
@@ -191,13 +192,13 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
     TextEditingController vendorIdController = TextEditingController();
     TextEditingController productIdController = TextEditingController();
 
-    ProductInventory existingProductInventory = await _fetchProductInventoryDetails(productInventoryId);
+    productInventory existingProductInventory = await _fetchProductInventoryDetails(productInventoryId);
 
     priceController.text = existingProductInventory.price.toString();
     availableAmountController.text = existingProductInventory.availableAmount.toString();
     listedAmountController.text = existingProductInventory.listedAmount.toString();
-    vendorIdController.text = existingProductInventory.vendorId.toString();
-    productIdController.text = existingProductInventory.productId.toString();
+    vendorIdController.text = existingProductInventory.vendorVendorId.toString();
+    productIdController.text = existingProductInventory.productProductId.toString();
 
     await showDialog(
       context: context,
@@ -260,14 +261,14 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
     );
   }
 
-  Future<ProductInventory> _fetchProductInventoryDetails(int productInventoryId) async {
+  Future<productInventory> _fetchProductInventoryDetails(int productInventoryId) async {
     final response = await http.get(
       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
     );
 
     if (response.statusCode == 200) {
       final dynamic json = jsonDecode(response.body);
-      return ProductInventory.fromJson(json);
+      return productInventory.fromJson(json);
     } else {
       print('Failed to load product inventory details by ID');
       throw Exception('Failed to load product inventory details by ID');
@@ -449,7 +450,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
                   itemCount: _productInventoryList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
-                      title: Text('Product ID: ${_productInventoryList[index].productId}'),
+                      title: Text('Product ID: ${_productInventoryList[index].productProductId}'),
                       subtitle: Text('Price: ${_productInventoryList[index].price}'),
                       trailing: ElevatedButton(
                         onPressed: () async {

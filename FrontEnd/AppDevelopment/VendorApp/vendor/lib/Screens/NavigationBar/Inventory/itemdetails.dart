@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'inventory.dart';
+import '../../../Classes/product_inventory.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   final productInventory item;

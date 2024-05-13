@@ -1,28 +1,28 @@
-class ProductInventory {
+class productInventory {
   final int productInventoryId;
   final int price;
   final int availableAmount;
   final int listedAmount;
-  final int vendorId;
-  final int productId;
+  final int vendorVendorId;
+  final int productProductId;
 
-  ProductInventory({
+  productInventory({
     required this.productInventoryId,
     required this.price,
     required this.availableAmount,
     required this.listedAmount,
-    required this.vendorId,
-    required this.productId,
+    required this.vendorVendorId,
+    required this.productProductId,
   });
 
-  factory ProductInventory.fromJson(Map<String, dynamic> json) {
-    return ProductInventory(
+  factory productInventory.fromJson(Map<String, dynamic> json) {
+    return productInventory(
       productInventoryId: json['product_inventory_id'],
       price: json['price'],
       availableAmount: json['available_amount'],
       listedAmount: json['listed_amount'],
-      vendorId: json['vendor_vendor_id'],
-      productId: json['product_product_id'],
+      vendorVendorId: json['vendor_vendor_id'],
+      productProductId: json['product_product_id'],
     );
   }
 }
