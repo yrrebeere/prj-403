@@ -113,11 +113,36 @@ const uploadProductImage = (req, res) => {
     });
 };
 
+const uploadCategoryImage = (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ error: 'Error uploading image.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image uploaded.' });
+        }
+
+        const categoryImagePath = path.join(__dirname, '../uploads/categories', req.file.filename);
+
+        // Move the uploaded image to the "categories" folder
+        fs.rename(req.file.path, categoryImagePath, (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to move image to categories folder.' });
+            }
+
+            res.status(200).json({ filename: req.file.filename });
+        });
+    });
+};
+
+
 module.exports = {
     getProductImage,
     getCategoryImage,
     getStoreImage,
     getVendorImage,
     // uploadImage,
-    uploadProductImage
+    uploadProductImage,
+    uploadCategoryImage
 };
