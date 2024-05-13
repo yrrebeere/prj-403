@@ -4,8 +4,19 @@ const fs = require('fs');
 const db = require('../models')
 const Image = db.image
 
-const upload = multer({ dest: 'uploads/products' });
+const storage = multer.diskStorage({
 
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        console.log(file)
+        cb(null, file.originalname)
+    }
+
+})
+
+const upload = multer({storage: storage})
 
 const getProductImage = (req, res) => {
     const filename = req.params.filename;
@@ -62,10 +73,51 @@ const getVendorImage = (req, res) => {
     });
 };
 
+// const uploadImage = (req, res) => {
+//     upload.single('file')(req, res, (err) => {
+//
+//         console.log(req.file)
+//
+//         if (err) {
+//             return res.status(400).json({ error: 'Error uploading image.' });
+//         }
+//
+//         if (!req.file) {
+//             return res.status(400).json({ error: 'No image uploaded.' });
+//         }
+//
+//         res.status(200).json({ filename: req.file.filename });
+//     });
+// };
+
+const uploadProductImage = (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ error: 'Error uploading image.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image uploaded.' });
+        }
+
+        const productImagePath = path.join(__dirname, '../uploads/products', req.file.filename);
+
+        // Move the uploaded image to the "products" folder
+        fs.rename(req.file.path, productImagePath, (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to move image to products folder.' });
+            }
+
+            res.status(200).json({ filename: req.file.filename });
+        });
+    });
+};
 
 module.exports = {
     getProductImage,
     getCategoryImage,
     getStoreImage,
-    getVendorImage
+    getVendorImage,
+    // uploadImage,
+    uploadProductImage
 };
