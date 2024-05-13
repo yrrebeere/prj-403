@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StoreService from '../../services/StoreService';
 import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Input, Layout, Menu, Button } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
+const { Search } = Input;
 
 const ListStoreComponent = () => {
     const [stores, setStores] = useState([]);
-    const [showStores, setShowStores] = useState(true); // Initially show stores
+    const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();
 
     useEffect(() => {
@@ -25,15 +26,23 @@ const ListStoreComponent = () => {
         fetchData();
     }, []);
 
+    const handleSearch = (value) => {
+        setSearchTerm(value.toLowerCase());
+    };
+
     const deleteStore = async (storeId) => {
         try {
             await StoreService.deleteStore(storeId);
-            const updatedStores = stores.filter(store => store.store_id !== storeId);
-            setStores(updatedStores);
+            setStores(stores.filter(store => store.store_id !== storeId));
         } catch (error) {
             console.error("Error deleting store:", error);
         }
     };
+
+    const filteredStores = stores.filter(store =>
+        store.store_name.toLowerCase().includes(searchTerm) ||
+        store.store_address.toLowerCase().includes(searchTerm)
+    );
 
     const isActive = (path) => location.pathname === path;
 
@@ -51,7 +60,7 @@ const ListStoreComponent = () => {
             <Sider
                 width={220}
                 style={{
-                    background: '#fff', // White background color
+                    background: '#fff',
                     overflow: 'auto',
                     height: '100vh',
                 }}
@@ -70,7 +79,7 @@ const ListStoreComponent = () => {
                 </div>
 
                 <Menu
-                    theme="light" // Light theme for the menu
+                    theme="light"
                     mode="inline"
                     defaultSelectedKeys={['2']}
                     selectedKeys={isActive() ? [] : [location.pathname]}
@@ -84,37 +93,53 @@ const ListStoreComponent = () => {
             </Sider>
             <Layout>
                 <div className={styles.body}>
-                    <h2>Stores</h2>
-                    <div>
-                        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-                            <Link to="/add-store" className="btn btn-primary">Add Store</Link>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+                        <div style={{
+                            paddingTop: '25px',
+                            paddingBottom: '25px',
+                            paddingLeft: '25px',
+                            color: 'black', // Changed to blue color
+                            fontSize: '20px',
+                            fontWeight: 'bold'
+                        }}>
+                            Grocery Management
                         </div>
-                        <div className="table-container" style={{ textAlign: 'center' }}>
-                            <table className="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Icon</th>
-                                    <th>Store Name</th>
-                                    <th>Location</th>
-                                    <th>Options</th>
+                        <div style={{ marginRight: '25px', paddingTop: '70px', paddingRight: '33px' }}>
+                            <Search
+                                placeholder="Search store"
+                                allowClear
+                                enterButton="Search"
+                                size="middle"
+                                onSearch={handleSearch}
+                                onChange={e => handleSearch(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
+                        <table className="table table-striped" style={{ width: '90%', borderCollapse: 'collapse', backgroundColor: 'white' }}>
+                            <thead>
+                            <tr>
+                                <th style={{ backgroundColor: 'white' }}>Icon</th>
+                                <th style={{ backgroundColor: 'white' }}>Store Name</th>
+                                <th style={{ backgroundColor: 'white' }}>Location</th>
+                                <th style={{ backgroundColor: 'white' }}>Options</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {filteredStores.map(store => (
+                                <tr key={store.store_id}>
+                                    <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
+                                    <td>{store.store_name}</td>
+                                    <td>{store.store_address}</td>
+                                    <td align="center">
+                                        <Link to={`/edit-store/${store.store_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
+                                        <Button type="primary" danger onClick={() => deleteStore(store.store_id)} style={{ marginLeft: '5px' }}>Delete</Button>
+                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link>
+                                    </td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                {stores.map(store => (
-                                    <tr key={store.store_id}>
-                                        <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
-                                        <td>{store.store_name}</td>
-                                        <td>{store.store_address}</td>
-                                        <td align="center">
-                                            <Link to={`/edit-store/${store.store_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
-                                            <button onClick={() => deleteStore(store.store_id)} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</button>
-                                            <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link>
-                                        </td>
-                                    </tr>
-                                ))}
-                                </tbody>
-                            </table>
-                        </div>
+                            ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </Layout>

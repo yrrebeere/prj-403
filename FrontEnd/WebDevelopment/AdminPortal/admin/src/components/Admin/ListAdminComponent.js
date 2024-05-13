@@ -1,14 +1,7 @@
 import React from 'react';
 import AdminService from '../../services/AdminService'; // Assuming this fetches admin data
-import { Layout, Menu, Input, Button } from 'antd'; // Import Input and Button from Ant Design
-import {
-    UserOutlined,
-    VideoCameraOutlined,
-    UploadOutlined,
-    BarChartOutlined,
-    CloudOutlined,
-    AppstoreOutlined,
-} from '@ant-design/icons';
+import { Layout, Menu, Input } from 'antd'; // Import Input and Button from Ant Design
+import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { Link, useLocation } from 'react-router-dom';
 
 const { Sider } = Layout;
@@ -38,27 +31,13 @@ const ListAdminComponent = () => {
     const handleSearch = (value) => {
         // Update search term
         setSearchTerm(value.toLowerCase());
-
-        if (value.trim() === '') { // Check if the search term is empty or whitespace
-            // Reset highlighting for all admins
-            const resetAdmins = admins.map(admin => ({ ...admin, highlighted: false }));
-            setAdmins(resetAdmins); // Update admins state with reset highlighting
-            return; // Exit early
-        }
-
-        // Highlight matching admins based on new search term
-        const updatedAdmins = admins.map(admin => {
-            const emailMatch = admin.email.toLowerCase().includes(value.toLowerCase());
-            const roleMatch = admin.admin_role.toLowerCase().includes(value.toLowerCase());
-            return {
-                ...admin,
-                highlighted: emailMatch || roleMatch,
-            };
-        });
-
-        // Update admins state with the newly highlighted rows
-        setAdmins(updatedAdmins);
     };
+
+    const filteredAdmins = admins.filter(admin => {
+        const emailMatch = admin.email.toLowerCase().includes(searchTerm);
+        const roleMatch = admin.admin_role.toLowerCase().includes(searchTerm);
+        return emailMatch || roleMatch;
+    });
 
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'User Management', url: '/' },
@@ -79,7 +58,7 @@ const ListAdminComponent = () => {
                     height: '100vh',
                 }}
             >
-                <div style={{display: 'flex', alignItems: 'center'}}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
                     <div style={{
                         paddingTop: '30px',
                         paddingBottom: '25px',
@@ -106,10 +85,10 @@ const ListAdminComponent = () => {
                 </Menu>
             </Sider>
             <Layout>
-                <div style={{padding: '1px'}}>
-                    <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}> {/* Added justifyContent for spacing */}
+                <div style={{ padding: '1px' }}>
+                    <div style={{  display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}> {/* Added justifyContent for spacing */}
                         <div style={{
-                            paddingTop: '28px',
+                            paddingTop: '25px',
                             paddingBottom: '25px',
                             paddingLeft: '25px',
                             color: 'black', // Changed to blue color
@@ -129,7 +108,7 @@ const ListAdminComponent = () => {
                             />
                         </div>
                     </div>
-                    <div style={{overflowX: 'auto', marginTop: '100px',}}> {/* Added marginTop for spacing */}
+                    <div style={{ overflowX: 'auto', marginTop: '20px' }}> {/* Added marginTop for spacing */}
                         <table className="table table-striped" style={{
                             margin: '0 auto',
                             minWidth: '600px',
@@ -140,28 +119,24 @@ const ListAdminComponent = () => {
                                 backgroundColor: 'white'
                             }}> {/* Changed heading color to blue and background color to white */}
                             <tr>
-                                <th style={{backgroundColor: 'white'}}>Email</th>
+                                <th style={{ backgroundColor: 'white' }}>Email</th>
                                 {/* Added background color to th */}
-                                <th style={{backgroundColor: 'white'}}>Role</th>
+                                <th style={{ backgroundColor: 'white' }}>Role</th>
                                 {/* Added background color to th */}
-                                <th style={{backgroundColor: 'white'}}>Options</th>
+                                <th style={{ backgroundColor: 'white' }}>Options</th>
                                 {/* Added background color to th */}
                             </tr>
                             </thead>
 
                             <tbody>
-                            {admins.map(admin => (
-                                <tr key={admin.admin_id}
-                                    style={{backgroundColor: admin.highlighted ? 'yellow' : 'transparent'}}> {/* Highlight based on 'highlighted' flag */}
+                            {filteredAdmins.map(admin => (
+                                <tr key={admin.admin_id}>
                                     <td>{admin.email}</td>
                                     <td>{admin.admin_role}</td>
                                     <td align="center">
-                                        <Link to={`/`} className="btn btn-primary"
-                                              style={{marginLeft: '5px'}}>Edit</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-danger"
-                                              style={{marginLeft: '5px'}}>Delete</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-primary"
-                                              style={{marginLeft: '5px'}}>View</Link> &nbsp;
+                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link> &nbsp;
+                                        <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
+                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
                                     </td>
                                 </tr>
                             ))}
