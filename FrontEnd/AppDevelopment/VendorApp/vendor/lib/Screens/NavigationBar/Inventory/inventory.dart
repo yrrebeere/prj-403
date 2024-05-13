@@ -329,5 +329,4 @@ class _InventoryState extends State<Inventory> with RouteAware {
       ),
     );
   }
-
 }

@@ -182,7 +182,6 @@ class _ViewProfileState extends State<ViewProfile> {
     return true;
   }
 
-
   // Helper function to capitalize the first letter of a string
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
@@ -220,15 +219,16 @@ class _ViewProfileState extends State<ViewProfile> {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Color(0xFFFF9100),
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: Center(
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child:
+                    Image.network(
+                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/vendors/P&G.png',
+                      fit: BoxFit.cover,
+                    )
                   ),
                 ),
               ),

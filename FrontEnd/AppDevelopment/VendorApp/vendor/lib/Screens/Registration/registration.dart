@@ -76,12 +76,6 @@ class _RegistrationState extends State<Registration> {
       print("User added");
       final dynamic json = jsonDecode(response.body);
 
-      // Get the UserIdProvider instance
-      // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
-
-      // Set the user ID
-      // userIdProvider.setUserId(json['user_id']);
-
       await createVendor(name, deliveryLocations, json['user_id']);
     } else {
       throw Exception('Failed to add user');

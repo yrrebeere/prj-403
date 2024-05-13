@@ -2,30 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/inventory_item.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'orderhistory.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
-
-class SearchProductInventory {
-  final int productId;
-  final String name;
-  final String imageUrl;
-
-  SearchProductInventory({
-    required this.productId,
-    required this.name,
-    required this.imageUrl,
-  });
-
-  factory SearchProductInventory.fromJson(Map<String, dynamic> json) {
-    return SearchProductInventory(
-      productId: json['product_id'],
-      name: json['product_name'],
-      imageUrl: json['image'],
-    );
-  }
-}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -35,7 +16,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<SearchProductInventory> searchResults = [];
+  List<InventoryItem> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
   int vendorId = 1;
@@ -245,7 +226,7 @@ class _HomeState extends State<Home> {
         }
 
         setState(() {
-          searchResults = data.map((item) => SearchProductInventory.fromJson(item)).toList();
+          searchResults = data.map((item) => InventoryItem.fromJson(item)).toList();
         });
       } else {
         print('Failed to load products');

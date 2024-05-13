@@ -203,7 +203,9 @@ class _SearchBarPageState extends State<SearchBarPage> {
     if (isDuplicate) {
       print('Product is a duplicate');
       _showDuplicateProductAlert(productProductId);
-    } else {
+    }
+
+    else {
       final response = await http.post(
         Uri.parse(
             'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/addproductinventory'),

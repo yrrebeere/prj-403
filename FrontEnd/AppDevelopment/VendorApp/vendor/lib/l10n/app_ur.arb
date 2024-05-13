@@ -20,7 +20,6 @@
   "privacy_and_policy" : " رازداری کی پالیسی سے اتفاق کرتا ہوں ",
   "register" : "رجسٹر کریں",
   "username" : "صارف نام",
-  "enter_reg_details" : "رجسٹریشن کی تفصیلات درج کریں",
   "number_confirmation" : "نمبر کی تصدیق",
   "edit" : "ترمیم",
   "confirm" : "جی ہاں",
@@ -61,5 +60,4 @@
   "delete": "حذف کریں",
   "update": "اپ ڈیٹ",
   "curr_orders": "موجودہ آرڈرز"
-
 }
