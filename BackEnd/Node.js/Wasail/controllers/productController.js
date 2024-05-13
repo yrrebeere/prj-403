@@ -80,7 +80,7 @@ const searchProductInInventory = async (req, res) => {
             where: { vendor_vendor_id: vendor_id },
         });
 
-        const productInventoryIds = associatedInventories.map((inventory) => inventory.product_inventory_id);
+        const productInventoryIds = associatedInventories.map((inventory) => inventory.product_product_id);
 
         const products = await db.product.findAll({
             where: {
