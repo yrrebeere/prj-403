@@ -74,6 +74,13 @@ const getVendorImage = (req, res) => {
 };
 
 const uploadProductImage = (req, res) => {
+
+    const productName = req.body.product_name || req.query.product_name;
+
+    if (!productName) {
+        return res.status(400).json({ error: 'Product name is required.' });
+    }
+
     upload.single('file')(req, res, (err) => {
         if (err) {
             return res.status(400).json({ error: 'Error uploading image.' });
@@ -83,20 +90,30 @@ const uploadProductImage = (req, res) => {
             return res.status(400).json({ error: 'No image uploaded.' });
         }
 
-        const productImagePath = path.join(__dirname, '../uploads/products', req.file.filename);
 
-        // Move the uploaded image to the "products" folder
+        const filename = `${productName}${path.extname(req.file.originalname)}`;
+        const productImagePath = path.join(__dirname, '../uploads/products', filename);
+
+
         fs.rename(req.file.path, productImagePath, (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to move image to products folder.' });
             }
 
-            res.status(200).json({ filename: req.file.filename });
+            res.status(200).json({ filename });
         });
     });
 };
 
+
 const uploadCategoryImage = (req, res) => {
+
+    const categoryName = req.body.category_name || req.query.category_name;
+
+    if (!categoryName) {
+        return res.status(400).json({ error: 'Category name is required.' });
+    }
+
     upload.single('file')(req, res, (err) => {
         if (err) {
             return res.status(400).json({ error: 'Error uploading image.' });
@@ -106,22 +123,25 @@ const uploadCategoryImage = (req, res) => {
             return res.status(400).json({ error: 'No image uploaded.' });
         }
 
-        const categoryImagePath = path.join(__dirname, '../uploads/categories', req.file.filename);
 
-        // Move the uploaded image to the "categories" folder
+        const filename = `${categoryName}${path.extname(req.file.originalname)}`;
+        const categoryImagePath = path.join(__dirname, '../uploads/categories', filename);
+
+
         fs.rename(req.file.path, categoryImagePath, (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to move image to categories folder.' });
             }
 
-            res.status(200).json({ filename: req.file.filename });
+            res.status(200).json({ filename });
         });
     });
 };
 
 
+
 const uploadStoreImage = (req, res) => {
-    // Extract the store name from the request body or query parameters
+
     const storeName = req.body.store_name || req.query.store_name;
 
     if (!storeName) {
@@ -137,11 +157,11 @@ const uploadStoreImage = (req, res) => {
             return res.status(400).json({ error: 'No image uploaded.' });
         }
 
-        // Construct the filename using the store name
+
         const filename = `${storeName}${path.extname(req.file.originalname)}`;
         const storeImagePath = path.join(__dirname, '../uploads/stores', filename);
 
-        // Move the uploaded image to the "stores" folder
+
         fs.rename(req.file.path, storeImagePath, (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to move image to stores folder.' });
@@ -154,6 +174,13 @@ const uploadStoreImage = (req, res) => {
 
 
 const uploadVendorImage = (req, res) => {
+
+    const vendorName = req.body.vendor_name || req.query.vendor_name;
+
+    if (!vendorName) {
+        return res.status(400).json({ error: 'Vendor name is required.' });
+    }
+
     upload.single('file')(req, res, (err) => {
         if (err) {
             return res.status(400).json({ error: 'Error uploading image.' });
@@ -163,18 +190,21 @@ const uploadVendorImage = (req, res) => {
             return res.status(400).json({ error: 'No image uploaded.' });
         }
 
-        const vendorImagePath = path.join(__dirname, '../uploads/vendors', req.file.filename);
 
-        // Move the uploaded image to the "vendors" folder
+        const filename = `${vendorName}${path.extname(req.file.originalname)}`;
+        const vendorImagePath = path.join(__dirname, '../uploads/vendors', filename);
+
+       
         fs.rename(req.file.path, vendorImagePath, (err) => {
             if (err) {
                 return res.status(500).json({ error: 'Failed to move image to vendors folder.' });
             }
 
-            res.status(200).json({ filename: req.file.filename });
+            res.status(200).json({ filename });
         });
     });
 };
+
 
 
 module.exports = {
