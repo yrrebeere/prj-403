@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:path/path.dart' as path;
 
 class Registration extends StatefulWidget {
   String phoneNumberController;
@@ -19,8 +22,7 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
@@ -32,6 +34,54 @@ class _RegistrationState extends State<Registration> {
   bool showPassword = false;
   String usernameError = '';
   String usernameAvailabilityMessage = '';
+
+  String? _imageExtension;
+  File? _imageFile;
+  final picker = ImagePicker();
+
+  Future<void> _chooseImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+        _imageExtension = path.extension(pickedFile.path).toLowerCase();
+        // print(_imageFile);
+        // print(_imageExtension);
+      }
+      else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> _uploadImage(String vendorName) async {
+    if (_imageFile == null) {
+      print('No image selected.');
+      return;
+    }
+
+    String apiUrl = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadvendor?vendor_name=$vendorName';
+
+    try {
+      var uri = Uri.parse(apiUrl);
+      var request = http.MultipartRequest('POST', uri);
+
+      request.files.add(await http.MultipartFile.fromPath('file', _imageFile!.path));
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Image uploaded successfully');
+        // Handle successful upload
+      } else {
+        print('Image upload failed with status ${response.statusCode}');
+        // Handle upload failure
+      }
+    } catch (e) {
+      print('Image upload failed with error: $e');
+      // Handle other exceptions
+    }
+  }
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
@@ -72,24 +122,27 @@ class _RegistrationState extends State<Registration> {
       headers: {'Content-Type': 'application/json'},
     );
 
+    _uploadImage(username);
+
     if (response.statusCode == 201) {
       print("User added");
       final dynamic json = jsonDecode(response.body);
 
-      await createVendor(name, deliveryLocations, json['user_id']);
+      await createVendor(name, deliveryLocations, json['user_id'], json['username']);
     } else {
       throw Exception('Failed to add user');
     }
   }
 
   Future<void> createVendor(
-      String vendorName, String deliveryLocations, int userId) async {
+      String vendorName, String deliveryLocations, int userId, String username) async {
     final response = await http.post(
       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/addvendor'),
       body: jsonEncode({
         'vendor_name': vendorName,
         'delivery_locations': deliveryLocations,
         'user_table_user_id': userId,
+        'image': 'vendors/' + username + _imageExtension!,
       }),
       headers: {'Content-Type': 'application/json'},
     );
@@ -558,7 +611,16 @@ class _RegistrationState extends State<Registration> {
                       ),
                       Positioned(
                         top: screenHeight * 0.89,
-                        left: screenWidth * 0.30,
+                        left: screenWidth * 0.10,
+                        bottom: screenHeight * 0.05,
+                        child: ElevatedButton(
+                          onPressed: _chooseImage,
+                          child: Text('Select Image'),
+                        ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.89,
+                        left: screenWidth * 0.50,
                         bottom: screenHeight * 0.05,
                         child: GestureDetector(
                           onTap: () async {

@@ -147,7 +147,7 @@ class _RegistrationState extends State<Registration> {
         'store_name': storeName,
         'store_address': storeAddress,
         'user_table_user_id': userId,
-        'store_image': 'stores/' + username + _imageExtension!, // add functionality to add png as well
+        'image': 'stores/' + username + _imageExtension!,
       }),
       headers: {'Content-Type': 'application/json'},
     );
