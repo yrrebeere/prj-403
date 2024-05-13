@@ -136,6 +136,29 @@ const uploadCategoryImage = (req, res) => {
     });
 };
 
+const uploadStoreImage = (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ error: 'Error uploading image.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image uploaded.' });
+        }
+
+        const storeImagePath = path.join(__dirname, '../uploads/stores', req.file.filename);
+
+        // Move the uploaded image to the "stores" folder
+        fs.rename(req.file.path, storeImagePath, (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to move image to stores folder.' });
+            }
+
+            res.status(200).json({ filename: req.file.filename });
+        });
+    });
+};
+
 
 module.exports = {
     getProductImage,
@@ -144,5 +167,6 @@ module.exports = {
     getVendorImage,
     // uploadImage,
     uploadProductImage,
-    uploadCategoryImage
+    uploadCategoryImage,
+    uploadStoreImage
 };
