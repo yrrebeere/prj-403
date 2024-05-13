@@ -1,5 +1,8 @@
+import 'dart:io';
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
@@ -19,13 +22,12 @@ class Registration extends StatefulWidget {
 class _RegistrationState extends State<Registration> {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-  TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
-  // final TextEditingController deliveryAreasController = TextEditingController();
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController storeNameController = TextEditingController();
   final TextEditingController storeAddressController = TextEditingController();
+  // final TextEditingController deliveryAreasController = TextEditingController();
 
   bool agreeToTerms = false;
   String selectedCountryCode = '+92';
@@ -33,6 +35,54 @@ class _RegistrationState extends State<Registration> {
   bool showPassword = false;
   String usernameError = '';
   String usernameAvailabilityMessage = '';
+
+  String? _imageExtension;
+  File? _imageFile;
+  final picker = ImagePicker();
+
+  Future<void> _chooseImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _imageFile = File(pickedFile.path);
+        _imageExtension = path.extension(pickedFile.path).toLowerCase();
+        // print(_imageFile);
+        // print(_imageExtension);
+      }
+      else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> _uploadImage(String storeName) async {
+    if (_imageFile == null) {
+      print('No image selected.');
+      return;
+    }
+
+    String apiUrl = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadstore?store_name=$storeName';
+
+    try {
+      var uri = Uri.parse(apiUrl);
+      var request = http.MultipartRequest('POST', uri);
+
+      request.files.add(await http.MultipartFile.fromPath('file', _imageFile!.path));
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        print('Image uploaded successfully');
+        // Handle successful upload
+      } else {
+        print('Image upload failed with status ${response.statusCode}');
+        // Handle upload failure
+      }
+    } catch (e) {
+      print('Image upload failed with error: $e');
+      // Handle other exceptions
+    }
+  }
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
@@ -75,24 +125,29 @@ class _RegistrationState extends State<Registration> {
       headers: {'Content-Type': 'application/json'},
     );
 
+    _uploadImage(username);
+
     if (response.statusCode == 201) {
       print("User added");
       final dynamic json = jsonDecode(response.body);
 
-      await createStore(storeName, storeAddress, json['user_id']);
+      print(json);
+
+      await createStore(storeName, storeAddress, json['user_id'], json['username']);
     } else {
       throw Exception('Failed to add user');
     }
   }
 
-  Future<void> createStore(
-      String storeName, String storeAddress, int userId) async {
+  Future<void> createStore(String storeName, String storeAddress, int userId, String username) async {
+
     final response = await http.post(
       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/addstore'),
       body: jsonEncode({
         'store_name': storeName,
         'store_address': storeAddress,
         'user_table_user_id': userId,
+        'store_image': 'stores/' + username + _imageExtension!, // add functionality to add png as well
       }),
       headers: {'Content-Type': 'application/json'},
     );
@@ -588,8 +643,17 @@ class _RegistrationState extends State<Registration> {
                         ),
                       ),
                       Positioned(
-                        top: screenHeight * 0.9,
-                        left: screenWidth * 0.30,
+                        top: screenHeight * 0.93,
+                        left: screenWidth * 0.10,
+                        bottom: screenHeight * 0.01,
+                          child: ElevatedButton(
+                            onPressed: _chooseImage,
+                            child: Text('Select Image'),
+                          ),
+                      ),
+                      Positioned(
+                        top: screenHeight * 0.93,
+                        left: screenWidth * 0.50,
                         bottom: screenHeight * 0.01,
                         child: GestureDetector(
                           onTap: () async {
@@ -624,19 +688,23 @@ class _RegistrationState extends State<Registration> {
                                           .text // New check
                                   ? 1.0
                                   : 0.5,
-                              child: Container(
-                                width: screenWidth * 0.3,
-                                padding: const EdgeInsets.all(14.0),
-                                decoration: BoxDecoration(
-                                  color: Color(0xFF6FB457),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.register,
-                                    style: TextStyle(color: Colors.white),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: screenWidth * 0.3,
+                                    // padding: const EdgeInsets.all(14.0),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFF6FB457),
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context)!.register,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
                           ),
