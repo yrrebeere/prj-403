@@ -73,23 +73,6 @@ const getVendorImage = (req, res) => {
     });
 };
 
-// const uploadImage = (req, res) => {
-//     upload.single('file')(req, res, (err) => {
-//
-//         console.log(req.file)
-//
-//         if (err) {
-//             return res.status(400).json({ error: 'Error uploading image.' });
-//         }
-//
-//         if (!req.file) {
-//             return res.status(400).json({ error: 'No image uploaded.' });
-//         }
-//
-//         res.status(200).json({ filename: req.file.filename });
-//     });
-// };
-
 const uploadProductImage = (req, res) => {
     upload.single('file')(req, res, (err) => {
         if (err) {
@@ -159,14 +142,37 @@ const uploadStoreImage = (req, res) => {
     });
 };
 
+const uploadVendorImage = (req, res) => {
+    upload.single('file')(req, res, (err) => {
+        if (err) {
+            return res.status(400).json({ error: 'Error uploading image.' });
+        }
+
+        if (!req.file) {
+            return res.status(400).json({ error: 'No image uploaded.' });
+        }
+
+        const vendorImagePath = path.join(__dirname, '../uploads/vendors', req.file.filename);
+
+        // Move the uploaded image to the "vendors" folder
+        fs.rename(req.file.path, vendorImagePath, (err) => {
+            if (err) {
+                return res.status(500).json({ error: 'Failed to move image to vendors folder.' });
+            }
+
+            res.status(200).json({ filename: req.file.filename });
+        });
+    });
+};
+
 
 module.exports = {
     getProductImage,
     getCategoryImage,
     getStoreImage,
     getVendorImage,
-    // uploadImage,
     uploadProductImage,
     uploadCategoryImage,
-    uploadStoreImage
+    uploadStoreImage,
+    uploadVendorImage
 };
