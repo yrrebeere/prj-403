@@ -106,13 +106,13 @@ const ListVendorComponent = () => {
                         </div>
                     </div>
                     <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <table className="table table-striped">
+                        <table className="table table-striped"  style={{backgroundColor:'white'}}>
                             <thead>
                             <tr>
-                                <th>Icon</th>
-                                <th>Vendor Name</th>
-                                <th>Location</th>
-                                <th>Options</th>
+                                <th  style={{backgroundColor:'white'}}>Icon</th>
+                                <th  style={{backgroundColor:'white'}}>Vendor Name</th>
+                                <th  style={{backgroundColor:'white'}}>Location</th>
+                                <th  style={{backgroundColor:'white'}}>Options</th>
                             </tr>
                             </thead>
                             <tbody>
