@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ContentManagementService from '../../services/ContentManagementService';
 import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Input, Button } from 'antd'; // Import Input and Button components from antd
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -13,11 +13,13 @@ import {
 } from '@ant-design/icons';
 
 const { Sider } = Layout;
+const { Search } = Input; // Destructure Search component from antd
 
 const ListContentManagementComponent = () => {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [showProducts, setShowProducts] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(''); // State for search term
     const location = useLocation();
 
     useEffect(() => {
@@ -60,6 +62,18 @@ const ListContentManagementComponent = () => {
         }
     };
 
+    const handleSearch = (value) => {
+        setSearchTerm(value.toLowerCase());
+    };
+
+    const filteredCategories = categories.filter(category =>
+        category.category_name.toLowerCase().includes(searchTerm)
+    );
+
+    const filteredProducts = products.filter(product =>
+        product.product_name.toLowerCase().includes(searchTerm)
+    );
+
     const sidebarItems = [
         { icon: <UserOutlined />, label: 'User Management', url: '/' },
         { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
@@ -70,7 +84,7 @@ const ListContentManagementComponent = () => {
     ];
 
     return (
-        <Layout>
+        <Layout style={{ minHeight: '100vh' }}>
             <Sider
                 width={220}
                 style={{
@@ -107,54 +121,86 @@ const ListContentManagementComponent = () => {
             </Sider>
             <Layout>
                 <div className={styles.body}>
-                    <h2>{showProducts ? "Products" : "Categories"}</h2>
+                    <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>
+                        <div style={{
+                            paddingTop: '25px',
+                            paddingBottom: '25px',
+                            paddingLeft: '25px',
+                            color: 'black', // Changed to blue color
+                            fontSize: '20px',
+                            fontWeight: 'bold'
+                        }}>
+                            List Category
+
+                        </div>
+
+
+                        <div style={{marginRight: '25px', paddingTop: '180px', paddingRight: '33px'}}>
+                            <Search
+                                placeholder={`Search ${showProducts ? 'product' : 'category'}`}
+                                allowClear
+                                enterButton="Search"
+                                size="middle"
+                                onSearch={handleSearch}
+                                onChange={e => handleSearch(e.target.value)}
+
+                            />
+                        </div>
+                    </div>
                     {!showProducts ? (
                         <div>
-                            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                            <div style={{textAlign: 'center', marginBottom: '20px'}}>
                                 <Link to="/add-category" className="btn btn-primary">Add Category</Link>
                             </div>
-                            <div className="table-container" style={{ textAlign: 'center' }}>
-                                <table className="table table-striped">
+                            <div className="table-container" style={{display: 'flex', justifyContent: 'center'}}>
+                                <table className="table table-striped" style={{backgroundColor:'white'}}>
                                     <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Category Name</th>
-                                        <th>Options</th>
+                                        <th style={{backgroundColor:'white'}}>Image</th>
+                                        <th style={{backgroundColor:'white'}}>Category Name</th>
+                                        <th style={{backgroundColor:'white'}}>Options</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {categories.map(category => (
+                                    {filteredCategories.map(category => (
                                         <tr key={category.product_category_id}>
-                                            <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${category.image}`} alt={category.category_name} style={{ width: '50px', height: '50px' }} /></td>
+                                            <td><img
+                                                src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${category.image}`}
+                                                alt={category.category_name} style={{width: '50px', height: '50px'}}/>
+                                            </td>
                                             <td>{category.category_name}</td>
                                             <td align="center">
-                                                <Link to={`/edit-category/${category.product_category_id}`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link>
-                                                <button onClick={() => deleteCategory(category.product_category_id)} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</button>
-                                                <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link>
+                                                <Link to={`/edit-category/${category.product_category_id}`}
+                                                      className="btn btn-primary"
+                                                      style={{marginLeft: '5px'}}>Edit</Link>
+                                                <button onClick={() => deleteCategory(category.product_category_id)}
+                                                        className="btn btn-danger" style={{marginLeft: '5px'}}>Delete
+                                                </button>
+                                                <Link to={`/`} className="btn btn-primary"
+                                                      style={{marginLeft: '5px'}}>View</Link>
                                             </td>
                                         </tr>
                                     ))}
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
                     ) : (
                         <div>
-                            <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                            <div style={{textAlign: 'center', marginBottom: '20px'}}>
                                 <Link to="/add-product" className="btn btn-primary">Add Product</Link>
                             </div>
-                            <div className="table-container" style={{ textAlign: 'center' }}>
-                                <table className="table table-striped">
+                            <div className="table-container" style={{ display: 'flex', justifyContent: 'center' }}>
+                                <table className="table table-striped"  style={{backgroundColor:'white'}}>
                                     <thead>
                                     <tr>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Options</th>
+                                        <th  style={{backgroundColor:'white'}}>Image</th>
+                                        <th  style={{backgroundColor:'white'}}>Product Name</th>
+                                        <th  style={{backgroundColor:'white'}}>Options</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {products.map(product => (
+                                    {filteredProducts.map(product => (
                                         <tr key={product.product_id}>
                                             <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${product.image}`} alt={product.product_name} style={{ width: '50px', height: '50px' }} /></td>
                                             <td>{product.product_name}</td>
@@ -166,15 +212,21 @@ const ListContentManagementComponent = () => {
                                         </tr>
                                     ))}
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
                     )}
 
-                    <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                        <button className="btn btn-primary" onClick={() => setShowProducts(!showProducts)}>{showProducts ? "Show Categories" : "Show Products"}</button>
+                    <div style={{textAlign: 'center', marginTop: '20px', paddingBottom: '20px'}}>
+                        <Button className="btn btn-primary" onClick={() => setShowProducts(!showProducts)} style={{
+                            fontSize: '16px',
+                            padding: '12px 24px',
+                            paddingBottom:'30px',
+                            textAlign: 'center',
+                            lineHeight: '1'
+                        }}>{showProducts ? "Show Categories" : "Show Products"}</Button>
                     </div>
+
                 </div>
             </Layout>
         </Layout>

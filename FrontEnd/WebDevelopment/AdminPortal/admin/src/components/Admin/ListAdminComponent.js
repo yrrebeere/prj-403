@@ -97,7 +97,7 @@ const ListAdminComponent = () => {
                         }}>
                             Users
                         </div>
-                        <div style={{ marginRight: '25px', paddingTop: '70px', paddingRight: '33px' }}> {/* Added style for padding */}
+                        <div style={{ marginRight: '25px', paddingTop: '180px', paddingRight: '33px' }}> {/* Added style for padding */}
                             <Search
                                 placeholder="Search user"
                                 allowClear

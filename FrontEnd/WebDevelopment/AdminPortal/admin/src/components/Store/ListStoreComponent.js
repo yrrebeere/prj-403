@@ -104,7 +104,7 @@ const ListStoreComponent = () => {
                         }}>
                             Grocery Management
                         </div>
-                        <div style={{ marginRight: '25px', paddingTop: '70px', paddingRight: '33px' }}>
+                        <div style={{ marginRight: '25px', paddingTop: '180px', paddingRight: '33px' }}>
                             <Search
                                 placeholder="Search store"
                                 allowClear
