@@ -1,10 +1,19 @@
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import numpy as np
 from joblib import load
 
-
 app = Flask(__name__)
+
+@app.route('/get-weekly-prediction/<store>/<product>')
+def get_weekly_prediction(store, product):
+    prediction = (store + product)
+    return jsonify(prediction), 200
+
+@app.route('/get-monthly-prediction/<store>/<product>')
+def get_monthly_prediction(store, product):
+    prediction = (store + product + store)
+    return jsonify(prediction), 200
 
 @app.route('/')
 def home():
@@ -31,14 +40,6 @@ def predict():
     }
 
     df = pd.DataFrame([data])
-
-    # df['date'] = request.form.get('datepicker')
-    # df['date'] = pd.to_datetime(df['date'])
-    # df['day_of_week'] = df['date'].dt.day_of_week
-    # df['day_of_week'] = df['day_of_week']+1
-    # df['day'] = df['date'].dt.day
-    # df['month'] = df['date'].dt.month
-    # df['year'] = df['date'].dt.year
 
     if request.method == 'POST':
         df['date'] = request.form.get('datepicker')
