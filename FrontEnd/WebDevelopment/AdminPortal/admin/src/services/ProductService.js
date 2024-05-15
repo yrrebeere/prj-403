@@ -10,12 +10,16 @@ class ProductService {
         return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/allproducts');
     }
 
-    editProduct(productId, productInfo) {
-        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/${productId}`, productInfo);
+    getProductById(productId) {
+        return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/' + productId);
+    }
+
+    editProduct(productId, info) {
+        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/` + productId, info);
     }
 
     deleteProduct(productId) {
-        return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/${productId}`);
+        return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/` + productId);
     }
 
 }

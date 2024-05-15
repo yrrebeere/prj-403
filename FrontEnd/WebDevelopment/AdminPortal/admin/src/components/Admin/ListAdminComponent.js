@@ -45,7 +45,8 @@ const ListAdminComponent = () => {
         { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
         { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
-        { icon: <AppstoreOutlined />, label: 'Content Management', url: '/content-management' },
+        { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
+        { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
     ];
 
     return (
