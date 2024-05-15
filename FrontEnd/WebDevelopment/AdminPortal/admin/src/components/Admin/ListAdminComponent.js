@@ -1,35 +1,43 @@
-import React from 'react';
-import AdminService from '../../services/AdminService'; // Assuming this fetches admin data
-import { Layout, Menu, Input } from 'antd'; // Import Input and Button from Ant Design
-import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
+import React, { useState, useEffect } from 'react';
+import AdminService from '../../services/AdminService';
+import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
+import { Menu, Layout, Input } from 'antd';
+import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
-const { Search } = Input; // Destructure Search component from Input
+const { Search } = Input;
 
 const ListAdminComponent = () => {
-    const [admins, setAdmins] = React.useState([]); // State for admin data
-    const [searchTerm, setSearchTerm] = React.useState(''); // State for search term
-    const location = useLocation(); // Get current location
+    const [admins, setAdmins] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const location = useLocation();
 
-    const isAdminActive = () => location.pathname === '/ListAdminComponent'; // Check if current path is '/users'
-
-    React.useEffect(() => {
-        const refreshAdmins = async () => {
-            console.log("Get All Admins");
-            try {
-                const response = await AdminService.getAllAdmins();
-                setAdmins(response.data);
-            } catch (error) {
-                console.error("Error fetching admins:", error);
-            }
-        };
-
+    useEffect(() => {
         refreshAdmins();
-    }, []); // Empty dependency array to run effect only once
+    }, []);
+
+    const refreshAdmins = () => {
+        AdminService.getAllAdmins()
+            .then((response) => {
+                setAdmins(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching stock counts:", error);
+            });
+    };
+
+    const deleteAdmin = (adminId) => {
+        AdminService.deleteAdmin(adminId)
+            .then(() => {
+                refreshAdmins();
+            })
+            .catch(error => {
+                console.error("Error deleting stock count:", error);
+            });
+    };
 
     const handleSearch = (value) => {
-        // Update search term
         setSearchTerm(value.toLowerCase());
     };
 
@@ -54,7 +62,7 @@ const ListAdminComponent = () => {
             <Sider
                 width={220}
                 style={{
-                    background: '#fff', // White background color
+                    background: '#fff',
                     overflow: 'auto',
                     height: '100vh',
                 }}
@@ -73,21 +81,26 @@ const ListAdminComponent = () => {
                 </div>
 
                 <Menu
-                    theme="light" // Light theme for the menu
+                    theme="light"
                     mode="inline"
                     defaultSelectedKeys={['2']}
-                    selectedKeys={isAdminActive() ? [] : [location.pathname]}
+                    selectedKeys={[location.pathname]}
                 >
                     {sidebarItems.map((item, index) => (
-                        <Menu.Item key={index + 1} icon={item.icon} style={{ marginBottom: '20px' }}> {/* Added marginBottom */}
+                        <Menu.Item key={index + 1} icon={item.icon} style={{ marginBottom: '20px' }}>
                             <Link to={item.url}>{item.label}</Link>
                         </Menu.Item>
                     ))}
                 </Menu>
             </Sider>
             <Layout>
-                <div style={{ padding: '1px' }}>
-                    <div style={{  display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}> {/* Added justifyContent for spacing */}
+
+                <div style={{padding: '1px'}}>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        marginBottom: '20px'
+                    }}> {/* Added justifyContent for spacing */}
                         <div style={{
                             paddingTop: '25px',
                             paddingBottom: '25px',
@@ -97,10 +110,20 @@ const ListAdminComponent = () => {
                             fontWeight: 'bold'
                         }}>
                             Users
+                            <div style={{
+                                paddingTop: '25px',
+                                paddingBottom: '25px',
+                                color: 'black', // Changed to blue color
+                                fontSize: '15px',
+                                margin: 'auto'
+                            }}>
+                                <Link to="/add-admin" className="btn btn-primary" style={{textAlign: 'left'}}>Add
+                                    Users</Link>
+                            </div>
                         </div>
-                        <div style={{ marginRight: '25px', paddingTop: '180px', paddingRight: '33px' }}> {/* Added style for padding */}
+                        <div style={{marginRight: '25px', paddingTop: '130px', paddingRight: '33px'}}>
                             <Search
-                                placeholder="Search user"
+                                placeholder="Search users"
                                 allowClear
                                 enterButton="Search"
                                 size="middle"
@@ -109,41 +132,39 @@ const ListAdminComponent = () => {
                             />
                         </div>
                     </div>
-                    <div style={{ overflowX: 'auto', marginTop: '20px' }}> {/* Added marginTop for spacing */}
-                        <table className="table table-striped" style={{
-                            margin: '0 auto',
-                            minWidth: '600px',
-                            backgroundColor: 'white'
-                        }}> {/* Removed paddingTop */}
-                            <thead style={{
-                                color: 'deepskyblue',
-                                backgroundColor: 'white'
-                            }}> {/* Changed heading color to blue and background color to white */}
-                            <tr>
-                                <th style={{ backgroundColor: 'white' }}>Email</th>
-                                {/* Added background color to th */}
-                                <th style={{ backgroundColor: 'white' }}>Role</th>
-                                {/* Added background color to th */}
-                                <th style={{ backgroundColor: 'white' }}>Options</th>
-                                {/* Added background color to th */}
-                            </tr>
-                            </thead>
 
-                            <tbody>
-                            {filteredAdmins.map(admin => (
-                                <tr key={admin.admin_id}>
-                                    <td>{admin.email}</td>
-                                    <td>{admin.admin_role}</td>
-                                    <td align="center">
-                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>Edit</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-danger" style={{ marginLeft: '5px' }}>Delete</Link> &nbsp;
-                                        <Link to={`/`} className="btn btn-primary" style={{ marginLeft: '5px' }}>View</Link> &nbsp;
-                                    </td>
-                                </tr>
-                            ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <table className="table table-striped" style={{
+                        margin: '0 auto',
+                        minWidth: '600px',
+                        backgroundColor: 'white'
+                    }}>
+                        <thead>
+                        <tr>
+                            <th style={{backgroundColor: 'white'}}>Admin Id</th>
+                            <th style={{backgroundColor: 'white'}}>Role</th>
+                            <th style={{backgroundColor: 'white'}}>Email</th>
+                            <th style={{backgroundColor: 'white'}}>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredAdmins.map(admin => (
+                            <tr key={admin.admin_id}>
+                                <td>{admin.admin_id}</td>
+                                <td>{admin.admin_role}</td>
+                                <td>{admin.email}</td>
+
+                                <td align="center">
+                                    <Link to={`/edit-admin/${admin.product_admin_id}`}
+                                          className="btn btn-primary"
+                                          style={{marginLeft: '5px'}}>Update</Link> &nbsp;
+                                    <button onClick={() => deleteAdmin(admin.product_admin_id)}
+                                            className="btn btn-danger">Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
                 </div>
             </Layout>
         </Layout>

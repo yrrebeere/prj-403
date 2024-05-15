@@ -139,7 +139,7 @@ const ListCategoryComponent = () => {
                     }}>
                         <thead>
                         <tr>
-                            <th style={{backgroundColor: 'white'}}>Category Id</th>
+                            <th style={{backgroundColor: 'white'}}>Image</th>
                             <th style={{backgroundColor: 'white'}}>Category Name</th>
                             <th style={{backgroundColor: 'white'}}>Options</th>
                         </tr>
@@ -147,7 +147,10 @@ const ListCategoryComponent = () => {
                         <tbody>
                         {filteredCategories.map(category => (
                             <tr key={category.product_category_id}>
-                                <td>{category.product_category_id}</td>
+                                <td><img
+                                    src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${category.image}`}
+                                    alt={category.category_name} style={{width: '50px', height: '50px'}}/>
+                                </td>
                                 <td>{category.category_name}</td>
                                 <td align="center">
                                     <Link to={`/edit-category/${category.product_category_id}`}
