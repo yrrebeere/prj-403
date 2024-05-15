@@ -25,7 +25,7 @@ const AddCategoryForm = () => {
 
     return (
         <div className={styles.body}>
-            <h1>Company Name</h1>
+            <h1>Add Category</h1>
 
             <form onSubmit={handleSubmit}>
 

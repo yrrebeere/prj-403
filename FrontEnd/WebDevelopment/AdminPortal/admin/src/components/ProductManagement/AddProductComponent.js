@@ -25,7 +25,7 @@ const AddProductForm = () => {
 
     return (
         <div className={styles.body}>
-            <h1>Company Name</h1>
+            <h1>Add Product</h1>
 
             <form onSubmit={handleSubmit}>
 
