@@ -2,7 +2,6 @@ var createError = require('http-errors');
 var express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-// var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors')
@@ -22,29 +21,24 @@ var adminsRouter = require('./routes/admins');
 var imagesRouter = require('./routes/images');
 var predictionsRouter = require('./routes/predictions');
 
-// var app = express();
-const app = express()
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
-}); 
-
+const app = express();
+app.use(cors())
 const port = 4000
-// const port = 25060
 
-// app.use(logger('dev'));
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', '*');
+//   res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//   if (req.method === 'OPTIONS') {
+//     res.sendStatus(200);
+//   } else {
+//     next();
+//   }
+// });
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/user_table',require('./API_Gateways/Usertable_Gateway'));
 
 app.use('/api/user_table',usersRouter)
 app.use('/api/vendor',vendorsRouter)
