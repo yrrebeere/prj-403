@@ -6,12 +6,22 @@ app = Flask(__name__)
 
 @app.route('/get-weekly-prediction/<store>/<product>')
 def get_weekly_prediction(store, product):
-    prediction = (store + product)
+    model = XGBModel.load("models/xgb/XGB_S"+store+"P"+product+".pkl")
+    prediction = model.predict(n=7)
+    prediction = prediction.pd_series().tolist()
+    prediction = np.maximum(prediction, 0)
+    prediction = sum(prediction)
+    prediction = int(prediction)
     return jsonify(prediction), 200
 
 @app.route('/get-monthly-prediction/<store>/<product>')
 def get_monthly_prediction(store, product):
-    prediction = (store + product + store)
+    model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
+    prediction = model.predict(n=30)
+    prediction = prediction.pd_series().tolist()
+    prediction = np.maximum(prediction, 0)
+    prediction = sum(prediction)
+    prediction = int(prediction)
     return jsonify(prediction), 200
 
 @app.route('/')
@@ -21,7 +31,7 @@ def home():
 @app.route('/predict', methods=["POST"])
 def predict():
 
-    xgb_model = XGBModel.load("models/xgb/XGBoost_S8F30M.pkl")
+    xgb_model = XGBModel.load("models/xgb/XGB_S8P30.pkl")
 
     xgb_predictions = xgb_model.predict(n=30)
     xgb_predictions = xgb_predictions.pd_series().tolist()
