@@ -178,12 +178,8 @@ class SearchResultsPage extends StatelessWidget {
             return productInventory.vendorVendorId == vendor.vendorId;
           }).toList();
 
-          return Card(
-            elevation: 3,
+          return Container(
             margin: EdgeInsets.all(8.0),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -203,7 +199,7 @@ class SearchResultsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CircleAvatar(
-                          radius: 60,
+                          radius: 70, // Increase the radius for a larger image
                           backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.vendorImage),
                         ),
                         SizedBox(width: 12.0),
@@ -231,8 +227,7 @@ class SearchResultsPage extends StatelessWidget {
                                       fontSize: 16.0,
                                       color: Color(0xFF6FB457),
                                       fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration
-                                          .underline),
+                                      decoration: TextDecoration.underline),
                                 ),
                                 SizedBox(width: 8.0),
                                 Icon(Icons.double_arrow_outlined,
@@ -277,6 +272,7 @@ class SearchResultsPage extends StatelessWidget {
               ],
             ),
           );
+
         },
       ),
     );
@@ -307,24 +303,34 @@ class ProductTile extends StatelessWidget {
           ),
         );
       },
-      child: Card(
-        elevation: 3,
-        shape: RoundedRectangleBorder(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 3,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 100,
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0),
-                ),
-                child: Image.network(
-                  "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+product.image,
-                  fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 100, // Increase the height as needed
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10.0),
+                    topRight: Radius.circular(10.0),
+                  ),
+                  child: Image.network(
+                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + product.image,
+                  ),
                 ),
               ),
             ),
@@ -353,6 +359,7 @@ class ProductTile extends StatelessWidget {
     );
   }
 }
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
