@@ -111,16 +111,6 @@ const ListStoreComponent = () => {
                             fontWeight: 'bold'
                         }}>
                             Store Management
-                            <div style={{
-                                paddingTop: '25px',
-                                paddingBottom: '25px',
-                                color: 'black', // Changed to blue color
-                                fontSize: '15px',
-                                margin: 'auto'
-                            }}>
-                                <Link to="/add-store" className="btn btn-primary" style={{textAlign: 'left'}}>Add
-                                    Store</Link>
-                            </div>
                         </div>
                         <div style={{marginRight: '25px', paddingTop: '130px', paddingRight: '33px'}}>
                             <Search
@@ -157,9 +147,6 @@ const ListStoreComponent = () => {
                                 <td>{store.store_address}</td>
 
                                 <td align="center">
-                                    <Link to={`/edit-store/${store.product_store_id}`}
-                                          className="btn btn-primary"
-                                          style={{marginLeft: '5px'}}>Update</Link> &nbsp;
                                     <button onClick={() => deleteStore(store.product_store_id)}
                                             className="btn btn-danger">Delete
                                     </button>

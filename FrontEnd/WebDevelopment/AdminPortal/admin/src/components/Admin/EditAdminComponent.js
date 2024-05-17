@@ -7,6 +7,7 @@ const EditAdminComponent = () => {
     const { product_admin_id } = useParams();
     const [adminRole, setAdminRole] = useState('');
     const [adminEmail, setAdminEmail] = useState('');
+    const [userId, setuserId] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,6 +18,9 @@ const EditAdminComponent = () => {
                 setAdminRole(admin_role);
                 const {email} = response.data;
                 setAdminEmail(email);
+                const {user_table_user_id} = response.data;
+                setAdminEmail(user_table_user_id);
+
             } catch (error) {
                 console.error('Error fetching admin details:', error);
             }
@@ -30,6 +34,7 @@ const EditAdminComponent = () => {
             await AdminService.editAdmin(product_admin_id, {
                 admin_role: adminRole,
                 email: adminEmail,
+                user_table_user_id : userId,
             });
             console.log('Admin updated successfully');
             navigate('/admins');
@@ -51,6 +56,10 @@ const EditAdminComponent = () => {
                     <tr>
                         <td>Admin Email</td>
                         <td><input type="text" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                        <td>User Id</td>
+                        <td><input type="text" value={userId} onChange={(e) => setuserId(e.target.value)}/></td>
                     </tr>
                     </tbody>
                 </table>

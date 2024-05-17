@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const AddAdminForm = () => {
     const [adminRole, setAdminRole] = useState('');
     const [adminEmail, setAdminEmail] = useState('');
+    const [userId, setUserId] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -15,7 +16,8 @@ const AddAdminForm = () => {
         try {
             await AdminService.addAdmin({
                 admin_role: adminRole,
-                admin_email: adminEmail,
+                email: adminEmail,
+                user_table_user_id: userId,
             });
 
             console.log('Admin added successfully');
@@ -40,6 +42,10 @@ const AddAdminForm = () => {
                     <tr>
                         <td>Email</td>
                         <td><input type="text" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                        <td>User Id</td>
+                        <td><input type="text" value={userId} onChange={(e) => setUserId(e.target.value)}/></td>
                     </tr>
                     </tbody>
                 </table>
