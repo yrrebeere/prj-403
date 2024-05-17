@@ -506,7 +506,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -548,7 +547,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 3.0),
                 Container(
-                  height: 48,
+                  height: 43,
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: Color(0xFF6FB457),
@@ -622,6 +621,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 16.0),
                 Container(
+                  height: 43,
                   padding: EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
                     color: Color(0xFF6FB457),

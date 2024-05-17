@@ -42,20 +42,62 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Center(
                     child: Image.network(
                       "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.product.image,
-                      width: 400,
-                      height: 400,
+                      width: 160,
+                      height: 160,
                       fit: BoxFit.cover,
                     ),
                   ),
                   SizedBox(height: 20.0),
                   Text(
                     'Product Name: ${widget.product.productName}',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 18.0),
                   Text(
                     'Price: Rs. ${widget.productInventory.price}',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 20.0),
+                  Text('Weekly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                  SizedBox(height: 20),
+                  Container(
+                    width: 400,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Add your onPressed code here!
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 5,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: Container(), // Empty container to remove the label
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text('Monthly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
+                  SizedBox(height: 20),// Space between the buttons
+                  Container(
+                    width: 400,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Add your onPressed code here!
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        elevation: 5,
+                        shadowColor: Colors.grey,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      child: Container(), // Empty container to remove the label
+                    ),
                   ),
                   SizedBox(height: 20.0),
                   _buildInputField(
