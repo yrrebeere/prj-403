@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template
-from darts.models import RandomForest, XGBModel
+from darts.models import XGBModel, Prophet
 import numpy as np
 
 
@@ -8,8 +8,8 @@ app = Flask(__name__)
 
 @app.route('/get-weekly-prediction/<model>/<store>/<product>')
 def get_weekly_prediction(model, store, product):
-    if model == 'rf':
-        forecasting_model = RandomForest.load("models/rf/RF_S" + store + "P" + product + ".pkl")
+    if model == 'p':
+        forecasting_model = Prophet.load("models/prophet/P_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=7)
@@ -22,8 +22,8 @@ def get_weekly_prediction(model, store, product):
 
 @app.route('/get-monthly-prediction/<model>/<store>/<product>')
 def get_monthly_prediction(model, store, product):
-    if model == 'rf':
-        forecasting_model = RandomForest.load("models/rf/RF_S" + store + "P" + product + ".pkl")
+    if model == 'p':
+        forecasting_model = Prophet.load("models/prophet/P_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=30)
