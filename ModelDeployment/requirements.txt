@@ -13,6 +13,7 @@ certifi==2024.2.2
 charset-normalizer==3.3.2
 click==8.1.7
 cloudpickle==3.0.0
+cmdstanpy==1.2.2
 colorama==0.4.6
 contourpy==1.2.1
 coreforecast==0.0.9
@@ -34,6 +35,7 @@ fugue==0.9.0
 gunicorn==21.2.0
 holidays==0.48
 idna==3.7
+importlib_resources==6.4.0
 ipython==8.12.3
 itsdangerous==2.1.2
 jedi==0.19.1
@@ -74,6 +76,7 @@ platformdirs==4.2.1
 pmdarima==2.0.4
 pretty-errors==1.2.25
 prompt-toolkit==3.0.43
+prophet==1.1.5
 protobuf==5.26.1
 ptyprocess==0.7.0
 pure-eval==0.2.2
@@ -97,6 +100,7 @@ six==1.16.0
 slicer==0.0.8
 soupsieve==2.5
 stack-data==0.6.3
+stanio==0.5.0
 statsforecast==1.7.4
 statsmodels==0.14.2
 sympy==1.12

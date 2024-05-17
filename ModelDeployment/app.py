@@ -8,10 +8,13 @@ app = Flask(__name__)
 
 @app.route('/get-weekly-prediction/<model>/<store>/<product>')
 def get_weekly_prediction(model, store, product):
+
     if model == 'p':
         forecasting_model = Prophet.load("models/prophet/P_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
+
+    # forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=7)
     prediction = prediction.pd_series().tolist()
     prediction = np.maximum(prediction, 0)
@@ -22,10 +25,13 @@ def get_weekly_prediction(model, store, product):
 
 @app.route('/get-monthly-prediction/<model>/<store>/<product>')
 def get_monthly_prediction(model, store, product):
+
     if model == 'p':
         forecasting_model = Prophet.load("models/prophet/P_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
+
+    # forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=30)
     prediction = prediction.pd_series().tolist()
     prediction = np.maximum(prediction, 0)
