@@ -43,8 +43,15 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=["POST"])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    selected_store = request.form.get('store', '1')
+    selected_product = request.form.get('product', 'A')
+    selected_model = request.form.get('model', 'Prophet')
+    selected_lag = request.form.get('lag', 'Daily')
+    selected_type = request.form.get('type', 'Univariate')
+    selected_features = request.form.getlist('features')
+    selected_duration = request.form.get('duration', 'Week')
 
     xgb_model = XGBModel.load("models/xgb/XGB_S8P30.pkl")
 
@@ -57,6 +64,13 @@ def predict():
     return render_template(
         'index.html',
         predictions = xgb_predictions,
+        selected_store = selected_store,
+        selected_product = selected_product,
+        selected_model = selected_model,
+        selected_lag = selected_lag,
+        selected_type = selected_type,
+        selected_features = selected_features,
+        selected_duration = selected_duration
     )
 
 
