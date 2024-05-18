@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-from darts.models import XGBModel, Prophet
+from darts.models import XGBModel, Prophet, LightGBMModel
 import numpy as np
 
 
@@ -8,8 +8,10 @@ app = Flask(__name__)
 
 @app.route('/get-weekly-prediction/<model>/<store>/<product>')
 def get_weekly_prediction(model, store, product):
-    if model == 'p':
+    if model == 'prophet':
         forecasting_model = Prophet.load("models/prophet/P_S"+store+"P"+product+".pkl")
+    elif model == 'lgbm':
+        forecasting_model = LightGBMModel.load("models/lgbm/LGBM_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=7)
@@ -22,8 +24,10 @@ def get_weekly_prediction(model, store, product):
 
 @app.route('/get-monthly-prediction/<model>/<store>/<product>')
 def get_monthly_prediction(model, store, product):
-    if model == 'p':
+    if model == 'prophet':
         forecasting_model = Prophet.load("models/prophet/P_S" + store + "P" + product + ".pkl")
+    elif model == 'lgbm':
+        forecasting_model = LightGBMModel.load("models/lgbm/LGBM_S" + store + "P" + product + ".pkl")
     else:
         forecasting_model = XGBModel.load("models/xgb/XGB_S" + store + "P" + product + ".pkl")
     prediction = forecasting_model.predict(n=30)
