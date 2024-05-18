@@ -7,6 +7,10 @@ module.exports = (sequelize, Datatypes)=>{
             primaryKey: true,
             autoIncrement: true
         },
+        store_number:{
+            type: Datatypes.INTEGER,
+            notNull: true,
+        },
         store_name:{
             type: Datatypes.STRING,
             notNull: true,
@@ -27,6 +31,12 @@ module.exports = (sequelize, Datatypes)=>{
             },
             allowNull: false
         },
+        model:{
+            type: Datatypes.STRING,
+            isAlpha: true,
+            notNull: true,
+        },
+
     },{
         underscored:true
     })

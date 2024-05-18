@@ -7,6 +7,10 @@ module.exports = (sequelize, Datatypes)=>{
             primaryKey: true,
             autoIncrement: true
         },
+        product_number:{
+            type: Datatypes.INTEGER,
+            notNull: true,
+        },
         product_name:{
             type: Datatypes.STRING,
             isAlpha: true,
