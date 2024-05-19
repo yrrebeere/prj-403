@@ -9,6 +9,9 @@ class OrderHistory extends StatelessWidget {
   OrderHistory(this.vendorId);
 
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int storeId) async {
+
+    // storeId = 2;
+
     try {
       final response = await http.get(
         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/storeorderhistory/$storeId'),
@@ -54,16 +57,17 @@ class OrderHistory extends StatelessWidget {
           final totalBill = order['total_bill'];
           final orderStatus = order['order_status'];
           final groceryStoreId = order['groceryStoreStoreId'];
+          final vendorVendorId = order['vendorVendorId'];
 
-          if (groceryStoreId != null) {
-            final groceryStoreResponse = await http.get(
-              Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$groceryStoreId'),
+          if (vendorVendorId != null) {
+            final vendorResponse = await http.get(
+              Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorVendorId'),
             );
 
-            if (groceryStoreResponse.statusCode == 200) {
-              final Map<String, dynamic> groceryStoreData = jsonDecode(groceryStoreResponse.body);
-              final groceryStoreName = groceryStoreData['store_name'];
-              final groceryStoreImage = groceryStoreData['image'];
+            if (vendorResponse.statusCode == 200) {
+              final Map<String, dynamic> vendorData = jsonDecode(vendorResponse.body);
+              final vendorName = vendorData['vendor_name'];
+              final vendorImage = vendorData['image'];
 
               combinedData.add({
                 'order_id': orderId,
@@ -72,12 +76,12 @@ class OrderHistory extends StatelessWidget {
                 'total_bill': totalBill,
                 'order_status': orderStatus,
                 'grocery_store_store_id': groceryStoreId,
-                'store_name': groceryStoreName,
-                'image': groceryStoreImage,
+                'vendor_name': vendorName,
+                'image': vendorImage,
                 'order_details': detailsForOrder,
               });
             } else {
-              print('Failed to load additional grocery store information: ${groceryStoreResponse.statusCode}');
+              print('Failed to load additional grocery store information: ${vendorResponse.statusCode}');
             }
           } else {
             print('grocery_store_store_id is null. Skipping fetching grocery store data.');
@@ -159,7 +163,7 @@ class OrderHistory extends StatelessWidget {
                           radius: 40,
                         ),
                         title: Text(
-                          '${orderData['store_name']}',
+                          '${orderData['vendor_name']}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

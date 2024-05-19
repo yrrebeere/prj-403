@@ -17,6 +17,7 @@ class _ViewProfileState extends State<ViewProfile> {
   late String number;
   late String username;
   late String language;
+  late String image;
 
   @override
   void initState() {
@@ -25,7 +26,27 @@ class _ViewProfileState extends State<ViewProfile> {
     number = "";
     username = "";
     language = "";
+    image = "";
     fetchUserProfile(widget.userId);
+    fetchVendorProfile("1");
+  }
+
+  Future<void> fetchVendorProfile(String vendorId) async {
+    try {
+      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorId'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        setState(() {
+          image = data['image'].toString().trim();
+        });
+      } else {
+        print('Failed to fetch vendor information. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during HTTP request: $error');
+    }
   }
 
   Future<void> fetchUserProfile(String userId) async {
@@ -226,7 +247,7 @@ class _ViewProfileState extends State<ViewProfile> {
                     borderRadius: BorderRadius.circular(50),
                     child:
                     Image.network(
-                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/vendors/P&G.png',
+                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
                       fit: BoxFit.cover,
                     )
                   ),

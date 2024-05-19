@@ -61,8 +61,6 @@ class _StorelistState extends State<Storelist> {
       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/searchstore/$vendorId'),
     );
 
-    print(response.body);
-
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
 

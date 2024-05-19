@@ -26,32 +26,32 @@
                 <select class="form-control" id="storeSelect" name="store">
                     <option value="1" {{ 'selected' if selected_store == '1' else '' }}>1</option>
                     <option value="2" {{ 'selected' if selected_store == '2' else '' }}>2</option>
-                    <option value="3" {{ 'selected' if selected_store == '3' else '' }}>3</option>
+                    <option value="8" {{ 'selected' if selected_store == '8' else '' }}>8</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="productSelect">Product</label>
                 <select class="form-control" id="productSelect" name="product">
-                    <option value="A" {{ 'selected' if selected_product == 'A' else '' }}>A</option>
-                    <option value="B" {{ 'selected' if selected_product == 'B' else '' }}>B</option>
-                    <option value="C" {{ 'selected' if selected_product == 'C' else '' }}>C</option>
+                    <option value="0" {{ 'selected' if selected_product == '0' else '' }}>0</option>
+                    <option value="1" {{ 'selected' if selected_product == '1' else '' }}>1</option>
+                    <option value="30" {{ 'selected' if selected_product == '30' else '' }}>30</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="modelSelect">Select Model</label>
                 <select class="form-control" id="modelSelect" name="model" onchange="toggleDropdowns()">
+                    <option value="Prophet" {{ 'selected' if selected_model == 'Prophet' else '' }}>Prophet</option>
                     <option value="Random Forest" {{ 'selected' if selected_model == 'Random Forest' else '' }}>Random Forest</option>
                     <option value="XGBoost" {{ 'selected' if selected_model == 'XGBoost' else '' }}>XGBoost</option>
-                    <option value="Prophet" {{ 'selected' if selected_model == 'Prophet' else '' }}>Prophet</option>
                     <option value="LightGBM" {{ 'selected' if selected_model == 'LightGBM' else '' }}>LightGBM</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="lagSelect">Lag</label>
                 <select class="form-control" id="lagSelect" name="lag">
-                    <option value="Daily" {{ 'selected' if selected_lag == 'Daily' else '' }}>Daily</option>
-                    <option value="Weekly" {{ 'selected' if selected_lag == 'Weekly' else '' }}>Weekly</option>
-                    <option value="Monthly" {{ 'selected' if selected_lag == 'Monthly' else '' }}>Monthly</option>
+                    <option value="2" {{ 'selected' if selected_lag == '2' else '' }}>Daily</option>
+                    <option value="7" {{ 'selected' if selected_lag == '7' else '' }}>Weekly</option>
+                    <option value="30" {{ 'selected' if selected_lag == '30' else '' }}>Monthly</option>
                 </select>
             </div>
             <div class="form-group">
@@ -102,9 +102,31 @@
             <button type="submit" class="btn btn-primary">Predict Sales</button>
         </form>
         <br>
-        <h2>
-            Predictions: {{ predictions }} <br>
-        </h2>
+        {% if rmse and rmsle and plot_path %}
+            <h2>Predictions</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RMSE</td>
+                        <td>{{ rmse }}</td>
+                    </tr>
+                    <tr>
+                        <td>RMSLE</td>
+                        <td>{{ rmsle }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+
+            <h2>Actual vs Predicted Sales</h2>
+            <img src="{{ url_for('static', filename='plot.png') }}" alt="Actual vs Predicted Plot" class="img-fluid">
+        {% endif %}
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
