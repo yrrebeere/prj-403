@@ -153,8 +153,9 @@ const ListProductComponent = () => {
                                     alt={product.product_name} style={{width: '50px', height: '50px'}}/></td>
                                 <td>{product.product_name}</td>
                                 <td align="center">
-                                    <Link to={`/edit-product/${product.product_id}`} className="btn btn-primary"
-                                          style={{marginLeft: '5px'}}>Update</Link> &nbsp;
+                                    <button onClick={() => window.location.href = `/edit-product/${product.product_id}`}
+                                            className="btn btn-primary">Update
+                                    </button> &nbsp;
                                     <button onClick={() => deleteProduct(product.product_id)}
                                             className="btn btn-danger">Delete
                                     </button>

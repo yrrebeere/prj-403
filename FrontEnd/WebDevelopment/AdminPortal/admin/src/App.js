@@ -12,8 +12,6 @@ import EditProductComponent from "./components/ProductManagement/EditProductComp
 import EditAdminComponent from "./components/Admin/EditAdminComponent";
 import ListCategoryComponent from "./components/CategoryManagement/ListCategoryComponent";
 
-
-
 function App() {
     return (
         <div className="App">

@@ -153,9 +153,9 @@ const ListCategoryComponent = () => {
                                 </td>
                                 <td>{category.category_name}</td>
                                 <td align="center">
-                                    <Link to={`/edit-category/${category.product_category_id}`}
-                                          className="btn btn-primary"
-                                          style={{marginLeft: '5px'}}>Update</Link> &nbsp;
+                                    <button onClick={() => window.location.href = `/edit-category/${category.product_category_id}`}
+                                            className="btn btn-primary">Update
+                                    </button> &nbsp;
                                     <button onClick={() => deleteCategory(category.product_category_id)}
                                             className="btn btn-danger">Delete
                                     </button>

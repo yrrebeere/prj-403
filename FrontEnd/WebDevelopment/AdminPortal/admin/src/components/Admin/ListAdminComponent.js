@@ -153,9 +153,9 @@ const ListAdminComponent = () => {
                                 <td>{admin.email}</td>
 
                                 <td align="center">
-                                    <Link to={`/edit-admin/${admin.admin_id}`}
-                                          className="btn btn-primary"
-                                          style={{marginLeft: '5px'}}>Update</Link> &nbsp;
+                                    <button onClick={() => window.location.href = `/edit-admin/${admin.admin_id}`}
+                                            className="btn btn-primary">Update
+                                    </button> &nbsp;
                                     <button onClick={() => deleteAdmin(admin.admin_id)}
                                             className="btn btn-danger">Delete
                                     </button>
