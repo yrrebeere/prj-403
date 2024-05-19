@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'home.dart';
-import '../navbar.dart'; // Import NavBar widget
+import '../navbar.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   final Product product;
@@ -19,6 +21,53 @@ class ProductDetailsPage extends StatefulWidget {
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
   int quantity = 0;
+  int? weeklyRecommendation;
+  int? monthlyRecommendation;
+  late TextEditingController _quantityController;
+
+  @override
+  void initState() {
+    super.initState();
+    _quantityController = TextEditingController(text: quantity.toString());
+    _fetchRecommendation('weekly');
+    _fetchRecommendation('monthly');
+    print(widget.product);
+  }
+
+  Future<void> _fetchRecommendation(String type) async {
+    final model = "xgb";
+    final storeNumber = "8";
+    final productNumber = widget.product.productNumber;
+
+    final url = type == 'weekly'
+        ? 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/prediction/sendweeklyprediction/$model/$storeNumber/$productNumber'
+        : 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/prediction/sendmonthlyprediction/$model/$storeNumber/$productNumber';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        setState(() {
+          if (type == 'weekly') {
+            weeklyRecommendation = data;
+          } else {
+            monthlyRecommendation = data;
+          }
+        });
+      } else {
+        throw Exception('Failed to load recommendation');
+      }
+    } catch (error) {
+      print('Error fetching recommendation: $error');
+    }
+  }
+
+  void _updateQuantity(int newQuantity) {
+    setState(() {
+      quantity = newQuantity;
+      _quantityController.text = newQuantity.toString();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,31 +90,33 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 children: [
                   Center(
                     child: Image.network(
-                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.product.image,
-                      width: 160,
-                      height: 160,
+                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + widget.product.image,
+                      width: 200,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                   ),
                   SizedBox(height: 20.0),
                   Text(
                     'Product Name: ${widget.product.productName}',
-                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 18.0),
+                  SizedBox(height: 10.0),
                   Text(
                     'Price: Rs. ${widget.productInventory.price}',
-                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 20.0),
-                  Text('Weekly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 20),
+                  Text('Weekly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
                   Container(
-                    width: 400,
+                    width: 380,
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add your onPressed code here!
+                        if (weeklyRecommendation != null) {
+                          _updateQuantity(weeklyRecommendation!);
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
@@ -75,18 +126,27 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      child: Container(), // Empty container to remove the label
+                      child: Center(
+                        child: Text(
+                          weeklyRecommendation != null
+                              ? '$weeklyRecommendation'
+                              : 'Fetching...',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
-                  Text('Monthly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),),
-                  SizedBox(height: 20),// Space between the buttons
+                  Text('Monthly Recommendation :', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  SizedBox(height: 10),
                   Container(
-                    width: 400,
+                    width: 380,
                     height: 60,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Add your onPressed code here!
+                        if (monthlyRecommendation != null) {
+                          _updateQuantity(monthlyRecommendation!);
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
@@ -96,13 +156,20 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      child: Container(), // Empty container to remove the label
+                      child: Center(
+                        child: Text(
+                          monthlyRecommendation != null
+                              ? '$monthlyRecommendation'
+                              : 'Fetching...',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  SizedBox(height: 30),
                   _buildInputField(
                     'Quantity',
-                    quantity.toString(),
+                    _quantityController,
                         (value) {
                       setState(() {
                         quantity = int.tryParse(value) ?? 0;
@@ -123,8 +190,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       );
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text(
-                              'Added ${widget.product.productName} to the cart'),
+                          content: Text('Added ${widget.product.productName} to the cart'),
                           duration: Duration(seconds: 2),
                         ),
                       );
@@ -157,9 +223,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   }
 
   Widget _buildInputField(
-      String label, String initialValue, ValueChanged<String> onChanged) {
+      String label,
+      TextEditingController controller,
+      ValueChanged<String> onChanged,
+      ) {
     return TextFormField(
-      initialValue: initialValue,
+      controller: controller,
       keyboardType: TextInputType.number,
       onChanged: onChanged,
       decoration: InputDecoration(
@@ -168,5 +237,11 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
       ),
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     );
+  }
+
+  @override
+  void dispose() {
+    _quantityController.dispose();
+    super.dispose();
   }
 }

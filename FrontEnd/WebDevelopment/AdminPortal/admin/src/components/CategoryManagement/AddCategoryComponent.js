@@ -40,7 +40,7 @@ const AddCategoryForm = () => {
                 <br/>
 
                 <div align="left" style={{margin: '20px'}}>
-                    <a href="/" className="btn btn-primary" style={{textAlign: 'left'}}>Back</a>
+                    <a href="/categories" className="btn btn-primary" style={{textAlign: 'left'}}>Back</a>
                     <button style={{marginLeft: '5px'}} className="btn btn-primary" type="submit">Add Category</button>
                 </div>
 
