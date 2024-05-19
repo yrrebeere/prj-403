@@ -4,13 +4,14 @@ const axios = require('axios');
 
 const sendWeeklyPrediction = async (req, res) => {
     try {
-        const { store_id, product_id } = req.params;
+        const { model, store_number, product_number} = req.params;
 
-        if (!store_id || !product_id) {
+        if (!store_number || !product_number) {
             return res.status(400).json({ error: 'Store ID and product ID are required.' });
         }
 
-        const url = `https://hammerhead-app-6m6td.ondigitalocean.app/get-weekly-prediction/${store_id}/${product_id}`;
+        const url = `https://hammerhead-app-6m6td.ondigitalocean.app/get-weekly-prediction/${model}/${store_number}/${product_number}`;
+
 
         const response = await axios.get(url);
 
