@@ -25,7 +25,7 @@ function App() {
                     <Route path="/admins" element={<ListAdminComponent />} />
                     <Route path="/edit-category/:product_category_id" element={<EditCategoryComponent />} />
                     <Route path="/edit-product/:product_id" element={<EditProductComponent />} />
-                    <Route path="/edit-admin/:store_id" element={<EditAdminComponent />} />
+                    <Route path="/edit-admin/:admin_id" element={<EditAdminComponent />} />
                     <Route path="/add-category" element={<AddCategoryComponent />} />
                     <Route path="/add-product" element={<AddProductComponent />} />
                     <Route path="/add-admin" element={<AddAdminComponent />} />
