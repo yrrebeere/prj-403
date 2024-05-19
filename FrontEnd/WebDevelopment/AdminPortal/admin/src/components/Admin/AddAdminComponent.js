@@ -7,13 +7,12 @@ import { useNavigate } from 'react-router-dom';
 const AddAdminForm = () => {
     const [adminRole, setAdminRole] = useState('');
     const [adminEmail, setAdminEmail] = useState('');
-    const [userId, setUserId] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [language, setLanguage] = useState('');
-    const [userType, setuserType] = useState('');
+    const [userType, setUserType] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -22,7 +21,6 @@ const AddAdminForm = () => {
         try {
             // First save the user data to user_table
             const userResponse = await UserService.addUser({
-                user_id: userId,
                 phone_number: phoneNumber,
                 name: name,
                 password: password,
@@ -55,10 +53,6 @@ const AddAdminForm = () => {
                     <tbody>
                     {/* User Table Fields */}
                     <tr>
-                        <td>User ID</td>
-                        <td><input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} /></td>
-                    </tr>
-                    <tr>
                         <td>Phone Number</td>
                         <td><input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} /></td>
                     </tr>
@@ -76,16 +70,29 @@ const AddAdminForm = () => {
                     </tr>
                     <tr>
                         <td>Language</td>
-                        <td><input type="text" value={language} onChange={(e) => setLanguage(e.target.value)} /></td>
+                        <td>
+                            <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+                                <option value="">Select Language</option>
+                                <option value="English">English</option>
+                                <option value="Urdu">Urdu</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>User Type</td>
-                        <td><input type="text" value={userType} onChange={(e) => setuserType(e.target.value)} /></td>
+                        <td><input type="text" value={userType} onChange={(e) => setUserType(e.target.value)} /></td>
                     </tr>
                     {/* Admin Table Fields */}
                     <tr>
                         <td>Role</td>
-                        <td><input type="text" value={adminRole} onChange={(e) => setAdminRole(e.target.value)} /></td>
+                        <td>
+                            <select value={adminRole} onChange={(e) => setAdminRole(e.target.value)}>
+                                <option value="">Select Role</option>
+                                <option value="Viewer">Viewer</option>
+                                <option value="Editor">Editor</option>
+                                <option value="Moderator">Moderator</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>Email</td>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminService from '../../services/AdminService';
+import UserService from '../../services/UserService';  // Import UserService
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
@@ -9,6 +10,7 @@ const { Search } = Input;
 
 const ListAdminComponent = () => {
     const [admins, setAdmins] = useState([]);
+    const [users, setUsers] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();
 
@@ -19,20 +21,42 @@ const ListAdminComponent = () => {
     const refreshAdmins = () => {
         AdminService.getAllAdmins()
             .then((response) => {
-                setAdmins(response.data);
+                const adminData = response.data;
+                setAdmins(adminData);
+                fetchUserDetails(adminData);
             })
             .catch(error => {
-                console.error("Error fetching stock counts:", error);
+                console.error("Error fetching admins:", error);
             });
     };
 
-    const deleteAdmin = (adminId) => {
+    const fetchUserDetails = (admins) => {
+        admins.forEach(admin => {
+            UserService.getUserById(admin.user_table_user_id)
+                .then((response) => {
+                    setUsers(prevUsers => ({
+                        ...prevUsers,
+                        [admin.user_table_user_id]: response.data
+                    }));
+                })
+                .catch(error => {
+                    console.error(`Error fetching user details for user ID ${admin.user_table_user_id}:`, error);
+                });
+        });
+    };
+
+    const deleteAdmin = (adminId, userId) => {
+        // Delete admin record first
         AdminService.deleteAdmin(adminId)
+            .then(() => {
+                // Then delete user record
+                return UserService.deleteUser(userId);
+            })
             .then(() => {
                 refreshAdmins();
             })
             .catch(error => {
-                console.error("Error deleting stock count:", error);
+                console.error("Error deleting admin or user:", error);
             });
     };
 
@@ -43,6 +67,7 @@ const ListAdminComponent = () => {
     const filteredAdmins = admins.filter(admin => {
         const emailMatch = admin.email.toLowerCase().includes(searchTerm);
         const roleMatch = admin.admin_role.toLowerCase().includes(searchTerm);
+        const user = users[admin.user_table_user_id];
         return emailMatch || roleMatch;
     });
 
@@ -93,18 +118,17 @@ const ListAdminComponent = () => {
                 </Menu>
             </Sider>
             <Layout>
-
-                <div style={{padding: '1px'}}>
+                <div style={{ padding: '1px' }}>
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         marginBottom: '20px'
-                    }}> {/* Added justifyContent for spacing */}
+                    }}>
                         <div style={{
                             paddingTop: '25px',
                             paddingBottom: '25px',
                             paddingLeft: '25px',
-                            color: 'black', // Changed to blue color
+                            color: 'black',
                             fontSize: '20px',
                             fontWeight: 'bold'
                         }}>
@@ -112,15 +136,14 @@ const ListAdminComponent = () => {
                             <div style={{
                                 paddingTop: '25px',
                                 paddingBottom: '25px',
-                                color: 'black', // Changed to blue color
+                                color: 'black',
                                 fontSize: '15px',
                                 margin: 'auto'
                             }}>
-                                <Link to="/add-admin" className="btn btn-primary" style={{textAlign: 'left'}}>Add
-                                    Users</Link>
+                                <Link to="/add-admin" className="btn btn-primary" style={{ textAlign: 'left' }}>Add Users</Link>
                             </div>
                         </div>
-                        <div style={{marginRight: '25px', paddingTop: '130px', paddingRight: '33px'}}>
+                        <div style={{ marginRight: '25px', paddingTop: '130px', paddingRight: '33px' }}>
                             <Search
                                 placeholder="Search users"
                                 allowClear
@@ -139,29 +162,43 @@ const ListAdminComponent = () => {
                     }}>
                         <thead>
                         <tr>
-                            <th style={{backgroundColor: 'white'}}>Admin Id</th>
-                            <th style={{backgroundColor: 'white'}}>Role</th>
-                            <th style={{backgroundColor: 'white'}}>Email</th>
-                            <th style={{backgroundColor: 'white'}}>Options</th>
+                            <th style={{ backgroundColor: 'white' }}>Admin Id</th>
+                            <th style={{ backgroundColor: 'white' }}>Role</th>
+                            <th style={{ backgroundColor: 'white' }}>Email</th>
+                            <th style={{ backgroundColor: 'white' }}>User Id</th>
+                            <th style={{ backgroundColor: 'white' }}>Phone Number</th>
+                            <th style={{ backgroundColor: 'white' }}>Name</th>
+                            <th style={{ backgroundColor: 'white' }}>Username</th>
+                            <th style={{ backgroundColor: 'white' }}>Language</th>
+                            <th style={{ backgroundColor: 'white' }}>User Type</th>
+                            <th style={{ backgroundColor: 'white' }}>Options</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {filteredAdmins.map(admin => (
-                            <tr key={admin.admin_id}>
-                                <td>{admin.admin_id}</td>
-                                <td>{admin.admin_role}</td>
-                                <td>{admin.email}</td>
-
-                                <td align="center">
-                                    <button onClick={() => window.location.href = `/edit-admin/${admin.admin_id}`}
-                                            className="btn btn-primary">Update
-                                    </button> &nbsp;
-                                    <button onClick={() => deleteAdmin(admin.admin_id)}
-                                            className="btn btn-danger">Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                        {filteredAdmins.map(admin => {
+                            const user = users[admin.user_table_user_id] || {};
+                            return (
+                                <tr key={admin.admin_id}>
+                                    <td>{admin.admin_id}</td>
+                                    <td>{admin.admin_role}</td>
+                                    <td>{admin.email}</td>
+                                    <td>{user.user_id}</td>
+                                    <td>{user.phone_number}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.username}</td>
+                                    <td>{user.language}</td>
+                                    <td>{user.user_type}</td>
+                                    <td align="center">
+                                        <button onClick={() => window.location.href = `/edit-admin/${admin.admin_id}`}
+                                                className="btn btn-primary">Update
+                                        </button> &nbsp;
+                                        <button onClick={() => deleteAdmin(admin.admin_id, admin.user_table_user_id)}
+                                                className="btn btn-danger">Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                         </tbody>
                     </table>
                 </div>
