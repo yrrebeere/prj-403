@@ -44,8 +44,8 @@ const ListStoreComponent = () => {
     const filteredStores = stores.filter(store => {
         const nameMatch = store.store_name && store.store_name.toLowerCase().includes(searchTerm);
         const addressMatch = store.store_address && store.store_address.toLowerCase().includes(searchTerm);
-        return nameMatch || addressMatch;
-
+        const modelMatch = store.model && store.model.toLowerCase().includes(searchTerm);
+        return nameMatch || addressMatch || modelMatch;
     });
 
     const sidebarItems = [
@@ -96,23 +96,23 @@ const ListStoreComponent = () => {
             </Sider>
             <Layout>
 
-                <div style={{padding: '1px'}}>
+                <div style={{ padding: '1px' }}>
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         marginBottom: '20px'
-                    }}> {/* Added justifyContent for spacing */}
+                    }}>
                         <div style={{
                             paddingTop: '25px',
                             paddingBottom: '25px',
                             paddingLeft: '25px',
-                            color: 'black', // Changed to blue color
+                            color: 'black',
                             fontSize: '20px',
                             fontWeight: 'bold'
                         }}>
                             Store Management
                         </div>
-                        <div style={{marginRight: '25px', paddingTop: '130px', paddingRight: '33px'}}>
+                        <div style={{ marginRight: '25px', paddingTop: '130px', paddingRight: '33px' }}>
                             <Search
                                 placeholder="Search store"
                                 allowClear
@@ -131,25 +131,25 @@ const ListStoreComponent = () => {
                     }}>
                         <thead>
                         <tr>
-                            <th style={{backgroundColor: 'white'}}>Image</th>
-                            <th style={{backgroundColor: 'white'}}>Store Name</th>
-                            <th style={{backgroundColor: 'white'}}>Store Address</th>
-                            <th style={{backgroundColor: 'white'}}>Options</th>
+                            <th style={{ backgroundColor: 'white' }}>Image</th>
+                            <th style={{ backgroundColor: 'white' }}>Store Name</th>
+                            <th style={{ backgroundColor: 'white' }}>Store Address</th>
+                            <th style={{ backgroundColor: 'white' }}>Model</th>
+                            <th style={{ backgroundColor: 'white' }}>Options</th>
                         </tr>
                         </thead>
                         <tbody>
                         {filteredStores.map(store => (
                             <tr key={store.product_store_id}>
-                                <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`}
-                                         alt="Store Icon" style={{width: '50px', height: '50px'}}/></td>
-
+                                <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
                                 <td>{store.store_name}</td>
                                 <td>{store.store_address}</td>
-
+                                <td>{store.model}</td>
                                 <td align="center">
-                                    <button onClick={() => deleteStore(store.product_store_id)}
-                                            className="btn btn-danger">Delete
-                                    </button>
+                                    <button onClick={() => window.location.href = `/edit-store/${store.store_id}`}
+                                            className="btn btn-primary">Update
+                                    </button> &nbsp;
+                                    <button onClick={() => deleteStore(store.product_store_id)} className="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
                         ))}

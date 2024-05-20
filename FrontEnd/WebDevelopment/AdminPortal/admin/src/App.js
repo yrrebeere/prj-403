@@ -11,6 +11,7 @@ import EditCategoryComponent from "./components/CategoryManagement/EditCategoryC
 import EditProductComponent from "./components/ProductManagement/EditProductComponent";
 import EditAdminComponent from "./components/Admin/EditAdminComponent";
 import ListCategoryComponent from "./components/CategoryManagement/ListCategoryComponent";
+import EditStoreComponent from "./components/Store/EditStoreComponent";
 
 function App() {
     return (
@@ -29,6 +30,7 @@ function App() {
                     <Route path="/add-category" element={<AddCategoryComponent />} />
                     <Route path="/add-product" element={<AddProductComponent />} />
                     <Route path="/add-admin" element={<AddAdminComponent />} />
+                    <Route path="/edit-store/:store_id" element={<EditStoreComponent />} />
                 </Routes>
             </Router>
         </div>

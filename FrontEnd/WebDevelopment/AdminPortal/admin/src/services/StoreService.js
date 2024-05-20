@@ -5,7 +5,7 @@ class StoreService {
         return axios.post('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/addstore', info);
     }
 
-    updateStore(store_id, info) {
+    editStore(store_id, info) {
         return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/${store_id}`, info);
     }
 
