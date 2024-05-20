@@ -21,6 +21,10 @@ class VendorService {
     deleteVendor(vendor_id){
         return axios.delete('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/' + vendor_id);
     }
+
+    getVendorCount() {
+        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/vendorcount`);
+    }
 }
 
 export default new VendorService();

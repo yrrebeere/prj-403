@@ -4,12 +4,14 @@ import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
+import VendorService from "../../services/VendorService";
 
 const { Sider } = Layout;
 const { Search } = Input;
 
 const ListAnalyticsComponent = () => {
     const [storeData, setStoreData] = useState({});
+    const [vendorData, setVendorData] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();
 
@@ -26,6 +28,17 @@ const ListAnalyticsComponent = () => {
             .catch(error => {
                 console.error("Error fetching store count:", error);
             });
+
+        VendorService.getVendorCount()
+            .then((response) => {
+                console.log('Response from getVendorCount:', response.data);
+                setVendorData(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching store count:", error);
+            });
+
+
     };
 
     const handleSearch = (value) => {
@@ -116,10 +129,16 @@ const ListAnalyticsComponent = () => {
                         <thead>
                         <tr>
                             <th style={{ backgroundColor: 'white' }}>Grocery Store Count</th>
+                            <th style={{ backgroundColor: 'white' }}>Vendor Count</th>
                         </tr>
                         </thead>
                         <tbody>
                         {Object.entries(storeData).map(([key, value]) => (
+                            <tr key={key}>
+                                <td>{value}</td>
+                            </tr>
+                        ))}
+                        {Object.entries(vendorData).map(([key, value]) => (
                             <tr key={key}>
                                 <td>{value}</td>
                             </tr>
