@@ -12,6 +12,7 @@ import EditProductComponent from "./components/ProductManagement/EditProductComp
 import EditAdminComponent from "./components/Admin/EditAdminComponent";
 import ListCategoryComponent from "./components/CategoryManagement/ListCategoryComponent";
 import EditStoreComponent from "./components/Store/EditStoreComponent";
+import ListAnalyticsComponent from "./components/Analytics/ListAnalyticsComponent";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<ListAdminComponent />} />
                     <Route path="/categories" element={<ListCategoryComponent />} />
+                    <Route path="/analytics" element={<ListAnalyticsComponent />} />
                     <Route path="/products" element={<ListProductComponent />} />
                     <Route path="/vendors" element={<ListVendorComponent />} />
                     <Route path="/stores" element={<ListStoreComponent />} />
