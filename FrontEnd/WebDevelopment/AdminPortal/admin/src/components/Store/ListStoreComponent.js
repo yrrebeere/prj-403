@@ -140,7 +140,7 @@ const ListStoreComponent = () => {
                         </thead>
                         <tbody>
                         {filteredStores.map(store => (
-                            <tr key={store.product_store_id}>
+                            <tr key={store.store_id}>
                                 <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
                                 <td>{store.store_name}</td>
                                 <td>{store.store_address}</td>
@@ -149,7 +149,7 @@ const ListStoreComponent = () => {
                                     <button onClick={() => window.location.href = `/edit-store/${store.store_id}`}
                                             className="btn btn-primary">Update
                                     </button> &nbsp;
-                                    <button onClick={() => deleteStore(store.product_store_id)} className="btn btn-danger">Delete</button>
+                                    <button onClick={() => deleteStore(store.store_id)} className="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
                         ))}
