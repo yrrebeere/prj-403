@@ -2,11 +2,6 @@ var router = require('express').Router();
 
 const productcategoryController = require('../controllers/productcategoryController')
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
 
 router.post('/addproductcategory',productcategoryController.addProductCategory)
 router.get('/allproductcategories',productcategoryController.getAllProductCategories)

@@ -2,13 +2,7 @@ var router = require('express').Router();
 
 const vendorController = require('../controllers/vendorController')
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
 
-
-//vendor
 router.post('/addvendor',vendorController.addVendor)
 router.get('/allvendors',vendorController.getAllVendors)
 router.get('/vendorcount',vendorController.vendorCount)

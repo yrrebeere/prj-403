@@ -118,7 +118,6 @@ const searchVendorInStore = async (req, res) => {
             return res.status(400).json({ error: 'Vendor name is required.' });
         }
 
-        // Step 1: Search Vendors by Name
         const vendors = await Vendor.findAll({
             where: {
                 vendor_name: {
@@ -131,10 +130,8 @@ const searchVendorInStore = async (req, res) => {
             return res.status(404).json({ error: 'No vendors found for the given name.' });
         }
 
-        // Step 2: Extract Vendor IDs
         const vendorIds = vendors.map((vendor) => vendor.vendor_id);
 
-        // Step 3: Search Product Inventories by Vendor IDs
         const productInventories = await db.product_inventory.findAll({
             where: {
                 vendor_vendor_id: {
@@ -147,10 +144,8 @@ const searchVendorInStore = async (req, res) => {
             return res.status(404).json({ error: 'No product inventory found for the given vendors.' });
         }
 
-        // Step 4: Extract Product IDs
         const productIds = productInventories.map((inventory) => inventory.product_product_id);
 
-        // Step 5: Search Products by Product IDs
         const products = await db.product.findAll({
             where: {
                 product_id: {

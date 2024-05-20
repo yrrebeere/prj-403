@@ -25,16 +25,6 @@ const app = express();
 app.use(cors())
 const port = 4000
 
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', '*');
-//   res.setHeader('Access-Control-Allow-Methods', 'POST, PUT, GET, OPTIONS');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   if (req.method === 'OPTIONS') {
-//     res.sendStatus(200);
-//   } else {
-//     next();
-//   }
-// });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -54,13 +44,6 @@ app.use('/api/admin',adminsRouter)
 app.use('/api/image',imagesRouter)
 app.use('/api/prediction',predictionsRouter)
 
-// const pool = mysql.createPool({
-//   connectionLimit : 10,
-//   host : 'localhost',
-//   user : 'root',
-//   password : '12345678',
-//   database : 'wasail',
-// })
 
 const pool = mysql.createPool({
   connectionLimit : 10,
@@ -72,18 +55,15 @@ const pool = mysql.createPool({
 
 app.listen(port,() => console.log(`listen on port ${port}`))
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
 
 });

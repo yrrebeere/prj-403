@@ -156,7 +156,6 @@ const passwordChecker = async (req, res) => {
     try {
         let phone_number = req.params.phone_number;
         let password = req.params.password;
-        // const { phone_number, password } = req.body;
 
         if (!phone_number || !password) {
             return res.status(400).json({ error: 'Phone number and password are required.' });
@@ -172,7 +171,6 @@ const passwordChecker = async (req, res) => {
             return res.status(404).json({ error: 'User not found.' });
         }
 
-        // Check if the provided password matches the password stored in the database
         const isPasswordMatch = (user.password === password);
 
         if (isPasswordMatch) {

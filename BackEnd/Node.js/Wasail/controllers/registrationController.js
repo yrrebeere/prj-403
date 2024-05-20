@@ -19,7 +19,6 @@ const addRegistration = async (req, res) => {
 
         if (user) {
             const vendorInfo = {
-                // user_id: user.id,
                 vendor_name: req.body.vendor_name,
                 delivery_locations: req.body.delivery_locations,
                 user_table_user_id: req.body.user_table_user_id
@@ -54,7 +53,6 @@ const addStoreRegistration = async (req, res) => {
 
         if (user) {
             const storeInfo = {
-                // user_id: user.id,
                 store_name: req.body.store_name,
                 image: req.body.image,
                 store_address: req.body.store_address,
