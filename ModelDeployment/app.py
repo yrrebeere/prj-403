@@ -59,7 +59,7 @@ def predict():
     selected_lag = request.form.get('lag', '2')
     selected_model = request.form.get('model', 'Prophet')
 
-    df = pd.read_csv("data/flask.csv", parse_dates=["date"])
+    df = pd.read_csv("data/deployment.csv", parse_dates=["date"])
 
     df = df[(df['store_nbr'] == int(selected_store)) & (df['family'] == int(selected_product))]
 
