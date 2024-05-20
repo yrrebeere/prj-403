@@ -3,6 +3,7 @@ import CategoryService from '../../services/CategoryService';
 import styles from '../../styles/ComponentStyles.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ProductService from "../../services/ProductService";
 
 const AddCategoryForm = () => {
     const [categoryName, setCategoryName] = useState('');
@@ -17,15 +18,17 @@ const AddCategoryForm = () => {
         e.preventDefault();
 
         try {
-            // Add category first
+            const extension = imageFile ? imageFile.name.split('.').pop() : '';
+
+            const imagePath = `categories/${categoryName}.${extension}`;
+
             await CategoryService.addCategory({
                 category_name: categoryName,
-                image: 'categories/'+imageFile.name,
+                image: imagePath,
             });
 
             console.log('Category added successfully');
 
-            // If there's an image file, upload it
             if (imageFile) {
                 const formData = new FormData();
                 formData.append('file', imageFile);
@@ -42,7 +45,7 @@ const AddCategoryForm = () => {
 
             navigate('/categories');
         } catch (error) {
-            console.error('Error adding Category or uploading image:', error);
+            console.error('Error adding Product:', error);
         }
     };
 
