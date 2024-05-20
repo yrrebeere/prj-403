@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/order_details.dart';
+import '../../../Classes/orders.dart';
 import 'productdetail.dart';
 import 'home.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class CartItemTile extends StatelessWidget {
   final CartItem cartItem;
@@ -116,6 +120,65 @@ class CartItemTile extends StatelessWidget {
 }
 
 class CartScreen extends StatelessWidget {
+  Future<void> placeOrder(List<CartItem> cartItems) async {
+
+    Orders order = Orders(
+      orderDate: DateTime.now(),
+      deliveryDate: DateTime.now().add(Duration(days: 7)),
+      totalBill: calculateTotalBill(cartItems),
+      orderStatus: 'In Process',
+      groceryStoreId: 1, // Example grocery store ID
+      vendorId: 1, // Example vendor ID
+    );
+
+    final orderResponse = await http.post(
+      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/addorder'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(order.toJson()),
+    );
+
+    if (orderResponse.statusCode == 200) {
+
+      final orderJson = jsonDecode(orderResponse.body);
+      int orderId = orderJson['order_id'];
+
+      List<OrderDetails> orderDetails = [];
+      cartItems.forEach((cartItem) {
+        orderDetails.add(OrderDetails(
+          quantity: cartItem.quantity,
+          unitPrice: cartItem.productInventory.price,
+          totalPrice: cartItem.quantity * cartItem.productInventory.price,
+          orderId: orderId,
+          productInventoryId: cartItem.productInventory.productInventoryId,
+        ));
+      });
+
+      for (var orderDetail in orderDetails) {
+        print(jsonEncode(orderDetail.toJson()));
+        await http.post(
+          Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order_detail/addorderdetail'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(orderDetail.toJson()),
+        );
+      }
+
+    } else {
+      throw Exception('Failed to place order');
+    }
+  }
+
+  int calculateTotalBill(List<CartItem> cartItems) {
+    int total = 0;
+    cartItems.forEach((cartItem) {
+      total += cartItem.quantity * cartItem.productInventory.price;
+    });
+    return total;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,8 +226,9 @@ class CartScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: GestureDetector(
-              onTap: () {
-                // Add logic to place order
+              onTap: () async {
+                await placeOrder(Provider.of<CartProvider>(context, listen: false).cartItems);
+                Provider.of<CartProvider>(context, listen: false).clearCart();
               },
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.3,
