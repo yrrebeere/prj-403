@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import StoreService from '../../services/StoreService';
-import styles from '../../styles/ComponentStyles.css';
+import VendorService from '../../services/VendorService';
+import ProductService from '../../services/ProductService';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
-import VendorService from "../../services/VendorService";
 
 const { Sider } = Layout;
 const { Search } = Input;
 
 const ListAnalyticsComponent = () => {
-    const [storeData, setStoreData] = useState({});
-    const [vendorData, setVendorData] = useState({});
+    const [storeCount, setStoreCount] = useState(0);
+    const [vendorCount, setVendorCount] = useState(0);
+    const [productCount, setProductCount] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();
 
     useEffect(() => {
-        refreshStores();
+        refreshData();
     }, []);
 
-    const refreshStores = () => {
+    const refreshData = () => {
         StoreService.getStoreCount()
             .then((response) => {
                 console.log('Response from getStoreCount:', response.data);
-                setStoreData(response.data);
+                setStoreCount(response.data.totalGroceryStores || 0);
             })
             .catch(error => {
                 console.error("Error fetching store count:", error);
@@ -32,13 +33,20 @@ const ListAnalyticsComponent = () => {
         VendorService.getVendorCount()
             .then((response) => {
                 console.log('Response from getVendorCount:', response.data);
-                setVendorData(response.data);
+                setVendorCount(response.data.totalVendors || 0);
             })
             .catch(error => {
-                console.error("Error fetching store count:", error);
+                console.error("Error fetching vendor count:", error);
             });
 
-
+        ProductService.getProductCount()
+            .then((response) => {
+                console.log('Response from getProductCount:', response.data);
+                setProductCount(response.data.totalProducts || 0);
+            })
+            .catch(error => {
+                console.error("Error fetching product count:", error);
+            });
     };
 
     const handleSearch = (value) => {
@@ -92,7 +100,6 @@ const ListAnalyticsComponent = () => {
                 </Menu>
             </Sider>
             <Layout>
-
                 <div style={{ padding: '1px' }}>
                     <div style={{
                         display: 'flex',
@@ -130,19 +137,15 @@ const ListAnalyticsComponent = () => {
                         <tr>
                             <th style={{ backgroundColor: 'white' }}>Grocery Store Count</th>
                             <th style={{ backgroundColor: 'white' }}>Vendor Count</th>
+                            <th style={{ backgroundColor: 'white' }}>Product Count</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {Object.entries(storeData).map(([key, value]) => (
-                            <tr key={key}>
-                                <td>{value}</td>
-                            </tr>
-                        ))}
-                        {Object.entries(vendorData).map(([key, value]) => (
-                            <tr key={key}>
-                                <td>{value}</td>
-                            </tr>
-                        ))}
+                        <tr>
+                            <td>{storeCount}</td>
+                            <td>{vendorCount}</td>
+                            <td>{productCount}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

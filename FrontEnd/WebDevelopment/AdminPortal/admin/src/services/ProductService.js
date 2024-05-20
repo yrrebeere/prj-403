@@ -22,6 +22,10 @@ class ProductService {
         return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/` + productId);
     }
 
+    getProductCount() {
+        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/productcount`);
+    }
+
 }
 
 export default new ProductService();
