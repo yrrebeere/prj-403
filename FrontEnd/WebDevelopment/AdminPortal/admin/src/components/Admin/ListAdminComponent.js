@@ -131,7 +131,7 @@ const ListAdminComponent = () => {
                             fontSize: '20px',
                             fontWeight: 'bold'
                         }}>
-                            Admins
+                            Admin Management
                             <div style={{
                                 paddingTop: '25px',
                                 paddingBottom: '25px',

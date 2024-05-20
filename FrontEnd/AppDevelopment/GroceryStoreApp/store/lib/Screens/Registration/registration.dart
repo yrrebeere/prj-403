@@ -46,8 +46,6 @@ class _RegistrationState extends State<Registration> {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
         _imageExtension = path.extension(pickedFile.path).toLowerCase();
-        // print(_imageFile);
-        // print(_imageExtension);
       }
       else {
         print('No image selected.');
@@ -73,14 +71,11 @@ class _RegistrationState extends State<Registration> {
 
       if (response.statusCode == 200) {
         print('Image uploaded successfully');
-        // Handle successful upload
       } else {
         print('Image upload failed with status ${response.statusCode}');
-        // Handle upload failure
       }
     } catch (e) {
       print('Image upload failed with error: $e');
-      // Handle other exceptions
     }
   }
 
