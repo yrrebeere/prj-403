@@ -50,6 +50,10 @@ const EditProductComponent = () => {
                 </table>
                 <br/>
                 <div align="left" style={{margin: '20px'}}>
+                    <button onClick={() => window.location.href = `/products`}
+                            className="btn btn-primary">Back
+                    </button>
+                    &nbsp;
                     <button className="btn btn-primary" type="submit">Update Product</button>
                 </div>
             </form>

@@ -32,7 +32,7 @@ const AddCategoryForm = () => {
                 <table className="table table-striped">
                     <tbody>
                     <tr>
-                        <td>Category</td>
+                        <td>Category Name</td>
                         <td><input type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/></td>
                     </tr>
                     </tbody>
@@ -40,8 +40,11 @@ const AddCategoryForm = () => {
                 <br/>
 
                 <div align="left" style={{margin: '20px'}}>
-                    <a href="/categories" className="btn btn-primary" style={{textAlign: 'left'}}>Back</a>
-                    <button style={{marginLeft: '5px'}} className="btn btn-primary" type="submit">Add Category</button>
+                    <button onClick={() => window.location.href = `/categories`}
+                            className="btn btn-primary">Back
+                    </button>
+                    &nbsp;
+                    <button className="btn btn-primary" type="submit">Add Category</button>
                 </div>
 
             </form>

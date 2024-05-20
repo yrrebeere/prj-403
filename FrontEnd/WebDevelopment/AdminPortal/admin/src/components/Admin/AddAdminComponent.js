@@ -45,7 +45,7 @@ const AddAdminForm = () => {
 
     return (
         <div className={styles.body}>
-            <h1>Add New User</h1>
+            <h1>Add New Admin</h1>
 
             <form onSubmit={handleSubmit}>
 
@@ -103,8 +103,13 @@ const AddAdminForm = () => {
                 <br/>
 
                 <div align="left" style={{margin: '20px'}}>
-                    <a href="/" className="btn btn-primary" style={{textAlign: 'left'}}>Back</a>
-                    <button style={{marginLeft: '5px'}} className="btn btn-primary" type="submit">Add Admin</button>
+                    <button onClick={() => window.location.href = `/admins`}
+                            className="btn btn-primary">Back
+                    </button>
+                    &nbsp;
+                    <button
+                            className="btn btn-primary" type="submit">Add Admin
+                    </button>
                 </div>
 
             </form>

@@ -49,10 +49,9 @@ const ListStoreComponent = () => {
     });
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
         { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
         { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
-        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
         { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },

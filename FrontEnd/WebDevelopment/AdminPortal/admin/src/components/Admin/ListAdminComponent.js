@@ -72,10 +72,9 @@ const ListAdminComponent = () => {
     });
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
         { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
         { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
-        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
         { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
@@ -132,7 +131,7 @@ const ListAdminComponent = () => {
                             fontSize: '20px',
                             fontWeight: 'bold'
                         }}>
-                            Users
+                            Admins
                             <div style={{
                                 paddingTop: '25px',
                                 paddingBottom: '25px',
@@ -140,7 +139,7 @@ const ListAdminComponent = () => {
                                 fontSize: '15px',
                                 margin: 'auto'
                             }}>
-                                <Link to="/add-admin" className="btn btn-primary" style={{ textAlign: 'left' }}>Add Users</Link>
+                                <Link to="/add-admin" className="btn btn-primary" style={{ textAlign: 'left' }}>Add Admins</Link>
                             </div>
                         </div>
                         <div style={{ marginRight: '25px', paddingTop: '130px', paddingRight: '33px' }}>
@@ -162,16 +161,12 @@ const ListAdminComponent = () => {
                     }}>
                         <thead>
                         <tr>
-                            <th style={{ backgroundColor: 'white' }}>Admin Id</th>
-                            <th style={{ backgroundColor: 'white' }}>Role</th>
-                            <th style={{ backgroundColor: 'white' }}>Email</th>
-                            <th style={{ backgroundColor: 'white' }}>User Id</th>
-                            <th style={{ backgroundColor: 'white' }}>Phone Number</th>
-                            <th style={{ backgroundColor: 'white' }}>Name</th>
-                            <th style={{ backgroundColor: 'white' }}>Username</th>
-                            <th style={{ backgroundColor: 'white' }}>Language</th>
-                            <th style={{ backgroundColor: 'white' }}>User Type</th>
-                            <th style={{ backgroundColor: 'white' }}>Options</th>
+                            <th style={{backgroundColor: 'white'}}>Name</th>
+                            <th style={{backgroundColor: 'white'}}>Username</th>
+                            <th style={{backgroundColor: 'white'}}>Role</th>
+                            <th style={{backgroundColor: 'white'}}>Email</th>
+                            <th style={{backgroundColor: 'white'}}>Phone Number</th>
+                            <th style={{backgroundColor: 'white'}}>Options</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -179,19 +174,16 @@ const ListAdminComponent = () => {
                             const user = users[admin.user_table_user_id] || {};
                             return (
                                 <tr key={admin.admin_id}>
-                                    <td>{admin.admin_id}</td>
-                                    <td>{admin.admin_role}</td>
-                                    <td>{admin.email}</td>
-                                    <td>{user.user_id}</td>
-                                    <td>{user.phone_number}</td>
                                     <td>{user.name}</td>
                                     <td>{user.username}</td>
-                                    <td>{user.language}</td>
-                                    <td>{user.user_type}</td>
+                                    <td>{admin.admin_role}</td>
+                                    <td>{admin.email}</td>
+                                    <td>{user.phone_number}</td>
                                     <td align="center">
                                         <button onClick={() => window.location.href = `/edit-admin/${admin.admin_id}`}
                                                 className="btn btn-primary">Update
-                                        </button> &nbsp;
+                                        </button>
+                                        &nbsp;
                                         <button onClick={() => deleteAdmin(admin.admin_id, admin.user_table_user_id)}
                                                 className="btn btn-danger">Delete
                                         </button>

@@ -32,7 +32,7 @@ const AddProductForm = () => {
                 <table className="table table-striped">
                     <tbody>
                     <tr>
-                        <td>Product</td>
+                        <td>Product Name</td>
                         <td><input type="text" value={productName} onChange={(e) => setProductName(e.target.value)}/></td>
                     </tr>
                     </tbody>
@@ -40,8 +40,11 @@ const AddProductForm = () => {
                 <br/>
 
                 <div align="left" style={{margin: '20px'}}>
-                    <a href="/" className="btn btn-primary" style={{textAlign: 'left'}}>Back</a>
-                    <button style={{marginLeft: '5px'}} className="btn btn-primary" type="submit">Add Product</button>
+                    <button onClick={() => window.location.href = `/products`}
+                            className="btn btn-primary">Back
+                    </button>
+                    &nbsp;
+                    <button className="btn btn-primary" type="submit">Add Product</button>
                 </div>
 
             </form>

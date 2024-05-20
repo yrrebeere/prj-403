@@ -48,10 +48,9 @@ const ListVendorComponent = () => {
     });
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
         { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
         { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
-        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
         { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
@@ -132,8 +131,8 @@ const ListVendorComponent = () => {
                         <tr>
                             <th style={{backgroundColor: 'white'}}>Image</th>
                             <th style={{backgroundColor: 'white'}}>Vendor Name</th>
-                            <th style={{backgroundColor: 'white'}}>Vendor Address</th>
-                            <th style={{backgroundColor: 'white'}}>vendorOptions</th>
+                            <th style={{backgroundColor: 'white'}}>Delivery Locations</th>
+                            <th style={{backgroundColor: 'white'}}>Options</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -141,9 +140,8 @@ const ListVendorComponent = () => {
                             <tr key={vendor.vendor_id}>
                                 <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${vendor.image}`}
                                          alt="Vendor Icon" style={{width: '50px', height: '50px'}}/></td>
-
                                 <td>{vendor.vendor_name}</td>
-                                <td>{vendor.vendor_address}</td>
+                                <td>{vendor.delivery_locations}</td>
 
                                 <td align="center">
                                     <button onClick={() => deleteVendor(vendor.vendor_id)}

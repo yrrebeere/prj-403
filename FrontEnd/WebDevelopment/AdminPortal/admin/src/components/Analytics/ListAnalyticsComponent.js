@@ -65,10 +65,9 @@ const ListAnalyticsComponent = () => {
     };
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'User Management', url: '/' },
+        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
         { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
         { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
-        { icon: <CloudOutlined />, label: 'ML Configuration', url: '/ml' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
         { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
         { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
@@ -125,17 +124,7 @@ const ListAnalyticsComponent = () => {
                             fontSize: '24px',
                             fontWeight: 'bold'
                         }}>
-                            Store Management
-                        </div>
-                        <div style={{ marginRight: '25px', paddingTop: '130px', paddingRight: '33px' }}>
-                            <Search
-                                placeholder="Search store"
-                                allowClear
-                                enterButton="Search"
-                                size="middle"
-                                onSearch={handleSearch}
-                                onChange={e => handleSearch(e.target.value)}
-                            />
+                            Analytics
                         </div>
                     </div>
 
