@@ -138,7 +138,7 @@ const ListVendorComponent = () => {
                         </thead>
                         <tbody>
                         {filteredVendors.map(vendor => (
-                            <tr key={vendor.product_vendor_id}>
+                            <tr key={vendor.vendor_id}>
                                 <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${vendor.image}`}
                                          alt="Vendor Icon" style={{width: '50px', height: '50px'}}/></td>
 
@@ -146,7 +146,7 @@ const ListVendorComponent = () => {
                                 <td>{vendor.vendor_address}</td>
 
                                 <td align="center">
-                                    <button onClick={() => deleteVendor(vendor.product_vendor_id)}
+                                    <button onClick={() => deleteVendor(vendor.vendor_id)}
                                             className="btn btn-danger">Delete
                                     </button>
                                 </td>
