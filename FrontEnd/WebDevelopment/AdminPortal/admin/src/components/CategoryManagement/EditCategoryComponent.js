@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import CategoryService from '../../services/CategoryService';
 import styles from '../../styles/ComponentStyles.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 const EditCategoryComponent = () => {
     const { product_category_id } = useParams();
     const [categoryName, setCategoryName] = useState('');
+    const [imageFile, setImageFile] = useState(null);
     const navigate = useNavigate();
+
+    const handleFileChange = (e) => {
+        setImageFile(e.target.files[0]);
+    };
 
     useEffect(() => {
         async function fetchData() {
@@ -23,14 +29,36 @@ const EditCategoryComponent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         try {
-            await CategoryService.editCategory(product_category_id, {
+            const extension = imageFile ? imageFile.name.split('.').pop() : '';
+
+            const imagePath = `categories/${categoryName}.${extension}`;
+
+            await CategoryService.editCategory(product_category_id,{
                 category_name: categoryName,
+                image: imagePath,
             });
-            console.log('Category updated successfully');
+
+            console.log('Category added successfully');
+
+            if (imageFile) {
+                const formData = new FormData();
+                formData.append('file', imageFile);
+
+                const apiUrl = `https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadcategory?category_name=${categoryName}`;
+                await axios.post(apiUrl, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                console.log('Image uploaded successfully');
+            }
+
             navigate('/categories');
         } catch (error) {
-            console.error('Error updating category:', error);
+            console.error('Error adding Product:', error);
         }
     };
 
@@ -43,6 +71,12 @@ const EditCategoryComponent = () => {
                     <tr>
                         <td>Category Name</td>
                         <td><input type="text" value={categoryName} onChange={(e) => setCategoryName(e.target.value)}/></td>
+                    </tr>
+                    <tr>
+                        <td>Category Image</td>
+                        <td>
+                            <input type="file" onChange={handleFileChange} />
+                        </td>
                     </tr>
                     </tbody>
                 </table>
