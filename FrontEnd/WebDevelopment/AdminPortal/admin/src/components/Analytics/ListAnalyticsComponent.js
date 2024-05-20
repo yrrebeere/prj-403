@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StoreService from '../../services/StoreService';
 import VendorService from '../../services/VendorService';
 import ProductService from '../../services/ProductService';
+import CategoryService from '../../services/CategoryService';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
@@ -13,6 +14,7 @@ const ListAnalyticsComponent = () => {
     const [storeCount, setStoreCount] = useState(0);
     const [vendorCount, setVendorCount] = useState(0);
     const [productCount, setProductCount] = useState(0);
+    const [categoryCount, setCategoryCount] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
     const location = useLocation();
 
@@ -46,6 +48,15 @@ const ListAnalyticsComponent = () => {
             })
             .catch(error => {
                 console.error("Error fetching product count:", error);
+            });
+
+        CategoryService.getCategoryCount()
+            .then((response) => {
+                console.log('Response from getCategoryCount:', response.data);
+                setCategoryCount(response.data.totalProductCategories || 0);
+            })
+            .catch(error => {
+                console.error("Error fetching category count:", error);
             });
     };
 
@@ -111,7 +122,7 @@ const ListAnalyticsComponent = () => {
                             paddingBottom: '25px',
                             paddingLeft: '25px',
                             color: 'black',
-                            fontSize: '20px',
+                            fontSize: '24px',
                             fontWeight: 'bold'
                         }}>
                             Store Management
@@ -128,23 +139,26 @@ const ListAnalyticsComponent = () => {
                         </div>
                     </div>
 
-                    <table className="table table-striped" style={{
+                    <table style={{
                         margin: '0 auto',
                         minWidth: '600px',
-                        backgroundColor: 'white'
+                        backgroundColor: 'white',
+                        borderCollapse: 'collapse'
                     }}>
                         <thead>
                         <tr>
-                            <th style={{ backgroundColor: 'white' }}>Grocery Store Count</th>
-                            <th style={{ backgroundColor: 'white' }}>Vendor Count</th>
-                            <th style={{ backgroundColor: 'white' }}>Product Count</th>
+                            <th style={{ backgroundColor: 'white', fontSize: '18px', padding: '14px', fontWeight: "normal", color: "gray" }}>Grocery Store Count</th>
+                            <th style={{ backgroundColor: 'white', fontSize: '18px', padding: '14px', fontWeight: "normal", color: "gray" }}>Vendor Count</th>
+                            <th style={{ backgroundColor: 'white', fontSize: '18px', padding: '14px', fontWeight: "normal", color: "gray" }}>Product Count</th>
+                            <th style={{ backgroundColor: 'white', fontSize: '18px', padding: '14px', fontWeight: "normal", color: "gray" }}>Category Count</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{storeCount}</td>
-                            <td>{vendorCount}</td>
-                            <td>{productCount}</td>
+                            <td style={{ fontSize: '70px', textAlign: 'center', padding: '10px', border: 'none', fontFamily: "serif" }}>{storeCount}</td>
+                            <td style={{ fontSize: '70px', textAlign: 'center', padding: '10px', border: 'none', fontFamily: "serif" }}>{vendorCount}</td>
+                            <td style={{ fontSize: '70px', textAlign: 'center', padding: '10px', border: 'none', fontFamily: "serif" }}>{productCount}</td>
+                            <td style={{ fontSize: '70px', textAlign: 'center', padding: '10px', border: 'none', fontFamily: "serif" }}>{categoryCount}</td>
                         </tr>
                         </tbody>
                     </table>

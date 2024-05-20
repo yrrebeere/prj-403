@@ -22,6 +22,10 @@ class CategoryService {
         return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/` + categoryId);
     }
 
+    getCategoryCount() {
+        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/productcategorycount`);
+    }
+
 }
 
 export default new CategoryService();
