@@ -123,7 +123,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         String listedAmount = listedAmountController.text.trim();
                         String availableAmount = availableAmountController.text.trim();
                         String price = priceController.text.trim();
-                        int vendorId = 1; // Example vendorId
+                        int vendorId = 7; // Example vendorId
 
                         widget.addToInventoryCallback(
                           listedAmount,

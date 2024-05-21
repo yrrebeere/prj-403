@@ -29,18 +29,39 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   String name = ""; // Initial values for demonstration
   String number = "";
-  String userId = '1'; // Replace with the actual user ID
+  String userId = '2'; // Replace with the actual user ID
+  late String image;
 
   @override
   void initState() {
     super.initState();
+    image = "";
+    fetchVendorProfile("7");
     fetchUserInfo(); // Fetch user information when the widget is initialized
+  }
+
+  Future<void> fetchVendorProfile(String vendorId) async {
+    try {
+      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorId'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        setState(() {
+          image = data['image'].toString().trim();
+        });
+      } else {
+        print('Failed to fetch vendor information. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during HTTP request: $error');
+    }
   }
 
   Future<void> fetchUserInfo() async {
     // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
     // final userId = userIdProvider.userId;
-    String userId = '1'; // Replace with the actual user ID
+    String userId = '2'; // Replace with the actual user ID
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
       final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
@@ -102,17 +123,33 @@ class _MenuState extends State<Menu> {
                                 height: 100,
                                 width: 100,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFFF9100),
+                                  color: Colors.white,
                                   shape: BoxShape.circle,
                                 ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                    size: 50,
-                                  ),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child:
+                                    Image.network(
+                                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
+                                      fit: BoxFit.cover,
+                                    )
                                 ),
                               ),
+                              // child: Container(
+                              //   height: 100,
+                              //   width: 100,
+                              //   decoration: BoxDecoration(
+                              //     color: Color(0xFFFF9100),
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              //   child: Center(
+                              //     child: Icon(
+                              //       Icons.person,
+                              //       color: Colors.white,
+                              //       size: 50,
+                              //     ),
+                              //   ),
+                              // ),
                             ),
                             Text(name, style: TextStyle(fontSize: 20)),
                             Text('0$number',

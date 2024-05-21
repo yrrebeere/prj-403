@@ -559,10 +559,6 @@ class _HomeState extends State<Home> {
                 Container(
                   height: 43,
                   padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF6FB457),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -572,7 +568,7 @@ class _HomeState extends State<Home> {
                             Icons.arrow_back_ios,
                             size: 15,
                           ),
-                          color: Colors.white,
+                          color: Color(0xFF6FB457),
                           onPressed: () {
                             _scrollController.animateTo(
                               _scrollController.offset -
@@ -584,14 +580,14 @@ class _HomeState extends State<Home> {
                         ),
                         Text(
                           'Recommendations',
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                          style: TextStyle(fontSize: 20.0, color: Color(0xFF6FB457)),
                         ),
                         IconButton(
                           icon: Icon(
                             Icons.arrow_forward_ios,
                             size: 15,
                           ),
-                          color: Colors.white,
+                          color: Color(0xFF6FB457),
                           onPressed: () {
                             _scrollController.animateTo(
                               _scrollController.offset +
@@ -612,20 +608,35 @@ class _HomeState extends State<Home> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _buildRecommendedProduct('Dalda Cooking Oil \n5Kg',
-                          'Rs. 2725', 'Assets/Images/Products/dalda-oil.jpeg'),
                       _buildRecommendedProduct(
-                          'Sunrise Wheat Flour \n10Kg',
-                          'Rs. 1800',
-                          'Assets/Images/Products/sunrise-flour.jpeg'),
-                      _buildRecommendedProduct('Olpers Milk \n6 Pack', 'Rs. 2800',
-                          'Assets/Images/Products/olpers-milk.jpg'),
-                      _buildRecommendedProduct('Knorr Ketchup', 'Rs. 240',
-                          'Assets/Images/Products/knorr-ketchup.png'),
-                      _buildRecommendedProduct('Nestle Milk \n6 Pack', 'Rs. 2450',
-                          'Assets/Images/Products/nestle-milk.jpg'),
-                      _buildRecommendedProduct('Dasani Water', 'Rs. 170',
-                          'Assets/Images/Products/dasani-water.png'),
+                          'Lays Masala',
+                          'Rs. 60',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/lays-masala.png'
+                      ),
+                      _buildRecommendedProduct(
+                          'Cheetos Salted',
+                          'Rs. 40',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/cheetos-salted.jpg'
+                      ),
+                      _buildRecommendedProduct(
+                          'Lipton Tea',
+                          'Rs. 515',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/lipton-tea.png'
+                      ),
+                      _buildRecommendedProduct(
+                          'Olpers Milk',
+                          'Rs. 170',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/olpers-milk.jpg'
+                      ),
+                      _buildRecommendedProduct(
+                          'K&N Nuggets',
+                          'Rs. 1200',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/k&n-nuggets.jpg'),
+                      _buildRecommendedProduct(
+                          'Nestle Yogurt',
+                          'Rs. 165',
+                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/nestle-yogurt.jpg'
+                      ),
                     ],
                   ),
                 ),
@@ -633,16 +644,12 @@ class _HomeState extends State<Home> {
                 Container(
                   height: 43,
                   padding: EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF6FB457),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         'Categories',
-                        style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        style: TextStyle(fontSize: 20.0, color: Color(0xFF6FB457)),
                       ),
                     ],
                   ),
@@ -694,7 +701,7 @@ class _HomeState extends State<Home> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
+          Image.network(
             imagePath,
             width: 90,
             height: 90,

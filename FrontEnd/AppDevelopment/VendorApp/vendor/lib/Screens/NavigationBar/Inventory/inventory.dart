@@ -44,14 +44,14 @@ class _InventoryState extends State<Inventory> with RouteAware {
 
   @override
   void didPopNext() {
-    _fetchAndDisplayCombinedData("1"); // Refresh data when returning to this page
+    _fetchAndDisplayCombinedData("7"); // Refresh data when returning to this page
   }
 
   @override
   void initState() {
     super.initState();
-    _fetchAndDisplayProductInventories("1");
-    _fetchAndDisplayCombinedData("1");
+    _fetchAndDisplayProductInventories("7");
+    _fetchAndDisplayCombinedData("7");
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       final route = ModalRoute.of(context);
       if (route != null) {
@@ -295,7 +295,7 @@ class _InventoryState extends State<Inventory> with RouteAware {
           );
 
           if (result != null && result) {
-            _fetchAndDisplayCombinedData("1"); // Refresh the data if result indicates a change
+            _fetchAndDisplayCombinedData("7"); // Refresh the data if result indicates a change
           }
         },
         backgroundColor:  Color(0xFFFF9100),
@@ -317,12 +317,12 @@ class _InventoryState extends State<Inventory> with RouteAware {
           },
           onDeleted: () {
             setState(() {
-              _fetchAndDisplayCombinedData("1");
+              _fetchAndDisplayCombinedData("7");
             });
           },
           onUpdate: () {
             setState(() {
-              _fetchAndDisplayCombinedData("1");
+              _fetchAndDisplayCombinedData("7");
             });
           },
         ),

@@ -28,7 +28,7 @@ class _ViewProfileState extends State<ViewProfile> {
     language = "";
     image = "";
     fetchUserProfile(widget.userId);
-    fetchVendorProfile("1");
+    fetchVendorProfile("7");
   }
 
   Future<void> fetchVendorProfile(String vendorId) async {

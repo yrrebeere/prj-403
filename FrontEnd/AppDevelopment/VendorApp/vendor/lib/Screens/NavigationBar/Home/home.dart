@@ -20,8 +20,8 @@ class _HomeState extends State<Home> {
   List<InventoryItem> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
-  int vendorId = 1;
-  int numberOfCurrentOrders = 4;
+  int vendorId = 7;
+  int numberOfCurrentOrders = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +106,6 @@ class _HomeState extends State<Home> {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ),
-                                    SizedBox(width: 10),
                                     Text(
                                       AppLocalizations.of(context)!.you_have,
                                       style: TextStyle(
@@ -129,10 +123,11 @@ class _HomeState extends State<Home> {
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 30),
                                     ),
-                                    Icon(Icons.arrow_forward_ios,
-                                        color: Colors.white),
                                   ],
                                 ),
+                              ),
+                              SizedBox(
+                                height: 5,
                               ),
                               Expanded(
                                 child: Row(
