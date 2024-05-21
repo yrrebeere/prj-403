@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ProductService from '../../services/ProductService';
-import styles from '../../styles/ComponentStyles.css';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from 'axios';
 
 const AddProductForm = () => {
     const [productName, setProductName] = useState('');
@@ -18,7 +18,6 @@ const AddProductForm = () => {
 
         try {
             const extension = imageFile ? imageFile.name.split('.').pop() : '';
-
             const imagePath = `products/${productName}.${extension}`;
 
             await ProductService.addProduct({
@@ -48,37 +47,46 @@ const AddProductForm = () => {
         }
     };
 
-
     return (
-        <div className={styles.body}>
+        <div className="container mt-5">
             <h1>Add Product</h1>
-
             <form onSubmit={handleSubmit}>
-
-                <table className="table table-striped">
-                    <tbody>
-                    <tr>
-                        <td>Product Name</td>
-                        <td><input type="text" value={productName} onChange={(e) => setProductName(e.target.value)}/></td>
-                    </tr>
-                    <tr>
-                        <td>Product Image</td>
-                        <td>
-                            <input type="file" onChange={handleFileChange} />
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <br/>
-
-                <div align="left" style={{margin: '20px'}}>
-                    <button onClick={() => window.location.href = `/products`}
-                            className="btn btn-primary">Back
-                    </button>
-                    &nbsp;
-                    <button className="btn btn-primary" type="submit">Add Product</button>
+                <div className="form-group">
+                    <label htmlFor="productName"><b>Product Name</b></label>
+                    <br/>
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="productName"
+                        value={productName}
+                        onChange={(e) => setProductName(e.target.value)}
+                    />
                 </div>
-
+                <br/>
+                <div className="form-group">
+                    <label htmlFor="productImage"><b>Product Image:</b></label>
+                    &nbsp;&nbsp;
+                    <input
+                        type="file"
+                        className="form-control-file"
+                        id="productImage"
+                        onChange={handleFileChange}
+                    />
+                </div>
+                <br/>
+                <div className="form-group">
+                    <button
+                        onClick={() => navigate('/products')}
+                        className="btn btn-secondary mr-2"
+                        type="button"
+                    >
+                        Back
+                    </button>
+                    &nbsp;&nbsp;
+                    <button className="btn btn-primary" type="submit">
+                        Add Product
+                    </button>
+                </div>
             </form>
         </div>
     );

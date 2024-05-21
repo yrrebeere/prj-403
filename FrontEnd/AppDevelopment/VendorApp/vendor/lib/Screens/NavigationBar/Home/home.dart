@@ -32,13 +32,13 @@ class _HomeState extends State<Home> {
   Future<void> _fetchCurrentOrders() async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/productcount'),
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/totalorders/$vendorId'),
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
-          numberOfCurrentOrders = data['totalProducts'];
+          numberOfCurrentOrders = data['orders'];
         });
       } else {
         print('Failed to fetch order count');

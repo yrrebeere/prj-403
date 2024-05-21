@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StoreService from '../../services/StoreService';
-import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
@@ -48,13 +47,26 @@ const ListStoreComponent = () => {
         return nameMatch || addressMatch || modelMatch;
     });
 
+    const renderModel = (model) => {
+        switch (model) {
+            case 'xgb':
+                return 'XGBoost';
+            case 'prophet':
+                return 'Prophet';
+            case 'lgbm':
+                return 'LightGBM';
+            default:
+                return model;
+        }
+    };
+
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
-        { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
-        { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
+        { icon: <UserOutlined />, label: 'Admins', url: '/' },
+        { icon: <UploadOutlined />, label: 'Grocery Stores', url: '/stores' },
+        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
-        { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
-        { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
+        { icon: <AppstoreOutlined />, label: 'Categories', url: '/categories' },
+        { icon: <AppstoreOutlined />, label: 'Products', url: '/products' },
     ];
 
     return (
@@ -123,7 +135,7 @@ const ListStoreComponent = () => {
                         </div>
                     </div>
 
-                    <table className="table table-striped" style={{
+                    <table className="table" style={{
                         margin: '0 auto',
                         minWidth: '600px',
                         backgroundColor: 'white'
@@ -143,7 +155,7 @@ const ListStoreComponent = () => {
                                 <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
                                 <td>{store.store_name}</td>
                                 <td>{store.store_address}</td>
-                                <td>{store.model}</td>
+                                <td>{renderModel(store.model)}</td>
                                 <td align="center">
                                     <button onClick={() => window.location.href = `/edit-store/${store.store_id}`}
                                             className="btn btn-primary">Update

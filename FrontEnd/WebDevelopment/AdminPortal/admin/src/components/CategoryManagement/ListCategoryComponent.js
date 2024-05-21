@@ -47,12 +47,12 @@ const ListCategoryComponent = () => {
     });
 
     const sidebarItems = [
-        { icon: <UserOutlined />, label: 'Admin Management', url: '/' },
-        { icon: <UploadOutlined />, label: 'Grocery Management', url: '/stores' },
-        { icon: <VideoCameraOutlined />, label: 'Vendor Management', url: '/vendors' },
+        { icon: <UserOutlined />, label: 'Admins', url: '/' },
+        { icon: <UploadOutlined />, label: 'Grocery Stores', url: '/stores' },
+        { icon: <VideoCameraOutlined />, label: 'Vendors', url: '/vendors' },
         { icon: <BarChartOutlined />, label: 'Analytics', url: '/analytics' },
-        { icon: <AppstoreOutlined />, label: 'Product Management', url: '/products' },
-        { icon: <AppstoreOutlined />, label: 'Category Management', url: '/categories' },
+        { icon: <AppstoreOutlined />, label: 'Categories', url: '/categories' },
+        { icon: <AppstoreOutlined />, label: 'Products', url: '/products' },
     ];
 
     return (
@@ -131,7 +131,7 @@ const ListCategoryComponent = () => {
                         </div>
                     </div>
 
-                    <table className="table table-striped" style={{
+                    <table className="table" style={{
                         margin: '0 auto',
                         minWidth: '600px',
                         backgroundColor: 'white'

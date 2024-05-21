@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ListAdminComponent from "./components/Admin/ListAdminComponent";
 import ListVendorComponent from "./components/Vendor/ListVendorComponent";
