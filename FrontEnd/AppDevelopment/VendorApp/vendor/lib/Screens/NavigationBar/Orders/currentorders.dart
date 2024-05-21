@@ -3,20 +3,31 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
-class CurrentOrdersPage extends StatelessWidget {
+class CurrentOrdersPage extends StatefulWidget {
   final int vendorId;
 
   CurrentOrdersPage(this.vendorId);
 
-  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
+  @override
+  _CurrentOrdersPageState createState() => _CurrentOrdersPageState();
+}
 
+class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
+  late Future<List<Map<String, dynamic>>> _ordersFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _ordersFuture = _fetchAndDisplayCombinedData(widget.vendorId);
+  }
+
+  Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
     vendorId = 7;
 
     try {
       final response = await http.get(
         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/search/$vendorId'),
       );
-
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
@@ -28,6 +39,7 @@ class CurrentOrdersPage extends StatelessWidget {
           final totalBill = item['total_bill'];
           final orderStatus = item['order_status'];
           final groceryStoreId = item['groceryStoreStoreId'];
+          final orderId = item['order_id']; // Assuming order_id is included in the response
 
           if (groceryStoreId != null) {
             print('Fetching grocery store data for ID: $groceryStoreId');
@@ -43,6 +55,7 @@ class CurrentOrdersPage extends StatelessWidget {
               final groceryStoreImage = groceryStoreData['image'];
 
               combinedData.add({
+                'order_id': orderId,
                 'order_date': orderDate,
                 'delivery_date': deliveryDate,
                 'total_bill': totalBill,
@@ -72,6 +85,27 @@ class CurrentOrdersPage extends StatelessWidget {
     }
   }
 
+  Future<void> _updateOrderStatus(int orderId, String status) async {
+    try {
+      final response = await http.put(
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/$orderId'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'order_status': status}),
+      );
+
+      if (response.statusCode == 200) {
+        print('Order status updated successfully.');
+        setState(() {
+          _ordersFuture = _fetchAndDisplayCombinedData(widget.vendorId);
+        });
+      } else {
+        print('Failed to update order status: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating order status: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,7 +125,7 @@ class CurrentOrdersPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: FutureBuilder<List<Map<String, dynamic>>>(
-          future: _fetchAndDisplayCombinedData(vendorId),
+          future: _ordersFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -115,8 +149,7 @@ class CurrentOrdersPage extends StatelessWidget {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: CircleAvatar(
-
-                        backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+orderData['image']),
+                        backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + orderData['image']),
                         radius: 30,
                       ),
                       title: Text(
@@ -140,7 +173,6 @@ class CurrentOrdersPage extends StatelessWidget {
                             style: TextStyle(fontSize: 16, color: Colors.black),
                           ),
                           SizedBox(height: 10),
-
                           Text(
                             'Total Bill: Rs.${orderData['total_bill']}',
                             style: TextStyle(fontSize: 16, color: Colors.black),
@@ -161,14 +193,23 @@ class CurrentOrdersPage extends StatelessWidget {
                               SizedBox(width: 8),
                               Expanded(
                                 child: Center(
-                                  child: Container(
-                                    padding: EdgeInsets.all(8.0),
-                                    decoration: BoxDecoration(
-                                    ),
-                                    child: Text(
-                                      'Order Status: \n${orderData['order_status']}',
-                                      style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-                                    ),
+                                  child: DropdownButton<String>(
+                                    value: orderData['order_status'],
+                                    items: ['In Process', 'On Its Way', 'Delivered']
+                                        .map<DropdownMenuItem<String>>((String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      if (newValue != null) {
+                                        setState(() {
+                                          orderData['order_status'] = newValue;
+                                        });
+                                        _updateOrderStatus(orderData['order_id'], newValue);
+                                      }
+                                    },
                                   ),
                                 ),
                               ),

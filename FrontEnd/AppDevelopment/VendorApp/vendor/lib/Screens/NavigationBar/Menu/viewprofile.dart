@@ -295,6 +295,9 @@ class _ViewProfileState extends State<ViewProfile> {
               ElevatedButton(
                 onPressed: onPressed,
                 child: Text('Edit'),
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFFF9100),
+                ),
               ),
             ],
           ),
