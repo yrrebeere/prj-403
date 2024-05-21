@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../../Classes/inventory_item.dart';
 import '../../SelectLanguage/languageprovider.dart';
+import '../navbar.dart';
 import 'orderhistory.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
@@ -78,7 +79,14 @@ class _HomeState extends State<Home> {
                           .map(
                             (product) => ListTile(
                           title: Text(product.name),
-                          // You can customize the display further based on your needs
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NavBar(initialIndex: 2),
+                              ),
+                            );
+                          },
                         ),
                       )
                           .toList(),
@@ -114,8 +122,7 @@ class _HomeState extends State<Home> {
                               ),
                               Expanded(
                                 child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '$numberOfCurrentOrders',
@@ -131,8 +138,7 @@ class _HomeState extends State<Home> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      AppLocalizations.of(context)!
-                                          .orders_today,
+                                      AppLocalizations.of(context)!.orders_today,
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 18),
                                     ),
@@ -158,7 +164,7 @@ class _HomeState extends State<Home> {
                         height: 90,
                         width: 380,
                         decoration: BoxDecoration(
-                          color:  Color(0xFFFF9100),
+                          color: Color(0xFFFF9100),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Padding(
@@ -167,8 +173,7 @@ class _HomeState extends State<Home> {
                             children: [
                               Expanded(
                                 child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -182,12 +187,10 @@ class _HomeState extends State<Home> {
                                           AppLocalizations.of(context)!
                                               .order_history,
                                           style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
+                                              color: Colors.white, fontSize: 18),
                                         ),
                                       ],
                                     ),
-                                    // Moved the arrow icon here
                                     Icon(Icons.arrow_forward_ios,
                                         color: Colors.white),
                                   ],

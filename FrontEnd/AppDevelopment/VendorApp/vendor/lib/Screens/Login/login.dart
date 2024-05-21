@@ -151,10 +151,24 @@ class _MyAppState extends State<Login> {
                             ),
                           ),
                           Positioned(
-                            left: screenWidth * 0.07,
-                            top: screenHeight * 0.33,
+                            left: screenWidth * 0.1,
+                            top: screenHeight * 0.35,
                             child: Text(
                               AppLocalizations.of(context)!.phone_number,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: screenWidth * 0.04,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                height: 0,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            left: screenWidth * 0.1,
+                            top: screenHeight * 0.48,
+                            child: Text(
+                              AppLocalizations.of(context)!.password,
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.04,
@@ -181,8 +195,8 @@ class _MyAppState extends State<Login> {
                             ),
                           ),
                           Positioned(
-                            left: screenWidth * 0.07,
-                            top: screenHeight * 0.2,
+                            left: screenWidth * 0.1,
+                            top: screenHeight * 0.25,
                             child: Text(
                               AppLocalizations.of(context)!.login,
                               style: TextStyle(
@@ -318,7 +332,7 @@ class _MyAppState extends State<Login> {
                                 child: Container(
                                   padding: const EdgeInsets.all(16.0),
                                   decoration: BoxDecoration(
-                                    color: Color(0xFF6FB457),
+                                    color: Color(0xFFFF9100),
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                   child: Center(

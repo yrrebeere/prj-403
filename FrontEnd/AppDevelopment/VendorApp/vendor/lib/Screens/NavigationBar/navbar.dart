@@ -11,16 +11,16 @@ import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 class NavBar extends StatefulWidget {
-  final int? quantity;
+  final int initialIndex;
 
-  const NavBar({Key? key, this.quantity}) : super(key: key);
+  const NavBar({Key? key, this.initialIndex = 0}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  int index = 0;
+  late int index;
 
   final screens = [
     Home(),
@@ -28,6 +28,12 @@ class _NavBarState extends State<NavBar> {
     Inventory(),
     Menu(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.initialIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +59,7 @@ class _NavBarState extends State<NavBar> {
             appBar: AppBar(
               backgroundColor: Color(0xFFFF9100), // Make app bar transparent
               flexibleSpace: Container(
-                decoration: BoxDecoration(
-
-                ),
+                decoration: BoxDecoration(),
               ),
               title: Padding(
                 padding: const EdgeInsets.only(left: 145),
