@@ -1,5 +1,6 @@
 const db = require('../models')
 const { Op } = require("sequelize");
+const { Sequelize } = require('sequelize');
 const Order = db.order
 const Detail = db.order_detail
 
@@ -313,6 +314,31 @@ const orderPlacement = async (req, res) => {
     }
 };
 
+const totalCurrentOrders = async (req, res) => {
+    try {
+        const vendor_id = req.params.vendor_vendor_id;
+
+        if (!vendor_id) {
+            return res.status(400).json({ error: 'Vendor ID is required.' });
+        }
+
+        const orders = await Order.count({
+            where: {
+                vendor_vendor_id: vendor_id,
+                order_status: {
+                    [Op.in]: ['In Process', 'On Its Way'],
+                },
+            },
+        });
+
+        res.status(200).json({ orders });
+
+    } catch (error) {
+        console.error('Error searching products by store:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 module.exports = {
     addOrder,
     getAllOrders,
@@ -325,5 +351,6 @@ module.exports = {
     orderHistoryByGID,
     storeOrderHistory,
     storeCurrentOrders,
-    orderPlacement
+    orderPlacement,
+    totalCurrentOrders
 }
