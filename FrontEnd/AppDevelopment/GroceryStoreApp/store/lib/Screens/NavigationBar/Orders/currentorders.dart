@@ -10,7 +10,7 @@ class CurrentOrdersPage extends StatelessWidget {
 
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int storeId) async {
 
-    // storeId = 2;
+    storeId = 2;
 
     try {
       final response = await http.get(
@@ -102,29 +102,21 @@ class CurrentOrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFF6FB457),
-          ),
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(left: 70),
-          child: Text('Current Orders'),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.chevron_left),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+                child: Text(
+                  'Current Orders',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF6FB457),
+                  ),
+                )
+            ),
             FutureBuilder<List<Map<String, dynamic>>>(
               future: _fetchAndDisplayCombinedData(vendorId),
               builder: (context, snapshot) {

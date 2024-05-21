@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:store/Screens/NavigationBar/Menu/menu.dart';
+import 'package:store/Screens/NavigationBar/Orders/currentorders.dart';
 import 'package:store/Screens/NavigationBar/Orders/orders.dart';
 import 'Home/home.dart';
 import 'Home/cartscreen.dart';
-import 'Inventory/inventory.dart';
+// Import OrderHistory
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../Registration/registrationprovider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
+
+import 'Orders/orderhistory.dart';
 
 class NavBar extends StatefulWidget {
   final int? quantity;
@@ -25,8 +28,8 @@ class _NavBarState extends State<NavBar> {
 
   final screens = [
     Home(),
-    Order(),
-    Inventory(),
+    CurrentOrdersPage(2),
+    OrderHistory(2),
     Menu(),
   ];
 
@@ -89,7 +92,7 @@ class _NavBarState extends State<NavBar> {
               items: <Widget>[
                 Icon(Icons.home, size: 30, color: Colors.white,),
                 Icon(Icons.local_shipping, size: 30, color: Colors.white,),
-                Icon(Icons.contact_page, size: 30, color: Colors.white,),
+                Icon(Icons.history, size: 30, color: Colors.white,),
                 Icon(Icons.menu, size: 30, color: Colors.white,),
               ],
               onTap: (newIndex) {

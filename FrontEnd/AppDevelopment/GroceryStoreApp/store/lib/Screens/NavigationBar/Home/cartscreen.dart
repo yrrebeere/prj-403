@@ -127,8 +127,8 @@ class CartScreen extends StatelessWidget {
       deliveryDate: DateTime.now().add(Duration(days: 7)),
       totalBill: calculateTotalBill(cartItems),
       orderStatus: 'In Process',
-      groceryStoreId: 1, // Example grocery store ID
-      vendorId: 1, // Example vendor ID
+      groceryStoreId: 2,
+      vendorId: 7,
     );
 
     final orderResponse = await http.post(
