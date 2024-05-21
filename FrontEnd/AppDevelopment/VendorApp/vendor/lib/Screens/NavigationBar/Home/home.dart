@@ -21,7 +21,34 @@ class _HomeState extends State<Home> {
   TextEditingController searchController = TextEditingController();
 
   int vendorId = 7;
-  int numberOfCurrentOrders = 5;
+  int numberOfCurrentOrders = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCurrentOrders();
+  }
+
+  Future<void> _fetchCurrentOrders() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/productcount'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        setState(() {
+          numberOfCurrentOrders = data['totalProducts'];
+        });
+      } else {
+        print('Failed to fetch order count');
+        // Optionally, handle the error with a UI message
+      }
+    } catch (e) {
+      print('Error: $e');
+      // Optionally, handle the error with a UI message
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +233,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-// Modify the _searchProductInInventory method
+  // Modify the _searchProductInInventory method
   Future<void> _searchProductInInventory(String productName) async {
     try {
       print('Searching for product: $productName'); // Add this debug print
