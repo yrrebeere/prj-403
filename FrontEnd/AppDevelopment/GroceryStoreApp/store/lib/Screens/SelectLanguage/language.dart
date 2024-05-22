@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:store/Screens/PhoneNumber/phonenumber.dart';
 import 'package:store/Screens/Registration/registrationprovider.dart';
+import '../../Classes/cart_provider.dart';
 import '../PhoneNumber/phonenumberprovider.dart';
 import 'package:provider/provider.dart';
 import 'languageprovider.dart';
-import 'package:store/Screens/NavigationBar/Home/home.dart';
 
 void main() => runApp(MyApp());
 

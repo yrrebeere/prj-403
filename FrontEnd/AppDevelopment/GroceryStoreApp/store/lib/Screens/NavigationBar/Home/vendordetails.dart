@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:store/Screens/NavigationBar/Home/productdetail.dart';
+import '../../../Classes/product.dart';
+import '../../../Classes/product_inventory.dart';
 import 'home.dart';
 
 class VendorDetailsPage extends StatefulWidget {
