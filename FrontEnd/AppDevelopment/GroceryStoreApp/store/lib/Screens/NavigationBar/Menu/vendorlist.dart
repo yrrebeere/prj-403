@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'package:store/Screens/NavigationBar/Home/vendordetails.dart';
 import 'dart:convert';
-import 'Details.dart';
+import '../../../Classes/vendor.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,29 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: VendorList(),
-    );
-  }
-}
-
-class Vendor {
-  final String vendorName;
-  final String deliveryLocations;
-  final int userId;
-  final String image;
-
-  Vendor({
-    required this.vendorName,
-    required this.deliveryLocations,
-    required this.userId,
-    required this.image,
-  });
-
-  factory Vendor.fromJson(Map<String, dynamic> json) {
-    return Vendor(
-      vendorName: json['vendor_name'],
-      deliveryLocations: json['delivery_locations'],
-      userId: json['user_table_user_id'],
-      image: json['image'],
     );
   }
 }
@@ -147,7 +125,7 @@ class _VendorListState extends State<VendorList> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Details(vendor: vendor),
+            builder: (context) => VendorDetailsPage(vendorId: vendor.vendorId),
           ),
         );
       },

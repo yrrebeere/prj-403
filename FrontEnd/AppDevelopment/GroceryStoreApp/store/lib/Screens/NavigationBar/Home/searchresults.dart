@@ -70,7 +70,7 @@ class SearchResultsPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 55, // Increase the radius for a larger image
-                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.vendorImage),
+                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.image),
                         ),
                         SizedBox(width: 12.0),
                         Column(

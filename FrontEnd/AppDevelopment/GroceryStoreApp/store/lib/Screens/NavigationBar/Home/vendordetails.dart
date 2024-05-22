@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:store/Screens/NavigationBar/Home/productdetail.dart';
 import '../../../Classes/product.dart';
 import '../../../Classes/product_inventory.dart';
-import 'home.dart';
 
 class VendorDetailsPage extends StatefulWidget {
   final int vendorId;
@@ -106,12 +105,12 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: Row(
                     children: [
                       if (vendorProfile['image'] != null)
                         CircleAvatar(
-                          radius: 60,
+                          radius: 50,
                           backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendorProfile['image']),
                         ),
                       SizedBox(width: 16),
@@ -120,41 +119,32 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the start (left) horizontally
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8), // Padding around the text
-                              decoration: BoxDecoration(
-                                color: Color(0xFF6FB457), // Color of the container
-                                borderRadius: BorderRadius.circular(8), // Border radius of the container
-                              ),
                               child: Text(
                                 '${vendorProfile['vendor_name']}',
                                 style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white, // Text color set to white
+                                  fontSize: 20,
+                                  color: Color(0xFF6FB457),
+                                  fontWeight: FontWeight.bold
                                 ),
                               ),
                             ),
                             SizedBox(height: 8),
                             Container(
-                              padding: EdgeInsets.all(8), // Padding around the text
-                              decoration: BoxDecoration(
-                                color: Color(0xFF6FB457), // Color of the container
-                                borderRadius: BorderRadius.circular(8), // Border radius of the container
-                              ),
                               child: Text(
                                 '${vendorProfile['delivery_locations']}',
                                 style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white, // Text color set to white
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  // fontWeight: FontWeight.w400
                                 ),
                               ),
                             ),
                           ],
                         ),
                       ),
-
                       SizedBox(width: 10),
                       Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.all(10.0),
                         child: GestureDetector(
                           onTap: _addVendorToList,
                           child: Container(
@@ -173,23 +163,6 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF6FB457), // Color of the container
-                      borderRadius: BorderRadius.circular(8), // Border radius of the container
-                    ),
-                    child: Text(
-                      'Inventory',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white, // Text color set to white
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
