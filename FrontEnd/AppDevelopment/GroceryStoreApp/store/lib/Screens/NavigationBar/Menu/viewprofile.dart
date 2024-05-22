@@ -18,6 +18,7 @@ class _ViewProfileState extends State<ViewProfile> {
   late String username;
   late String language;
   late String image;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -26,6 +27,7 @@ class _ViewProfileState extends State<ViewProfile> {
     number = "";
     username = "";
     language = "";
+    image = "";
     fetchUserProfile(widget.userId);
     fetchStoreProfile("2");
   }
@@ -39,12 +41,15 @@ class _ViewProfileState extends State<ViewProfile> {
         print(data);
         setState(() {
           image = data['image'].toString().trim();
+          checkLoadingComplete();
         });
       } else {
         print('Failed to fetch store information. Status code: ${response.statusCode}');
+        checkLoadingComplete();
       }
     } catch (error) {
       print('Error during HTTP request: $error');
+      checkLoadingComplete();
     }
   }
 
@@ -59,12 +64,23 @@ class _ViewProfileState extends State<ViewProfile> {
           number = data['phone_number'].toString().trim();
           username = data['username'].toString().trim();
           language = data['language'].toString().trim();
+          checkLoadingComplete();
         });
       } else {
         print('Failed to fetch user information. Status code: ${response.statusCode}');
+        checkLoadingComplete();
       }
     } catch (error) {
       print('Error during HTTP request: $error');
+      checkLoadingComplete();
+    }
+  }
+
+  void checkLoadingComplete() {
+    if (name.isNotEmpty && number.isNotEmpty && username.isNotEmpty && language.isNotEmpty && image.isNotEmpty) {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -111,10 +127,9 @@ class _ViewProfileState extends State<ViewProfile> {
     }
   }
 
-
   Future<bool> isUsernameAvailable(String username) async {
     final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username'));
-    print(username+response.body);
+    print(username + response.body);
     return response.statusCode == 200 && json.decode(response.body) == false;
   }
 
@@ -202,7 +217,6 @@ class _ViewProfileState extends State<ViewProfile> {
     return true;
   }
 
-
   // Helper function to capitalize the first letter of a string
   String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
@@ -230,7 +244,9 @@ class _ViewProfileState extends State<ViewProfile> {
           },
         ),
       ),
-      body: SingleChildScrollView(
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
@@ -244,12 +260,11 @@ class _ViewProfileState extends State<ViewProfile> {
                     shape: BoxShape.circle,
                   ),
                   child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child:
-                      Image.network(
-                        'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
-                        fit: BoxFit.cover,
-                      )
+                    borderRadius: BorderRadius.circular(50),
+                    child: Image.network(
+                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),

@@ -29,7 +29,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   String name = ""; // Initial values for demonstration
   String number = "";
-  String userId = '2'; // Replace with the actual user ID
+  String userId = '18'; // Replace with the actual user ID
   late String image;
 
   @override
@@ -61,7 +61,7 @@ class _MenuState extends State<Menu> {
   Future<void> fetchUserInfo() async {
     // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
     // final userId = userIdProvider.userId;
-    String userId = '2'; // Replace with the actual user ID
+    String userId = '18'; // Replace with the actual user ID
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
       final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
