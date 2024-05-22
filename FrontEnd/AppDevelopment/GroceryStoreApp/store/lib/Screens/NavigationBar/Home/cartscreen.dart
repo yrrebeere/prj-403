@@ -34,26 +34,34 @@ class CartItemTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      cartItem.product.productName,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        cartItem.product.productName,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        maxLines: 1, // Limit the number of lines to 2
+                        overflow: TextOverflow.ellipsis, // Add ellipsis for overflow
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      'Price: Rs. ${cartItem.productInventory.price.toString()}',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                    Text(
-                      'Quantity: ${cartItem.quantity}',
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
+                      SizedBox(height: 10),
+                      Text(
+                        'Price: Rs. ${cartItem.productInventory.price.toString()}',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      Text(
+                        'Quantity: ${cartItem.quantity}',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      Text(
+                        'Total Price: Rs. ${cartItem.productInventory.price * cartItem.quantity}',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
                 Row(
                   children: [
@@ -70,7 +78,7 @@ class CartItemTile extends StatelessWidget {
                         iconSize: 15,
                       ),
                     ),
-                    SizedBox(width: 15),
+                    SizedBox(width: 5),
                     Container(
                       width: 32,
                       height: 32,
@@ -86,7 +94,7 @@ class CartItemTile extends StatelessWidget {
                         iconSize: 15,
                       ),
                     ),
-                    SizedBox(width: 15),
+                    SizedBox(width: 5),
                     Container(
                       child: IconButton(
                         onPressed: onRemoveItem,
@@ -122,8 +130,8 @@ class CartItemTile extends StatelessWidget {
 }
 
 class CartScreen extends StatelessWidget {
-  Future<void> placeOrder(List<CartItem> cartItems) async {
 
+  Future<void> placeOrder(BuildContext context, List<CartItem> cartItems) async {
     Orders order = Orders(
       orderDate: DateTime.now(),
       deliveryDate: DateTime.now().add(Duration(days: 7)),
@@ -167,6 +175,8 @@ class CartScreen extends StatelessWidget {
           body: jsonEncode(orderDetail.toJson()),
         );
       }
+
+      Navigator.pop(context);
 
     } else {
       throw Exception('Failed to place order');
@@ -227,25 +237,34 @@ class CartScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: GestureDetector(
-              onTap: () async {
-                await placeOrder(Provider.of<CartProvider>(context, listen: false).cartItems);
-                Provider.of<CartProvider>(context, listen: false).clearCart();
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Color(0xFF6FB457),
-                  borderRadius: BorderRadius.circular(8.0),
+            child: Column(
+              children: [
+                Text(
+                  'Total Bill: Rs. ${calculateTotalBill(Provider.of<CartProvider>(context, listen: false).cartItems)}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                child: Center(
-                  child: Text(
-                    'Place Order',
-                    style: TextStyle(color: Colors.white),
+                SizedBox(height: 20),
+                GestureDetector(
+                  onTap: () async {
+                    await placeOrder(context, Provider.of<CartProvider>(context, listen: false).cartItems);
+                    Provider.of<CartProvider>(context, listen: false).clearCart();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.3,
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF6FB457),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Place Order',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
