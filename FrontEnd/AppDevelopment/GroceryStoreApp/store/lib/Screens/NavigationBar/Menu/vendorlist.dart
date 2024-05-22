@@ -47,7 +47,7 @@ class VendorList extends StatefulWidget {
 
 class _VendorListState extends State<VendorList> {
   List<Vendor> _vendorList = [];
-  int vendorId = 1;
+  int storeId = 2;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class _VendorListState extends State<VendorList> {
     try {
       final response = await http.get(
         Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/viewvendorlist/$vendorId'),
+            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/viewvendorlist/$storeId'),
       );
 
       if (response.statusCode == 200) {
@@ -113,22 +113,18 @@ class _VendorListState extends State<VendorList> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                  padding: EdgeInsets.all(8.0), // Add padding to the container
-                  decoration: BoxDecoration(
-                    color: Color(0xFF6FB457), // Background color of the container
-                    borderRadius: BorderRadius.circular(8), // Border radius of the container
-                  ),
-                  child: Center(
+                padding: const EdgeInsets.only(top: 18, bottom: 8),
+                child: Center(
                     child: Text(
-                      AppLocalizations.of(context)!.vendor_list,
-                      style: TextStyle(fontSize: 20, color: Colors.white), // Text color set to white
-                    ),
-                  ),
+                      'Vendor List',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.w400,
+                        color: Color(0xFF6FB457),
+                      ),
+                    )
                 ),
               ),
-
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),

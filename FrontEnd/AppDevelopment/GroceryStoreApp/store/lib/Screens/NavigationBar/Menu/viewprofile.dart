@@ -17,6 +17,7 @@ class _ViewProfileState extends State<ViewProfile> {
   late String number;
   late String username;
   late String language;
+  late String image;
 
   @override
   void initState() {
@@ -26,6 +27,25 @@ class _ViewProfileState extends State<ViewProfile> {
     username = "";
     language = "";
     fetchUserProfile(widget.userId);
+    fetchStoreProfile("2");
+  }
+
+  Future<void> fetchStoreProfile(String storeId) async {
+    try {
+      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$storeId'));
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data);
+        setState(() {
+          image = data['image'].toString().trim();
+        });
+      } else {
+        print('Failed to fetch store information. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error during HTTP request: $error');
+    }
   }
 
   Future<void> fetchUserProfile(String userId) async {
@@ -220,15 +240,16 @@ class _ViewProfileState extends State<ViewProfile> {
                   height: 100,
                   width: 100,
                   decoration: BoxDecoration(
-                    color: Color(0xFF6FB457),
+                    color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: Center(
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                      size: 50,
-                    ),
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child:
+                      Image.network(
+                        'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
+                        fit: BoxFit.cover,
+                      )
                   ),
                 ),
               ),
@@ -274,6 +295,9 @@ class _ViewProfileState extends State<ViewProfile> {
               ElevatedButton(
                 onPressed: onPressed,
                 child: Text('Edit'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF6FB457),
+                ),
               ),
             ],
           ),

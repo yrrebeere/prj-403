@@ -135,21 +135,6 @@ class _MenuState extends State<Menu> {
                                     )
                                 ),
                               ),
-                              // child: Container(
-                              //   height: 100,
-                              //   width: 100,
-                              //   decoration: BoxDecoration(
-                              //     color: Color(0xFFFF9100),
-                              //     shape: BoxShape.circle,
-                              //   ),
-                              //   child: Center(
-                              //     child: Icon(
-                              //       Icons.person,
-                              //       color: Colors.white,
-                              //       size: 50,
-                              //     ),
-                              //   ),
-                              // ),
                             ),
                             Text(name, style: TextStyle(fontSize: 20)),
                             Text('0$number',
