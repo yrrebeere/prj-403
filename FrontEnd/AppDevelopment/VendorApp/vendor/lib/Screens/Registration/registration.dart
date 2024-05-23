@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../Classes/user_provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:flutter/services.dart';
@@ -127,7 +128,6 @@ class _RegistrationState extends State<Registration> {
     if (response.statusCode == 201) {
       print("User added");
       final dynamic json = jsonDecode(response.body);
-
       await createVendor(name, deliveryLocations, json['user_id'], json['username']);
     } else {
       throw Exception('Failed to add user');
@@ -148,6 +148,10 @@ class _RegistrationState extends State<Registration> {
     );
 
     if (response.statusCode == 201) {
+      final dynamic json = jsonDecode(response.body);
+      int vendorId = json['vendor_id'];
+      Provider.of<UserProvider>(context, listen: false).setUserId(userId.toString());
+      Provider.of<UserProvider>(context, listen: false).setVendorId(vendorId.toString());
       print("Vendor added");
     } else {
       throw Exception('Failed to add user');
