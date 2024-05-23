@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-class VendorIdManager {
-  static int? vendorId;
+class StoreIdManager {
+  static int? storeId;
 
   static void logout() {
-    vendorId = null;
+    storeId = null;
   }
 }
 
@@ -433,7 +433,7 @@ class _MenuState extends State<Menu> {
                               Expanded(
                                 child: GestureDetector(
                                   onTap: () {
-                                    VendorIdManager.logout();
+                                    StoreIdManager.logout();
 
                                     Navigator.pushReplacement(
                                       context,
