@@ -1,5 +1,6 @@
 const db = require('../models')
 const { Sequelize } = require('sequelize');
+const { Op } = require("sequelize");
 const Store = db.grocery_store
 
 const addStore = async (req, res) => {
@@ -109,6 +110,31 @@ const groceryStoreCount = async (req, res) => {
     }
 };
 
+const getStoreIdByUserId = async (req, res) => {
+    try {
+
+        const user_id = req.params.user_table_user_id;
+
+        if (!user_id) {
+            return res.status(400).json({ error: 'User ID is required.' });
+        }
+
+        const store = await Store.findOne({
+            where: {
+                user_table_user_id: {
+                    [Op.eq]: user_id,
+                },
+            },
+        });
+
+        res.status(200).send(store);
+
+    } catch (error) {
+        console.error('Error getting store id by user id:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
 
 
 module.exports = {
@@ -119,5 +145,6 @@ module.exports = {
     deleteStore,
     searchStoreByVID,
     viewVendorList,
-    groceryStoreCount
+    groceryStoreCount,
+    getStoreIdByUserId
 }
