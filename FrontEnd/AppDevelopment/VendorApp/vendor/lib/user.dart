@@ -529,13 +529,6 @@ class _UsersScreenState extends State<UsersScreen> {
                     return ListTile(
                       title: Text(_users[index].name),
                       subtitle: Text(_users[index].username),
-                      // trailing: ElevatedButton(
-                      //   onPressed: () async {
-                      //     await _deleteUserConfirmation(
-                      //         context, _users[index].userId);
-                      //   },
-                      //   child: Text('Delete User'),
-                      // ),
                     );
                   },
                 ),

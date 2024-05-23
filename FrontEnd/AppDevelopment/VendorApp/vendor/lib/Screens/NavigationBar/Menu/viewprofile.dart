@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'dart:convert';
+
+import '../../../Classes/user_provider.dart';
 
 class ViewProfile extends StatefulWidget {
   final String userId;
@@ -18,6 +21,7 @@ class _ViewProfileState extends State<ViewProfile> {
   late String username;
   late String language;
   late String image;
+  late String vendorId;
 
   @override
   void initState() {
@@ -28,10 +32,13 @@ class _ViewProfileState extends State<ViewProfile> {
     language = "";
     image = "";
     fetchUserProfile(widget.userId);
-    fetchVendorProfile("7");
+    fetchVendorProfile();
   }
 
-  Future<void> fetchVendorProfile(String vendorId) async {
+  Future<void> fetchVendorProfile() async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    vendorId = userProvider.vendorId.toString();
+
     try {
       final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorId'));
 

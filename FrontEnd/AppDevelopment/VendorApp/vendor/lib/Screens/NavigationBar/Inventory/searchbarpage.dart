@@ -162,7 +162,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
     }
   }
 
-  Future<void> _addToInventory(String listedAmount, String availableAmount, String price, int vendorId, int productProductId) async {
+  Future<void> _addToInventory(String listedAmount, String availableAmount, String price, String vendorId, int productProductId) async {
     bool isDuplicate = widget.productInventories.any((product) => product.productProductId == productProductId);
 
     Future<void> _showDuplicateProductAlert(int duplicateProductId) async {

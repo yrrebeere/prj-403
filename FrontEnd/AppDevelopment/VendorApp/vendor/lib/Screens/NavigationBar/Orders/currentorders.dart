@@ -22,7 +22,6 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
   }
 
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(int vendorId) async {
-    vendorId = 7;
 
     try {
       final response = await http.get(

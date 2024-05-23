@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/OTP/otp.dart';
+import '../../Classes/user_provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:provider/provider.dart';
@@ -61,9 +62,28 @@ class _MyAppState extends State<PhoneNumber> {
       final dynamic json = jsonDecode(response.body);
       String userId = json['userId'].toString();
 
-      print("UserId: " + userId);
-
       return userId;
+
+    } catch (e) {
+      print("Error checking if user: $e");
+      return "";
+    }
+
+  }
+
+  Future<String> getVendorByUserId(String userId) async {
+
+    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/getvendor/$userId";
+
+    try {
+      final http.Response response = await http.get(
+        Uri.parse(url),
+      );
+
+      final dynamic json = jsonDecode(response.body);
+      String vendorId = json['vendor_id'].toString();
+
+      return vendorId;
 
     } catch (e) {
       print("Error checking if user: $e");
@@ -82,6 +102,17 @@ class _MyAppState extends State<PhoneNumber> {
 
       final dynamic json = jsonDecode(response.body);
       bool phoneNumberExists = json['exists'];
+      int userId = json['userId'];
+      String vendorId = await getVendorByUserId(userId.toString());
+
+      Provider.of<UserProvider>(context, listen: false).setUserId(userId.toString());
+      Provider.of<UserProvider>(context, listen: false).setVendorId(vendorId.toString());
+
+      String myUser = Provider.of<UserProvider>(context, listen: false).userId;
+      String myVendor = Provider.of<UserProvider>(context, listen: false).vendorId;
+
+      print("My User: " + myUser);
+      print("My Vendor: " + myVendor);
 
       return phoneNumberExists;
     } catch (e) {

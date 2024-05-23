@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../Classes/user_provider.dart';
 import 'currentorders.dart';
+import 'package:provider/provider.dart';
 
 class searchProductInventory {
   final int productId;
@@ -35,10 +37,11 @@ class _OrderState extends State<Order> {
   List<searchProductInventory> searchResults = [];
   TextEditingController searchController = TextEditingController();
 
-  // Hardcoded vendorId as 1
-  int vendorId = 1;
   @override
   Widget build(BuildContext context) {
+    // Accessing the vendorId from the provider
+    String vendorId = Provider.of<UserProvider>(context).vendorId;
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -48,7 +51,7 @@ class _OrderState extends State<Order> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CurrentOrdersPage(vendorId),
+                  builder: (context) => CurrentOrdersPage(int.parse(vendorId)),
                 ),
               );
             },

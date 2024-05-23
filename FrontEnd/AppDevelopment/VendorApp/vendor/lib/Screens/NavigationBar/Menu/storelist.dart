@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/user_provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -48,7 +49,8 @@ class Storelist extends StatefulWidget {
 
 class _StorelistState extends State<Storelist> {
   List<Store> _groceryStoreList = [];
-  int vendorId = 7;
+  // Remove the hardcoded vendorId
+  // int vendorId = 7;
 
   @override
   void initState() {
@@ -57,6 +59,10 @@ class _StorelistState extends State<Storelist> {
   }
 
   Future<void> _fetchGroceryStoresList() async {
+    // Fetch the vendorId from the UserProvider
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final vendorId = userProvider.vendorId;
+
     final response = await http.get(
       Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/searchstore/$vendorId'),
     );

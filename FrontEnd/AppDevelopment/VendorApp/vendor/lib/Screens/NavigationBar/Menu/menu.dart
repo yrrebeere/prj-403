@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/main.dart';
+import '../../../Classes/user_provider.dart';
 import 'storelist.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:flutter/services.dart';
@@ -29,14 +30,11 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   String name = ""; // Initial values for demonstration
   String number = "";
-  String userId = '18'; // Replace with the actual user ID
-  late String image;
+  String image = "";
 
   @override
   void initState() {
     super.initState();
-    image = "";
-    fetchVendorProfile("7");
     fetchUserInfo(); // Fetch user information when the widget is initialized
   }
 
@@ -59,11 +57,10 @@ class _MenuState extends State<Menu> {
   }
 
   Future<void> fetchUserInfo() async {
-    // final userIdProvider = Provider.of<UserIdProvider>(context, listen: false);
-    // final userId = userIdProvider.userId;
-    String userId = '18'; // Replace with the actual user ID
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final userId = userProvider.userId;
+
     try {
-      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
       final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
@@ -86,80 +83,116 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: languageProvider.selectedLocale,
-        builder: (context, child) {
-          return Directionality(
-            textDirection: TextDirection.ltr,
-            child: child!,
-          );
-        },
-        home: Scaffold(
-          body: Container(
-            child: SingleChildScrollView(
-              child: Container(
-                color: Color(0xfff2f2f6),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Container(
-                        height: 1000,
-                        width: 365,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Container(
-                                height: 100,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: ClipRRect(
+    return Consumer2<LanguageProvider, UserProvider>(
+      builder: (context, languageProvider, userProvider, child) {
+        final vendorId = userProvider.vendorId;
+        final userId = userProvider.userId;
+
+        if (vendorId != null && image.isEmpty) {
+          fetchVendorProfile(vendorId.toString());
+        }
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: languageProvider.selectedLocale,
+          builder: (context, child) {
+            return Directionality(
+              textDirection: TextDirection.ltr,
+              child: child!,
+            );
+          },
+          home: Scaffold(
+            body: Container(
+              child: SingleChildScrollView(
+                child: Container(
+                  color: Color(0xfff2f2f6),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Container(
+                          height: 1000,
+                          width: 365,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
-                                    child:
-                                    Image.network(
+                                    child: Image.network(
                                       'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
                                       fit: BoxFit.cover,
-                                    )
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            Text(name, style: TextStyle(fontSize: 20)),
-                            Text('0$number',
-                                style: TextStyle(
-                                    fontSize: 17, color: Colors.grey)),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                final result = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ViewProfile(userId: userId,),
-                                  ),
-                                );
+                              Text(name, style: TextStyle(fontSize: 20)),
+                              Text('0$number', style: TextStyle(fontSize: 17, color: Colors.grey)),
+                              SizedBox(height: 30),
+                              GestureDetector(
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ViewProfile(userId: userId.toString()),
+                                    ),
+                                  );
 
-                                if (result != null) {
-                                  setState(() {
-                                    name = result['name'];
-                                    number = result['number'];
-                                  });
-                                }
-                              },
-                              child: Row(
+                                  if (result != null) {
+                                    setState(() {
+                                      name = result['name'];
+                                      number = result['number'];
+                                    });
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFFF9100),
+                                          borderRadius: BorderRadius.circular(100),
+                                        ),
+                                        child: Center(
+                                          child: Icon(Icons.remove_red_eye, color: Colors.white, size: 30),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(AppLocalizations.of(context)!.view_profile, style: TextStyle(fontSize: 20)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Text(AppLocalizations.of(context)!.other, style: TextStyle(fontSize: 20, color: Colors.grey)),
+                                  ),
+                                ],
+                              ),
+                              Row(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
@@ -167,295 +200,196 @@ class _MenuState extends State<Menu> {
                                       height: 50,
                                       width: 50,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFFF9100),
-                                        borderRadius:
-                                            BorderRadius.circular(100),
+                                        color: Colors.purple,
+                                        borderRadius: BorderRadius.circular(100),
                                       ),
                                       child: Center(
-                                        child: Icon(
-                                          Icons.remove_red_eye,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
+                                        child: Icon(Icons.format_list_bulleted_outlined, color: Colors.white, size: 30),
                                       ),
                                     ),
                                   ),
                                   Expanded(
-                                    child: Text(
-                                      AppLocalizations.of(context)!.view_profile,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
+                                    child: Text(AppLocalizations.of(context)!.store_list, style: TextStyle(fontSize: 20)),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20.0),
-                                    child: Icon(Icons.arrow_forward_ios,
-                                        color: Colors.black, size: 20),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Text(AppLocalizations.of(context)!.other,
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.grey)),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.purple,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.format_list_bulleted_outlined,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.store_list,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: GestureDetector(
+                                    child: GestureDetector(
                                       onTap: () {
                                         Navigator.push(
                                           context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Storelist(),
-                                          ),
+                                          MaterialPageRoute(builder: (context) => Storelist()),
                                         );
                                       },
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
+                                      child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Text(AppLocalizations.of(context)!.general_settings, style: TextStyle(fontSize: 20, color: Colors.grey)),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.help, color: Colors.white, size: 30),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(AppLocalizations.of(context)!.about, style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.lock, color: Colors.white, size: 30),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(AppLocalizations.of(context)!.privacy_policy, style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.yellow,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.language, color: Colors.white, size: 30),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(AppLocalizations.of(context)!.language, style: TextStyle(fontSize: 20)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
                                         color: Colors.black,
-                                        size: 20,
-                                      )),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Text(AppLocalizations.of(context)!.general_settings,
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.grey)),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.help,
-                                        color: Colors.white,
-                                        size: 30,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.location_on, color: Colors.white, size: 30),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.about,
-                                    style: TextStyle(fontSize: 20),
+                                  Expanded(
+                                    child: Text(AppLocalizations.of(context)!.change_address, style: TextStyle(fontSize: 20)),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black, size: 20),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.lock,
-                                        color: Colors.white,
-                                        size: 30,
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      height: 50,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                        borderRadius: BorderRadius.circular(100),
+                                      ),
+                                      child: Center(
+                                        child: Icon(Icons.error, color: Colors.white, size: 30),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.privacy_policy,
-                                    style: TextStyle(fontSize: 20),
+                                  Expanded(
+                                    child: Text(AppLocalizations.of(context)!.change_phone_number, style: TextStyle(fontSize: 20)),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black, size: 20),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.yellow,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.language,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Icon(Icons.arrow_forward_ios, color: Colors.black, size: 20),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.language,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black, size: 20),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.black,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.location_on,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.change_address,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black, size: 20),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        Icons.error,
-                                        color: Colors.white,
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.change_phone_number,
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.black, size: 20),
-                                ),
-                              ],
-                            ),
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  VendorIdManager.logout();
+                                ],
+                              ),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    VendorIdManager.logout();
 
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MyVendorApp()),
-                                  );
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context)!.logout,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.red,
-                                    decoration: TextDecoration.underline,
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => MyVendorApp()),
+                                    );
+                                  },
+                                  child: Text(
+                                    AppLocalizations.of(context)!.logout,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.red,
+                                      decoration: TextDecoration.underline,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

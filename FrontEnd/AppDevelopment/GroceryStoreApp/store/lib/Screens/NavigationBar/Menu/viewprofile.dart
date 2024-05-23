@@ -268,7 +268,7 @@ class _ViewProfileState extends State<ViewProfile> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               _buildProfileInfo("Name", name, () {
                 showEditDialog('name', name);
               }),
@@ -284,6 +284,7 @@ class _ViewProfileState extends State<ViewProfile> {
               _buildProfileInfo("Language", language, () {
                 showEditDialog('language', language);
               }),
+              SizedBox(height: 20),
               _buildProfileInfo("Password", "*********", () {
                 showEditDialog('password', ''); // Initialize with empty password
               }),

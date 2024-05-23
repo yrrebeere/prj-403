@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import '../../../Classes/inventory_item.dart';
+import '../../../Classes/user_provider.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import '../navbar.dart';
 import 'orderhistory.dart';
@@ -19,18 +20,20 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<InventoryItem> searchResults = [];
   TextEditingController searchController = TextEditingController();
-
-  int vendorId = 7;
   int numberOfCurrentOrders = 0;
 
   @override
   void initState() {
     super.initState();
-    _fetchCurrentOrders();
+    // Fetch current orders after the widget is built to ensure context is available
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchCurrentOrders();
+    });
   }
 
   Future<void> _fetchCurrentOrders() async {
     try {
+      final vendorId = Provider.of<UserProvider>(context, listen: false).vendorId;
       final response = await http.get(
         Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/totalorders/$vendorId'),
       );
@@ -52,9 +55,10 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LanguageProvider>(
-      builder: (context, languageProvider, child) {
+    return Consumer2<LanguageProvider, UserProvider>(
+      builder: (context, languageProvider, userProvider, child) {
         print("Selected Locale: ${languageProvider.selectedLocale}");
+        final vendorId = userProvider.vendorId;
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -95,7 +99,7 @@ class _HomeState extends State<Home> {
                             onPressed: () async {
                               String productName = searchController.text;
                               print('Searching for product: $productName');
-                              await _searchProductInInventory(productName);
+                              await _searchProductInInventory(productName, vendorId);
                             },
                           ),
                         ],
@@ -177,7 +181,7 @@ class _HomeState extends State<Home> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrderHistoryPage(vendorId),
+                            builder: (context) => OrderHistoryPage(),
                           ),
                         );
                       },
@@ -234,7 +238,7 @@ class _HomeState extends State<Home> {
   }
 
   // Modify the _searchProductInInventory method
-  Future<void> _searchProductInInventory(String productName) async {
+  Future<void> _searchProductInInventory(String productName, String vendorId) async {
     try {
       print('Searching for product: $productName'); // Add this debug print
       final response = await http.get(

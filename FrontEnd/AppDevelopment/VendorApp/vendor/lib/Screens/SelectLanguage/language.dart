@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
 import 'package:vendor/Screens/Registration/registrationprovider.dart';
+import '../../Classes/user_provider.dart';
 import '../PhoneNumber/phonenumberprovider.dart';
-import 'package:provider/provider.dart';
 import 'languageprovider.dart';
 
 void main() => runApp(MyApp());
@@ -21,9 +22,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<PhoneNumberProvider>(
           create: (context) => PhoneNumberProvider(),
-        ),// ChangeNotifierProvider<LoginChangeNotifier>(
-        //   create: (context) => LoginChangeNotifier(),
-        // ),
+        ),
+        ChangeNotifierProvider<UserProvider>(
+          create: (context) => UserProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -48,7 +50,7 @@ class _LanguageState extends State<Language> {
   @override
   Widget build(BuildContext context) {
     LanguageProvider languageProvider =
-        Provider.of<LanguageProvider>(context, listen: false);
+    Provider.of<LanguageProvider>(context, listen: false);
     Locale? selectedLocale = languageProvider.selectedLocale;
 
     double screenWidth = MediaQuery.of(context).size.width;
@@ -68,7 +70,7 @@ class _LanguageState extends State<Language> {
           child: Builder(
             builder: (BuildContext context) {
               LanguageProvider languageProvider =
-                  Provider.of<LanguageProvider>(context, listen: false);
+              Provider.of<LanguageProvider>(context, listen: false);
               Locale? selectedLocale = languageProvider.selectedLocale;
 
               return Container(
