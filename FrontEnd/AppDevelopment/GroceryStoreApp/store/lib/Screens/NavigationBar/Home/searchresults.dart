@@ -81,10 +81,12 @@ class SearchResultsPage extends StatelessWidget {
                               child: Text(
                                 vendor.vendorName,
                                 style: TextStyle(
-                                  fontSize: 20.0,
+                                  fontSize: 17.0,
                                   color: Color(0xFF6FB457),
                                   fontWeight: FontWeight.bold,
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                             SizedBox(height: 8.0),
@@ -93,7 +95,7 @@ class SearchResultsPage extends StatelessWidget {
                                 Text(
                                   'See Vendor Details',
                                   style: TextStyle(
-                                      fontSize: 16.0,
+                                      fontSize: 14.0,
                                       color: Colors.blueAccent,
                                   ),
                                 ),

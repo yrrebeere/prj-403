@@ -250,7 +250,7 @@ class CartScreen extends StatelessWidget {
                     Provider.of<CartProvider>(context, listen: false).clearCart();
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.3,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
                       color: Color(0xFF6FB457),

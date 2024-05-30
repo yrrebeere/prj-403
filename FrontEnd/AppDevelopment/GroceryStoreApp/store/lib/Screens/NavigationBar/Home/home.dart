@@ -319,12 +319,16 @@ class _HomeState extends State<Home> {
                           children: [
                             Image.network(
                               "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+category.imageUrl,
-                              width: 80,
-                              height: 80,
+                              width: 75,
+                              height: 75,
                               fit: BoxFit.cover,
                             ),
                             SizedBox(height: 8.0),
-                            Text(category.name),
+                            Text(
+                              category.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ],
                         ),
                       ),
