@@ -72,70 +72,71 @@ class _HomeState extends State<Home> {
             );
           },
           home: Scaffold(
-            body: Container(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: searchController,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Color(0xfff2f2f6),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide.none,
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                controller: searchController,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Color(0xfff2f2f6),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                  hintText: AppLocalizations.of(context)!.search,
                                 ),
-                                hintText: AppLocalizations.of(context)!.search,
                               ),
                             ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: () async {
-                              String productName = searchController.text;
-                              print('Searching for product: $productName');
-                              await _searchProductInInventory(productName, vendorId);
+                            IconButton(
+                              icon: Icon(Icons.search),
+                              onPressed: () async {
+                                String productName = searchController.text;
+                                print('Searching for product: $productName');
+                                await _searchProductInInventory(productName, vendorId);
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: searchResults
+                            .map(
+                              (product) => ListTile(
+                            title: Text(product.name),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => NavBar(initialIndex: 2),
+                                ),
+                              );
                             },
                           ),
-                        ],
+                        )
+                            .toList(),
                       ),
-                    ),
-                    Column(
-                      children: searchResults
-                          .map(
-                            (product) => ListTile(
-                          title: Text(product.name),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NavBar(initialIndex: 2),
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                          .toList(),
-                    ),
-                    GestureDetector(
-                      child: Container(
-                        height: 160,
-                        width: 380,
-                        decoration: BoxDecoration(
-                          color: Color(0xFF141022),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(35.0),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Row(
+                      GestureDetector(
+                        child: Container(
+                          height: 160,
+                          width: 380,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF141022),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(35.0),
+                            child: Column(
+                              children: [
+                                Row(
                                   children: [
                                     Text(
                                       AppLocalizations.of(context)!.you_have,
@@ -144,9 +145,7 @@ class _HomeState extends State<Home> {
                                     ),
                                   ],
                                 ),
-                              ),
-                              Expanded(
-                                child: Row(
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
@@ -156,12 +155,7 @@ class _HomeState extends State<Home> {
                                     ),
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Expanded(
-                                child: Row(
+                                Row(
                                   children: [
                                     Text(
                                       AppLocalizations.of(context)!.orders_today,
@@ -170,64 +164,64 @@ class _HomeState extends State<Home> {
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => OrderHistoryPage(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OrderHistoryPage(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: 8),
+                          height: 90,
+                          width: 380,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFFF9100),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: 20),
-                        height: 90,
-                        width: 380,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFFF9100),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(35.0),
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.history,
-                                          color: Colors.white,
-                                          size: 30,
-                                        ),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .order_history,
-                                          style: TextStyle(
-                                              color: Colors.white, fontSize: 18),
-                                        ),
-                                      ],
-                                    ),
-                                    Icon(Icons.arrow_forward_ios,
-                                        color: Colors.white),
-                                  ],
+                          child: Padding(
+                            padding: const EdgeInsets.all(35.0),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.history,
+                                            color: Colors.white,
+                                            size: 30,
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .order_history,
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      Icon(Icons.arrow_forward_ios,
+                                          color: Colors.white),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

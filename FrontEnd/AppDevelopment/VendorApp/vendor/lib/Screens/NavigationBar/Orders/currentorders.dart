@@ -111,7 +111,7 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
       appBar: AppBar(
         backgroundColor: Color(0xFFFF9100),
         title: Padding(
-          padding: const EdgeInsets.only(left: 70),
+          padding: const EdgeInsets.only(left: 35),
           child: Text('Current Orders'),
         ),
         leading: IconButton(

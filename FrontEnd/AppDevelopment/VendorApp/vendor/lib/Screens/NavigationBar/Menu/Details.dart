@@ -105,8 +105,8 @@ class _DetailsState extends State<Details> {
             children: [
               Image.network(
                 "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.store.image,
-                width: 90,
-                height: 90,
+                width: 70,
+                height: 70,
                 fit: BoxFit.cover,
               ),
               SizedBox(width: 10),
@@ -117,9 +117,9 @@ class _DetailsState extends State<Details> {
                     children: [
                       Text(
                         widget.store.storeName,
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(width: 60),
+                      SizedBox(width: 20),
                       ElevatedButton.icon(
                         onPressed: () {
                           // Add your action here
@@ -129,7 +129,7 @@ class _DetailsState extends State<Details> {
                         style: ElevatedButton.styleFrom(
                           primary: Color(0xFF6FB457),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
@@ -140,50 +140,10 @@ class _DetailsState extends State<Details> {
             ],
           ),
           Text(
-            'Store Address: ${widget.store.storeAddress}',
+            'Store Addres: ${widget.store.storeAddress}',
             style: TextStyle(fontSize: 18, color: Colors.grey),
           ),
           SizedBox(height: 20),
-          Expanded(
-            child: _orderDetailsList.isNotEmpty
-                ? ListView.separated(
-              itemCount: _orderDetailsList.length,
-              separatorBuilder: (BuildContext context, int index) {
-                return SizedBox(height: 12);
-              },
-              itemBuilder: (context, index) {
-                var orderDetails = _orderDetailsList[index];
-                return Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(16),
-                    title: Text(
-                      'Item ID: ${orderDetails.detailId}',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Quantity: ${orderDetails.quantity}', style: TextStyle(fontSize: 16)),
-                        Text('Unit Price: ${orderDetails.unitPrice}', style: TextStyle(fontSize: 16)),
-                        Text('Total Price: ${orderDetails.totalPrice}', style: TextStyle(fontSize: 16)),
-                        Text('Order ID: ${orderDetails.orderOrderId}', style: TextStyle(fontSize: 16)),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            )
-                : Center(
-              child: Text(
-                'No order details available',
-                style: TextStyle(fontSize: 18, color: Colors.grey),
-              ),
-            ),
-          ),
         ],
       ),
     );

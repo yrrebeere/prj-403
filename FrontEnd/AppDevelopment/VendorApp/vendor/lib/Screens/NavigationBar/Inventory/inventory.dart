@@ -153,150 +153,154 @@ class _InventoryState extends State<Inventory> with RouteAware {
           final vendorId = userProvider.vendorId;
 
           return Scaffold(
-            body: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      color: Color(0xfff2f2f6),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Text(
-                                  '${productInventories.length} ${AppLocalizations.of(context)!.listed_sku}',
-                                  style: TextStyle(fontSize: 21),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
+            backgroundColor: Color(0xfff2f2f6),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Container(
+                        color: Color(0xfff2f2f6),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25),
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Text(
+                                    '${productInventories.length} ${AppLocalizations.of(context)!.listed_sku}',
+                                    style: TextStyle(fontSize: 21),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: productInventories.length,
-                            itemBuilder: (context, index) {
-                              productInventory item = productInventories[index];
 
-                              // Find the corresponding InventoryItem using productProductId
-                              InventoryItem productItem = suggestions.firstWhere(
-                                    (inventoryItem) => inventoryItem.productId == item.productProductId,
-                                orElse: () => InventoryItem(productId: -1, name: '', imageUrl: ''),
-                              );
-
-                              return Column(
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      _openItemDetails(item);
-                                    },
+                                  Expanded(
                                     child: Container(
-                                      width: 370, // Maintain fixed width
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                            offset: Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.center, // Align children to the center vertically
-                                          children: [
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Container(
-                                                  height: 100,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(50),
-                                                  ),
-                                                  child: Image.network(
-                                                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+productItem.imageUrl,
-                                                    width: 50,
-                                                    height: 50,
-                                                    fit: BoxFit.cover,
-                                                    errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-                                                      return Icon(Icons.error);
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(width: 10), // Add spacing between image and text
-                                            Expanded( // Use Expanded to allow the text to take available space
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    "${productItem.name}",
-                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                                                    maxLines: 2, // Limit to 2 lines
-                                                    overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
-                                                  ),
-                                                  Text(
-                                                    "${AppLocalizations.of(context)!.listed_amount}: ${item.listedAmount}",
-                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
-                                                  ),
-                                                  Text(
-                                                    "${AppLocalizations.of(context)!.available_amount}: ${item.availableAmount}",
-                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
-                                                  ),
-                                                  Text(
-                                                    "${AppLocalizations.of(context)!.price}: ${item.price}",
-                                                    textDirection: TextDirection.ltr,
-                                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color:Color(0xFF6FB457)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            // Wrap the content of the arrow in Align widget to center it vertically
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Icon(Icons.arrow_forward_ios, color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
+                                        borderRadius: BorderRadius.circular(25),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 20),
                                 ],
-                              );
-                            },
-                          ),
-                        ],
+                              ),
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: productInventories.length,
+                              itemBuilder: (context, index) {
+                                productInventory item = productInventories[index];
+
+                                // Find the corresponding InventoryItem using productProductId
+                                InventoryItem productItem = suggestions.firstWhere(
+                                      (inventoryItem) => inventoryItem.productId == item.productProductId,
+                                  orElse: () => InventoryItem(productId: -1, name: '', imageUrl: ''),
+                                );
+
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        _openItemDetails(item);
+                                      },
+                                      child: Container(
+                                        width: 370, // Maintain fixed width
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(20),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: Offset(0, 3),
+                                            ),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.center, // Align children to the center vertically
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    height: 100,
+                                                    width: 100,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius: BorderRadius.circular(50),
+                                                    ),
+                                                    child: Image.network(
+                                                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+productItem.imageUrl,
+                                                      width: 50,
+                                                      height: 50,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                                                        return Icon(Icons.error);
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(width: 10), // Add spacing between image and text
+                                              Expanded( // Use Expanded to allow the text to take available space
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      "${productItem.name}",
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                                                      maxLines: 2, // Limit to 2 lines
+                                                      overflow: TextOverflow.ellipsis, // Handle overflow with ellipsis
+                                                    ),
+                                                    Text(
+                                                      "${AppLocalizations.of(context)!.listed_amount}: ${item.listedAmount}",
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
+                                                    ),
+                                                    Text(
+                                                      "${AppLocalizations.of(context)!.available_amount}: ${item.availableAmount}",
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color: Colors.blue),
+                                                    ),
+                                                    Text(
+                                                      "${AppLocalizations.of(context)!.price}: ${item.price}",
+                                                      textDirection: TextDirection.ltr,
+                                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15,color:Color(0xFF6FB457)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              // Wrap the content of the arrow in Align widget to center it vertically
+                                              Align(
+                                                alignment: Alignment.center,
+                                                child: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 20),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {

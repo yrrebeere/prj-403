@@ -62,7 +62,7 @@ class _NavBarState extends State<NavBar> {
                 decoration: BoxDecoration(),
               ),
               title: Padding(
-                padding: const EdgeInsets.only(left: 145),
+                padding: const EdgeInsets.only(left: 125),
                 child: Text(AppLocalizations.of(context)!.app_name),
               ),
               elevation: 0,
