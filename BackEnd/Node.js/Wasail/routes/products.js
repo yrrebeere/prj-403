@@ -2,7 +2,6 @@ var router = require('express').Router();
 
 const productController = require('../controllers/productController')
 
-
 router.post('/addproduct',productController.addProduct)
 router.get('/allproducts',productController.getAllProducts)
 router.get('/productcount',productController.productCount)

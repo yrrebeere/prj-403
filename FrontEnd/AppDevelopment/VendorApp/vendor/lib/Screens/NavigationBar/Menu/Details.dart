@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../Classes/api.dart';
 import 'storelist.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -51,7 +52,7 @@ class _DetailsState extends State<Details> {
   Future<void> _fetchOrderDetails() async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order_detail/allorderdetails/'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order_detail/allorderdetails/'),
       );
 
       if (response.statusCode == 200) {
@@ -104,7 +105,7 @@ class _DetailsState extends State<Details> {
           Row(
             children: [
               Image.network(
-                "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+widget.store.image,
+                "${ApiConstants.baseUrl}/api/image/"+widget.store.image,
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,

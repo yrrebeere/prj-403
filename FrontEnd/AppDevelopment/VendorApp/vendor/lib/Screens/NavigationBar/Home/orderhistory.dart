@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Classes/api.dart';
 import '../../../Classes/user_provider.dart';
 
 class OrderHistoryPage extends StatelessWidget {
@@ -74,7 +75,7 @@ class OrderHistoryPage extends StatelessWidget {
                                   children: [
                                     CircleAvatar(
                                       radius: 50,
-                                      backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+data['image']),
+                                      backgroundImage: NetworkImage("${ApiConstants.baseUrl}/api/image/"+data['image']),
                                     ),
                                     SizedBox(height: 25),
                                     Text(
@@ -147,7 +148,7 @@ class OrderHistoryPage extends StatelessWidget {
   Future<List<Map<String, dynamic>>> _fetchAndDisplayCombinedData(String vendorId) async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/orderhistory/$vendorId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order/orderhistory/$vendorId'),
       );
 
       if (response.statusCode == 200) {
@@ -166,8 +167,7 @@ class OrderHistoryPage extends StatelessWidget {
             print('Fetching grocery store data for ID: $groceryStoreId');
 
             final groceryStoreResponse = await http.get(
-              Uri.parse(
-                  'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$groceryStoreId'),
+              Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/$groceryStoreId'),
             );
 
             if (groceryStoreResponse.statusCode == 200) {

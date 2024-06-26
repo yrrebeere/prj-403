@@ -20,7 +20,9 @@ module.exports = (sequelize, Datatypes)=>{
             },
             allowNull: false
         },
-    },{
-        underscored:true
-    })
+    },
+        {
+            underscored:true
+        }
+    )
 }

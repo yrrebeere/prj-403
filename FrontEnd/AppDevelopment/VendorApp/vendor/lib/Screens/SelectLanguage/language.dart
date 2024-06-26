@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:vendor/Screens/PhoneNumber/phonenumber.dart';
-import 'package:vendor/Screens/Registration/registrationprovider.dart';
+import 'package:vendor/Classes/registrationprovider.dart';
 import '../../Classes/user_provider.dart';
-import '../PhoneNumber/phonenumberprovider.dart';
-import 'languageprovider.dart';
+import '../../Classes/phonenumberprovider.dart';
+import '../../Classes/languageprovider.dart';
 
 void main() => runApp(MyApp());
 

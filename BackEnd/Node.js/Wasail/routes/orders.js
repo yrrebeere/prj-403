@@ -2,7 +2,6 @@ var router = require('express').Router();
 
 const orderController = require('../controllers/orderController')
 
-
 router.post('/addorder', orderController.addOrder)
 router.get('/allorders', orderController.getAllOrders)
 router.get('/:order_id', orderController.getOneOrder)
@@ -16,7 +15,5 @@ router.get('/groceryorderhistory/:vendor_vendor_id/:grocery_store_store_id', ord
 router.get('/storeorderhistory/:grocery_store_store_id', orderController.storeOrderHistory)
 router.get('/storecurrentorder/:grocery_store_store_id', orderController.storeCurrentOrders)
 router.post('/orderplacement', orderController.orderPlacement)
-
-
 
 module.exports = router;

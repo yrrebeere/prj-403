@@ -37,7 +37,9 @@ module.exports = (sequelize, Datatypes)=>{
             notNull: true,
         },
 
-    },{
-        underscored:true
-    })
+    },
+        {
+            underscored:true
+        }
+    )
 }

@@ -180,8 +180,6 @@ const vendorCount = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     addVendor,
     getAllVendors,

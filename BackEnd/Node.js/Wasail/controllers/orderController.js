@@ -49,6 +49,7 @@ const deleteOrder = async (req, res) => {
     res.status(200).send('Order is deleted !')
 
 }
+
 const searchOrderByVID = async (req, res) => {
     try {
         const vendor_id = req.params.vendor_vendor_id;
@@ -268,8 +269,6 @@ const storeCurrentOrders = async (req, res) => {
                 },
             },
         });
-
-
 
         res.status(200).json({ orders, orderDetails, productInventories, products });
     } catch (error) {

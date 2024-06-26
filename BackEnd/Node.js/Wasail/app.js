@@ -25,7 +25,6 @@ const app = express();
 app.use(cors())
 const port = 4000
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -44,12 +43,11 @@ app.use('/api/admin',adminsRouter)
 app.use('/api/image',imagesRouter)
 app.use('/api/prediction',predictionsRouter)
 
-
 const pool = mysql.createPool({
   connectionLimit : 10,
-  host : 'db-mysql-nyc3-39234-do-user-15490202-0.c.db.ondigitalocean.com',
-  user : 'admin',
-  password : 'AVNS_IjfxfxsgiZ5GzaEZ3A_',
+  host : 'localhost',
+  user : 'root',
+  password : '12345678',
   database : 'wasail',
 })
 
@@ -58,7 +56,6 @@ app.listen(port,() => console.log(`listen on port ${port}`))
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
 
 app.use(function(err, req, res, next) {
   res.locals.message = err.message;

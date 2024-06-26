@@ -6,8 +6,8 @@ import 'Home/home.dart';
 import 'Inventory/inventory.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../Registration/registrationprovider.dart';
-import '../SelectLanguage/languageprovider.dart';
+import '../../Classes/registrationprovider.dart';
+import '../../Classes/languageprovider.dart';
 import 'package:flutter/services.dart';
 
 class NavBar extends StatefulWidget {

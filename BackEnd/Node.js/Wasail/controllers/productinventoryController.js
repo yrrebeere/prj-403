@@ -1,5 +1,4 @@
 const db = require('../models')
-
 const Inventory = db.product_inventory
 
 const addProductInventory = async (req, res) => {
@@ -106,7 +105,6 @@ const selectProduct = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 
 module.exports = {
     addProductInventory,

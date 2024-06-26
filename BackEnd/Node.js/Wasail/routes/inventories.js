@@ -2,7 +2,6 @@ var router = require('express').Router();
 
 const productinventoryController = require('../controllers/productinventoryController')
 
-
 router.post('/addproductinventory',productinventoryController.addProductInventory)
 router.get('/allproductinventories',productinventoryController.getAllProductInventories)
 router.get('/:product_inventory_id', productinventoryController.getOneProductInventory)

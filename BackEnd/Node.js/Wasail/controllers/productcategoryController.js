@@ -166,9 +166,6 @@ const productCategoryCount = async (req, res) => {
     }
 };
 
-
-
-
 module.exports = {
     addProductCategory,
     getAllProductCategories,

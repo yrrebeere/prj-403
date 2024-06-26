@@ -1,7 +1,5 @@
 const db = require('../models')
 const { Op } = require('sequelize');
-
-
 const Product = db.product
 
 const addProduct = async (req, res) => {
@@ -45,7 +43,6 @@ const deleteProduct = async (req, res) => {
     res.status(200).send('Product is deleted !')
 
 }
-
 
 const searchProduct = async (req, res) => {
     try {
@@ -167,9 +164,6 @@ const productCount = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
-
-
 
 module.exports = {
     addProduct,

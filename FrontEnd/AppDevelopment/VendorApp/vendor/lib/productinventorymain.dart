@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../Classes/product_inventory.dart';
-import 'package:vendor/Classes/product_inventory.dart';
+import 'Classes/api.dart';
 
 void main() => runApp(
   MyApp(),
@@ -34,7 +34,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
   }
 
   Future<void> _fetchAllProductInventories() async {
-    final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/allproductinventories'));
+    final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/allproductinventories'));
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = jsonDecode(response.body);
@@ -85,7 +85,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
 
   Future<void> _fetchProductInventory(int productInventoryId) async {
     final response = await http
-        .get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'));
+        .get(Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'));
 
     if (response.statusCode == 200) {
       final dynamic json = jsonDecode(response.body);
@@ -166,7 +166,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
 
   Future<void> _createProductInventory(int price, int availableAmount, int listedAmount, int vendorId, int productId) async {
     final response = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/addproductinventory'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/addproductinventory'),
       body: jsonEncode({
         'price': price,
         'available_amount': availableAmount,
@@ -263,7 +263,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
 
   Future<productInventory> _fetchProductInventoryDetails(int productInventoryId) async {
     final response = await http.get(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'),
     );
 
     if (response.statusCode == 200) {
@@ -286,7 +286,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
       ) async {
     try {
       final response = await http.put(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'),
         body: jsonEncode({
           'price': price,
           'available_amount': availableAmount,
@@ -391,7 +391,7 @@ class _ProductInventoryScreenState extends State<ProductInventoryScreen> {
 
   Future<void> _deleteProductInventory(int productInventoryId) async {
     final response = await http.delete(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'),
     );
 
     if (response.statusCode == 200) {

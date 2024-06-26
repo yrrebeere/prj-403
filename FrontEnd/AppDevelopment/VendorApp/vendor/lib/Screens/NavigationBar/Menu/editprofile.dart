@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../SelectLanguage/languageprovider.dart';
+import '../../../Classes/languageprovider.dart';
 import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {

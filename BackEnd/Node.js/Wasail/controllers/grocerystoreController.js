@@ -135,8 +135,6 @@ const getStoreIdByUserId = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     addStore,
     getAllStores,

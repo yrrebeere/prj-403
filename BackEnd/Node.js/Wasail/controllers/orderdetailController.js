@@ -1,5 +1,4 @@
 const db = require('../models')
-
 const Detail = db.order_detail
 
 const addOrderDetail = async (req, res) => {

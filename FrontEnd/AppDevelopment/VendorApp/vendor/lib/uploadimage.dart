@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
+import 'Classes/api.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -44,7 +46,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
     }
 
     String vendorName = 'ereeberry';
-    String apiUrl = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadvendor?vendor_name=$vendorName';
+    String apiUrl = '${ApiConstants.baseUrl}/api/image/uploadvendor?vendor_name=$vendorName';
 
     try {
       var uri = Uri.parse(apiUrl);

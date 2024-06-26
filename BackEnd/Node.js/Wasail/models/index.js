@@ -7,6 +7,7 @@ const process = require('process');
 const basename = path.basename(__filename);
 const config = require('../config/config');
 const db = {};
+
 db.user_table = require('./usertable');
 db.vendor = require('./vendor');
 db.grocery_store = require('./grocerystore');
@@ -24,7 +25,6 @@ console.log(config);
 const sequelize = new Sequelize(config.db.database, config.db.username, config.db.password,{
   dialect : 'mysql',
   host : config.db.host,
-  port : 25060,
 });
 
 fs

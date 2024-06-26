@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/product_inventory.dart';
 
 class ItemDetailsPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   Future<void> _fetchAndDisplayProductDetails(int productId) async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/$productId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product/$productId'),
       );
 
       if (response.statusCode == 200) {
@@ -119,7 +120,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                       SizedBox(height: 16),
                       imageUrl != null
                           ? Image.network(
-                        "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+imageUrl,
+                        "${ApiConstants.baseUrl}/api/image/"+imageUrl,
                         height: 300,
                         width: 300,
                         fit: BoxFit.cover,
@@ -276,8 +277,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   Future<void> _deleteProductInventory(int productInventoryId) async {
     try {
       final response = await http.delete(
-        Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'),
       );
 
       if (!mounted) {
@@ -333,8 +333,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       ) async {
     try {
       final response = await http.put(
-        Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/$productInventoryId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/$productInventoryId'),
         body: jsonEncode({
           'price': price,
           'available_amount': availableAmount,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/inventory_item.dart';
 import 'package:http/http.dart' as http;
 
@@ -90,7 +91,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         SizedBox(height: 16),
                         widget.product.imageUrl != null
                             ? Image.network(
-                          "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + widget.product.imageUrl,
+                          "${ApiConstants.baseUrl}/api/image/" + widget.product.imageUrl,
                           height: 300,
                           width: 300,
                           fit: BoxFit.cover,

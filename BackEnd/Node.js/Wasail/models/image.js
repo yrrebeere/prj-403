@@ -15,7 +15,9 @@ module.exports = (sequelize, Datatypes)=>{
             allowNull: false,
             defaultValue: Datatypes.NOW
         },
-    },{
-        underscored:true
-    })
+    },
+        {
+            underscored:true
+        }
+    )
 }

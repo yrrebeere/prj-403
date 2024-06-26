@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/NavigationBar/Inventory/productdetailspage.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/inventory_item.dart';
 import '../../../Classes/product_inventory.dart';
-import '../../SelectLanguage/languageprovider.dart';
+import '../../../Classes/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'itemdetails.dart';
 
@@ -124,7 +125,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
                               child: ListTile(
                                 title: Text(product.name),
                                 leading: Image.network(
-                                  "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + imageUrl,
+                                  "${ApiConstants.baseUrl}/api/image/" + imageUrl,
                                   width: 80,
                                   height: 80,
                                   fit: BoxFit.cover,
@@ -149,7 +150,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
   Future<void> _fetchAndDisplayProducts(String query) async {
     final response = await http.get(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproduct/$query'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product/searchproduct/$query'),
     );
 
     if (response.statusCode == 200) {
@@ -207,8 +208,7 @@ class _SearchBarPageState extends State<SearchBarPage> {
 
     else {
       final response = await http.post(
-        Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/addproductinventory'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/addproductinventory'),
         body: jsonEncode({
           'listed_amount': listedAmount,
           'available_amount': availableAmount,

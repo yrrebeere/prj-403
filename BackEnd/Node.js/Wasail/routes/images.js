@@ -2,7 +2,6 @@ var router = require('express').Router();
 
 const imageController = require('../controllers/imageController')
 
-
 router.post('/uploadproduct', imageController.uploadProductImage);
 router.post('/uploadcategory', imageController.uploadCategoryImage);
 router.post('/uploadstore', imageController.uploadStoreImage);

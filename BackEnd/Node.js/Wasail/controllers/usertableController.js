@@ -106,7 +106,6 @@ const usernameExists = async (req, res) => {
     }
 };
 
-
 const userAuthentication = async (req, res) => {
     try {
         let phone_number = req.params.phone_number;
@@ -183,8 +182,6 @@ const passwordChecker = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
-
 
 module.exports = {
     addUser,

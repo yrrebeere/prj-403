@@ -2,7 +2,6 @@ const db = require('../models')
 const { Op } = require("sequelize");
 const List = db.list
 
-
 const addVendorList = async (req, res) => {
     try {
         const store_id = req.params.grocery_store_store_id;

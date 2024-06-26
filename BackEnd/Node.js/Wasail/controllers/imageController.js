@@ -45,6 +45,7 @@ const getCategoryImage = (req, res) => {
         res.send(data);
     });
 };
+
 const getStoreImage = (req, res) => {
     const filename = req.params.filename;
     const imagePath = path.join(__dirname, '../uploads/stores', filename);
@@ -105,7 +106,6 @@ const uploadProductImage = (req, res) => {
     });
 };
 
-
 const uploadCategoryImage = (req, res) => {
 
     const categoryName = req.body.category_name || req.query.category_name;
@@ -137,8 +137,6 @@ const uploadCategoryImage = (req, res) => {
         });
     });
 };
-
-
 
 const uploadStoreImage = (req, res) => {
 
@@ -172,7 +170,6 @@ const uploadStoreImage = (req, res) => {
     });
 };
 
-
 const uploadVendorImage = (req, res) => {
 
     const vendorName = req.body.vendor_name || req.query.vendor_name;
@@ -204,8 +201,6 @@ const uploadVendorImage = (req, res) => {
         });
     });
 };
-
-
 
 module.exports = {
     getProductImage,

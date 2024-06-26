@@ -59,9 +59,7 @@ const addStoreRegistration = async (req, res) => {
                 user_table_user_id: req.body.user_table_user_id
             };
 
-
             const store = await Store.create(storeInfo);
-
 
             res.status(200).json({ user, store });
         } else {

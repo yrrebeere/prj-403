@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/user_provider.dart';
 import 'searchbarpage.dart';
 import '../../../Classes/inventory_item.dart';
@@ -75,7 +76,7 @@ class _InventoryState extends State<Inventory> with RouteAware {
 
   Future<void> _fetchAndDisplayCombinedData(String vendorId) async {
     final response = await http.get(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/search/$vendorId'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/search/$vendorId'),
     );
 
     if (response.statusCode == 200) {
@@ -88,7 +89,7 @@ class _InventoryState extends State<Inventory> with RouteAware {
 
         final productId = productInventoryItem.productProductId;
         final productInventoryResponse = await http.get(
-          Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/$productId'),
+          Uri.parse('${ApiConstants.baseUrl}/api/product/$productId'),
         );
 
         if (productInventoryResponse.statusCode == 200) {
@@ -131,7 +132,7 @@ class _InventoryState extends State<Inventory> with RouteAware {
 
   Future<void> _fetchAndDisplayProductInventories(String vendorId) async {
     final response = await http.get(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_inventory/search/$vendorId'),
+      Uri.parse('${ApiConstants.baseUrl}/api/product_inventory/search/$vendorId'),
     );
 
     if (response.statusCode == 200) {
@@ -241,7 +242,7 @@ class _InventoryState extends State<Inventory> with RouteAware {
                                                       borderRadius: BorderRadius.circular(50),
                                                     ),
                                                     child: Image.network(
-                                                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+productItem.imageUrl,
+                                                      "${ApiConstants.baseUrl}/api/image/"+productItem.imageUrl,
                                                       width: 50,
                                                       height: 50,
                                                       fit: BoxFit.cover,

@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../Classes/api.dart';
 import '../../Classes/user_provider.dart';
-import '../SelectLanguage/languageprovider.dart';
+import '../../Classes/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -61,7 +62,7 @@ class _RegistrationState extends State<Registration> {
       return;
     }
 
-    String apiUrl = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadvendor?vendor_name=$vendorName';
+    String apiUrl = '${ApiConstants.baseUrl}/api/image/uploadvendor?vendor_name=$vendorName';
 
     try {
       var uri = Uri.parse(apiUrl);
@@ -86,7 +87,7 @@ class _RegistrationState extends State<Registration> {
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
-        "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username";
+        "${ApiConstants.baseUrl}/api/user_table/usernameexists/$username";
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
@@ -111,7 +112,7 @@ class _RegistrationState extends State<Registration> {
       String userType,
       String deliveryLocations) async {
     final response = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/adduser'),
+      Uri.parse('${ApiConstants.baseUrl}/api/user_table/adduser'),
       body: jsonEncode({
         'phone_number': phoneNumber,
         'name': name,
@@ -137,7 +138,7 @@ class _RegistrationState extends State<Registration> {
   Future<void> createVendor(
       String vendorName, String deliveryLocations, int userId, String username) async {
     final response = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/addvendor'),
+      Uri.parse('${ApiConstants.baseUrl}/api/vendor/addvendor'),
       body: jsonEncode({
         'vendor_name': vendorName,
         'delivery_locations': deliveryLocations,

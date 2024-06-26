@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:vendor/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/main.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/user_provider.dart';
 import 'storelist.dart';
-import '../../SelectLanguage/languageprovider.dart';
+import '../../../Classes/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +41,7 @@ class _MenuState extends State<Menu> {
 
   Future<void> fetchVendorProfile(String vendorId) async {
     try {
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/vendor/$vendorId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -61,7 +62,7 @@ class _MenuState extends State<Menu> {
     final userId = userProvider.userId;
 
     try {
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -133,7 +134,7 @@ class _MenuState extends State<Menu> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
                                     child: Image.network(
-                                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
+                                      '${ApiConstants.baseUrl}/api/image/' + image,
                                       fit: BoxFit.cover,
                                     ),
                                   ),

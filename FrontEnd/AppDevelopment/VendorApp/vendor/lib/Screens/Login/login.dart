@@ -3,9 +3,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:vendor/Screens/NavigationBar/navbar.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import '../PhoneNumber/phonenumberprovider.dart';
-import '../Registration/registrationprovider.dart';
-import '../SelectLanguage/languageprovider.dart';
+import '../../Classes/api.dart';
+import '../../Classes/phonenumberprovider.dart';
+import '../../Classes/registrationprovider.dart';
+import '../../Classes/languageprovider.dart';
 import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
@@ -48,7 +49,7 @@ class _MyAppState extends State<Login> {
       String password = passwordController.text;
       String phoneNumber = widget.phoneNumber;
 
-      final url = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/passwordchecker/$phoneNumber/$password';
+      final url = '${ApiConstants.baseUrl}/api/user_table/passwordchecker/$phoneNumber/$password';
 
       try {
         final response = await http.get(Uri.parse(url));

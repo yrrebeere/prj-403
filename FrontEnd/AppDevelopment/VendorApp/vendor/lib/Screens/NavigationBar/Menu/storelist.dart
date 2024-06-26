@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/user_provider.dart';
-import '../../SelectLanguage/languageprovider.dart';
+import '../../../Classes/languageprovider.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -64,7 +65,7 @@ class _StorelistState extends State<Storelist> {
     final vendorId = userProvider.vendorId;
 
     final response = await http.get(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/searchstore/$vendorId'),
+      Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/searchstore/$vendorId'),
     );
 
     if (response.statusCode == 200) {
@@ -187,7 +188,7 @@ class _StorelistState extends State<Storelist> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Image.network(
-                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+store.image,
+                    "${ApiConstants.baseUrl}/api/image/"+store.image,
                     width: 30,
                     height: 30,
                     fit: BoxFit.cover,

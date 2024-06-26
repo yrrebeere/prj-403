@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/inventory_item.dart';
 import '../../../Classes/user_provider.dart';
-import '../../SelectLanguage/languageprovider.dart';
+import '../../../Classes/languageprovider.dart';
 import '../navbar.dart';
 import 'orderhistory.dart';
 import 'package:flutter/services.dart';
@@ -35,7 +36,7 @@ class _HomeState extends State<Home> {
     try {
       final vendorId = Provider.of<UserProvider>(context, listen: false).vendorId;
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/totalorders/$vendorId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order/totalorders/$vendorId'),
       );
 
       if (response.statusCode == 200) {
@@ -236,7 +237,7 @@ class _HomeState extends State<Home> {
     try {
       print('Searching for product: $productName'); // Add this debug print
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductininventory/$vendorId/$productName'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product/searchproductininventory/$vendorId/$productName'),
       );
 
       if (response.statusCode == 200) {

@@ -35,7 +35,9 @@ module.exports = (sequelize, Datatypes)=>{
         user_type:{
             type: Datatypes.ENUM('Admin', 'Grocery Store', 'Vendor')
         },
-    },{
-        underscored:true
-    })
+    },
+        {
+            underscored:true
+        }
+    )
 }

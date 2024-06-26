@@ -58,5 +58,4 @@ const sendMonthlyPrediction = async (req, res) => {
 module.exports = {
     sendWeeklyPrediction,
     sendMonthlyPrediction
-
 }

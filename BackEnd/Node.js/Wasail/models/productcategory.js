@@ -15,7 +15,9 @@ module.exports = (sequelize, Datatypes)=>{
         image:{
             type: Datatypes.STRING,
         },
-    },{
-        underscored:true
-    })
+    },
+        {
+            underscored:true
+        }
+    )
 }

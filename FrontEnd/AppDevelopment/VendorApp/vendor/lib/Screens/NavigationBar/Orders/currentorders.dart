@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
+import '../../../Classes/api.dart';
+
 class CurrentOrdersPage extends StatefulWidget {
   final int vendorId;
 
@@ -25,7 +27,7 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
 
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/search/$vendorId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order/search/$vendorId'),
       );
 
       if (response.statusCode == 200) {
@@ -44,7 +46,7 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
             print('Fetching grocery store data for ID: $groceryStoreId');
 
             final groceryStoreResponse = await http.get(
-              Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$groceryStoreId'),
+              Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/$groceryStoreId'),
             );
 
             if (groceryStoreResponse.statusCode == 200) {
@@ -87,7 +89,7 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
   Future<void> _updateOrderStatus(int orderId, String status) async {
     try {
       final response = await http.put(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/$orderId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order/$orderId'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'order_status': status}),
       );
@@ -148,7 +150,7 @@ class _CurrentOrdersPageState extends State<CurrentOrdersPage> {
                     child: ListTile(
                       contentPadding: EdgeInsets.all(16),
                       leading: CircleAvatar(
-                        backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + orderData['image']),
+                        backgroundImage: NetworkImage("${ApiConstants.baseUrl}/api/image/" + orderData['image']),
                         radius: 30,
                       ),
                       title: Text(
