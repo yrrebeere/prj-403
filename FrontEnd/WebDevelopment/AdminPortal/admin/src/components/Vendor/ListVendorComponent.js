@@ -4,6 +4,7 @@ import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
+import config from "../../config";
 const { Sider } = Layout;
 const { Search } = Input;
 
@@ -138,7 +139,7 @@ const ListVendorComponent = () => {
                         <tbody>
                         {filteredVendors.map(vendor => (
                             <tr key={vendor.vendor_id}>
-                                <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${vendor.image}`}
+                                <td><img src={config.baseUrl + `/api/image/${vendor.image}`}
                                          alt="Vendor Icon" style={{width: '50px', height: '50px'}}/></td>
                                 <td>{vendor.vendor_name}</td>
                                 <td>{vendor.delivery_locations}</td>

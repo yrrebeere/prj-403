@@ -1,29 +1,30 @@
 import axios from 'axios';
+import config from "../config";
 
 class VendorService {
 
     addVendor(info){
-        return axios.post('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/addvendor', info);
+        return axios.post(config.baseUrl + '/api/vendor/addvendor', info);
     }
 
     editVendor(vendor_id, info){
-        return axios.put('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/' + vendor_id, info);
+        return axios.put(config.baseUrl + '/api/vendor/' + vendor_id, info);
     }
 
     getVendorById(vendor_id){
-        return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/' + vendor_id);
+        return axios.get(config.baseUrl + '/api/vendor/' + vendor_id);
     }
 
     getAllVendors(){
-        return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/allvendors');
+        return axios.get(config.baseUrl + '/api/vendor/allvendors');
     }
 
     deleteVendor(vendor_id){
-        return axios.delete('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/' + vendor_id);
+        return axios.delete(config.baseUrl + '/api/vendor/' + vendor_id);
     }
 
     getVendorCount() {
-        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/vendorcount`);
+        return axios.get(config.baseUrl + `/api/vendor/vendorcount`);
     }
 }
 

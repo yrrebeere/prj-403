@@ -1,29 +1,30 @@
 import axios from 'axios';
+import config from "../config";
 
 class ProductService {
 
     addProduct(productInfo) {
-        return axios.post('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/addproduct', productInfo);
+        return axios.post(config.baseUrl + '/api/product/addproduct', productInfo);
     }
 
     getAllProducts() {
-        return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/allproducts');
+        return axios.get(config.baseUrl + '/api/product/allproducts');
     }
 
     getProductById(productId) {
-        return axios.get('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/' + productId);
+        return axios.get(config.baseUrl + '/api/product/' + productId);
     }
 
     editProduct(productId, info) {
-        return axios.put(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/` + productId, info);
+        return axios.put(config.baseUrl + `/api/product/` + productId, info);
     }
 
     deleteProduct(productId) {
-        return axios.delete(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/` + productId);
+        return axios.delete(config.baseUrl + `/api/product/` + productId);
     }
 
     getProductCount() {
-        return axios.get(`https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/productcount`);
+        return axios.get(config.baseUrl + `/api/product/productcount`);
     }
 
 }

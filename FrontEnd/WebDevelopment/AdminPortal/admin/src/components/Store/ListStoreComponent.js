@@ -3,6 +3,7 @@ import StoreService from '../../services/StoreService';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
+import config from "../../config";
 
 const { Sider } = Layout;
 const { Search } = Input;
@@ -152,7 +153,7 @@ const ListStoreComponent = () => {
                         <tbody>
                         {filteredStores.map(store => (
                             <tr key={store.store_id}>
-                                <td><img src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
+                                <td><img src={config.baseUrl + `/api/image/${store.image}`} alt="Store Icon" style={{ width: '50px', height: '50px' }} /></td>
                                 <td>{store.store_name}</td>
                                 <td>{store.store_address}</td>
                                 <td>{renderModel(store.model)}</td>

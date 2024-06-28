@@ -4,6 +4,7 @@ import styles from '../../styles/ComponentStyles.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, Layout, Input } from 'antd';
 import { UserOutlined, VideoCameraOutlined, UploadOutlined, BarChartOutlined, CloudOutlined, AppstoreOutlined } from '@ant-design/icons';
+import config from "../../config";
 
 const { Sider } = Layout;
 const { Search } = Input;
@@ -147,7 +148,7 @@ const ListCategoryComponent = () => {
                         {filteredCategories.map(category => (
                             <tr key={category.product_category_id}>
                                 <td><img
-                                    src={`https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/${category.image}`}
+                                    src={config.baseUrl + `/api/image/${category.image}`}
                                     alt={category.category_name} style={{width: '50px', height: '50px'}}/>
                                 </td>
                                 <td>{category.category_name}</td>
