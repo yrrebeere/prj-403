@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../../Classes/api.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
 import 'package:flutter/services.dart';
@@ -59,7 +60,7 @@ class _RegistrationState extends State<Registration> {
       return;
     }
 
-    String apiUrl = 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/uploadstore?store_name=$storeName';
+    String apiUrl = '${ApiConstants.baseUrl}/api/image/uploadstore?store_name=$storeName';
 
     try {
       var uri = Uri.parse(apiUrl);
@@ -81,7 +82,7 @@ class _RegistrationState extends State<Registration> {
 
   Future<String> checkUsernameAvailability(String username) async {
     final String url =
-        "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username";
+        "${ApiConstants.baseUrl}/api/user_table/usernameexists/$username";
     try {
       final http.Response response = await http.get(
         Uri.parse(url),
@@ -108,7 +109,7 @@ class _RegistrationState extends State<Registration> {
       String storeAddress
       ) async {
     final response = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/adduser'),
+      Uri.parse('${ApiConstants.baseUrl}/api/user_table/adduser'),
       body: jsonEncode({
         'phone_number': phoneNumber,
         'name': name,
@@ -137,7 +138,7 @@ class _RegistrationState extends State<Registration> {
   Future<void> createStore(String storeName, String storeAddress, int userId, String username) async {
 
     final response = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/addstore'),
+      Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/addstore'),
       body: jsonEncode({
         'store_name': storeName,
         'store_address': storeAddress,

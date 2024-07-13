@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'package:store/Screens/NavigationBar/Home/vendordetails.dart';
 import 'dart:convert';
+import '../../../Classes/api.dart';
 import '../../../Classes/vendor.dart';
 
 void main() => runApp(MyApp());
@@ -37,7 +38,7 @@ class _VendorListState extends State<VendorList> {
     try {
       final response = await http.get(
         Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/viewvendorlist/$storeId'),
+            '${ApiConstants.baseUrl}/api/grocery_store/viewvendorlist/$storeId'),
       );
 
       if (response.statusCode == 200) {
@@ -159,7 +160,7 @@ class _VendorListState extends State<VendorList> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                   child: Image.network(
-                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.image,
+                    "${ApiConstants.baseUrl}/api/image/"+vendor.image,
                     width: 50,
                     height: 50,
                     fit: BoxFit.cover,
@@ -211,7 +212,7 @@ class _VendorListState extends State<VendorList> {
     try {
 
       final response = await http.delete(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/list/1'),
+        Uri.parse('${ApiConstants.baseUrl}/api/list/1'),
       );
 
       // Update the local list after successful deletion from the database

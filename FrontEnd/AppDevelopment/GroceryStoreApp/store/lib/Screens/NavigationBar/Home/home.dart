@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:store/Screens/NavigationBar/Home/searchresults.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/cart_provider.dart';
 import '../../../Classes/category.dart';
 import '../../../Classes/product.dart';
@@ -34,7 +35,7 @@ class _HomeState extends State<Home> {
     try {
       final response = await http.get(
         Uri.parse(
-            'https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/allproductcategories'),
+            '${ApiConstants.baseUrl}/api/product_category/allproductcategories'),
       );
 
       if (response.statusCode == 200) {
@@ -58,7 +59,7 @@ class _HomeState extends State<Home> {
   void onCategoryTileClicked(String categoryName) async {
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/searchcategoryinstore/$categoryName'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_category/searchcategoryinstore/$categoryName'),
       );
 
       if (response.statusCode == 200) {
@@ -94,7 +95,7 @@ class _HomeState extends State<Home> {
     try {
       // Attempt to search by product name
       final productResponse = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product/searchproductinstore/$searchText'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product/searchproductinstore/$searchText'),
       );
 
       if (productResponse.statusCode == 200) {
@@ -116,7 +117,7 @@ class _HomeState extends State<Home> {
 
       // If not found in products, attempt to search by category name
       final categoryResponse = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/product_category/searchcategoryinstore/$searchText'),
+        Uri.parse('${ApiConstants.baseUrl}/api/product_category/searchcategoryinstore/$searchText'),
       );
 
       if (categoryResponse.statusCode == 200) {
@@ -138,7 +139,7 @@ class _HomeState extends State<Home> {
 
       // If not found in categories, attempt to search by vendor name
       final vendorResponse = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/searchvendorinstore/$searchText'),
+        Uri.parse('${ApiConstants.baseUrl}/api/vendor/searchvendorinstore/$searchText'),
       );
 
       if (vendorResponse.statusCode == 200) {
@@ -256,31 +257,31 @@ class _HomeState extends State<Home> {
                       _buildRecommendedProduct(
                           'Lays Masala',
                           'Rs. 60',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/lays-masala.png'
+                          '${ApiConstants.baseUrl}/api/image/products/lays-masala.png'
                       ),
                       _buildRecommendedProduct(
                           'Cheetos Salted',
                           'Rs. 40',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/cheetos-salted.jpg'
+                          '${ApiConstants.baseUrl}/api/image/products/cheetos-salted.jpg'
                       ),
                       _buildRecommendedProduct(
                           'Lipton Tea',
                           'Rs. 515',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/lipton-tea.png'
+                          '${ApiConstants.baseUrl}/api/image/products/lipton-tea.png'
                       ),
                       _buildRecommendedProduct(
                           'Olpers Milk',
                           'Rs. 170',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/olpers-milk.jpg'
+                          '${ApiConstants.baseUrl}/api/image/products/olpers-milk.jpg'
                       ),
                       _buildRecommendedProduct(
                           'K&N Nuggets',
                           'Rs. 1200',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/k&n-nuggets.jpg'),
+                          '${ApiConstants.baseUrl}/api/image/products/k&n-nuggets.jpg'),
                       _buildRecommendedProduct(
                           'Nestle Yogurt',
                           'Rs. 165',
-                          'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/products/nestle-yogurt.jpg'
+                          '${ApiConstants.baseUrl}/api/image/products/nestle-yogurt.jpg'
                       ),
                     ],
                   ),
@@ -318,7 +319,7 @@ class _HomeState extends State<Home> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.network(
-                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+category.imageUrl,
+                              "${ApiConstants.baseUrl}/api/image/"+category.imageUrl,
                               width: 75,
                               height: 75,
                               fit: BoxFit.cover,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:store/Screens/NavigationBar/Home/productdetail.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/product.dart';
 import '../../../Classes/product_inventory.dart';
 
@@ -26,7 +27,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
 
   Future<Map<String, dynamic>> fetchVendorProfile(int vendorId) async {
     final response =
-    await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/vendorprofile/$vendorId'));
+    await http.get(Uri.parse('${ApiConstants.baseUrl}/api/vendor/vendorprofile/$vendorId'));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
@@ -41,7 +42,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
     try {
 
       final response = await http.post(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/list/addvendorlist/1/1'),
+        Uri.parse('${ApiConstants.baseUrl}/api/list/addvendorlist/1/1'),
         // You can add any additional data needed for the request, such as headers or body
       );
 
@@ -111,7 +112,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                       if (vendorProfile['image'] != null)
                         CircleAvatar(
                           radius: 50,
-                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendorProfile['image']),
+                          backgroundImage: NetworkImage("${ApiConstants.baseUrl}/api/image/"+vendorProfile['image']),
                         ),
                       SizedBox(width: 16),
                       Expanded(
@@ -195,7 +196,7 @@ class _VendorDetailsPageState extends State<VendorDetailsPage> {
                           child: ListTile(
                             contentPadding: EdgeInsets.all(16.0),
                             leading: Image.network(
-                              "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + product['image'],
+                              "${ApiConstants.baseUrl}/api/image/" + product['image'],
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,

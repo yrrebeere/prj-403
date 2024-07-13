@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:store/Screens/OTP/otp.dart';
+import '../../Classes/api.dart';
 import '../../Classes/user_provider.dart';
 import '../SelectLanguage/languageprovider.dart';
 import '../Login/login.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<PhoneNumber> {
 
   Future<bool> checkIfGroceryStore(String userId) async {
 
-    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId";
+    final String url = "${ApiConstants.baseUrl}/api/user_table/$userId";
 
     try {
       final http.Response response = await http.get(
@@ -52,7 +53,7 @@ class _MyAppState extends State<PhoneNumber> {
 
   Future<String> getUserId(String phoneNumber) async {
 
-    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber";
+    final String url = "${ApiConstants.baseUrl}/api/user_table/numberExists/$phoneNumber";
 
     try {
       final http.Response response = await http.get(
@@ -73,7 +74,7 @@ class _MyAppState extends State<PhoneNumber> {
 
   Future<String> getStoreByUserId(String userId) async {
 
-    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/getstore/$userId";
+    final String url = "${ApiConstants.baseUrl}/api/grocery_store/getstore/$userId";
 
     try {
       final http.Response response = await http.get(
@@ -93,7 +94,7 @@ class _MyAppState extends State<PhoneNumber> {
   }
 
   Future<bool> checkPhoneNumberExists(String phoneNumber) async {
-    final String url = "https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber";
+    final String url = "${ApiConstants.baseUrl}/api/user_table/numberExists/$phoneNumber";
 
     try {
       final http.Response response = await http.get(

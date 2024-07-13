@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store/Screens/NavigationBar/Menu/viewprofile.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:store/Screens/SelectLanguage/language.dart';
+import '../../../Classes/api.dart';
 import 'vendorlist.dart';
 import '../../SelectLanguage/languageprovider.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _MenuState extends State<Menu> {
 
   Future<void> fetchStoreProfile(String storeId) async {
     try {
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$storeId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/$storeId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -68,7 +69,7 @@ class _MenuState extends State<Menu> {
     String userId = '2'; // Replace with the actual user ID
     try {
       // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for fetching user information
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -136,7 +137,7 @@ class _MenuState extends State<Menu> {
                                       ? ClipRRect(
                                     borderRadius: BorderRadius.circular(50),
                                     child: Image.network(
-                                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image!,
+                                      '${ApiConstants.baseUrl}/api/image/' + image!,
                                       fit: BoxFit.cover,
                                     ),
                                   )

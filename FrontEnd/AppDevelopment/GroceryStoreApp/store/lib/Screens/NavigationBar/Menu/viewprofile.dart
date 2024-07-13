@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../../../Classes/api.dart';
+
 class ViewProfile extends StatefulWidget {
   final String userId;
 
@@ -29,12 +31,12 @@ class _ViewProfileState extends State<ViewProfile> {
     language = "";
     image = "";
     fetchUserProfile(widget.userId);
-    fetchStoreProfile("2");
+    fetchStoreProfile("5");
   }
 
   Future<void> fetchStoreProfile(String storeId) async {
     try {
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/grocery_store/$storeId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/grocery_store/$storeId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -55,7 +57,7 @@ class _ViewProfileState extends State<ViewProfile> {
 
   Future<void> fetchUserProfile(String userId) async {
     try {
-      final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/$userId'));
+      final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/user_table/$userId'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -94,7 +96,7 @@ class _ViewProfileState extends State<ViewProfile> {
       }
 
       final response = await http.put(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/${widget.userId}'),
+        Uri.parse('${ApiConstants.baseUrl}/api/user_table/${widget.userId}'),
         body: {field: value},
       );
 
@@ -128,13 +130,13 @@ class _ViewProfileState extends State<ViewProfile> {
   }
 
   Future<bool> isUsernameAvailable(String username) async {
-    final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/usernameexists/$username'));
+    final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/user_table/usernameexists/$username'));
     print(username + response.body);
     return response.statusCode == 200 && json.decode(response.body) == false;
   }
 
   Future<bool> isPhoneNumberAvailable(String phoneNumber) async {
-    final response = await http.get(Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/user_table/numberExists/$phoneNumber'));
+    final response = await http.get(Uri.parse('${ApiConstants.baseUrl}/api/user_table/numberExists/$phoneNumber'));
     print(json.decode(response.body)['exists']);
     return response.statusCode == 200 && json.decode(response.body)['exists'] == false;
   }
@@ -262,7 +264,7 @@ class _ViewProfileState extends State<ViewProfile> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image.network(
-                      'https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/' + image,
+                      '${ApiConstants.baseUrl}/api/image/' + image,
                       fit: BoxFit.cover,
                     ),
                   ),

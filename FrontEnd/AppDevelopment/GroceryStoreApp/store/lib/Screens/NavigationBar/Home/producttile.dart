@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:store/Screens/NavigationBar/Home/productdetail.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/product.dart';
 import '../../../Classes/product_inventory.dart';
 
@@ -54,7 +55,7 @@ class ProductTile extends StatelessWidget {
                     topRight: Radius.circular(10.0),
                   ),
                   child: Image.network(
-                    "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + product.image,
+                    "${ApiConstants.baseUrl}/api/image/" + product.image,
                   ),
                 ),
               ),

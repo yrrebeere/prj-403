@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/cart_item.dart';
 import '../../../Classes/cart_provider.dart';
 import '../../../Classes/order_details.dart';
@@ -108,7 +109,7 @@ class CartItemTile extends StatelessWidget {
           ],
         ),
         leading: Image.network(
-          "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+cartItem.product.image,
+          "${ApiConstants.baseUrl}/api/image/"+cartItem.product.image,
           width: 60,
           height: 60,
           fit: BoxFit.cover,
@@ -142,7 +143,7 @@ class CartScreen extends StatelessWidget {
     );
 
     final orderResponse = await http.post(
-      Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/addorder'),
+      Uri.parse('${ApiConstants.baseUrl}/api/order/addorder'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -168,7 +169,7 @@ class CartScreen extends StatelessWidget {
       for (var orderDetail in orderDetails) {
         print(jsonEncode(orderDetail.toJson()));
         await http.post(
-          Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order_detail/addorderdetail'),
+          Uri.parse('${ApiConstants.baseUrl}/api/order_detail/addorderdetail'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

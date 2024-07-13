@@ -1,3 +1,4 @@
+-- drop database wasail;
 -- create database wasail;
 use wasail;
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES

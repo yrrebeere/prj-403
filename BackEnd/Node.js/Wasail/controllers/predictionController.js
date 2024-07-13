@@ -10,7 +10,7 @@ const sendWeeklyPrediction = async (req, res) => {
             return res.status(400).json({ error: 'Store ID and product ID are required.' });
         }
 
-        const url = `https://hammerhead-app-6m6td.ondigitalocean.app/get-weekly-prediction/${model}/${store_number}/${product_number}`;
+        const url = `http://127.0.0.1:5000/get-weekly-prediction/${model}/${store_number}/${product_number}`;
 
 
         const response = await axios.get(url);
@@ -37,7 +37,7 @@ const sendMonthlyPrediction = async (req, res) => {
             return res.status(400).json({ error: 'Store ID and product ID are required.' });
         }
 
-        const url = `https://hammerhead-app-6m6td.ondigitalocean.app/get-monthly-prediction/${model}/${store_number}/${product_number}`;
+        const url = `http://127.0.0.1:5000/get-monthly-prediction/${model}/${store_number}/${product_number}`;
 
         const response = await axios.get(url);
 

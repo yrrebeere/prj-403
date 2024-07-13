@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../../../Classes/api.dart';
 import '../../../Classes/cart_provider.dart';
 import '../../../Classes/product.dart';
 import '../../../Classes/product_inventory.dart';
@@ -43,8 +44,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
     final productNumber = widget.product.productNumber;
 
     final url = type == 'weekly'
-        ? 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/prediction/sendweeklyprediction/$model/$storeNumber/$productNumber'
-        : 'https://sea-lion-app-wbl8m.ondigitalocean.app/api/prediction/sendmonthlyprediction/$model/$storeNumber/$productNumber';
+        ? '${ApiConstants.baseUrl}/api/prediction/sendweeklyprediction/$model/$storeNumber/$productNumber'
+        : '${ApiConstants.baseUrl}/api/prediction/sendmonthlyprediction/$model/$storeNumber/$productNumber';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -93,7 +94,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 children: [
                   Center(
                     child: Image.network(
-                      "https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + widget.product.image,
+                      "${ApiConstants.baseUrl}/api/image/" + widget.product.image,
                       width: 200,
                       height: 200,
                       fit: BoxFit.cover,

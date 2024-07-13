@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 
+import '../../../Classes/api.dart';
+
 class OrderHistory extends StatelessWidget {
   final int vendorId;
 
@@ -14,7 +16,7 @@ class OrderHistory extends StatelessWidget {
 
     try {
       final response = await http.get(
-        Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/order/storeorderhistory/$storeId'),
+        Uri.parse('${ApiConstants.baseUrl}/api/order/storeorderhistory/$storeId'),
       );
 
       if (response.statusCode == 200) {
@@ -61,7 +63,7 @@ class OrderHistory extends StatelessWidget {
 
           if (vendorVendorId != null) {
             final vendorResponse = await http.get(
-              Uri.parse('https://sea-lion-app-wbl8m.ondigitalocean.app/api/vendor/$vendorVendorId'),
+              Uri.parse('${ApiConstants.baseUrl}/api/vendor/$vendorVendorId'),
             );
 
             if (vendorResponse.statusCode == 200) {
@@ -153,7 +155,7 @@ class OrderHistory extends StatelessWidget {
                           child: ListTile(
                             contentPadding: EdgeInsets.all(16),
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/" + orderData['image']),
+                              backgroundImage: NetworkImage("${ApiConstants.baseUrl}/api/image/" + orderData['image']),
                               radius: 40,
                             ),
                             title: Text(

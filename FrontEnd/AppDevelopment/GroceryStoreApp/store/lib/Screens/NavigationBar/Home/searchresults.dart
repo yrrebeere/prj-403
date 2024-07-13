@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:store/Screens/NavigationBar/Home/producttile.dart';
 import 'package:store/Screens/NavigationBar/Home/vendordetails.dart';
+import '../../../Classes/api.dart';
 import '../../../Classes/product.dart';
 import '../../../Classes/product_inventory.dart';
 import '../../../Classes/vendor.dart';
@@ -70,7 +71,7 @@ class SearchResultsPage extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 55, // Increase the radius for a larger image
-                          backgroundImage: NetworkImage("https://sea-lion-app-wbl8m.ondigitalocean.app/api/image/"+vendor.image),
+                          backgroundImage: NetworkImage("${ApiConstants.baseUrl}/api/image/"+vendor.image),
                         ),
                         SizedBox(width: 12.0),
                         Column(
