@@ -1,8 +1,10 @@
 -- drop database wasail;
 -- create database wasail;
 use wasail;
+
 INSERT INTO user_tables (phone_number, name, password, username, language, user_type, created_at, updated_at) VALUES
-(03214377009, 'Fizza Adeel', 'password@123', 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
+(03224377009, 'Fizza Adeel', 'password@123', 'fizza', 'English', 'Vendor', '2023-12-17T12:34:56', '2023-12-19T12:34:56'),
+(03215353502, 'Irtaza Ahmed Khan', 'password@123', 'irtaza', 'English', 'Grocery Store', '2023-12-17T12:34:56', '2023-12-19T12:34:56');
 SELECT * FROM wasail.user_tables;
 
 INSERT INTO vendors (vendor_name, delivery_locations, image, created_at, updated_at, user_table_user_id) VALUES
@@ -16,17 +18,17 @@ INSERT INTO vendors (vendor_name, delivery_locations, image, created_at, updated
 SELECT * FROM wasail.vendors;
 
 INSERT INTO grocery_stores (store_number, store_name, image, store_address, created_at, updated_at, user_table_user_id, model) VALUES
-(5, 'Esajees', 'stores/esajees.png', 'Shop 175, Y Block Market, DHA Phase 3', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(8, 'Jalal Sons', 'stores/jalal_sons.png', 'Shop 5, H Block Market, DHA Phase 2', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(16, 'Alfatah', 'stores/alfatah.png', 'Shop 30, A Block Market, State Life', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(19, 'Imtiaz', 'stores/imtiaz.png', 'Shop 301, Lalik Chowk, DHA Phase 3 ', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(22, 'Carrefour', 'stores/carrefour.png', 'Shop 29, Main Boulevard, Gulberg II', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(25, 'Metro', 'stores/metro.png', 'B Block Market, Model Town', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(33, 'Green Valley', 'stores/green-valley.png', 'Shop 62, Mall of lahore, Cantt', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(37, 'H.Karim Baksh', 'stores/h-karim-baksh.png', 'Shop 60, Main Boulevard, Lake City', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(41, 'Carrefour', 'stores/carrefour.png', 'Shop 87, Emporium, Johar Town', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(47, 'Alfatah', 'stores/alfatah.png', 'A Block Market, Lake City', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb'),
-(51, 'Imtiaz', 'stores/imtiaz.png', 'Shop 4, D Block Market, State Life', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 1, 'xgb');
+(5, 'Esajees', 'stores/esajees.png', 'Shop 175, Y Block Market, DHA Phase 3', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(8, 'Jalal Sons', 'stores/jalal_sons.png', 'Shop 5, H Block Market, DHA Phase 2', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(16, 'Alfatah', 'stores/alfatah.png', 'Shop 30, A Block Market, State Life', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(19, 'Imtiaz', 'stores/imtiaz.png', 'Shop 301, Lalik Chowk, DHA Phase 3 ', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(22, 'Carrefour', 'stores/carrefour.png', 'Shop 29, Main Boulevard, Gulberg II', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(25, 'Metro', 'stores/metro.png', 'B Block Market, Model Town', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(33, 'Green Valley', 'stores/green-valley.png', 'Shop 62, Mall of lahore, Cantt', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(37, 'H.Karim Baksh', 'stores/h-karim-baksh.png', 'Shop 60, Main Boulevard, Lake City', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(41, 'Carrefour', 'stores/carrefour.png', 'Shop 87, Emporium, Johar Town', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(47, 'Alfatah', 'stores/alfatah.png', 'A Block Market, Lake City', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb'),
+(51, 'Imtiaz', 'stores/imtiaz.png', 'Shop 4, D Block Market, State Life', '2023-12-17T12:34:56', '2023-12-19T12:34:56', 2, 'xgb');
 SELECT * FROM wasail.grocery_stores;
 
 INSERT INTO orders (order_date, delivery_date, total_bill, order_status, created_at, updated_at, grocery_store_store_id, vendor_vendor_id) VALUES
