@@ -95,8 +95,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                   Center(
                     child: Image.network(
                       "${ApiConstants.baseUrl}/api/image/" + widget.product.image,
-                      width: 200,
-                      height: 200,
+                      width: 275,
+                      height: 275,
                       fit: BoxFit.cover,
                     ),
                   ),

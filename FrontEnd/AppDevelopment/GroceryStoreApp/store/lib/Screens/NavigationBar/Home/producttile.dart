@@ -48,7 +48,7 @@ class ProductTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                height: 80, // Increase the height as needed
+                height: 100, // Increase the height as needed
                 child: ClipRRect(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.0),
